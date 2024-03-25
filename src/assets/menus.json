@@ -1,0 +1,21 @@
+{
+    "menu_0": [
+        "<div class='centre-hex-0'><div>WEB</div><div class='letter letter-and'>&</div><div>APP</div></div>",
+        "<div class='large-letter'>H</div>",
+        "<div class='large-letter'>E</div>",
+        "<div class='large-letter'>X</div>",
+        "<div class='large-letter'>X</div>",
+        "<div class='large-letter'>O</div>",
+        "<div class='large-letter'>B</div>"
+    ],
+    "menu_1": [
+        "<div class='centre-hex-1'><div id='menuMagic' class='menu-magic'></div><div #topHalf class='top-half'><div><span class='letter'>H</span>EX</div></div><div #bottomHalf class='bottom-half'><div>BO<span class='letter'>X</span></div></div></div>",
+        "<div class='menu-theme'>Services</div>",
+        "<div class='menu-theme'>Hello !</div>",
+        "<div class='menu-theme'>Cours</div>",
+        "<div class='menu-theme'>Labo</div>",
+        "<div class='menu-theme'>Pot P</div>",
+        "<div class='menu-theme'>Ludo</div>"
+    ]
+}
+

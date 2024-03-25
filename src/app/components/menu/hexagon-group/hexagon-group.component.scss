@@ -1,0 +1,45 @@
+.menu-rotate {
+    //transform: rotateZ(5deg) !important;
+    // transform-origin: calc(100vw / 2) calc(100vh - 94px);
+    transform-origin: calc(100vw / 2) 26px;
+    //transform-origin: 225px 546px;
+    transition: transform 1s;
+    //overflow: hidden;
+    width: 100vw;
+    min-width: 300px;
+    // height: 100vh;
+    pointer-events: none;
+}
+
+/*.origin {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: red;
+    left: 150px;
+    top: 545px;
+    //left: calc(100vw / 2);
+    //top: calc(100vh - 95px);
+    z-index: 20;
+}*/
+
+/*.sub-menu-holder {
+    position: absolute;
+    width: 300px;
+    height: 200px;
+    border: 1px black solid;
+    box-sizing: border-box;
+    left: calc((100vw / 2) - 30px);
+    top: calc(100vh - 345px);
+    overflow: hidden;
+}
+
+.sub-menu {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 100%;
+    left: 0;
+    background: red;
+    transition: top 2s ease-out;
+}*/

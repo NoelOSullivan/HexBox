@@ -1,0 +1,197 @@
+@import "../../../../scss/_variables.scss";
+
+.timeline-holder {
+  position: relative;
+  width: calc(100vw - 20px);
+  height: calc(100vh - 214px);
+  //border: 1px solid black;
+  box-sizing: border-box;
+  margin: 5px;
+  text-align: center;
+  overflow: hidden;
+//   background: lightpink;
+}
+
+.timeline-scroller {
+  position: absolute;
+  height: calc(100vh - 214px);
+  top: 0;
+  right: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  transition: right 500ms ease-out;
+//   background: lightgrey;
+}
+
+.unanimate-timeline-scroller {
+  transition: none;
+}
+
+.timeline-scroller-no-animate {
+  transition: none;
+}
+
+//---------------
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+}
+
+.years {
+  display: flex;
+  flex-direction: row;
+}
+
+.year-holder {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 24px;
+  min-width: 500px;
+  border: 1px solid rgba(211, 211, 211, 0.781);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+.year {
+//   background: red;
+}
+
+.companies {
+  position: relative;
+  min-width: 500px;
+  height: 30px;
+}
+.company {
+    border-radius: 15px;
+    background: black;
+    color: white;
+}
+
+.gamesys {
+  position: absolute;
+  left: 0;
+  width: 80%;
+//   background: lightgreen;
+}
+
+.tech-valley {
+  position: absolute;
+  left: 80%;
+  width: calc(20% + (100% * 4) + 8px);
+//   background: lightyellow;
+  ;
+}
+
+.technos {
+  min-height: 100px;
+}
+
+.skyline {
+  position: relative;
+  min-height: 350px;
+}
+
+
+
+// -------------------------
+.london-eye {
+  //135m
+  // height: 100%;
+//   background: lightpink;
+}
+
+.wheel-svg {
+  position: absolute;
+  bottom: 0;
+  left: 7px;
+  bottom: 30px;
+  animation: rotation 200s infinite linear;
+  width: 190px;
+  height: 190px;
+}
+
+.wheel {
+  width: 100%;
+  height: 100%;
+}
+
+.eye-support-svg {
+  position: absolute;
+  bottom: 5px;
+  left: 38px;
+  width: 130px;
+  height: 130px;
+}
+
+.eye {
+  width: 100%;
+  height: 100%;
+}
+.tower-bridge {
+  // 65m
+}
+
+.tower-bridge-svg {
+  position: absolute;
+  bottom: 5px;
+  left: 200px;
+  width: 100px;
+  height: 100px;
+}
+
+.tower-bridge {
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+
+.timeline-element {
+  border: 1px $primary-hover-color solid;
+  height: inherit;
+  width: calc(100vw - 10px);
+  box-sizing: border-box;
+  font-family: 'Rajdhani', sans-serif;
+  flex-shrink: 0;
+  margin-right: 10px;
+
+  @media screen and (min-width: $timeline-break-small) {
+    width: calc(100vw / 2 - 10px);
+  }
+
+  @media screen and (min-width: $timeline-break-medium) {
+    width: calc(100vw / 3 - 10px);
+  }
+}
+
+.date {
+  font-size: 24px;
+  font-weight: 600;
+  background: $primary-background-color;
+  color: $primary-text-color;
+}
+
+.client {
+  font-size: 18px;
+}
+
+.projectDescription {
+  font-size: 14px;
+}
+
+.jobDescription {
+  font-size: 14px;
+}

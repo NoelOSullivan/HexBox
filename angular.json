@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "devBox": {
+    "hexBox": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/dev-box",
+            "outputPath": "dist/hex-box",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -65,10 +65,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "devBox:build:production"
+              "buildTarget": "hexBox:build:production"
             },
             "development": {
-              "buildTarget": "devBox:build:development"
+              "buildTarget": "hexBox:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -76,7 +76,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "devBox:build"
+            "buildTarget": "hexBox:build"
           }
         },
         "test": {

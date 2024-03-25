@@ -1,0 +1,459 @@
+<div class='timeline-holder' (panstart)="onPanStart($event)" (panmove)="onPanMove($event)" (panend)="onPanEnd($event)"
+  (swipeleft)="onSwipeLeft($event)" (swiperight)="onSwipeRight($event)">
+  <div #timelineScroller class="timeline-scroller" [ngClass]="{'unanimate-timeline-scroller':!animateScroller}">
+
+
+    <!-- <div class="timeline-years"> -->
+    <!-- <div class="timeline-year-holder" *ngFor="let year of timelineYears; let i = index"> -->
+
+    <!-- <div class="animations-holder">
+
+
+    </div>
+
+    <div class="companies">
+      <div class="company">Tech Valley</div>
+    </div> -->
+
+    <!-- <div class="timeline-companies-holder">
+      <div class="timeline-years">
+        <div class="companies"></div>
+        <div class="companies"></div>
+        <div class="companies"></div>
+        <div class="companies"></div>
+        <div class="companies"></div>
+        <div class="companies"></div>
+        <div class="companies"></div>
+        <div class="companies"></div>
+        <div class="companies"></div>
+        <div class="companies"></div>
+        <div class="companies"></div>
+        <div class="companies"></div>
+        <div class="companies"></div>
+        <div class="companies"></div>
+        <div class="companies"></div>
+        <div class="companies"></div>
+        <div class="companies"></div>
+        <div class="companies"></div>
+        <div class="companies"></div>
+        <div class="companies"></div>
+        <div class="companies"></div>
+        <div class="companies"></div>
+        <div class="companies"></div>
+        <div class="companies"></div>
+        <div class="companies"></div>
+        <div class="companies"></div>
+        <div class="companies"></div>
+        <div class="companies"></div>
+        <div class="companies"></div>
+        <div class="companies">
+          <div class="gamesys">Gamesys</div>
+          <div class="tech-valley">Tech Valley</div>
+        </div>
+        <div class="companies"></div>
+        <div class="companies"></div>
+        <div class="companies"></div>
+        <div class="companies"></div>
+      </div>
+    </div> -->
+
+    <div class="timeline">
+      <div class="years">
+        <div class="year-holder">
+          <div class="technos">
+          </div>
+          <div class="companies">
+          </div>
+          <div class="skyline">
+          </div>
+          <div class="year">
+            1987
+          </div>
+        </div>
+        <div class="year-holder">
+          <div class="technos">
+          </div>
+          <div class="companies">
+          </div>
+          <div class="skyline">
+          </div>
+          <div class="year">
+            1988
+          </div>
+        </div>
+        <div class="year-holder">
+          <div class="technos">
+          </div>
+          <div class="companies">
+          </div>
+          <div class="skyline">
+          </div>
+          <div class="year">
+            1989
+          </div>
+        </div>
+        <div class="year-holder">
+          <div class="technos">
+          </div>
+          <div class="companies">
+          </div>
+          <div class="skyline">
+          </div>
+          <div class="year">
+            1990
+          </div>
+        </div>
+        <div class="year-holder">
+          <div class="technos">
+          </div>
+          <div class="companies">
+          </div>
+          <div class="skyline">
+          </div>
+          <div class="year">
+            1991
+          </div>
+        </div>
+        <div class="year-holder">
+          <div class="technos">
+          </div>
+          <div class="companies">
+          </div>
+          <div class="skyline">
+          </div>
+          <div class="year">
+            1992
+          </div>
+        </div>
+        <div class="year-holder">
+          <div class="technos">
+          </div>
+          <div class="companies">
+          </div>
+          <div class="skyline">
+          </div>
+          <div class="year">
+            1993
+          </div>
+        </div>
+        <div class="year-holder">
+          <div class="technos">
+          </div>
+          <div class="companies">
+          </div>
+          <div class="skyline">
+          </div>
+          <div class="year">
+            1994
+          </div>
+        </div>
+        <div class="year-holder">
+          <div class="technos">
+          </div>
+          <div class="companies">
+          </div>
+          <div class="skyline">
+          </div>
+          <div class="year">
+            1995
+          </div>
+        </div>
+        <div class="year-holder">
+          <div class="technos">
+          </div>
+          <div class="companies">
+          </div>
+          <div class="skyline">
+          </div>
+          <div class="year">
+            1996
+          </div>
+        </div>
+        <div class="year-holder">
+          <div class="technos">
+          </div>
+          <div class="companies">
+          </div>
+          <div class="skyline">
+          </div>
+          <div class="year">
+            1997
+          </div>
+        </div>
+        <div class="year-holder">
+          <div class="technos">
+          </div>
+          <div class="companies">
+          </div>
+          <div class="skyline">
+          </div>
+          <div class="year">
+            1998
+          </div>
+        </div>
+        <div class="year-holder">
+          <div class="technos">
+          </div>
+          <div class="companies">
+          </div>
+          <div class="skyline">
+          </div>
+          <div class="year">
+            1999
+          </div>
+        </div>
+        <div class="year-holder">
+          <div class="technos">
+          </div>
+          <div class="companies">
+          </div>
+          <div class="skyline">
+          </div>
+          <div class="year">
+            2000
+          </div>
+        </div>
+        <div class="year-holder">
+          <div class="technos">
+          </div>
+          <div class="companies">
+          </div>
+          <div class="skyline">
+          </div>
+          <div class="year">
+            2001
+          </div>
+        </div>
+        <div class="year-holder">
+          <div class="technos">
+          </div>
+          <div class="companies">
+          </div>
+          <div class="skyline">
+          </div>
+          <div class="year">
+            2002
+          </div>
+        </div>
+        <div class="year-holder">
+          <div class="technos">
+          </div>
+          <div class="companies">
+          </div>
+          <div class="skyline">
+          </div>
+          <div class="year">
+            2003
+          </div>
+        </div>
+        <div class="year-holder">
+          <div class="technos">
+          </div>
+          <div class="companies">
+          </div>
+          <div class="skyline">
+          </div>
+          <div class="year">
+            2004
+          </div>
+        </div>
+        <div class="year-holder">
+          <div class="technos">
+          </div>
+          <div class="companies">
+          </div>
+          <div class="skyline">
+          </div>
+          <div class="year">
+            2005
+          </div>
+        </div>
+        <div class="year-holder">
+          <div class="technos">
+          </div>
+          <div class="companies">
+          </div>
+          <div class="skyline">
+          </div>
+          <div class="year">
+            2006
+          </div>
+        </div>
+        <div class="year-holder">
+          <div class="technos">
+          </div>
+          <div class="companies">
+          </div>
+          <div class="skyline">
+          </div>
+          <div class="year">
+            2007
+          </div>
+        </div>
+        <div class="year-holder">
+          <div class="technos">
+          </div>
+          <div class="companies">
+          </div>
+          <div class="skyline">
+          </div>
+          <div class="year">
+            2008
+          </div>
+        </div>
+        <div class="year-holder">
+          <div class="technos">
+          </div>
+          <div class="companies">
+          </div>
+          <div class="skyline">
+          </div>
+          <div class="year">
+            2009
+          </div>
+        </div>
+        <div class="year-holder">
+          <div class="technos">
+          </div>
+          <div class="companies">
+          </div>
+          <div class="skyline">
+          </div>
+          <div class="year">
+            2010
+          </div>
+        </div>
+        <div class="year-holder">
+          <div class="technos">
+          </div>
+          <div class="companies">
+          </div>
+          <div class="skyline">
+          </div>
+          <div class="year">
+            2011
+          </div>
+        </div>
+        <div class="year-holder">
+          <div class="technos">
+          </div>
+          <div class="companies">
+          </div>
+          <div class="skyline">
+          </div>
+          <div class="year">
+            2012
+          </div>
+        </div>
+        <div class="year-holder">
+          <div class="technos">
+          </div>
+          <div class="companies">
+          </div>
+          <div class="skyline">
+          </div>
+          <div class="year">
+            2013
+          </div>
+        </div>
+        <div class="year-holder">
+          <div class="technos">
+          </div>
+          <div class="companies">
+          </div>
+          <div class="skyline">
+          </div>
+          <div class="year">
+            2014
+          </div>
+        </div>
+        <div class="year-holder">
+          <div class="technos">
+          </div>
+          <div class="companies">
+            <div class="company moneypenny">Moneypenny</div>
+          </div>
+          <div class="skyline">
+          </div>
+          <div class="year">
+            2015
+          </div>
+        </div>
+        <div class="year-holder">
+          <div class="technos">
+          </div>
+          <div class="companies">
+            <div class="company gamesys">Gamesys</div>
+            <div class="company tech-valley">Tech Valley</div>
+          </div>
+          <div class="skyline">
+            <div class="london-eye">
+              <svg class="wheel-svg">
+                <image xlink:href="../../../../../../../assets/images/london-eye.svg" class="wheel" />
+              </svg>
+              <svg class="eye-support-svg">
+                <image xlink:href="../../../../../../../assets/images/eye-support.svg" class="eye" />
+              </svg>
+            </div>
+            <div class="tower-bridge">
+              <svg class="tower-bridge-svg">
+                <image xlink:href="../../../../../../../assets/images/tower-bridge.svg" class="tower-bridge" />
+              </svg>
+            </div>
+          </div>
+          <div class="year">
+            2016
+          </div>
+        </div>
+        <div class="year-holder">
+          <div class="technos">
+          </div>
+          <div class="companies">
+          </div>
+          <div class="skyline">
+          </div>
+          <div class="year">
+            2017
+          </div>
+        </div>
+        <div class="year-holder">
+          <div class="technos">
+          </div>
+          <div class="companies">
+          </div>
+          <div class="skyline">
+          </div>
+          <div class="year">
+            2018
+          </div>
+        </div>
+        <div class="year-holder">
+          <div class="technos">
+          </div>
+          <div class="companies">
+          </div>
+          <div class="skyline">
+          </div>
+          <div class="year">
+            2019
+          </div>
+        </div>
+        <div class="year-holder">
+          <div class="technos">
+          </div>
+          <div class="companies">
+          </div>
+          <div class="skyline">
+          </div>
+          <div class="year">
+            2020
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <svg class="london-eye" width="200" height="200">
+          <image xlink:href="../../../../../../../assets/images/london-eye.svg" width="200" height="200" />
+        </svg> -->
+    <!-- </div> -->
+  </div>
+</div>

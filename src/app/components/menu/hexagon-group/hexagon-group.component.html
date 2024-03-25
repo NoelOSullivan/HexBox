@@ -1,0 +1,17 @@
+<div #menuRotate class="menu-rotate">
+    <app-hexagon *ngIf="menuRotate && menuContent" [content]=menuContent[0] class="hex_0">
+    </app-hexagon>
+    <!-- Remember that order is inverted for the needs of the opening animation-->
+    <app-hexagon *ngIf="menuRotate && menuContent" [content]=menuContent[6] [hexNum]="6" class="hex_6" [ngClass]="{'hexagon-flip-animate':hexOpened[5],'hexagon-selected':selected==6 || rolled==6}" (click)="clickHexagon(6,'/container6')" (mouseover)="overHexagon(6)" (mouseleave)="leaveHexagon()">
+    </app-hexagon>
+    <app-hexagon *ngIf="menuRotate && menuContent" [content]=menuContent[5] [hexNum]="5" class="hex_5" [ngClass]="{'hexagon-flip-animate':hexOpened[4],'hexagon-selected':selected==5 || rolled==5}" (click)="clickHexagon(5,'/container5')" (mouseover)="overHexagon(5)" (mouseleave)="leaveHexagon()">
+    </app-hexagon>
+    <app-hexagon #bollocks *ngIf="menuRotate && menuContent" [content]=menuContent[4] [hexNum]="4" class="hex_4" [ngClass]="{'hexagon-flip-animate':hexOpened[3],'hexagon-selected':selected==4 || rolled==4}" (click)="clickHexagon(4,'/container4')" (mouseover)="overHexagon(4)" (mouseleave)="leaveHexagon()">
+    </app-hexagon>
+    <app-hexagon *ngIf="menuRotate && menuContent" [content]=menuContent[3] [hexNum]="3" class="hex_3" [ngClass]="{'hexagon-flip-animate':hexOpened[2], 'hexagon-selected':selected==3 || rolled==3}" (click)="clickHexagon(3,'/container3')" (mouseover)="overHexagon(3)" (mouseleave)="leaveHexagon()">
+    </app-hexagon>
+    <app-hexagon *ngIf="menuRotate && menuContent" [content]=menuContent[2] [hexNum]="2" class="hex_2" [ngClass]="{'hexagon-flip-animate':hexOpened[1],'hexagon-selected':selected==2 || rolled==2}" (click)="clickHexagon(2,'/container2')" (mouseover)="overHexagon(2)" (mouseleave)="leaveHexagon()">
+    </app-hexagon>
+    <app-hexagon *ngIf="menuRotate && menuContent" [content]=menuContent[1] [hexNum]="1" class="hex_1" [ngClass]="{'hexagon-flip-animate':hexOpened[0], 'hexagon-selected':selected==1 || rolled==1}" (click)="clickHexagon(1,'/container1')" (mouseover)="overHexagon(1)" (mouseleave)="leaveHexagon()">
+    </app-hexagon>
+</div>
