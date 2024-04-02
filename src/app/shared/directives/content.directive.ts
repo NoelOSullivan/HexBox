@@ -25,7 +25,7 @@ export class ContentDirective {
   touchEndX!: number;
   endInterval: any;
   finalAnimRotation!: number;
-  swipeDirection!: String;
+  direction!: String;
   finalAnimDirection!: String;
   blockInteraction: boolean = false;
 
@@ -49,19 +49,19 @@ export class ContentDirective {
   }
 
   @HostListener('wheel', ['$event']) wheel(event: WheelEvent) {
-    
+
     if (!this.blockInteraction) {
       if (event.deltaY > 0) {
         if (this.rotation.degrees > this.maxRotation) {
           this.blockInteraction = true;
-          this.swipeDirection = "left"
+          this.direction = "left"
           this.finalAnimRotation = this.rotation.degrees - 180;
           this.finishFlipToCalculatedPage();
         }
       } else {
         if (this.rotation.degrees < 0) {
           this.blockInteraction = true;
-          this.swipeDirection = "right"
+          this.direction = "right"
           this.finalAnimRotation = this.rotation.degrees + 180;
           this.finishFlipToCalculatedPage();
         }
@@ -107,10 +107,10 @@ export class ContentDirective {
     this.touchEndTime = event.timeStamp;
 
     if (this.touchEndX < this.touchStartX) {
-      this.swipeDirection = "left"
+      this.direction = "left"
     } else {
       if (this.touchEndX > this.touchStartX) {
-        this.swipeDirection = "right"
+        this.direction = "right"
       }
     }
 
@@ -180,6 +180,7 @@ export class ContentDirective {
 
     if (this.count !== Math.floor(this.rotation.degrees / -180)) {
       this.count = Math.floor(this.rotation.degrees / -180);
+      // console.log("count", this.count);
       // Turn off display of all pages
       for (let i = 0; i < this.nPages; i++) {
         this.panel.nativeElement.children[i].style.display = 'none';
@@ -194,8 +195,21 @@ export class ContentDirective {
 
     this.panel.nativeElement.style.transform = "rotateY(" + this.rotation.degrees + "deg)";
 
+    // This patch forces the page number to 2 if the rotation is in first half turn
+    // This patch forces the page number to nPages if the rotation is in last half turn
+    let nPage = this.count + 1;
+    if (this.rotation.degrees < -90 && this.rotation.degrees > -180) {
+      nPage = 2;
+    } else {
+      if (this.rotation.degrees < this.maxRotation + 90) {
+        nPage = this.nPages;
+      } else {
+        nPage = this.count + 1;
+      }
+    }
+
     // Update the pagecounter store array with the page number of the activePanel
-    const payload = { panelNumber: Number(this.nPanel), pageNumber: this.count + 1 }
+    const payload = { panelNumber: Number(this.nPanel), pageNumber: nPage }
     this.store.dispatch(new UpdatePageCounter(payload));
   }
 
