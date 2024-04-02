@@ -4,8 +4,8 @@ import { Store } from '@ngxs/store';
 import { Location, NgClass, NgIf } from '@angular/common';
 import { DataService } from '../../../shared/services/data.service';
 import { HexagonComponent } from '../hexagon/hexagon.component';
-import { Rotation } from '../../../shared/interfaces/rotation';
-import { ChangeRotation } from '../../../store/rotation/rotation.action';
+import { Rotation, ActivePanelNumber } from '../../../shared/interfaces/hexagon';
+import { ChangePanelNumber, ChangeRotation } from '../../../store/hexagon/hexagon.actions';
 
 @Component({
   selector: 'hexagon-group',
@@ -126,7 +126,11 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
         this.store.dispatch(new ChangeRotation(rotation));
         this.rotateMenu();
       }
+
       this.selected = hexIndex;
+      const activePanelNumber: ActivePanelNumber = {apn:hexIndex}
+      this.store.dispatch(new ChangePanelNumber(activePanelNumber));
+
     }
   }
 

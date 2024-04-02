@@ -1,6 +1,6 @@
 {
     "menu_0": [
-        "<div class='centre-hex-1'></div>",
+        "<div class='centre-hex-0'><div>WEB</div><div class='letter letter-and'>&</div><div>APP</div></div>",
         "<div class='large-letter'>H</div>",
         "<div class='large-letter'>E</div>",
         "<div class='large-letter'>X</div>",
@@ -16,9 +16,6 @@
         "<div class='menu-theme'>Labo</div>",
         "<div class='menu-theme'>Pot P</div>",
         "<div class='menu-theme'>Ludo</div>"
-    ],
-    "logo": [
-        "<div class='centre-hex-logo'><div  class='top-half-logo'><div><span class='letter'>H</span>EX</div></div><div class='bottom-half-logo'><div>BO<span class='letter'>X</span></div></div></div>"
     ]
 }
 

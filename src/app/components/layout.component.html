@@ -1,11 +1,14 @@
-<div #contentLayout class="content-layout">
-    <app-content [nContainer]=1 [startRotation]=0></app-content>
-    <app-content [nContainer]=2 [startRotation]=60></app-content>
-    <app-content [nContainer]=3 [startRotation]=120></app-content>
-    <app-content [nContainer]=4 [startRotation]=180></app-content>
-    <app-content [nContainer]=5 [startRotation]=240></app-content>
-    <app-content [nContainer]=6 [startRotation]=300></app-content>
-</div>
-<div #menuLayout class="menu-layout">
-    <app-menu></app-menu>
+<div class="background">
+    <div #contentLayout class="content-layout">
+        <app-arrow></app-arrow>
+        <app-content [nContainer]=1 [startRotation]=0></app-content>
+        <app-content [nContainer]=2 [startRotation]=60></app-content>
+        <app-content [nContainer]=3 [startRotation]=120></app-content>
+        <app-content [nContainer]=4 [startRotation]=180></app-content>
+        <app-content [nContainer]=5 [startRotation]=240></app-content>
+        <app-content [nContainer]=6 [startRotation]=300></app-content>
+    </div>
+    <div #menuLayout class="menu-layout">
+        <app-menu></app-menu>
+    </div>
 </div>

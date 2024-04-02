@@ -1,0 +1,43 @@
+.arrow-back-right {
+    position: absolute;
+    width: 80px;
+    height: 120px;
+    bottom: 0px;
+    right: 8px;
+    background-size: contain;
+    background-image:url('../../../../assets/images/arrow-back.png');
+}
+
+.arrow-front-right {
+    position: absolute;
+    z-index: 1;
+    width: 80px;
+    height: 120px;
+    bottom: 0px;
+    right: 8px;
+    background-size: contain;
+    background-image:url('../../../../assets/images/arrow-front.png');
+}
+
+.arrow-back-left {
+    position: absolute;
+    transform: scaleX(-1);
+    width: 80px;
+    height: 120px;
+    bottom: 0px;
+    left: 8px;
+    background-size: contain;
+    background-image:url('../../../../assets/images/arrow-back.png');
+}
+
+.arrow-front-left {
+    position: absolute;
+    transform: scaleX(-1);
+    z-index: 1;
+    width: 80px;
+    height: 120px;
+    bottom: 0px;
+    left: 8px;
+    background-size: contain;
+    background-image:url('../../../../assets/images/arrow-front.png');
+}

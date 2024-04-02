@@ -1,16 +1,22 @@
 import { Component } from '@angular/core';
-import { SwipeDirective } from '../../../../../shared/directives/swipe.directive';
+import { ContentDirective } from '../../../../../shared/directives/content.directive';
 import { NgIf } from '@angular/common';
+import { LogoComponent } from '../../../../../shared/components/logo/logo.component';
+import { ArrowComponent } from '../../../../../shared/components/arrow/arrow.component';
 
 @Component({
   selector: 'app-container1',
   standalone: true, 
-  imports: [NgIf, SwipeDirective],
+  imports: [NgIf, ContentDirective, LogoComponent, ArrowComponent],
   templateUrl: './container1.component.html',
   styleUrls: ['./container1.component.scss','../../main-sections-shared-styles.scss']
 })
 export class Container1  {
 
   constructor() { }
+
+  yikes() {
+    console.log("YIKES");
+  }
 
 }

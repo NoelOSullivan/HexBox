@@ -11,3 +11,12 @@
     padding-bottom: 54px;
     overflow: hidden;
 }
+
+.background{
+    height:100vh;
+    background-size:cover;
+    width:100vw;
+    background-image:url('../../assets/images/background.jpg');
+    background-position:50% 50%;
+  }
+  

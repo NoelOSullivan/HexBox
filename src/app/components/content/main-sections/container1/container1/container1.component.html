@@ -1,28 +1,38 @@
 <div class="container">
-    <div #flipper appSwipe class="flipper">
+    <!-- <app-arrow></app-arrow> -->
+    <div #flipper appSwipe nPanel="1" class="flipper">
         <li class="common-side side1">
-            1
+            <app-logo></app-logo>
+            <h1>Web Development</h1>
+            <div class="vertical-space-between-holder">
+                <h2 (click)="yikes()">- Web Apps -<br>- Web Sites -<br>- Training -</h2>
+                <h3>... and a little bit of witchcraft</h3>
+                <p class="para">25 years of experience<br>in digital communication</p>
+            </div>
         </li>
         <li class="common-side side2">
-            2
+            <app-logo></app-logo>
+            <h2>Web Magic.</h2>
         </li>
         <li class="common-side side1">
-            3
+            <app-logo></app-logo>
+            <h2>Webtastic</h2>
         </li>
         <li class="common-side side2">
-            4
+            <app-logo></app-logo>
+            <h2>We put bells and whistles on it.</h2>
         </li>
         <li class="common-side side1">
-            5
+            <h2>We are the champions ...</h2>
         </li>
         <li class="common-side side2">
-            6
+            <h2>... my friend</h2>
         </li>
         <li class="common-side side1">
-            7
+            <h2>Top, Top, Top of the league</h2>
         </li>
         <li class="common-side side2">
-            8
+            <h2>You'll never walk alone</h2>
         </li>
     </div>
 </div>

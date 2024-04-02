@@ -222,6 +222,7 @@
 
 .svg-hexagon {
   fill: $primary-background-color;
+  // fill: rgba(124,240,10,0.5);
   fill-opacity: 0.4;
   stroke: $primary-text-color;
   stroke-width: 3px;
@@ -314,14 +315,14 @@
   color: $primary-first-letter-color;
 }
 
-:host ::ng-deep .letter-and {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 30px;
-  font-weight: 900;
-  opacity: 0.5;
-  padding-left: 5px;
-  margin-top: -3px;
-}
+// :host ::ng-deep .letter-and {
+//   font-family: 'Montserrat', sans-serif;
+//   font-size: 30px;
+//   font-weight: 900;
+//   opacity: 0.5;
+//   padding-left: 5px;
+//   margin-top: -3px;
+// }
 
 :host ::ng-deep .menu-theme {
   position: absolute;
@@ -339,33 +340,8 @@
   //}
 }
 
-:host ::ng-deep .centre-hex-0 {
-  position: absolute;
-  text-align: center;
-  //width: 70px;
-  //left: 25px;
-  //top: 28px;
-  transform: rotateY(0deg);
-  font-family: 'Miriam Libre', sans-serif;
-  //font-size: 24px;
-  //line-height: 18px;
-  text-shadow: none;
-
-  //@media only screen and (max-width: 500px) {     
-  width: 60px;
-  left: 1px;
-  top: 6px;
-  font-size: 16px;
-  line-height: 16px;
-  font-weight: 600;
-  //}
-}
-
 :host ::ng-deep .centre-hex-1 {
   position: absolute;
-  //width: 70px;
-  //left: 15px;
-  //top: 20px;
   transform: rotateY(0deg);
   font-family: 'Montserrat', sans-serif;
   font-size: 36px;
@@ -376,7 +352,6 @@
   height: 54px;
   width: 60px;
   left: 0px;
-  // top: 10px;
   font-size: 21px;
   line-height: 17px;
   overflow: hidden;
@@ -395,16 +370,17 @@
     width: 60px;
     height: 26px;
     box-sizing: border-box;
-    top: 0px;
+    top: -26px;
     transition: top 1s ease-out;
+    color: white;
   }
 
   .bottom-half {
     position: absolute;
     width: 60px;
-    top: 26px;
+    top: 54px;
     height: 26px;
     transition: top 1s ease-out;
-    // background: rgb(255,219,153);
+    color:black  ;
   }
 }

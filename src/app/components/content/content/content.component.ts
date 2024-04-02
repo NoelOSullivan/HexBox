@@ -7,16 +7,16 @@ import { Container3 } from '../main-sections/container3/container3/container3.co
 import { Container5 } from '../main-sections/container5/container5/container5.component';
 import { Container6 } from '../main-sections/container6/container6/container6.component';
 import { Observable } from 'rxjs';
-import { RotationState } from '../../../store/rotation/rotation.state';
-import { RotationStateModel } from '../../../store/rotation/rotation.model';
+import { RotationToAdd } from '../../../store/hexagon/hexagon.state';
+import { RotationToAddModel } from '../../../store/hexagon/hexagon.model';
 import { Select } from '@ngxs/store';
-import { SwipeDirective } from '../../../shared/directives/swipe.directive';
+import { ArrowComponent } from '../../../shared/components/arrow/arrow.component';
 
 @Component({
   selector: 'app-content',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.Default,
-  imports: [NgIf, Container1, Container2, Container3, Container4, Container5, Container6, SwipeDirective],
+  imports: [NgIf, Container1, Container2, Container3, Container4, Container5, Container6, ArrowComponent],
   templateUrl: './content.component.html',
   styleUrls: ['./content.component.scss'],
 })
@@ -30,7 +30,7 @@ export class ContentComponent implements OnInit {
   actualRotation: number = 0;
   transitionSet: boolean = false;
 
-  @Select(RotationState) rotation$!: Observable<RotationStateModel>;
+  @Select(RotationToAdd) rotation$!: Observable<RotationToAddModel>;
 
   constructor(private element: ElementRef) { }
 
@@ -40,11 +40,11 @@ export class ContentComponent implements OnInit {
 
   ngAfterViewInit(): void {
     this.rotation$.subscribe(newRot => {
-      if (!this.transitionSet && newRot.rotation.degrees != 0) {
+      if (!this.transitionSet && newRot.rotationToAdd.degrees != 0) {
         this.transitionSet = true;
         this.contentHolder.nativeElement.style.transition = "transform 1s";
       }
-      this.rotateMe(Number(newRot.rotation.degrees));
+      this.rotateMe(Number(newRot.rotationToAdd.degrees));
 
     });
   }
@@ -52,22 +52,6 @@ export class ContentComponent implements OnInit {
   rotateMe(degrees: number) {
     this.actualRotation += degrees;
     this.contentHolder.nativeElement.style.transform = "rotate(" + this.actualRotation + "deg)";
-  }
-
-  logTouchstart($event: Event) {
-    console.log("START", $event);
-  }
-
-  logTouchmove($event: Event) {
-    console.log("MOVE", $event);
-
-
-
-
-  }
-
-  logTouchEnd($event: Event) {
-    console.log("END", $event);
   }
 
 }

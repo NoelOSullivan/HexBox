@@ -34,15 +34,17 @@ export class HexagonComponent implements OnInit {
   }
 
   ngOnChanges(changes: any) {
-    // console.log("changes", changes);
+    // console.log("changes", changes.content.currentValue);
     if (changes.content.currentValue && changes.content.currentValue.indexOf("menuMagic") > -1) {
       setTimeout(() => {
         let menuMagic: HTMLElement = document.getElementsByClassName("menu-magic")[0] as HTMLElement;
         menuMagic.style.visibility = "visible";
         let topHalf: HTMLElement = document.getElementsByClassName("top-half")[0] as HTMLElement;
         let bottomHalf: HTMLElement = document.getElementsByClassName("bottom-half")[0] as HTMLElement;
-        topHalf.style.backgroundColor = "#ffdb99";
-        bottomHalf.style.background = "#ffdb99";
+        topHalf.style.background = "black";
+        bottomHalf.style.background = "white";
+        topHalf.style.top = "0px";
+        bottomHalf.style.top = "26px";
         // this.controlsService.currentOpenState.subscribe(state => {
         //   this.openState = state;
         //   if (this.openState) {
