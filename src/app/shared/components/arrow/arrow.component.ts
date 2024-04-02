@@ -1,11 +1,11 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Select } from '@ngxs/store';
-import { Observable, concat } from 'rxjs';
+import { Observable } from 'rxjs';
+
 import { PageCounters } from '../../../store/page/page.state';
 import { PageCounterModel } from '../../../store/page/page.model';
 import { ActivePanelNumber } from '../../../store/hexagon/hexagon.state';
 import { ActivePanelNumberModel } from '../../../store/hexagon/hexagon.model';
-// import { ActivePanelNumber } from '../../interfaces/hexagon';
 
 @Component({
   selector: 'app-arrow',
@@ -16,82 +16,97 @@ import { ActivePanelNumberModel } from '../../../store/hexagon/hexagon.model';
 })
 export class ArrowComponent {
 
+  @ViewChild('ArrowBackLeft') arrowBackLeft!: ElementRef;
   @ViewChild('ArrowFrontLeft') arrowFrontLeft!: ElementRef;
+  @ViewChild('ArrowBackRight') arrowBackRight!: ElementRef;
   @ViewChild('ArrowFrontRight') arrowFrontRight!: ElementRef;
   @Select(PageCounters) pageCounter$!: Observable<PageCounterModel>;
   @Select(ActivePanelNumber) activePanelNumber$!: Observable<ActivePanelNumberModel>;
 
   activePanelNumber!: number;
-  pageCounters!: PageCounters;
+  pageCounters!: any;
 
   ngAfterViewInit(): void {
 
-    // If page 1 of panel - left arrow dim / right arrow light
-    // If page lastpage of panel - right arrow dim / left arrow light
-    // else both arrows light
-
     this.activePanelNumber$.subscribe(newAPN => {
       this.activePanelNumber = newAPN.activePanelNumber.apn;
-      // console.log("newAPN", newAPN);
+      if (this.pageCounters) {
+        if (this.pageCounters.counters[this.activePanelNumber - 1] === 1) {
+          this.arrowFrontLeft.nativeElement.style.setProperty("opacity", "0.5");
+          this.arrowFrontLeft.nativeElement.style.setProperty("filter", "none");
+          this.arrowBackLeft.nativeElement.style.setProperty("opacity", "0.5");
+          this.arrowBackLeft.nativeElement.style.setProperty("filter", "none");
+          this.arrowFrontRight.nativeElement.style.setProperty("opacity", "1");
+          this.arrowFrontRight.nativeElement.style.setProperty("filter", "drop-shadow(-4px -2px 0px white)");
+          this.arrowBackRight.nativeElement.style.setProperty("opacity", "1");
+          this.arrowBackRight.nativeElement.style.setProperty("filter", "drop-shadow(-1px -2px 0px white)");
+        } else {
+          // If last page of selected panel dim right arrow
+          if (this.pageCounters.counters[this.activePanelNumber - 1] === this.pageCounters.totals[this.activePanelNumber - 1]) {
+            this.arrowFrontRight.nativeElement.style.setProperty("opacity", "0.5");
+            this.arrowFrontRight.nativeElement.style.setProperty("filter", "none");
+            this.arrowBackRight.nativeElement.style.setProperty("opacity", "0.5");
+            this.arrowBackRight.nativeElement.style.setProperty("filter", "none");
+            this.arrowFrontLeft.nativeElement.style.setProperty("opacity", "1");
+            this.arrowFrontLeft.nativeElement.style.setProperty("filter", "drop-shadow(-4px -2px 0px white)");
+            this.arrowBackLeft.nativeElement.style.setProperty("opacity", "1");
+            this.arrowBackLeft.nativeElement.style.setProperty("filter", "drop-shadow(-1px -2px 0px white)");
+          } else {
+            // Otherwise shine both arrows
+            this.arrowFrontLeft.nativeElement.style.setProperty("opacity", "1");
+            this.arrowFrontLeft.nativeElement.style.setProperty("filter", "drop-shadow(-4px -2px 0px white)");
+            this.arrowBackLeft.nativeElement.style.setProperty("opacity", "1");
+            this.arrowBackLeft.nativeElement.style.setProperty("filter", "drop-shadow(-1px -2px 0px white)");
+            this.arrowFrontRight.nativeElement.style.setProperty("opacity", "1");
+            this.arrowFrontRight.nativeElement.style.setProperty("filter", "drop-shadow(-4px -2px 0px white)");
+            this.arrowBackRight.nativeElement.style.setProperty("opacity", "1");
+            this.arrowBackRight.nativeElement.style.setProperty("filter", "drop-shadow(-1px -2px 0px white)");
+          }
+        }
+      }
+      
+
+
     });
 
+    // Subscribes to store array which gives active (front-facing) page for each panel
     this.pageCounter$.subscribe(newPC => {
-      // console.log("newPC", newPC);
-
-      if(newPC.pageCounters.counters[this.activePanelNumber - 1] === 1 ) {
+      // If first page of selected panel dim left arrow
+      this.pageCounters = newPC.pageCounters;
+      if (newPC.pageCounters.counters[this.activePanelNumber - 1] === 1) {
         this.arrowFrontLeft.nativeElement.style.setProperty("opacity", "0.5");
+        this.arrowFrontLeft.nativeElement.style.setProperty("filter", "none");
+        this.arrowBackLeft.nativeElement.style.setProperty("opacity", "0.5");
+        this.arrowBackLeft.nativeElement.style.setProperty("filter", "none");
+        this.arrowFrontRight.nativeElement.style.setProperty("opacity", "1");
+        this.arrowFrontRight.nativeElement.style.setProperty("filter", "drop-shadow(-4px -2px 0px white)");
+        this.arrowBackRight.nativeElement.style.setProperty("opacity", "1");
+        this.arrowBackRight.nativeElement.style.setProperty("filter", "drop-shadow(-1px -2px 0px white)");
       } else {
-        if(newPC.pageCounters.counters[this.activePanelNumber - 1] === newPC.pageCounters.totals[this.activePanelNumber - 1] ) {
+        // If last page of selected panel dim right arrow
+        if (newPC.pageCounters.counters[this.activePanelNumber - 1] === newPC.pageCounters.totals[this.activePanelNumber - 1]) {
           this.arrowFrontRight.nativeElement.style.setProperty("opacity", "0.5");
-        } else {
+          this.arrowFrontRight.nativeElement.style.setProperty("filter", "none");
+          this.arrowBackRight.nativeElement.style.setProperty("opacity", "0.5");
+          this.arrowBackRight.nativeElement.style.setProperty("filter", "none");
           this.arrowFrontLeft.nativeElement.style.setProperty("opacity", "1");
+          this.arrowFrontLeft.nativeElement.style.setProperty("filter", "drop-shadow(-4px -2px 0px white)");
+          this.arrowBackLeft.nativeElement.style.setProperty("opacity", "1");
+          this.arrowBackLeft.nativeElement.style.setProperty("filter", "drop-shadow(-1px -2px 0px white)");
+        } else {
+          // Otherwise shine both arrows
+          this.arrowFrontLeft.nativeElement.style.setProperty("opacity", "1");
+          this.arrowFrontLeft.nativeElement.style.setProperty("filter", "drop-shadow(-4px -2px 0px white)");
+          this.arrowBackLeft.nativeElement.style.setProperty("opacity", "1");
+          this.arrowBackLeft.nativeElement.style.setProperty("filter", "drop-shadow(-1px -2px 0px white)");
           this.arrowFrontRight.nativeElement.style.setProperty("opacity", "1");
+          this.arrowFrontRight.nativeElement.style.setProperty("filter", "drop-shadow(-4px -2px 0px white)");
+          this.arrowBackRight.nativeElement.style.setProperty("opacity", "1");
+          this.arrowBackRight.nativeElement.style.setProperty("filter", "drop-shadow(-1px -2px 0px white)");
         }
       }
 
     });
-
-    // "hello" + number.ToString()
-
-    // this.activePanelNumber$.subscribe(newPanelNumber => {
-    //   console.log("newPanelNumber", newPanelNumber.activePanelNumber);
-    //   // this.activePanelNumber = newPanelNumber.activePanelNumber;
-
-    //   if (!newPanelNumber) {
-    //     // this.arrowFrontLeft.nativeElement.style.setProperty("opacity", "0.5");
-    //   } else {
-    //     // debugger;
-    //     // conseole.log("this.pageCounters", this.pageCounters);
-    //     // if (this.pageCounters[this.contentPanelNumber.panel - 1] === 1) {
-    //     //   this.arrowFrontLeft.nativeElement.style.setProperty("opacity", "0.5");
-    //     // } else {
-    //     //   this.arrowFrontLeft.nativeElement.style.setProperty("opacity", "1");
-    //     // }
-
-    //     this.pageCounters$.subscribe(newPC => {
-    //       // console.log("newPC", newPC);
-    //       // debugger;
-    //       // console.log("NEW PC", newPC.pageCounters.counters[this.contentPanelNumber.panel - 1]);
-    //       // this.pageCounters = newPC.pageCounters.counters;
-    //       // if (newPC.pageCounters[this.contentPanelNumber.panel - 1] === 1) {
-    //       //   this.arrowFrontLeft.nativeElement.style.setProperty("opacity", "0.5");
-    //       // }
-    //     });
-
-    //   }
-    // });
-
-    // this.pageCounters$.subscribe(newPC => {
-    //   // console.log("newPC", newPC);
-    //   // debugger;
-    //   // console.log("NEW PC", newPC.pageCounters.counters[this.contentPanelNumber.panel - 1]);
-    //   // this.pageCounters = newPC.pageCounters;
-    //   // if (newPC.pageCounters[this.contentPanelNumber.panel - 1] === 1) {
-    //   //   this.arrowFrontLeft.nativeElement.style.setProperty("opacity", "0.5");
-    //   // }
-    // });
-
-
   }
 
   clickRightArrow() {

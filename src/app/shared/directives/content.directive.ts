@@ -1,5 +1,6 @@
 import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 import { Store } from '@ngxs/store';
+
 import { Rotation } from '../interfaces/hexagon';
 import { InitPageTotals, UpdatePageCounter } from '../../store/page/page.action';
 
@@ -26,18 +27,20 @@ export class ContentDirective {
   finalAnimRotation!: number;
   swipeDirection!: String;
   finalAnimDirection!: String;
+  blockInteraction: boolean = false;
 
   counter: number = 0;
 
-  constructor(private element: ElementRef, private store: Store) { }
+  constructor(private panel: ElementRef, private store: Store) { }
 
   ngAfterViewInit() {
 
-    this.nPages = this.element.nativeElement.children.length;
+    // Count the number of pages in the panel
+    this.nPages = this.panel.nativeElement.children.length;
     this.maxRotation = (this.nPages - 1) * -180;
 
     for (let i = 2; i < this.nPages; i++) {
-      this.element.nativeElement.children[i].style.display = 'none';
+      this.panel.nativeElement.children[i].style.display = 'none';
     }
 
     const payload = { panelNumber: Number(this.nPanel), totalPages: this.nPages }
@@ -46,19 +49,24 @@ export class ContentDirective {
   }
 
   @HostListener('wheel', ['$event']) wheel(event: WheelEvent) {
-
-    if (event.deltaY > 0) {
-      this.rotation.degrees -= 20;
-    } else {
-      this.rotation.degrees += 20;
+    
+    if (!this.blockInteraction) {
+      if (event.deltaY > 0) {
+        if (this.rotation.degrees > this.maxRotation) {
+          this.blockInteraction = true;
+          this.swipeDirection = "left"
+          this.finalAnimRotation = this.rotation.degrees - 180;
+          this.finishFlipToCalculatedPage();
+        }
+      } else {
+        if (this.rotation.degrees < 0) {
+          this.blockInteraction = true;
+          this.swipeDirection = "right"
+          this.finalAnimRotation = this.rotation.degrees + 180;
+          this.finishFlipToCalculatedPage();
+        }
+      }
     }
-
-    // if (this.rotation.degrees < this.maxRotation) this.rotation.degrees = this.maxRotation;
-
-    this.managePanelDisplay();
-
-    this.element.nativeElement.style.transform = "rotateY(" + this.rotation.degrees + "deg)";
-
   }
 
   @HostListener('touchstart', ['$event']) touchstart(event: TouchEvent) {
@@ -70,11 +78,12 @@ export class ContentDirective {
 
   @HostListener('touchmove', ['$event']) touchmove(event: TouchEvent) {
 
+    // Detect movement of finger since last event
     const diffX = this.lastX - event.targetTouches[0].clientX;
-
     this.lastX = event.targetTouches[0].clientX;
 
     // If swiping right calculate new rotation if not yet minimum value (0)
+    // TO DO : 3 is arbitary. Maybe find a rule.
     if (diffX < 0) {
       if (this.rotation.degrees < 0) {
         this.rotation.degrees -= diffX * 3;
@@ -88,25 +97,7 @@ export class ContentDirective {
       }
     }
 
-    // // If new rotation goes too far in either direction, correct to zero or max
-    // if (this.rotation.degrees > 0) {
-    //   this.rotation.degrees = 0;
-    // } else {
-    //   if (this.rotation.degrees < this.maxRotation) {
-    //     this.rotation.degrees = this.maxRotation;
-    //   } else {
-    //     console.log("this.count", this.count);
-    //   }
-    // }
-
     this.managePanelDisplay();
-
-    this.element.nativeElement.style.transform = "rotateY(" + this.rotation.degrees + "deg)";
-
-    const payload = { panelNumber: Number(this.nPanel), pageNumber: this.count + 1 }
-    this.store.dispatch(new UpdatePageCounter(payload));
-
-    
 
   }
 
@@ -123,46 +114,14 @@ export class ContentDirective {
       }
     }
 
-    let distanceX = this.touchEndX - this.touchStartX;
-    let totalTime = this.touchEndTime - this.touchStartTime;
-
-    let speed = distanceX / totalTime;
-
-    this.finishFlipToCalculatedPage(speed, distanceX, totalTime);
-
-  }
-
-  managePanelDisplay() {
-
-    // If new rotation goes too far in either direction, correct to zero or max
-    if (this.rotation.degrees > 0) {
-      this.rotation.degrees = 0;
-    } else {
-      if (this.rotation.degrees < this.maxRotation) {
-        this.rotation.degrees = this.maxRotation;
-      } else {
-        console.log("this.count", this.count);
-      }
-    }
-
-    if (this.count !== Math.floor(this.rotation.degrees / -180)) {
-      this.count = Math.floor(this.rotation.degrees / -180);
-      // Turn off display of all pages
-      for (let i = 0; i < this.nPages; i++) {
-        this.element.nativeElement.children[i].style.display = 'none';
-      }
-      // Display front facing panel
-      this.element.nativeElement.children[this.count].style.display = 'flex';
-      // Display next probable front facing panel (the one we are turning to)
-      if (this.count < this.nPages - 1) {
-        this.element.nativeElement.children[this.count + 1].style.display = 'flex';
-      }
-    }
-  }
-
-  finishFlipToCalculatedPage(speed: number, distanceX: number, totalTime: number) {
-
+    // Calculate the final degrees that will be flipped to
     this.finalAnimRotation = Math.round(this.rotation.degrees / 180) * 180;
+    this.finishFlipToCalculatedPage();
+
+  }
+
+
+  finishFlipToCalculatedPage() {
 
     if (this.finalAnimRotation < this.rotation.degrees) {
       this.finalAnimDirection = "left";
@@ -172,6 +131,7 @@ export class ContentDirective {
       }
     }
 
+    // TODO : try to avoid this interval
     this.endInterval = setInterval(() => {
       this.finishFlip();
     }, 5);
@@ -188,22 +148,56 @@ export class ContentDirective {
       }
     }
 
-    this.element.nativeElement.style.transform = "rotateY(" + this.rotation.degrees + "deg)";
+    this.panel.nativeElement.style.transform = "rotateY(" + this.rotation.degrees + "deg)";
 
     if (this.finalAnimDirection === "left") {
       if (this.rotation.degrees <= this.finalAnimRotation) {
-        this.rotation.degrees = this.finalAnimRotation;
         clearInterval(this.endInterval);
+        this.rotation.degrees = this.finalAnimRotation;
+        this.managePanelDisplay();
+        this.blockInteraction = false;
       }
     } else {
       if (this.rotation.degrees >= this.finalAnimRotation) {
-        this.rotation.degrees = this.finalAnimRotation;
         clearInterval(this.endInterval);
+        this.rotation.degrees = this.finalAnimRotation;
+        this.managePanelDisplay();
+        this.blockInteraction = false;
       }
     }
 
+  }
 
+  managePanelDisplay() {
 
+    // If new rotation goes too far in either direction, correct to zero or max
+    if (this.rotation.degrees > 0) {
+      this.rotation.degrees = 0;
+    } else {
+      if (this.rotation.degrees < this.maxRotation) {
+        this.rotation.degrees = this.maxRotation;
+      }
+    }
+
+    if (this.count !== Math.floor(this.rotation.degrees / -180)) {
+      this.count = Math.floor(this.rotation.degrees / -180);
+      // Turn off display of all pages
+      for (let i = 0; i < this.nPages; i++) {
+        this.panel.nativeElement.children[i].style.display = 'none';
+      }
+      // Display front facing panel
+      this.panel.nativeElement.children[this.count].style.display = 'flex';
+      // Display next probable front facing panel (the one we are turning to)
+      if (this.count < this.nPages - 1) {
+        this.panel.nativeElement.children[this.count + 1].style.display = 'flex';
+      }
+    }
+
+    this.panel.nativeElement.style.transform = "rotateY(" + this.rotation.degrees + "deg)";
+
+    // Update the pagecounter store array with the page number of the activePanel
+    const payload = { panelNumber: Number(this.nPanel), pageNumber: this.count + 1 }
+    this.store.dispatch(new UpdatePageCounter(payload));
   }
 
 }

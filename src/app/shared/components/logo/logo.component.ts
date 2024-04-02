@@ -29,7 +29,6 @@ export class LogoComponent implements OnInit {
 
   setUpMenu() {
     this.menuContent = this.allMenus["logo"][0];
-    // console.log("this.menuContent", this.menuContent);
   }
 
 }

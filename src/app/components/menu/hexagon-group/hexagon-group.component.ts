@@ -128,7 +128,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
       }
 
       this.selected = hexIndex;
-      const activePanelNumber: ActivePanelNumber = {apn:hexIndex}
+      const activePanelNumber: ActivePanelNumber = {apn:hexIndex - 1}
       this.store.dispatch(new ChangePanelNumber(activePanelNumber));
 
     }
