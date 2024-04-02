@@ -165,7 +165,6 @@ export class ContentDirective {
         this.blockInteraction = false;
       }
     }
-
   }
 
   managePanelDisplay() {

@@ -1,19 +1,33 @@
-.arrow-back-right {
+.arrow-common {
     position: absolute;
     width: 80px;
     height: 120px;
+    opacity: 0.5;
+    filter: none;
+}
+
+.arrow-back-right {
     bottom: 0px;
     right: 8px;
 }
 
 .arrow-front-right {
-    position: absolute;
     z-index: 1;
-    width: 80px;
-    height: 120px;
     bottom: 0px;
     right: 8px;
-    background-size: contain;
+}
+
+.arrow-back-left {
+    transform: scaleX(-1);
+    bottom: 0px;
+    left: 8px;
+}
+
+.arrow-front-left {
+    transform: scaleX(-1);
+    z-index: 1;
+    bottom: 0px;
+    left: 8px;
 }
 
 .arrow-image {
@@ -21,21 +35,7 @@
     height: 120px;
 }
 
-.arrow-back-left {
-    position: absolute;
-    transform: scaleX(-1);
-    width: 80px;
-    height: 120px;
-    bottom: 0px;
-    left: 8px;
-}
-
-.arrow-front-left {
-    position: absolute;
-    transform: scaleX(-1);
-    z-index: 1;
-    width: 80px;
-    height: 120px;
-    bottom: 0px;
-    left: 8px;
+.arrow-active {
+    opacity: 1;
+    filter: drop-shadow(-4px -2px 0px white);
 }
