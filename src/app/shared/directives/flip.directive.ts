@@ -6,10 +6,12 @@ import { InitPageTotals, UpdatePageCounter } from '../../store/panel/panel.actio
 import { Observable } from 'rxjs';
 import { PageTurnerModel } from '../../store/panel/panel.model';
 import { PageTurner } from '../../store/panel/panel.state';
+import { ActivePanelNumberModel } from '../../store/hexagon/hexagon.model';
+import { ActivePanelNumber } from '../../store/hexagon/hexagon.state';
 
 @Directive({
-  selector: '[appSwipe]',
-  exportAs: 'AppSwipe',
+  selector: '[flipControl]',
+  exportAs: 'FlipControl',
   standalone: true
 })
 
@@ -17,6 +19,7 @@ export class ContentDirective implements OnInit {
 
   @Input() nPanel!: string;
   @Select(PageTurner) direction$!: Observable<PageTurnerModel>;
+  @Select(ActivePanelNumber) activePanelNumber$!: Observable<ActivePanelNumberModel>;
 
   lastX!: number;
   rotation: Rotation = { degrees: 0 };
@@ -32,15 +35,23 @@ export class ContentDirective implements OnInit {
   direction!: String;
   finalAnimDirection!: String;
   blockWheelAndClick: boolean = false;
+  activePanelNumber!: number;
 
   counter: number = 0;
 
   constructor(private panel: ElementRef, private store: Store) { }
 
   ngOnInit() {
+    this.activePanelNumber$.subscribe(newAPN => {
+      this.activePanelNumber = newAPN.activePanelNumber.apn
+    });
     this.direction$.subscribe(newDirection => {
       if (!this.blockWheelAndClick) {
-        this.turnPage(newDirection.direction.direction);
+        if(this.activePanelNumber === 0) this.activePanelNumber = 6;
+        if(this.activePanelNumber === Number(this.nPanel)) {
+          this.turnPage(newDirection.direction.direction);
+        }
+
       }
     });
   }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ContentDirective } from '../../../../../shared/directives/content.directive';
+import { ContentDirective } from '../../../../../shared/directives/flip.directive';
 import { NgIf } from '@angular/common';
 import { LogoComponent } from '../../../../../shared/components/logo/logo.component';
 import { ArrowComponent } from '../../../../../shared/components/arrow/arrow.component';

@@ -10,13 +10,12 @@ import { Observable } from 'rxjs';
 import { RotationToAdd } from '../../../store/hexagon/hexagon.state';
 import { RotationToAddModel } from '../../../store/hexagon/hexagon.model';
 import { Select } from '@ngxs/store';
-import { ArrowComponent } from '../../../shared/components/arrow/arrow.component';
 
 @Component({
   selector: 'app-content',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.Default,
-  imports: [NgIf, Container1, Container2, Container3, Container4, Container5, Container6, ArrowComponent],
+  imports: [NgIf, Container1, Container2, Container3, Container4, Container5, Container6],
   templateUrl: './content.component.html',
   styleUrls: ['./content.component.scss'],
 })
@@ -32,7 +31,7 @@ export class ContentComponent implements OnInit {
 
   @Select(RotationToAdd) rotation$!: Observable<RotationToAddModel>;
 
-  constructor(private element: ElementRef) { }
+  constructor() { }
 
   ngOnInit() {
     this.actualRotation = this.startRotation;

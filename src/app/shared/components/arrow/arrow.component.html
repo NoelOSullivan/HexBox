@@ -1,12 +1,20 @@
-<div #ArrowBackLeft class="arrow-common arrow-back-left" [ngClass]="{'arrow-active, back-corrective':leftArrowActive}">
-    <img src="../../../../assets/images/arrow-back.png" class="arrow-image" />
-</div>
-<div #ArrowFrontLeft (click)="clickArrow('right')" class="arrow-common arrow-front-left" [ngClass]="{'arrow-active':leftArrowActive}">
-    <img src="../../../../assets/images/arrow-front.png" class="arrow-image" />
-</div>
-<div #ArrowBackRight class="arrow-common arrow-back-right" [ngClass]="{'arrow-active, back-corrective':rightArrowActive}">
-    <img src="../../../../assets/images/arrow-back.png" class="arrow-image" />
-</div>
-<div #ArrowFrontRight (click)="clickArrow('left')" class="arrow-common arrow-front-right" [ngClass]="{'arrow-active':rightArrowActive}">
-    <img src="../../../../assets/images/arrow-front.png" class="arrow-image" />
+<div class="arrow-screen">
+    <div class="arrowHolder">
+        <div #ArrowBackLeft class="arrow-common arrow-back-left"
+            [ngClass]="{'arrow-active, back-corrective':leftArrowActive}">
+            <img src="../../../../assets/images/arrow-back.png" class="arrow-image" />
+        </div>
+        <div #ArrowFrontLeft (click)="clickArrow('right')" class="arrow-common arrow-front-left"
+            [ngClass]="{'arrow-active':leftArrowActive}">
+            <img src="../../../../assets/images/arrow-front.png" class="arrow-image" />
+        </div>
+        <div #ArrowBackRight class="arrow-common arrow-back-right"
+            [ngClass]="{'arrow-active, back-corrective':rightArrowActive}">
+            <img src="../../../../assets/images/arrow-back.png" class="arrow-image" />
+        </div>
+        <div #ArrowFrontRight (click)="clickArrow('left')" class="arrow-common arrow-front-right"
+            [ngClass]="{'arrow-active':rightArrowActive}">
+            <img src="../../../../assets/images/arrow-front.png" class="arrow-image" />
+        </div>
+    </div>
 </div>

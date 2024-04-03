@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { MenuComponent } from './menu/menu/menu.component';
 import { ContentComponent } from './content/content/content.component';
 import { ArrowComponent } from '../shared/components/arrow/arrow.component';
@@ -16,9 +16,15 @@ export class LayoutComponent {
   @ViewChild('contentLayout') contentLayout!: ElementRef;
   @ViewChild('menuLayout') menuLayout!: ElementRef;
 
+  @HostListener('window:resize', ['$event'])
+  onWindowResize() {
+    this.screenHeight = window.innerHeight;
+    this.updateHeight();
+  }
+
   constructor() { }
 
-  screenHeight: number | undefined;
+  screenHeight!: number;
 
   ngAfterViewInit(): void {
 
@@ -33,5 +39,10 @@ export class LayoutComponent {
     this.menuLayout.nativeElement.style["width"] = '100%';
     this.menuLayout.nativeElement.style["bottom"] = '0';
     this.menuLayout.nativeElement.style["left"] = '0';
+  }
+
+  updateHeight() {
+    this.contentLayout.nativeElement.style["height"] = this.screenHeight / 4 * 3 + 'px';
+    this.menuLayout.nativeElement.style["height"] = this.screenHeight / 4 + 'px';
   }
 }

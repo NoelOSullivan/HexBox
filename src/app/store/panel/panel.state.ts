@@ -48,9 +48,9 @@ export class PageCounters {
 })
 
 @Injectable()
-export class PageTurner{
-    constructor(){}
-    @Action(TurnPage) turnPage(ctx: StateContext<PageTurnerModel>, action:TurnPage){
+export class PageTurner {
+    constructor() { }
+    @Action(TurnPage) turnPage(ctx: StateContext<PageTurnerModel>, action: TurnPage) {
         const state = ctx.getState();
         ctx.setState({
             ...state,

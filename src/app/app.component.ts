@@ -13,18 +13,14 @@ export class AppComponent {
 
   title = 'HexBox';
 
-  public getScreenWidth: any;
-  public getScreenHeight: any;
+  // public getScreenWidth: any;
+  // public getScreenHeight: any;
 
-  ngOnInit() {
-    this.getScreenWidth = window.innerWidth;
-    this.getScreenHeight = window.innerHeight;
-  }
+  // ngOnInit() {
+  //   this.getScreenWidth = window.innerWidth;
+  //   this.getScreenHeight = window.innerHeight;
+  // }
 
-  @HostListener('window:resize', ['$event'])
-  onWindowResize() {
-    this.getScreenWidth = window.innerWidth;
-    this.getScreenHeight = window.innerHeight;
-  }
+  
   
 }
