@@ -150,18 +150,18 @@ export class ContentDirective {
 
     this.panel.nativeElement.style.transform = "rotateY(" + this.rotation.degrees + "deg)";
 
+    this.managePanelDisplay();
+
     if (this.finalAnimDirection === "left") {
       if (this.rotation.degrees <= this.finalAnimRotation) {
         clearInterval(this.endInterval);
         this.rotation.degrees = this.finalAnimRotation;
-        this.managePanelDisplay();
         this.blockInteraction = false;
       }
     } else {
       if (this.rotation.degrees >= this.finalAnimRotation) {
         clearInterval(this.endInterval);
         this.rotation.degrees = this.finalAnimRotation;
-        this.managePanelDisplay();
         this.blockInteraction = false;
       }
     }
