@@ -2,11 +2,14 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { NgClass } from '@angular/common';
+import { Store } from '@ngxs/store';
 
-import { PageCounters } from '../../../store/page/page.state';
-import { PageCounterModel } from '../../../store/page/page.model';
+import { PageCounters } from '../../../store/panel/panel.state';
+import { PageCounterModel } from '../../../store/panel/panel.model';
 import { ActivePanelNumber } from '../../../store/hexagon/hexagon.state';
 import { ActivePanelNumberModel } from '../../../store/hexagon/hexagon.model';
+import { Direction } from '../../../shared/interfaces/panel';
+import { TurnPage } from '../../../store/panel/panel.action';
 
 @Component({
   selector: 'app-arrow',
@@ -25,6 +28,8 @@ export class ArrowComponent {
   pageCounters!: any;
   leftArrowActive: boolean = false;
   rightArrowActive: boolean = true;
+
+  constructor(private store: Store) {}
 
   ngAfterViewInit(): void {
 
@@ -71,12 +76,9 @@ export class ArrowComponent {
     });
   }
 
-  clickRightArrow() {
-
-  }
-
-  clickLeftArrow() {
-
+  clickArrow(direction: string) {
+    const directionObj: Direction = {direction:direction}
+    this.store.dispatch(new TurnPage(directionObj));
   }
 
 }

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { State, Action, StateContext } from "@ngxs/store";
 
-import { PageCounterModel } from './page.model';
-import { UpdatePageCounter, InitPageTotals } from './page.action';
+import { PageCounterModel, PageTurnerModel } from './panel.model';
+import { UpdatePageCounter, InitPageTotals, TurnPage } from './panel.action';
 
 @State<PageCounterModel>({
     name: 'pageCounters',
@@ -35,5 +35,26 @@ export class PageCounters {
             ...state,
             pageCounters: { counters: state.pageCounters.counters, totals: totals }
         });
+    }
+}
+
+@State<PageTurnerModel>({
+    name: 'pageTurner',
+    defaults: {
+        direction: {
+            direction: "none",
+        },
+    }
+})
+
+@Injectable()
+export class PageTurner{
+    constructor(){}
+    @Action(TurnPage) turnPage(ctx: StateContext<PageTurnerModel>, action:TurnPage){
+        const state = ctx.getState();
+        ctx.setState({
+            ...state,
+            direction: action.Direction
+        })
     }
 }

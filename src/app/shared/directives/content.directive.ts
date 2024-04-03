@@ -1,8 +1,11 @@
-import { Directive, ElementRef, HostListener, Input } from '@angular/core';
-import { Store } from '@ngxs/store';
+import { Directive, ElementRef, HostListener, Input, OnInit } from '@angular/core';
+import { Select, Store } from '@ngxs/store';
 
 import { Rotation } from '../interfaces/hexagon';
-import { InitPageTotals, UpdatePageCounter } from '../../store/page/page.action';
+import { InitPageTotals, UpdatePageCounter } from '../../store/panel/panel.action';
+import { Observable } from 'rxjs';
+import { PageTurnerModel } from '../../store/panel/panel.model';
+import { PageTurner } from '../../store/panel/panel.state';
 
 @Directive({
   selector: '[appSwipe]',
@@ -10,9 +13,10 @@ import { InitPageTotals, UpdatePageCounter } from '../../store/page/page.action'
   standalone: true
 })
 
-export class ContentDirective {
+export class ContentDirective implements OnInit {
 
   @Input() nPanel!: string;
+  @Select(PageTurner) direction$!: Observable<PageTurnerModel>;
 
   lastX!: number;
   rotation: Rotation = { degrees: 0 };
@@ -27,11 +31,19 @@ export class ContentDirective {
   finalAnimRotation!: number;
   direction!: String;
   finalAnimDirection!: String;
-  blockInteraction: boolean = false;
+  blockWheelAndClick: boolean = false;
 
   counter: number = 0;
 
   constructor(private panel: ElementRef, private store: Store) { }
+
+  ngOnInit() {
+    this.direction$.subscribe(newDirection => {
+      if (!this.blockWheelAndClick) {
+        this.turnPage(newDirection.direction.direction);
+      }
+    });
+  }
 
   ngAfterViewInit() {
 
@@ -45,28 +57,17 @@ export class ContentDirective {
 
     const payload = { panelNumber: Number(this.nPanel), totalPages: this.nPages }
     this.store.dispatch(new InitPageTotals(payload));
-
   }
 
   @HostListener('wheel', ['$event']) wheel(event: WheelEvent) {
-
-    if (!this.blockInteraction) {
+    if (!this.blockWheelAndClick) {
       if (event.deltaY > 0) {
-        if (this.rotation.degrees > this.maxRotation) {
-          this.blockInteraction = true;
-          this.direction = "left"
-          this.finalAnimRotation = this.rotation.degrees - 180;
-          this.finishFlipToCalculatedPage();
-        }
+        this.turnPage("left");
       } else {
-        if (this.rotation.degrees < 0) {
-          this.blockInteraction = true;
-          this.direction = "right"
-          this.finalAnimRotation = this.rotation.degrees + 180;
-          this.finishFlipToCalculatedPage();
-        }
+        this.turnPage("right");
       }
     }
+
   }
 
   @HostListener('touchstart', ['$event']) touchstart(event: TouchEvent) {
@@ -120,6 +121,23 @@ export class ContentDirective {
 
   }
 
+  turnPage(direction: string) {
+    if (direction === "left") {
+      if (this.rotation.degrees > this.maxRotation) {
+        this.blockWheelAndClick = true;
+        this.direction = "left"
+        this.finalAnimRotation = this.rotation.degrees - 180;
+        this.finishFlipToCalculatedPage();
+      }
+    } else {
+      if (this.rotation.degrees < 0) {
+        this.blockWheelAndClick = true;
+        this.direction = "right"
+        this.finalAnimRotation = this.rotation.degrees + 180;
+        this.finishFlipToCalculatedPage();
+      }
+    }
+  }
 
   finishFlipToCalculatedPage() {
 
@@ -156,13 +174,13 @@ export class ContentDirective {
       if (this.rotation.degrees <= this.finalAnimRotation) {
         clearInterval(this.endInterval);
         this.rotation.degrees = this.finalAnimRotation;
-        this.blockInteraction = false;
+        this.blockWheelAndClick = false;
       }
     } else {
       if (this.rotation.degrees >= this.finalAnimRotation) {
         clearInterval(this.endInterval);
         this.rotation.degrees = this.finalAnimRotation;
-        this.blockInteraction = false;
+        this.blockWheelAndClick = false;
       }
     }
   }
