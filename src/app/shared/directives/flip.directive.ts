@@ -42,18 +42,20 @@ export class ContentDirective implements OnInit {
   constructor(private panel: ElementRef, private store: Store) { }
 
   ngOnInit() {
+
     this.activePanelNumber$.subscribe(newAPN => {
       this.activePanelNumber = newAPN.activePanelNumber.apn
     });
+
     this.direction$.subscribe(newDirection => {
       if (!this.blockWheelAndClick) {
         if(this.activePanelNumber === 0) this.activePanelNumber = 6;
         if(this.activePanelNumber === Number(this.nPanel)) {
           this.turnPage(newDirection.direction.direction);
         }
-
       }
     });
+
   }
 
   ngAfterViewInit() {
@@ -68,28 +70,27 @@ export class ContentDirective implements OnInit {
 
     const payload = { panelNumber: Number(this.nPanel), totalPages: this.nPages }
     this.store.dispatch(new InitPageTotals(payload));
+
   }
 
   @HostListener('wheel', ['$event']) wheel(event: WheelEvent) {
     if (!this.blockWheelAndClick) {
-      if (event.deltaY > 0) {
-        this.turnPage("left");
-      } else {
-        this.turnPage("right");
-      }
+      // if(Number(this.nPanel) === this.activePanelNumber) {
+        if (event.deltaY > 0) {
+          this.turnPage("left");
+        } else {
+          this.turnPage("right");
+        }
+      // }
     }
-
   }
 
   @HostListener('touchstart', ['$event']) touchstart(event: TouchEvent) {
-
     this.lastX = this.touchStartX = event.changedTouches[0].clientX;
     this.touchStartTime = event.timeStamp;
-
   }
 
   @HostListener('touchmove', ['$event']) touchmove(event: TouchEvent) {
-
     // Detect movement of finger since last event
     const diffX = this.lastX - event.targetTouches[0].clientX;
     this.lastX = event.targetTouches[0].clientX;
@@ -108,13 +109,10 @@ export class ContentDirective implements OnInit {
         }
       }
     }
-
     this.managePanelDisplay();
-
   }
 
   @HostListener('touchend', ['$event']) touchend(event: TouchEvent) {
-
     this.touchEndX = event.changedTouches[0].clientX;
     this.touchEndTime = event.timeStamp;
 
@@ -129,7 +127,6 @@ export class ContentDirective implements OnInit {
     // Calculate the final degrees that will be flipped to
     this.finalAnimRotation = Math.round(this.rotation.degrees / 180) * 180;
     this.finishFlipToCalculatedPage();
-
   }
 
   turnPage(direction: string) {
@@ -164,7 +161,6 @@ export class ContentDirective implements OnInit {
     this.endInterval = setInterval(() => {
       this.finishFlip();
     }, 5);
-
   }
 
   finishFlip() {
@@ -226,6 +222,7 @@ export class ContentDirective implements OnInit {
 
     // This patch forces the page number to 2 if the rotation is in first half turn
     // This patch forces the page number to nPages if the rotation is in last half turn
+    // This ensures that the arrows update at the halfway point of the first and last flip
     let nPage = this.count + 1;
     if (this.rotation.degrees < -90 && this.rotation.degrees > -180) {
       nPage = 2;
