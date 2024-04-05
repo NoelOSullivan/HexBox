@@ -49,8 +49,8 @@ export class ContentDirective implements OnInit {
 
     this.direction$.subscribe(newDirection => {
       if (!this.blockWheelAndClick) {
-        if(this.activePanelNumber === 0) this.activePanelNumber = 6;
-        if(this.activePanelNumber === Number(this.nPanel)) {
+        if (this.activePanelNumber === 0) this.activePanelNumber = 6;
+        if (this.activePanelNumber === Number(this.nPanel)) {
           this.turnPage(newDirection.direction.direction);
         }
       }
@@ -75,58 +75,64 @@ export class ContentDirective implements OnInit {
 
   @HostListener('wheel', ['$event']) wheel(event: WheelEvent) {
     if (!this.blockWheelAndClick) {
-      // if(Number(this.nPanel) === this.activePanelNumber) {
+      if (Number(this.nPanel) === this.activePanelNumber) {
         if (event.deltaY > 0) {
           this.turnPage("left");
         } else {
           this.turnPage("right");
         }
-      // }
+      }
     }
   }
 
   @HostListener('touchstart', ['$event']) touchstart(event: TouchEvent) {
-    this.lastX = this.touchStartX = event.changedTouches[0].clientX;
-    this.touchStartTime = event.timeStamp;
+    if (Number(this.nPanel) === this.activePanelNumber) {
+      this.lastX = this.touchStartX = event.changedTouches[0].clientX;
+      this.touchStartTime = event.timeStamp;
+    }
   }
 
   @HostListener('touchmove', ['$event']) touchmove(event: TouchEvent) {
-    // Detect movement of finger since last event
-    const diffX = this.lastX - event.targetTouches[0].clientX;
-    this.lastX = event.targetTouches[0].clientX;
+    if (Number(this.nPanel) === this.activePanelNumber) {
+      // Detect movement of finger since last event
+      const diffX = this.lastX - event.targetTouches[0].clientX;
+      this.lastX = event.targetTouches[0].clientX;
 
-    // If swiping right calculate new rotation if not yet minimum value (0)
-    // TO DO : 3 is arbitary. Maybe find a rule.
-    if (diffX < 0) {
-      if (this.rotation.degrees < 0) {
-        this.rotation.degrees -= diffX * 3;
-      }
-    } else {
-      // If swiping left calculate new rotation if not yet maximum value (this.maxRotation)
-      if (diffX > 0) {
-        if (this.rotation.degrees > this.maxRotation) {
+      // If swiping right calculate new rotation if not yet minimum value (0)
+      // TO DO : 3 is arbitary. Maybe find a rule.
+      if (diffX < 0) {
+        if (this.rotation.degrees < 0) {
           this.rotation.degrees -= diffX * 3;
         }
+      } else {
+        // If swiping left calculate new rotation if not yet maximum value (this.maxRotation)
+        if (diffX > 0) {
+          if (this.rotation.degrees > this.maxRotation) {
+            this.rotation.degrees -= diffX * 3;
+          }
+        }
       }
+      this.managePanelDisplay();
     }
-    this.managePanelDisplay();
   }
 
   @HostListener('touchend', ['$event']) touchend(event: TouchEvent) {
-    this.touchEndX = event.changedTouches[0].clientX;
-    this.touchEndTime = event.timeStamp;
+    if (Number(this.nPanel) === this.activePanelNumber) {
+      this.touchEndX = event.changedTouches[0].clientX;
+      this.touchEndTime = event.timeStamp;
 
-    if (this.touchEndX < this.touchStartX) {
-      this.direction = "left"
-    } else {
-      if (this.touchEndX > this.touchStartX) {
-        this.direction = "right"
+      if (this.touchEndX < this.touchStartX) {
+        this.direction = "left"
+      } else {
+        if (this.touchEndX > this.touchStartX) {
+          this.direction = "right"
+        }
       }
-    }
 
-    // Calculate the final degrees that will be flipped to
-    this.finalAnimRotation = Math.round(this.rotation.degrees / 180) * 180;
-    this.finishFlipToCalculatedPage();
+      // Calculate the final degrees that will be flipped to
+      this.finalAnimRotation = Math.round(this.rotation.degrees / 180) * 180;
+      this.finishFlipToCalculatedPage();
+    }
   }
 
   turnPage(direction: string) {
@@ -205,7 +211,6 @@ export class ContentDirective implements OnInit {
 
     if (this.count !== Math.floor(this.rotation.degrees / -180)) {
       this.count = Math.floor(this.rotation.degrees / -180);
-      // console.log("count", this.count);
       // Turn off display of all pages
       for (let i = 0; i < this.nPages; i++) {
         this.panel.nativeElement.children[i].style.display = 'none';

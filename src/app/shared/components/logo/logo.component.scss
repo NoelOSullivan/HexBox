@@ -27,13 +27,11 @@
 :host ::ng-deep .centre-hex-logo {
     position: absolute;
     transform: rotateY(0deg);
-    // font-family: 'Montserrat', sans-serif;
     font-family: "Miriam Libre", sans-serif;
     font-size: 32px;
     line-height: 50px;
     text-shadow: none;
 
-    //@media only screen and (max-width: 500px) {  
     height: 100%;
     width: 100%;
     left: 0px;

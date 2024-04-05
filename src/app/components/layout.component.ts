@@ -34,15 +34,17 @@ export class LayoutComponent {
     this.screenHeight = window.innerHeight;
 
     if(this.screenWidth < this.screenHeight) {
-      this.contentLayout.nativeElement.style["height"] = this.screenHeight / 4 * 3 + 'px';
+      this.contentLayout.nativeElement.style["height"] = this.screenHeight - 180 + 'px';
       this.contentLayout.nativeElement.style["width"] = '100%';
       this.contentLayout.nativeElement.style["top"] = '0';
       this.contentLayout.nativeElement.style["left"] = '0';
+      // this.contentLayout.nativeElement.style["background"] = 'yellow';
   
-      this.menuLayout.nativeElement.style["height"] = this.screenHeight / 4 + 'px';
+      this.menuLayout.nativeElement.style["height"] = '180px';
       this.menuLayout.nativeElement.style["width"] = '100%';
       this.menuLayout.nativeElement.style["bottom"] = '0';
       this.menuLayout.nativeElement.style["left"] = '0';
+      // this.menuLayout.nativeElement.style["background"] = 'green';
     } else {
       this.contentLayout.nativeElement.style["width"] = this.screenWidth / 4 * 3 + 'px';
       this.contentLayout.nativeElement.style["height"] = '100%';
@@ -54,12 +56,10 @@ export class LayoutComponent {
       this.menuLayout.nativeElement.style["top"] = '0';
       this.menuLayout.nativeElement.style["right"] = '0';
     }
-
-    
   }
 
   updateLayout() {
-    this.contentLayout.nativeElement.style["height"] = this.screenHeight / 4 * 3 + 'px';
-    this.menuLayout.nativeElement.style["height"] = this.screenHeight / 4 + 'px';
+    this.contentLayout.nativeElement.style["height"] = this.screenHeight - 180 + 'px';
+    this.menuLayout.nativeElement.style["height"] = '180px';
   }
 }
