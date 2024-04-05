@@ -45,11 +45,12 @@ export class ContentDirective implements OnInit {
 
     this.activePanelNumber$.subscribe(newAPN => {
       this.activePanelNumber = newAPN.activePanelNumber.apn
+      if (this.activePanelNumber === 0) this.activePanelNumber = 6;
     });
 
     this.direction$.subscribe(newDirection => {
       if (!this.blockWheelAndClick) {
-        if (this.activePanelNumber === 0) this.activePanelNumber = 6;
+        // if (this.activePanelNumber === 0) this.activePanelNumber = 6;
         if (this.activePanelNumber === Number(this.nPanel)) {
           this.turnPage(newDirection.direction.direction);
         }
