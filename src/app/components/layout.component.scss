@@ -1,6 +1,6 @@
 .fullscreen-layout{
     height: 100svh;
-    min-height: 550px;
+    // min-height: 550px;
     width:100svw;
     background-size:cover;
     background-image:url('../../assets/images/background.jpg');
@@ -18,7 +18,6 @@
     align-items: center;
     box-sizing: border-box;
     padding-bottom: 54px;
-    max-height: 180px;
     overflow: hidden;
 }
   
