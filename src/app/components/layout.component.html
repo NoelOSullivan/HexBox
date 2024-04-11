@@ -1,14 +1,24 @@
 <div class="fullscreen-layout">
     <div #contentLayout class="content-layout">
-        <app-arrow></app-arrow>
-        <app-content [nContainer]=1 [startRotation]=0></app-content>
-        <app-content [nContainer]=2 [startRotation]=60></app-content>
-        <app-content [nContainer]=3 [startRotation]=120></app-content>
-        <app-content [nContainer]=4 [startRotation]=180></app-content>
-        <app-content [nContainer]=5 [startRotation]=240></app-content>
-        <app-content [nContainer]=6 [startRotation]=300></app-content>
+        <!-- <span *ngIf="orientation === 'PORTRAIT'"> -->
+        <span [ngClass]="{'hideForLandscape':!viewHeightOK}">
+            <app-arrow></app-arrow>
+            <app-content [nContainer]=1 [startRotation]=0></app-content>
+            <app-content [nContainer]=2 [startRotation]=60></app-content>
+            <app-content [nContainer]=3 [startRotation]=120></app-content>
+            <app-content [nContainer]=4 [startRotation]=180></app-content>
+            <app-content [nContainer]=5 [startRotation]=240></app-content>
+            <app-content [nContainer]=6 [startRotation]=300></app-content>
+        </span>
     </div>
     <div #menuLayout class="menu-layout">
-        <app-menu></app-menu>
+        <!-- <span *ngIf="orientation === 'PORTRAIT'"> -->
+        <span [ngClass]="{'hideForLandscape':!viewHeightOK}">
+            <app-menu></app-menu>
+        </span>
+    </div>
+    <!-- <div class="orientation-message" *ngIf="orientation === 'LANDSCAPE'"> -->
+    <div class="orientation-message" [ngClass]="{'hideForPortrait':viewHeightOK}">
+        Please turn your phone to portrait
     </div>
 </div>

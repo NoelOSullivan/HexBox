@@ -37,6 +37,8 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
 
+    console.log("111111111111111111111111");
+
     this.lastSelected = 2;
 
     this.getMenus();
@@ -60,6 +62,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    console.log("222222222222222222222222");
     // Remember that 1 to 6 were inverted for the start animation. Order is 0,6,5,4,3,2,1
     this.hexagons = this.menuRotate.nativeElement.getElementsByClassName('hexagon-content-holder');
   }
@@ -99,6 +102,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
   }
 
   manageMenu(hexIndex: number | null | undefined) {
+    console.log("5555555555555555555");
     if ((hexIndex !== 0) && (hexIndex !== null) && (hexIndex !== undefined)) {
       if (this.selected !== null) {
         this.lastSelected = this.selected;
@@ -136,12 +140,14 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
 
   rotateMenu() {
     if (this.menuRotate) {
+      console.log("33333333333333333333");
       this.menuRotate.nativeElement.style.transform = "rotate(" + this.menuRotation + "deg)"
       this.hexagonContentRotate();
     }
   }
 
   hexagonContentRotate() {
+    console.log("444444444444444");
     // Keeps the contents of hexagons horizontal, as the menu turns.
     // Remember that 1 to 6 were inverted for the start animation. Order is 0,6,5,4,3,2,1
     this.hexagons[0].style.transform = "rotate(" + (this.menuRotation * -1) + "deg)";
