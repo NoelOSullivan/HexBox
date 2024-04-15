@@ -11,6 +11,8 @@
 .content-layout {
     position: absolute;
     overflow: hidden;
+    border-bottom: 5px solid rgba($color: #FFFFFF, $alpha: 0.5);
+    box-sizing: border-box;
     // background: lightpink;
 }
 
@@ -21,6 +23,7 @@
     box-sizing: border-box;
     padding-bottom: 54px;
     overflow: hidden;
+    background-color: black;
 }
 
 .hideForLandscape {

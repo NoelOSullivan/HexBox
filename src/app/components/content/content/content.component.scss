@@ -5,4 +5,5 @@
     height: calc(100% - 40px);
     box-sizing: border-box;
     transform-origin: 50% 120vh;
+    pointer-events: none;
 }
