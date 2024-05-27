@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Observable } from 'rxjs';
 import { NgIf } from '@angular/common';
 import { Container1 } from '../main-sections/container1/container1/container1.component';
 import { Container4 } from '../main-sections/container4/container4/container4.component';
@@ -6,9 +7,9 @@ import { Container2 } from '../main-sections/container2/container2/container2.co
 import { Container3 } from '../main-sections/container3/container3/container3.component';
 import { Container5 } from '../main-sections/container5/container5/container5.component';
 import { Container6 } from '../main-sections/container6/container6/container6.component';
-import { Observable } from 'rxjs';
+import { ActivePanelNumber } from '../../../store/hexagon/hexagon.state';
 import { RotationToAdd } from '../../../store/hexagon/hexagon.state';
-import { RotationToAddModel } from '../../../store/hexagon/hexagon.model';
+import { ActivePanelNumberModel, RotationToAddModel } from '../../../store/hexagon/hexagon.model';
 import { Select } from '@ngxs/store';
 
 @Component({
@@ -26,10 +27,13 @@ export class ContentComponent implements OnInit {
   @Input() startRotation!: number;
   @Input() nContainer!: number;
 
+  @Select(RotationToAdd) rotation$!: Observable<RotationToAddModel>;
+  // @Select(ActivePanelNumber) activePanelNumber$!: Observable<ActivePanelNumberModel>;
+
   actualRotation: number = 0;
   transitionSet: boolean = false;
 
-  @Select(RotationToAdd) rotation$!: Observable<RotationToAddModel>;
+  // activePanelNumber!: number;
 
   constructor() { }
 
@@ -46,6 +50,12 @@ export class ContentComponent implements OnInit {
       this.rotateMe(Number(newRot.rotationToAdd.degrees));
 
     });
+
+    // this.activePanelNumber$.subscribe(newAPN => {
+    //   this.activePanelNumber = newAPN.activePanelNumber.apn;
+    //   console.log("CONTNT COMPONENT", this.activePanelNumber);
+      
+    // });
   }
 
   rotateMe(degrees: number) {

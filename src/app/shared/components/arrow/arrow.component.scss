@@ -19,45 +19,45 @@
 .arrow-common {
     position: absolute;
     width: 80px;
-    height: 120px;
+    height: 60px;
     opacity: 0.5;
     filter: none;
     cursor: default;
 }
 
 .arrow-back-right {
-    bottom: 0px;
+    bottom: 5px;
     right: -10px;
 }
 
 .arrow-front-right {
     z-index: 1;
-    bottom: 0px;
+    bottom: 5px;
     right: -10px;
 }
 
 .arrow-back-left {
     transform: scaleX(-1);
-    bottom: 0px;
+    bottom: 5px;
     left: -10px;
 }
 
 .arrow-front-left {
     transform: scaleX(-1);
     z-index: 1;
-    bottom: 0px;
+    bottom: 5px;
     left: -10px;
 }
 
 .arrow-image {
     width: 80px;
-    height: 120px;
+    height: 60px;
 }
 
 .arrow-active {
     opacity: 1;
     cursor: pointer;
-    filter: drop-shadow(-4px -2px 0px white);
+    filter: drop-shadow(-3px -1px 0px white);
 }
 
 .back-corrective {

@@ -6,3 +6,8 @@ export interface PageCounters {
 export interface Direction {
     direction: string;
 }
+
+export interface DirectAccess {
+    hexNum: number | undefined;
+    nPage: number | undefined;
+}

@@ -1,11 +1,14 @@
 import { Component, OnInit, ViewChild, ViewChildren, QueryList, ElementRef, AfterViewInit, signal, Signal } from '@angular/core';
 import { Router, NavigationStart, Event as NavigationEvent } from '@angular/router';
-import { Store } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
 import { Location, NgClass, NgIf } from '@angular/common';
 import { DataService } from '../../../shared/services/data.service';
 import { HexagonComponent } from '../hexagon/hexagon.component';
 import { Rotation, ActivePanelNumber } from '../../../shared/interfaces/hexagon';
 import { ChangePanelNumber, ChangeRotation } from '../../../store/hexagon/hexagon.actions';
+import { DirectAccess } from '../../../store/panel/panel.state';
+import { Observable } from 'rxjs';
+import { DirectAccessModel } from '../../../store/panel/panel.model';
 
 @Component({
   selector: 'hexagon-group',
@@ -17,6 +20,8 @@ import { ChangePanelNumber, ChangeRotation } from '../../../store/hexagon/hexago
 })
 
 export class HexagonGroupComponent implements OnInit, AfterViewInit {
+
+  @Select(DirectAccess) directAccess$!: Observable<DirectAccessModel>;
 
   @ViewChild('menuRotate')
   menuRotate!: ElementRef;
@@ -36,8 +41,6 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
   private menuAnimationFinished: boolean = false;
 
   ngOnInit() {
-
-    console.log("111111111111111111111111");
 
     this.lastSelected = 2;
 
@@ -59,10 +62,15 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
       this.changeMenu();
     }, 5000);
 
+    this.directAccess$.subscribe(newDA => {
+      if(newDA.directAccess.hexNum) {
+        this.manageMenu(newDA.directAccess.hexNum + 1);
+      }
+    });
+
   }
 
   ngAfterViewInit() {
-    console.log("222222222222222222222222");
     // Remember that 1 to 6 were inverted for the start animation. Order is 0,6,5,4,3,2,1
     this.hexagons = this.menuRotate.nativeElement.getElementsByClassName('hexagon-content-holder');
   }
@@ -102,7 +110,6 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
   }
 
   manageMenu(hexIndex: number | null | undefined) {
-    console.log("5555555555555555555");
     if ((hexIndex !== 0) && (hexIndex !== null) && (hexIndex !== undefined)) {
       if (this.selected !== null) {
         this.lastSelected = this.selected;
@@ -140,14 +147,12 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
 
   rotateMenu() {
     if (this.menuRotate) {
-      console.log("33333333333333333333");
       this.menuRotate.nativeElement.style.transform = "rotate(" + this.menuRotation + "deg)"
       this.hexagonContentRotate();
     }
   }
 
   hexagonContentRotate() {
-    console.log("444444444444444");
     // Keeps the contents of hexagons horizontal, as the menu turns.
     // Remember that 1 to 6 were inverted for the start animation. Order is 0,6,5,4,3,2,1
     this.hexagons[0].style.transform = "rotate(" + (this.menuRotation * -1) + "deg)";

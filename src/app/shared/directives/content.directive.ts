@@ -1,28 +1,33 @@
-import { Directive, ElementRef, HostListener, Input, OnInit } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 
 import { Rotation } from '../interfaces/hexagon';
 import { InitPageTotals, UpdatePageCounter } from '../../store/panel/panel.action';
 import { Observable } from 'rxjs';
-import { PageTurnerModel } from '../../store/panel/panel.model';
-import { PageTurner } from '../../store/panel/panel.state';
+import { DirectAccessModel, PageTurnerModel } from '../../store/panel/panel.model';
+import { DirectAccess, PageTurner } from '../../store/panel/panel.state';
 import { ActivePanelNumberModel } from '../../store/hexagon/hexagon.model';
 import { ActivePanelNumber } from '../../store/hexagon/hexagon.state';
 
 @Directive({
-  selector: '[flipControl]',
-  exportAs: 'FlipControl',
+  selector: '[contentControl]',
+  exportAs: 'ContentControl',
   standalone: true
 })
 
 export class ContentDirective implements OnInit {
 
+  @Select(DirectAccess) directAccess$!: Observable<DirectAccessModel>;
+
   @Input() nPanel!: string;
+  @Output() changeActivePanel = new EventEmitter<number>();
+  @Output() changePageNum = new EventEmitter<number>();
   @Select(PageTurner) direction$!: Observable<PageTurnerModel>;
   @Select(ActivePanelNumber) activePanelNumber$!: Observable<ActivePanelNumberModel>;
 
   lastX!: number;
   rotation: Rotation = { degrees: 0 };
+  directRotation!: number;
   nPages!: number;
   count: number = 0;
   maxRotation!: number;
@@ -31,13 +36,14 @@ export class ContentDirective implements OnInit {
   touchStartX!: number;
   touchEndX!: number;
   endInterval: any;
+  directAccessInterval: any;
   finalAnimRotation!: number;
   direction!: String;
   finalAnimDirection!: String;
   blockWheelAndClick: boolean = false;
   activePanelNumber!: number;
 
-  counter: number = 0;
+  // counter: number = 0;
 
   constructor(private panel: ElementRef, private store: Store) { }
 
@@ -46,6 +52,7 @@ export class ContentDirective implements OnInit {
     this.activePanelNumber$.subscribe(newAPN => {
       this.activePanelNumber = newAPN.activePanelNumber.apn
       if (this.activePanelNumber === 0) this.activePanelNumber = 6;
+      this.changeActivePanel.emit(this.activePanelNumber);
     });
 
     this.direction$.subscribe(newDirection => {
@@ -53,6 +60,16 @@ export class ContentDirective implements OnInit {
         // if (this.activePanelNumber === 0) this.activePanelNumber = 6;
         if (this.activePanelNumber === Number(this.nPanel)) {
           this.turnPage(newDirection.direction.direction);
+        }
+      }
+    });
+
+    this.directAccess$.subscribe(newDA => {
+      if (newDA.directAccess.nPage) {
+        if (Number(this.nPanel) === newDA.directAccess.hexNum) {
+          console.log("AT", this.count);
+          console.log("GO TO PAGE", newDA.directAccess.nPage);
+          this.directAccess(newDA.directAccess.nPage - 1);
         }
       }
     });
@@ -136,6 +153,26 @@ export class ContentDirective implements OnInit {
     }
   }
 
+  directAccess(page: number) {
+    this.directRotation = (page) * -180;
+    const diff = page - this.count;
+    this.directAccessInterval = setInterval(() => {
+      this.rotation.degrees -= diff;
+      if (diff > 0) {
+        if (this.rotation.degrees <= this.directRotation) {
+          this.rotation.degrees = this.directRotation
+          clearInterval(this.directAccessInterval);
+        }
+      } else {
+        if (this.rotation.degrees >= this.directRotation) {
+          this.rotation.degrees = this.directRotation
+          clearInterval(this.directAccessInterval);
+        }
+      }
+      this.managePanelDisplay();
+    }, 1);
+  }
+
   turnPage(direction: string) {
     if (direction === "left") {
       if (this.rotation.degrees > this.maxRotation) {
@@ -168,6 +205,7 @@ export class ContentDirective implements OnInit {
     this.endInterval = setInterval(() => {
       this.finishFlip();
     }, 5);
+
   }
 
   finishFlip() {
@@ -189,12 +227,14 @@ export class ContentDirective implements OnInit {
         clearInterval(this.endInterval);
         this.rotation.degrees = this.finalAnimRotation;
         this.blockWheelAndClick = false;
+        this.changePageNum.emit(this.count);
       }
     } else {
       if (this.rotation.degrees >= this.finalAnimRotation) {
         clearInterval(this.endInterval);
         this.rotation.degrees = this.finalAnimRotation;
         this.blockWheelAndClick = false;
+        this.changePageNum.emit(this.count);
       }
     }
   }

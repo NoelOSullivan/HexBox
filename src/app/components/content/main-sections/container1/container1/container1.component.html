@@ -1,37 +1,61 @@
 <div class="container">
     <!-- <app-arrow></app-arrow> -->
-    <div #flipper flipControl nPanel="1" class="flipper">
-        <li class="common-side side1">
+    <div contentControl nPanel="1" class="flipper">
+        <li class="common-side">
             <app-logo></app-logo>
-            <h1>Web Development</h1>
             <div class="vertical-space-between-holder">
-                <h2 (click)="yikes()">- Web Apps -<br>- Web Sites -<br>- Training -</h2>
-                <h3>... and a little bit of witchcraft</h3>
-                <p class="para">25 years of experience<br>in digital communication</p>
+                Hello ! I'm Noel<br>
+                Freelance Web Developer<br>
+                At your service<br><br>
+                Need a website, or a web app ?<br>
+                Need training in HTML, CSS or Javascript ?
+                That's what I do.<br><br>
+                Always made-to-measure.<br>Sometimes unique.<br>Hopefully magic.  
+                <br>
+                To find out more ...
+                <p>SWIPE, WHEEL, OR CLICK</p>
             </div>
         </li>
-        <li class="common-side side2">
+        <li class="common-side">
             <app-logo></app-logo>
-            <h2>Web Magic.</h2>
+            <div class="vertical-space-between-holder">
+                <p>
+                    I have 25 years of experience in digital communication working in multiple sectors notably
+                    industry, education and entertainment.<br><br>
+                    Take a look at who I've worked for and what I did for them.
+                </p>
+                <br>
+                <app-direct-access [linkText]="'Who'" [hexNum]="2" [nPage]="1"></app-direct-access>
+            </div>
         </li>
-        <li class="common-side side1">
+        <li class="common-side">
+            <div class="vertical-space-between-holder">
+                <p>
+                    Web Apps can do lots of good stuff. Streamlining production, promoting products.
+                    Have a look at our offers.
+                </p>
+                <app-direct-access [linkText]="'Apps and Sites'" [hexNum]="1" [nPage]="4"></app-direct-access>
+                <p>
+                    I offer a range of B2B training packages in high-end front end development.
+                    All courses are based on real-life scenarios.
+                </p>
+                <app-direct-access [linkText]="'Cours'" [hexNum]="1" [nPage]="5"></app-direct-access>
+            </div>
+        </li>
+        <li class="common-side">
             <app-logo></app-logo>
-            <h2>Webtastic</h2>
+            <h2>APPS AND SITES</h2>
         </li>
-        <li class="common-side side2">
-            <app-logo></app-logo>
-            <h2>We put bells and whistles on it.</h2>
+        <li class="common-side">
+            <h2>COURS</h2>
         </li>
-        <li class="common-side side1">
-            <h2>We are the champions ...</h2>
-        </li>
-        <li class="common-side side2">
+        <li class="common-side">
             <h2>FFFFFFFFFFFFFFFFFFFFFFFFF</h2>
         </li>
-        <li class="common-side side1">
+        <li class="common-side">
             <h2>Top, Top, Top of the league</h2>
         </li>
-        <li class="common-side side2">
+        <li class="common-side">
             <h2>You'll never walk alone</h2>
         </li>
     </div>

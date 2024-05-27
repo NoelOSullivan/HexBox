@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ContentDirective } from '../../../../../shared/directives/flip.directive';
+import { ContentDirective } from '../../../../../shared/directives/content.directive';
 import { NgIf } from '@angular/common';
 
 @Component({

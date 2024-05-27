@@ -1,4 +1,4 @@
-import { Direction } from "../../shared/interfaces/panel";
+import { Direction, DirectAccess } from "../../shared/interfaces/panel";
 
 export class UpdatePageCounter {
     static readonly type= '[Change page info on content panel] UpdatePageCounter';
@@ -11,7 +11,12 @@ export class InitPageTotals {
 }
 
 export class TurnPage {
-    static readonly type= '[Turn page left or rigth] TurnPage';
+    static readonly type= '[Turn page left or right] TurnPage';
     constructor(public Direction: Direction){}
+}
+
+export class AccessPanelDirect {
+    static readonly type= '[Access a panel directly] Direct Access';
+    constructor(public DirectAccess: DirectAccess){}
 }
 

@@ -1,4 +1,4 @@
-import { PageCounters, Direction } from "../../shared/interfaces/panel";
+import { PageCounters, Direction, DirectAccess } from "../../shared/interfaces/panel";
 
 export class PageCounterModel {
     public pageCounters!: PageCounters;
@@ -6,4 +6,8 @@ export class PageCounterModel {
 
 export class PageTurnerModel {
     public direction!: Direction;
+}
+
+export class DirectAccessModel {
+    public directAccess!: DirectAccess;
 }

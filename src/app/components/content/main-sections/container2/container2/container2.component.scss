@@ -5,3 +5,34 @@
 .side2 {
     // background: silver;
 }
+
+.logo-holder {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.logo-holder-column {
+    padding: 5px;
+    box-sizing: border-box;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.logo {
+    position: relative;
+    width: 100%;
+}
+
+.image {
+    width: 100%;
+    object-fit: contain; 
+}
+
+.app-fill-container {
+    width: 100%;
+    height: 100%;
+}

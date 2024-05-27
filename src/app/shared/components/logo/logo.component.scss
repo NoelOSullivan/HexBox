@@ -2,7 +2,7 @@
 
 .hex-sign {
     position: relative;
-    width: 80px;
+    width: 50px;
 }
 
 .svg-hexagon-logo {
@@ -28,21 +28,20 @@
     position: absolute;
     transform: rotateY(0deg);
     font-family: "Miriam Libre", sans-serif;
-    font-size: 32px;
-    line-height: 50px;
+    font-size: 18px;
+    line-height: 25px;
     text-shadow: none;
 
     height: 100%;
     width: 100%;
     left: 0px;
-    line-height: 50px;
     overflow: hidden;
 
     .top-half-logo {
         position: absolute;
         padding-top: 0px;
         width: 100%;
-        height: 35px;
+        height: 22px;
         box-sizing: border-box;
         top: 0px;
         background: black;
@@ -52,7 +51,7 @@
     .bottom-half-logo {
         position: absolute;
         width: 100%;
-        top: 40px;
+        top: 24px;
         height: 40px;
         line-height: 14px;
         color: black;

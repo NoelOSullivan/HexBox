@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { State, Action, StateContext } from "@ngxs/store";
 
-import { PageCounterModel, PageTurnerModel } from './panel.model';
-import { UpdatePageCounter, InitPageTotals, TurnPage } from './panel.action';
+import { DirectAccessModel, PageCounterModel, PageTurnerModel } from './panel.model';
+import { UpdatePageCounter, InitPageTotals, TurnPage, AccessPanelDirect } from './panel.action';
+
+//----------
 
 @State<PageCounterModel>({
     name: 'pageCounters',
@@ -38,6 +40,8 @@ export class PageCounters {
     }
 }
 
+//----------
+
 @State<PageTurnerModel>({
     name: 'pageTurner',
     defaults: {
@@ -55,6 +59,30 @@ export class PageTurner {
         ctx.setState({
             ...state,
             direction: action.Direction
+        })
+    }
+}
+
+//----------
+
+@State<DirectAccessModel>({
+    name: 'directAccess',
+    defaults: {
+        directAccess: {
+            hexNum: 0,
+            nPage: 0
+        },
+    }
+})
+
+@Injectable()
+export class DirectAccess {
+    constructor() { }
+    @Action(AccessPanelDirect) accessPanelDirect(ctx: StateContext<DirectAccessModel>, action: AccessPanelDirect) {
+        const state = ctx.getState();
+        ctx.setState({
+            ...state,
+            directAccess: action.DirectAccess
         })
     }
 }

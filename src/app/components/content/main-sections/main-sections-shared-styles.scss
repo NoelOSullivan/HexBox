@@ -45,14 +45,25 @@ li:nth-child(even) {
 
 .vertical-space-between-holder {
     width: 100%;
+    margin-left: 40px;
+    margin-right: 40px;
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
     font-weight: 100;
+    overflow-y: scroll;
 }
 
 .para {
     font-weight: 100;
+}
+
+.seventy {
+    width: 70%;
+}
+
+header {
+    display: flex;
 }

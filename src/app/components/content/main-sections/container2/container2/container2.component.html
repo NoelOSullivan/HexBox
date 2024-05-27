@@ -1,18 +1,51 @@
 <div class="container">
-    <div #flipper flipControl nPanel="2" class="flipper">
-        <li class="common-side side1">
-            <h1>1</h1>
+    <div #flipper contentControl nPanel="2" (changeActivePanel)="changePanel($event)" (changePageNum)="changePageNum($event)" class="flipper">
+        <li class="common-side">
+            <div class="logo-holder">
+                <div class="logo-holder-column">
+                    <div class="logo">
+                        <img class="image" src="../../../../../../assets/images/logos/logo-dgac.png">
+                        <app-link-icon></app-link-icon>
+                    </div>
+                    <div class="logo">
+                        <img class="image" src="../../../../../../assets/images/logos/logo-airbus.jpg">
+                        <app-link-icon></app-link-icon>
+                    </div>
+                    <div class="logo">
+                        <img class="image" src="../../../../../../assets/images/logos/logo-moneypenny.jpg">
+                        <app-link-icon></app-link-icon>
+                    </div>
+                    <div class="logo">
+                        <img class="image" src="../../../../../../assets/images/logos/logo-milan.jpg">
+                        <app-link-icon></app-link-icon>
+                    </div>
+                </div>
+                <div class="logo-holder-column">
+                    <div class="logo">
+                        <img class="image" src="../../../../../../assets/images/logos/logo-ednat.jpg">
+                        <app-link-icon></app-link-icon>
+                    </div>
+                    <div class="logo">
+                        <img class="image" src="../../../../../../assets/images/logos/logo-gamesys.jpg">
+                        <app-link-icon></app-link-icon>
+                    </div>
+                    <div class="logo">
+                        <img class="image" src="../../../../../../assets/images/logos/logo-thesun.jpg">
+                        <app-link-icon></app-link-icon>
+                    </div>
+                </div>
+            </div>
         </li>
-        <li class="common-side side2">
-            <h1>2</h1>
+        <li class="common-side">
+            <app-airbus [pageNum]="pageNum" class="app-fill-container"></app-airbus>
         </li>
-        <li class="common-side side1">
+        <li class="common-side">
             <h1>3</h1>
         </li>
-        <li class="common-side side2">
+        <li class="common-side">
             <h1>4</h1>
         </li>
-        <li class="common-side side1">
+        <li class="common-side">
             <h1>5</h1>
         </li>
     </div>

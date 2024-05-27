@@ -310,6 +310,10 @@
   font-size: 12px;
 }
 
+:host ::ng-deep .one-char {
+  font-size: 18px;
+}
+
 :host ::ng-deep .centre-hex-1 {
   position: absolute;
   transform: rotateY(0deg);

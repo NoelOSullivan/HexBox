@@ -1,0 +1,11 @@
+.direct-access {
+  display: flex;
+  flex-direction: row;
+  width: 100px;
+  height: 32px;
+  background: rgba(255, 155, 0, 0.8);
+  border: 1px solid black;
+  border-radius: 20px;
+  align-items: center;
+  cursor: pointer;
+}
