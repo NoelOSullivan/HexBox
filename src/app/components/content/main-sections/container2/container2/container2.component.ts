@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
 import { ContentDirective } from '../../../../../shared/directives/content.directive';
 import { NgIf } from '@angular/common';
-import { LinkIconComponent } from '../../../../../shared/components/link-icon/link-icon.component';
+import { Store } from '@ngxs/store';
 
-import { AirbusComponent } from '../airbus/airbus.component';
+import { LinkIconComponent } from '../../../../../shared/components/link-icon/link-icon.component';
+import { AirbusComponent } from './airbus/airbus.component';
+import { DirectAccess } from '../../../../../shared/interfaces/panel';
+import { AccessPanelDirect } from '../../../../../store/panel/panel.action';
 
 @Component({
   selector: 'app-container2',
@@ -14,7 +17,7 @@ import { AirbusComponent } from '../airbus/airbus.component';
 })
 export class Container2  {
 
-  constructor() { }
+  constructor(private store: Store) { }
 
   activePanel!: number;
   pageNum!: number;
@@ -27,6 +30,12 @@ export class Container2  {
   changePageNum(pageNum: number) {
     console.log("changePageNum", pageNum);
     this.pageNum = pageNum;
+  }
+
+  goPage(pageNum: number) {
+    console.log("GO PAGE");
+    const directAccess: DirectAccess = {hexNum: this.activePanel, nPage: pageNum};
+    this.store.dispatch(new AccessPanelDirect(directAccess));
   }
 
 }

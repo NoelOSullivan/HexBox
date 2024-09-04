@@ -1,24 +1,30 @@
 <div class="container">
     <!-- <app-arrow></app-arrow> -->
+
     <div contentControl nPanel="1" class="flipper">
+        <!-- <div class="intro2" [ngClass]="{'shuntIntro2': onFinIntro===true}"> -->
         <li class="common-side">
             <app-logo></app-logo>
-            <div class="vertical-space-between-holder">
+            <div class="intro-text vertical-space-between-holder" [ngClass]="{'shuntIntro2': onFinIntro===true}">
                 Hello ! I'm Noel<br>
-                Freelance Web Developer<br>
-                At your service<br><br>
+                Web Developer<br><br>
                 Need a website, or a web app ?<br>
-                Need training in HTML, CSS or Javascript ?
-                That's what I do.<br><br>
-                Always made-to-measure.<br>Sometimes unique.<br>Hopefully magic.  
+                Need training in HTML, CSS or Javascript ?<br>
+                I can help<br><br>
+                Always made-to-measure.<br>Sometimes unique.<br>Hopefully magic.
                 <br>
-                To find out more ...
-                <p>SWIPE, WHEEL, OR CLICK</p>
+                To find out more ...<br><br>
+                SWIPE, WHEEL, OR CLICK
+                <app-swipe-icon></app-swipe-icon>
+            </div>
+            <div *ngIf="onIntro===true" class="video">
+                <video #video1 class="testimage" src="../../../../../../assets/videos/white1.mp4"></video>
+                <video #video3 class="testimage" [ngClass]="{'shuntIntro1': onFinIntro===true}" src="../../../../../../assets/videos/white3.mp4"></video>
             </div>
         </li>
         <li class="common-side">
             <app-logo></app-logo>
-            <div class="vertical-space-between-holder">
+            <div *ngIf="onIntro===false" class="vertical-space-between-holder">
                 <p>
                     I have 25 years of experience in digital communication working in multiple sectors notably
                     industry, education and entertainment.<br><br>
@@ -26,6 +32,9 @@
                 </p>
                 <br>
                 <app-direct-access [linkText]="'Who'" [hexNum]="2" [nPage]="1"></app-direct-access>
+            </div>
+            <div *ngIf="onIntro===true" class="video">
+                <video #video2 class="testimage" src="../../../../../../assets/videos/white2.mp4"></video>
             </div>
         </li>
         <li class="common-side">
@@ -58,5 +67,17 @@
         <li class="common-side">
             <h2>You'll never walk alone</h2>
         </li>
+        <!-- </div> -->
+        <!-- <div class="intro1" [ngClass]="{'shuntIntro1': onFinIntro===true}">
+            <li class="common-side side1 test1">
+                <video #video1 class="testimage" src="../../../../../../assets/videos/flip1.mp4"></video>
+                <video #video3 class="testimage" src="../../../../../../assets/videos/flip3.mp4"></video>
+            </li>
+            <li class="common-side side1 test1">
+                <video #video2 class="testimage" src="../../../../../../assets/videos/flip2.mp4"></video>
+            </li>
+        </div> -->
     </div>
+
+
 </div>

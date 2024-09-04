@@ -19,7 +19,6 @@ export class AirbusComponent {
   }
 
   ngOnChanges(changes: any) {
-    console.log("changes", changes.pageNum.currentValue);
     if(changes.pageNum.currentValue === 1) {
       this.anim = true;
     } else {

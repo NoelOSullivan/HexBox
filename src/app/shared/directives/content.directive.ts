@@ -67,8 +67,6 @@ export class ContentDirective implements OnInit {
     this.directAccess$.subscribe(newDA => {
       if (newDA.directAccess.nPage) {
         if (Number(this.nPanel) === newDA.directAccess.hexNum) {
-          console.log("AT", this.count);
-          console.log("GO TO PAGE", newDA.directAccess.nPage);
           this.directAccess(newDA.directAccess.nPage - 1);
         }
       }
@@ -82,7 +80,7 @@ export class ContentDirective implements OnInit {
     this.nPages = this.panel.nativeElement.children.length;
     this.maxRotation = (this.nPages - 1) * -180;
 
-    for (let i = 2; i < this.nPages; i++) {
+    for (let i = 1; i < this.nPages; i++) {
       this.panel.nativeElement.children[i].style.display = 'none';
     }
 
@@ -135,21 +133,25 @@ export class ContentDirective implements OnInit {
   }
 
   @HostListener('touchend', ['$event']) touchend(event: TouchEvent) {
+    console.log("TOUCH END");
     if (Number(this.nPanel) === this.activePanelNumber) {
       this.touchEndX = event.changedTouches[0].clientX;
       this.touchEndTime = event.timeStamp;
 
       if (this.touchEndX < this.touchStartX) {
         this.direction = "left"
+        // Calculate the final degrees that will be flipped to
+        this.finalAnimRotation = Math.round(this.rotation.degrees / 180) * 180;
+        this.finishFlipToCalculatedPage();
       } else {
         if (this.touchEndX > this.touchStartX) {
           this.direction = "right"
+          // Calculate the final degrees that will be flipped to
+          this.finalAnimRotation = Math.round(this.rotation.degrees / 180) * 180;
+          this.finishFlipToCalculatedPage();
         }
       }
 
-      // Calculate the final degrees that will be flipped to
-      this.finalAnimRotation = Math.round(this.rotation.degrees / 180) * 180;
-      this.finishFlipToCalculatedPage();
     }
   }
 
@@ -162,11 +164,13 @@ export class ContentDirective implements OnInit {
         if (this.rotation.degrees <= this.directRotation) {
           this.rotation.degrees = this.directRotation
           clearInterval(this.directAccessInterval);
+          this.changePageNum.emit(this.count + 1);
         }
       } else {
         if (this.rotation.degrees >= this.directRotation) {
           this.rotation.degrees = this.directRotation
           clearInterval(this.directAccessInterval);
+          this.changePageNum.emit(this.count - 1);
         }
       }
       this.managePanelDisplay();
@@ -227,6 +231,7 @@ export class ContentDirective implements OnInit {
         clearInterval(this.endInterval);
         this.rotation.degrees = this.finalAnimRotation;
         this.blockWheelAndClick = false;
+        console.log("LEFT", this.count);
         this.changePageNum.emit(this.count);
       }
     } else {
@@ -234,6 +239,7 @@ export class ContentDirective implements OnInit {
         clearInterval(this.endInterval);
         this.rotation.degrees = this.finalAnimRotation;
         this.blockWheelAndClick = false;
+        console.log("RIGHT", this.count);
         this.changePageNum.emit(this.count);
       }
     }
@@ -250,8 +256,10 @@ export class ContentDirective implements OnInit {
       }
     }
 
+
     if (this.count !== Math.floor(this.rotation.degrees / -180)) {
       this.count = Math.floor(this.rotation.degrees / -180);
+      console.log("----", this.count); 
       // Turn off display of all pages
       for (let i = 0; i < this.nPages; i++) {
         this.panel.nativeElement.children[i].style.display = 'none';
@@ -279,6 +287,8 @@ export class ContentDirective implements OnInit {
         nPage = this.count + 1;
       }
     }
+
+    console.log("NPAGE", nPage);
 
     // Update the pagecounter store array with the page number of the activePanel
     const payload = { panelNumber: Number(this.nPanel), pageNumber: nPage }

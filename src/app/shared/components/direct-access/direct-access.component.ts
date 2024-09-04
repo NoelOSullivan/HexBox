@@ -21,9 +21,6 @@ export class DirectAccessComponent {
   constructor(private store: Store) { }
 
   clickDirectAccess() {
-    console.log("hexNum", this.hexNum);
-    console.log("nPage", this.nPage);
-
     const directAccess: DirectAccess = {hexNum: this.hexNum, nPage: this.nPage};
     this.store.dispatch(new AccessPanelDirect(directAccess));
   }

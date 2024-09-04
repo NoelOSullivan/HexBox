@@ -1,13 +1,14 @@
 <div class="container">
     <div #flipper contentControl nPanel="2" (changeActivePanel)="changePanel($event)" (changePageNum)="changePageNum($event)" class="flipper">
         <li class="common-side">
+            <span class="title">Projects from the last ten years</span>
             <div class="logo-holder">
                 <div class="logo-holder-column">
                     <div class="logo">
                         <img class="image" src="../../../../../../assets/images/logos/logo-dgac.png">
                         <app-link-icon></app-link-icon>
                     </div>
-                    <div class="logo">
+                    <div (click)="goPage(2)" class="logo">
                         <img class="image" src="../../../../../../assets/images/logos/logo-airbus.jpg">
                         <app-link-icon></app-link-icon>
                     </div>

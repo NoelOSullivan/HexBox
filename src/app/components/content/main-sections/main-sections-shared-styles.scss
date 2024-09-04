@@ -17,6 +17,7 @@
     margin: auto;
     position: relative;
     pointer-events: all;
+    // overflow: hidden;
     // transition: transform 1s; 
 }
 
@@ -53,7 +54,7 @@ li:nth-child(even) {
     align-items: center;
     justify-content: space-around;
     font-weight: 100;
-    overflow-y: scroll;
+    // overflow-y: scroll;
 }
 
 .para {
