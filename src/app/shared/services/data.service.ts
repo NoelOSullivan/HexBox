@@ -8,10 +8,14 @@ export class DataService {
     private http = inject(HttpClient);
 
     getMenus() {
-      return this.http.get('../../../assets/menus.json');
+      return this.http.get('assets/menus.json');
     }
 
     getWhen() {
-        return this.http.get('../assets/when.json');
+        return this.http.get('assets/when.json');
+    }
+
+    getData(url:string) {
+      return this.http.get('assets/' + url);
     }
 }

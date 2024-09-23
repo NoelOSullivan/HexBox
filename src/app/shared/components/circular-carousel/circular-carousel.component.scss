@@ -1,0 +1,45 @@
+.carousel-root {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    // pointer-events: none;
+    // background: yellow;
+    perspective: 1000px;
+}
+
+.carousel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    // background: green;
+    transform-style: preserve-3d;
+    transform: translateZ(-288px);
+    // transition: transform 1s;
+    // pointer-events: none;
+}
+
+.carousel-item {
+    position: absolute;
+    display: flex;
+    width: 80%;
+    height: 25%;
+    background: rgba(255,255,255,0.2);
+    border: 1px solid black;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.svg-icon {
+    width: 100%;
+}
+
+li {
+    list-style: none;
+}

@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, ViewChildren, QueryList, ElementRef, AfterViewInit, signal, Signal } from '@angular/core';
-import { Router, NavigationStart, Event as NavigationEvent } from '@angular/router';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Router, Event as NavigationEvent } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { Location, NgClass, NgIf } from '@angular/common';
 import { DataService } from '../../../shared/services/data.service';
@@ -9,6 +9,8 @@ import { ChangePanelNumber, ChangeRotation } from '../../../store/hexagon/hexago
 import { DirectAccess } from '../../../store/panel/panel.state';
 import { Observable } from 'rxjs';
 import { DirectAccessModel } from '../../../store/panel/panel.model';
+import { AppStateModel } from 'app/store/general/general.model';
+import { AppState } from 'app/store/general/general.state';
 
 @Component({
   selector: 'hexagon-group',
@@ -22,14 +24,19 @@ import { DirectAccessModel } from '../../../store/panel/panel.model';
 export class HexagonGroupComponent implements OnInit, AfterViewInit {
 
   @Select(DirectAccess) directAccess$!: Observable<DirectAccessModel>;
+  @Select(AppState) appState$!: Observable<AppStateModel>;
 
   @ViewChild('menuRotate')
   menuRotate!: ElementRef;
+
+  appState!: AppStateModel;
+  onIntro!: boolean;
 
   constructor(private dataService: DataService, private router: Router, private store: Store) {
   }
 
   public menuContent: Array<any> = [];
+  public menuContent2!: string;
   public hexOpened: Array<any> = [];
   private allMenus!: any;
   public selected!: number;
@@ -37,37 +44,61 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
   private menuRotation: number = 0;
   public rolled: number | null = null;
   private hexagons: Array<any> = [];
-  private onIntro: boolean = false;
+  // private onIntro: boolean = false;
   private menuAnimationFinished: boolean = false;
 
   ngOnInit() {
 
-    this.lastSelected = 2;
+    this.lastSelected = 0;
 
     this.getMenus();
 
-    this.onIntro = true;
+    // this.onIntro = true;
 
     this.hexOpened = [false, false, false, false, false, false];
 
     this.menuAnimationFinished = false;
 
-    for (let i = 0; i < 6; i++) {
-      this.introHexagonWithDelay(i);
-    }
+    setTimeout(() => {
+      for (let i = 0; i < 6; i++) {
+        this.introHexagonWithDelay(i);
+      }
+    }, 1000);
+    
 
     // Calls change of menu after menu intro
     setTimeout(() => {
-      this.onIntro = false;
+      // this.onIntro = false;
       this.changeMenu();
     }, 5000);
 
     this.directAccess$.subscribe(newDA => {
-      if(newDA.directAccess.hexNum) {
+      if (newDA.directAccess.hexNum) {
         this.manageMenu(newDA.directAccess.hexNum + 1);
       }
     });
 
+    this.appState$.subscribe(newAppState => {
+      this.appState = newAppState;
+      this.onIntro = this.appState.appState.onIntro;
+
+      if(this.onIntro === false) {
+        this.manageMenu(2);
+      }
+      console.log("XXXXXXXXXXXXXXXXXX", this.appState);
+
+
+      console.log("this.menuContent", this.menuContent);
+      // console.log("this.content",this.content);
+      // debugger;
+      if (this.menuContent.length !== 0 && this.menuContent[2].indexOf("##") >= 0) {
+        // const contentText = this.menuContent[2].split("##");
+        // const twoPossibles = contentText[1].split("#");
+        // let newText = this.onIntro ? twoPossibles[0] : twoPossibles[1];
+        // this.menuContent[2] = contentText[0] + newText + contentText[2];
+        this.updateMenuHack();
+      }
+    });
   }
 
   ngAfterViewInit() {
@@ -84,6 +115,17 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
 
   setUpMenu(menu: number) {
     this.menuContent = this.allMenus["menu_" + menu];
+    this.menuContent2 = this.menuContent[2];
+    this.updateMenuHack();
+  }
+
+  updateMenuHack(): void {
+    if (this.menuContent.length !== 0 && this.menuContent[2].indexOf("##") >= 0) {
+      const contentText = this.menuContent[2].split("##");
+      const twoPossibles = contentText[1].split("#");
+      let newText = this.onIntro ? twoPossibles[0] : twoPossibles[1];
+      this.menuContent2 = contentText[0] + newText + contentText[2];
+    }
   }
 
   // Hexagons open/rotate one after the other
@@ -100,7 +142,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
       // After pause, open menu with new button content
       this.setUpMenu(1); // Change menu content. To do : refactor and clean up
       this.hexOpened = [true, true, true, true, true, true];
-      this.manageMenu(2);
+      // this.manageMenu(2);
     }, 1000);
   }
 
@@ -139,7 +181,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
       }
 
       this.selected = hexIndex;
-      const activePanelNumber: ActivePanelNumber = {apn:hexIndex - 1}
+      const activePanelNumber: ActivePanelNumber = { apn: hexIndex - 1 }
       this.store.dispatch(new ChangePanelNumber(activePanelNumber));
 
     }

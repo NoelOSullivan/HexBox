@@ -16,25 +16,19 @@ export class HexagonComponent implements OnInit {
 
   // 
 
-
   @Input() content: string | undefined;
   @Input() hexNum!: number;
   rolled: boolean | undefined;
   openState: boolean | undefined;
 
+  
   constructor() { }
 
   ngOnInit() {
-    // this.controlsService.currentOpenState.subscribe(state =>
-    //   {
-    //     console.log("this.openState",this.openState);
-    //     this.openState = state;
-    //   }
-    //   );
   }
 
   ngOnChanges(changes: any) {
-    // console.log("changes", changes.content.currentValue);
+
     if (changes.content.currentValue && changes.content.currentValue.indexOf("menuMagic") > -1) {
       setTimeout(() => {
         let menuMagic: HTMLElement = document.getElementsByClassName("menu-magic")[0] as HTMLElement;

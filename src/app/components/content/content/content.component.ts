@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
-import { NgIf } from '@angular/common';
+import { NgIf, NgClass } from '@angular/common';
 import { Container1 } from '../main-sections/container1/container1/container1.component';
 import { Container4 } from '../main-sections/container4/container4/container4.component';
 import { Container2 } from '../main-sections/container2/container2/container2.component';
@@ -8,15 +8,17 @@ import { Container3 } from '../main-sections/container3/container3/container3.co
 import { Container5 } from '../main-sections/container5/container5/container5.component';
 import { Container6 } from '../main-sections/container6/container6/container6.component';
 import { ActivePanelNumber } from '../../../store/hexagon/hexagon.state';
+import { PageCounters } from '../../../store/panel/panel.state';
 import { RotationToAdd } from '../../../store/hexagon/hexagon.state';
 import { ActivePanelNumberModel, RotationToAddModel } from '../../../store/hexagon/hexagon.model';
 import { Select } from '@ngxs/store';
+import { PageCounterModel } from '../../../store/panel/panel.model';
 
 @Component({
   selector: 'app-content',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.Default,
-  imports: [NgIf, Container1, Container2, Container3, Container4, Container5, Container6],
+  imports: [NgIf, NgClass, Container1, Container2, Container3, Container4, Container5, Container6],
   templateUrl: './content.component.html',
   styleUrls: ['./content.component.scss'],
 })
@@ -24,21 +26,58 @@ import { Select } from '@ngxs/store';
 export class ContentComponent implements OnInit {
 
   @ViewChild('contentHolder') contentHolder!: ElementRef;
+  @ViewChild('pageWidget') pageWidget!: ElementRef;
   @Input() startRotation!: number;
   @Input() nContainer!: number;
 
   @Select(RotationToAdd) rotation$!: Observable<RotationToAddModel>;
-  // @Select(ActivePanelNumber) activePanelNumber$!: Observable<ActivePanelNumberModel>;
+  @Select(ActivePanelNumber) activePanelNumber$!: Observable<ActivePanelNumberModel>;
+  @Select(PageCounters) pageCounters$!: Observable<PageCounterModel>
 
   actualRotation: number = 0;
   transitionSet: boolean = false;
 
-  // activePanelNumber!: number;
+  activePanelNumber!: number;
+  pageCounters!: PageCounterModel;
+
+  pageTotal: number = 0;
+  pageNumber: number = 0;
 
   constructor() { }
 
   ngOnInit() {
     this.actualRotation = this.startRotation;
+
+    this.pageCounters$.subscribe(newPC => {
+      this.pageCounters = newPC;
+      // console.log("pageCounters-----", this.pageCounters);
+      this.updateWidgetInfo();
+    });
+
+    this.activePanelNumber$.subscribe(newAPN => {
+      if (this.activePanelNumber !== newAPN.activePanelNumber.apn) {
+        this.activePanelNumber = newAPN.activePanelNumber.apn;
+        this.updateWidgetInfo();
+      }
+    });
+
+  }
+
+  updateWidgetInfo(): void {
+
+    // console.log("this.activePanelNumber", this.activePanelNumber);
+
+    let apn = this.activePanelNumber;
+    if (apn === 0) apn = 6;
+    this.pageTotal = this.pageCounters.pageCounters.totals[apn - 1];
+    this.pageNumber = this.pageCounters.pageCounters.counters[apn - 1];
+
+    // console.log("WIDGET", this.pageTotal, this.pageNumber);
+
+    if (this.pageWidget) {
+      // console.log(this.pageNumber / this.pageTotal * 100);
+      this.pageWidget.nativeElement.style.width = this.pageNumber / this.pageTotal * 100 + '%';
+    }
   }
 
   ngAfterViewInit(): void {
@@ -48,14 +87,15 @@ export class ContentComponent implements OnInit {
         this.contentHolder.nativeElement.style.transition = "transform 1s";
       }
       this.rotateMe(Number(newRot.rotationToAdd.degrees));
-
     });
 
-    // this.activePanelNumber$.subscribe(newAPN => {
-    //   this.activePanelNumber = newAPN.activePanelNumber.apn;
-    //   console.log("CONTNT COMPONENT", this.activePanelNumber);
-      
-    // });
+    // this.pageWidgetInfo.pageTotal = this.pageCounters.pageCounters.totals[this.activePanelNumber - 1]
+
+    // this.pageTotal = this.pageCounters.pageCounters.totals[this.activePanelNumber - 1];
+    // this.pageNumber = this.pageCounters.pageCounters.counters[this.activePanelNumber - 1];
+
+    // console.log("WIDGET", this.pageTotal, this.pageNumber);
+
   }
 
   rotateMe(degrees: number) {

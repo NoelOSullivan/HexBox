@@ -4,27 +4,36 @@
     <div contentControl nPanel="1" class="flipper">
         <!-- <div class="intro2" [ngClass]="{'shuntIntro2': onFinIntro===true}"> -->
         <li class="common-side">
-            <app-logo></app-logo>
-            <div class="intro-text vertical-space-between-holder" [ngClass]="{'shuntIntro2': onFinIntro===true}">
-                Hello ! I'm Noel<br>
-                Web Developer<br><br>
-                Need a website, or a web app ?<br>
-                Need training in HTML, CSS or Javascript ?<br>
-                I can help<br><br>
-                Always made-to-measure.<br>Sometimes unique.<br>Hopefully magic.
-                <br>
-                To find out more ...<br><br>
-                SWIPE, WHEEL, OR CLICK
+
+            <div *ngIf="onIntro===true" class="finger" [ngClass]="{'finger-anim': onFingerAnim===true}">
                 <app-swipe-icon></app-swipe-icon>
             </div>
-            <div *ngIf="onIntro===true" class="video">
-                <video #video1 class="testimage" src="../../../../../../assets/videos/white1.mp4"></video>
-                <video #video3 class="testimage" [ngClass]="{'shuntIntro1': onFinIntro===true}" src="../../../../../../assets/videos/white3.mp4"></video>
+
+            <div class="text-holder">
+                <div class="intro-anim vertical-space-between-holder"
+                    [ngClass]="{'shunt-intro-text': onFinIntro===true}">
+                    <div class="byline">Noel O'Sullivan</div>
+                    <div class=" intro-title">
+                        Creative Web<br>Development
+                    </div>
+                    <div>
+                        <div class="intro-text">Twenty years of digital media</div>
+                        <div class="intro-text">Aeronautic, institutional, entertainment</div>
+                        <div class="intro-text">Data visualisation, marketing, games </div>
+                    </div>
+                </div>
             </div>
+            <div class="video-holder">
+                <video #video1 class="video" src="assets/videos/white1.mp4"></video>
+                <video #video3 class="video" [ngClass]="{'shunt-intro-video': onFinIntro===true}"
+                    src="assets/videos/white3.mp4"></video>
+                <div *ngIf="onIntro===true && showSwipe===true" class="swipe-me">Swipe Me</div>
+            </div>
+            <app-logo></app-logo>
         </li>
         <li class="common-side">
             <app-logo></app-logo>
-            <div *ngIf="onIntro===false" class="vertical-space-between-holder">
+            <div *ngIf="onIntro===false" class="vertical-space-between-holder basic-text">
                 <p>
                     I have 25 years of experience in digital communication working in multiple sectors notably
                     industry, education and entertainment.<br><br>
@@ -33,8 +42,9 @@
                 <br>
                 <app-direct-access [linkText]="'Who'" [hexNum]="2" [nPage]="1"></app-direct-access>
             </div>
-            <div *ngIf="onIntro===true" class="video">
-                <video #video2 class="testimage" src="../../../../../../assets/videos/white2.mp4"></video>
+            <div *ngIf="onIntro===true" class="video-holder">
+                <video #video2 class="video" src="assets/videos/white2.mp4"></video>
+                <div *ngIf="onIntro===true" class="swipe-me-back">Swipe Me</div>
             </div>
         </li>
         <li class="common-side">

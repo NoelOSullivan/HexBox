@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { State, Action, StateContext } from "@ngxs/store";
 
-import { LanguageModel } from './general.model';
-import { ChangeLanguage } from './general.actions';
+import { LanguageModel, AppStateModel } from './general.model';
+import { ChangeLanguage, ChangeAppState } from './general.actions';
 
 @State<LanguageModel>({
     name: 'language',
@@ -16,11 +16,35 @@ import { ChangeLanguage } from './general.actions';
 @Injectable()
 export class Language{
     constructor(){}
-    @Action(ChangeLanguage) changeRotation(ctx: StateContext<LanguageModel>, action:ChangeLanguage){
+    @Action(ChangeLanguage) changeLanguage(ctx: StateContext<LanguageModel>, action:ChangeLanguage){
         const state = ctx.getState();
         ctx.setState({
             ...state,
             language: action.Language
+        })
+    }
+}
+
+//------------------------------
+
+@State<AppStateModel>({
+    name: 'appState',
+    defaults: {
+        appState: {
+            onIntro: true,
+        },
+    }
+})
+
+@Injectable()
+export class AppState{
+    constructor(){}
+    @Action(ChangeAppState) changeAppState(ctx: StateContext<AppStateModel>, action:ChangeAppState){
+        console.log("ChangeAppState", action)
+        const state = ctx.getState();
+        ctx.setState({
+            ...state,
+            appState: action.AppState
         })
     }
 }

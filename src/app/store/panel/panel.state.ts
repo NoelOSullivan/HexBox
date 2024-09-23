@@ -23,13 +23,14 @@ export class PageCounters {
         let state = ctx.getState();
         let counters: [number, number, number, number, number, number] = [...state.pageCounters.counters];
         counters[payload.panelNumber - 1] = payload.pageNumber;
-        ctx.setState({
+        ctx.patchState({
             ...state,
             pageCounters: { counters: counters, totals: state.pageCounters.totals }
         });
     }
 
     @Action(InitPageTotals) initPageTotals(ctx: StateContext<PageCounterModel>, { payload }: InitPageTotals) {
+        // console.log("----------------------------------");
         let state = ctx.getState();
         let totals: [number, number, number, number, number, number] = [...state.pageCounters.totals];
         totals[payload.panelNumber - 1] = payload.totalPages;

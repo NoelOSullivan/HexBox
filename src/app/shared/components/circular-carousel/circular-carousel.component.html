@@ -1,0 +1,7 @@
+<nav class="carousel-root">
+    <div #carousel class="carousel">
+        <li class="carousel-item" *ngFor="let item of items; let  i = index" id="item{{i}}">
+            <img class="svg-icon" src="{{item.imageSrc}}" />
+        </li>
+    </div>
+</nav>

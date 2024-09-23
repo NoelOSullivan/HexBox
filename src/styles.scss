@@ -9,3 +9,10 @@ h1, h2, h3, p {
     margin: 0;
     font-weight: 100;
 }
+
+@font-face {
+    font-family: 'SteelfishOutline';
+    src: url('assets/fonts/steelfish outline.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

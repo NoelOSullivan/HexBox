@@ -8,7 +8,7 @@
 }
 
 .flipper {
-    max-width: 500px;
+    max-width: 400px;
     width: 100%;
     height: 100%;
     transform-style: preserve-3d;
@@ -34,7 +34,7 @@ li:nth-child(even) {
     align-items: center;
     justify-content: space-between;
     backface-visibility: hidden;
-    // font-size: 60px;
+    font-size: 20px;
     font-family: 'Miriam Libre', sans-serif;
     font-weight: 600;
     text-align: center;
@@ -51,9 +51,10 @@ li:nth-child(even) {
     height: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    // align-items: center;
     justify-content: space-around;
-    font-weight: 100;
+    padding-top: 40px;
+    box-sizing: border-box;
     // overflow-y: scroll;
 }
 

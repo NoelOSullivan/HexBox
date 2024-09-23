@@ -23,17 +23,17 @@ export class Container2  {
   pageNum!: number;
 
   changePanel(panel: number) {
-    console.log("changePanel", panel);
+    // console.log("changePanel", panel);
     this.activePanel = panel;
   }
 
   changePageNum(pageNum: number) {
-    console.log("changePageNum", pageNum);
+    // console.log("changePageNum", pageNum);
     this.pageNum = pageNum;
   }
 
   goPage(pageNum: number) {
-    console.log("GO PAGE");
+    // console.log("GO PAGE");
     const directAccess: DirectAccess = {hexNum: this.activePanel, nPage: pageNum};
     this.store.dispatch(new AccessPanelDirect(directAccess));
   }

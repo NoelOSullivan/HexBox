@@ -1,9 +1,32 @@
+@import "../../../scss/variables";
+
 .content-holder {
     position: absolute;
-    width: calc(100% - 40px);
-    margin: 20px;
-    height: calc(100% - 40px);
+    width: calc(100% - 20px);
+    margin: 10px;
+    height: calc(100% - 20px);
     box-sizing: border-box;
     transform-origin: 50% 120vh;
     pointer-events: none;
+    z-index: 10;
+}
+
+.show-content {
+    opacity: 1;
+    transition: opacity 500ms linear;
+}
+
+.hide-content {
+    opacity: 0.2;
+}
+
+
+
+.page-counter {
+    position: absolute;
+    width: 0px;
+    height: 5px;
+    background-color: $primary-background-color;
+    top: 100%;
+    transition: width 100ms linear;
 }

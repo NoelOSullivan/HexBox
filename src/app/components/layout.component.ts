@@ -39,7 +39,7 @@ export class LayoutComponent implements OnInit {
       this.originalShortSide = window.innerHeight;
     }
 
-    console.log("window.", window.innerWidth, window.innerHeight);
+    // console.log("window.", window.innerWidth, window.innerHeight);
 
     if (this.viewHeightOK) {
       this.updateLayout();
@@ -84,8 +84,8 @@ export class LayoutComponent implements OnInit {
 
   updateLayout() {
 
-    console.log("this.originalLongSide", this.originalLongSide);
-    console.log("this.originalShortSide", this.originalShortSide);
+    // console.log("this.originalLongSide", this.originalLongSide);
+    // console.log("this.originalShortSide", this.originalShortSide);
 
     this.contentLayout.nativeElement.style["height"] = 'calc(100svh - 200px)';
     this.contentLayout.nativeElement.style["width"] = '100svw';

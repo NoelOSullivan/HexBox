@@ -10,7 +10,7 @@
     </app-hexagon>
     <app-hexagon *ngIf="menuRotate && menuContent" [content]=menuContent[3] [hexNum]="3" class="hex_3" [ngClass]="{'hexagon-flip-animate':hexOpened[2], 'hexagon-selected':selected==3 || rolled==3}" (click)="clickHexagon(3,'/container3')" (mouseover)="overHexagon(3)" (mouseleave)="leaveHexagon()">
     </app-hexagon>
-    <app-hexagon *ngIf="menuRotate && menuContent" [content]=menuContent[2] [hexNum]="2" class="hex_2" [ngClass]="{'hexagon-flip-animate':hexOpened[1],'hexagon-selected':selected==2 || rolled==2}" (click)="clickHexagon(2,'/container2')" (mouseover)="overHexagon(2)" (mouseleave)="leaveHexagon()">
+    <app-hexagon *ngIf="menuRotate && menuContent" [content]=menuContent2 [hexNum]="2" class="hex_2" [ngClass]="{'hexagon-flip-animate':hexOpened[1],'hexagon-selected':selected==2 || rolled==2}" (click)="clickHexagon(2,'/container2')" (mouseover)="overHexagon(2)" (mouseleave)="leaveHexagon()">
     </app-hexagon>
     <app-hexagon *ngIf="menuRotate && menuContent" [content]=menuContent[1] [hexNum]="1" class="hex_1" [ngClass]="{'hexagon-flip-animate':hexOpened[0], 'hexagon-selected':selected==1 || rolled==1}" (click)="clickHexagon(1,'/container1')" (mouseover)="overHexagon(1)" (mouseleave)="leaveHexagon()">
     </app-hexagon>

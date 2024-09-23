@@ -1,9 +1,9 @@
 import { Directive, ElementRef, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
+import { Observable } from 'rxjs';
 
 import { Rotation } from '../interfaces/hexagon';
 import { InitPageTotals, UpdatePageCounter } from '../../store/panel/panel.action';
-import { Observable } from 'rxjs';
 import { DirectAccessModel, PageTurnerModel } from '../../store/panel/panel.model';
 import { DirectAccess, PageTurner } from '../../store/panel/panel.state';
 import { ActivePanelNumberModel } from '../../store/hexagon/hexagon.model';
@@ -29,6 +29,7 @@ export class ContentDirective implements OnInit {
   rotation: Rotation = { degrees: 0 };
   directRotation!: number;
   nPages!: number;
+  lastPage!: number | undefined;
   count: number = 0;
   maxRotation!: number;
   touchStartTime!: number;
@@ -49,16 +50,24 @@ export class ContentDirective implements OnInit {
 
   ngOnInit() {
 
-    this.activePanelNumber$.subscribe(newAPN => {
-      this.activePanelNumber = newAPN.activePanelNumber.apn
-      if (this.activePanelNumber === 0) this.activePanelNumber = 6;
-      this.changeActivePanel.emit(this.activePanelNumber);
-    });
+    // Count the number of pages in the panel
+    this.nPages = this.panel.nativeElement.children.length;
+    this.maxRotation = (this.nPages - 1) * -180;
+
+    // Only show first page
+    for (let i = 1; i < this.nPages; i++) {
+      this.panel.nativeElement.children[i].style.display = 'none';
+    }
+
+    // Update store with this panels total pages
+    const payload = { panelNumber: Number(this.nPanel), totalPages: this.nPages }
+    this.store.dispatch(new InitPageTotals(payload));
 
     this.direction$.subscribe(newDirection => {
       if (!this.blockWheelAndClick) {
         // if (this.activePanelNumber === 0) this.activePanelNumber = 6;
         if (this.activePanelNumber === Number(this.nPanel)) {
+          // console.log("YABADABADO");
           this.turnPage(newDirection.direction.direction);
         }
       }
@@ -72,24 +81,24 @@ export class ContentDirective implements OnInit {
       }
     });
 
+    
+
   }
 
   ngAfterViewInit() {
 
-    // Count the number of pages in the panel
-    this.nPages = this.panel.nativeElement.children.length;
-    this.maxRotation = (this.nPages - 1) * -180;
-
-    for (let i = 1; i < this.nPages; i++) {
-      this.panel.nativeElement.children[i].style.display = 'none';
-    }
-
-    const payload = { panelNumber: Number(this.nPanel), totalPages: this.nPages }
-    this.store.dispatch(new InitPageTotals(payload));
+    this.activePanelNumber$.subscribe(newAPN => {
+      this.activePanelNumber = newAPN.activePanelNumber.apn
+      if (this.activePanelNumber === 0) this.activePanelNumber = 6;
+      this.changeActivePanel.emit(this.activePanelNumber);
+      this.lastPage = undefined;
+      // console.log("Content Directive subscribe : activePanelNumber", this.activePanelNumber);
+    });
 
   }
 
   @HostListener('wheel', ['$event']) wheel(event: WheelEvent) {
+    // console.log("event", event);
     if (!this.blockWheelAndClick) {
       if (Number(this.nPanel) === this.activePanelNumber) {
         if (event.deltaY > 0) {
@@ -133,7 +142,7 @@ export class ContentDirective implements OnInit {
   }
 
   @HostListener('touchend', ['$event']) touchend(event: TouchEvent) {
-    console.log("TOUCH END");
+    // console.log("TOUCH END");
     if (Number(this.nPanel) === this.activePanelNumber) {
       this.touchEndX = event.changedTouches[0].clientX;
       this.touchEndTime = event.timeStamp;
@@ -180,6 +189,7 @@ export class ContentDirective implements OnInit {
   turnPage(direction: string) {
     if (direction === "left") {
       if (this.rotation.degrees > this.maxRotation) {
+        // console.log(this.rotation.degrees + " : " + this.maxRotation);
         this.blockWheelAndClick = true;
         this.direction = "left"
         this.finalAnimRotation = this.rotation.degrees - 180;
@@ -231,7 +241,7 @@ export class ContentDirective implements OnInit {
         clearInterval(this.endInterval);
         this.rotation.degrees = this.finalAnimRotation;
         this.blockWheelAndClick = false;
-        console.log("LEFT", this.count);
+        // console.log("LEFT", this.count);
         this.changePageNum.emit(this.count);
       }
     } else {
@@ -239,7 +249,7 @@ export class ContentDirective implements OnInit {
         clearInterval(this.endInterval);
         this.rotation.degrees = this.finalAnimRotation;
         this.blockWheelAndClick = false;
-        console.log("RIGHT", this.count);
+        // console.log("RIGHT", this.count);
         this.changePageNum.emit(this.count);
       }
     }
@@ -256,10 +266,9 @@ export class ContentDirective implements OnInit {
       }
     }
 
-
     if (this.count !== Math.floor(this.rotation.degrees / -180)) {
       this.count = Math.floor(this.rotation.degrees / -180);
-      console.log("----", this.count); 
+      // console.log("----", this.count);
       // Turn off display of all pages
       for (let i = 0; i < this.nPages; i++) {
         this.panel.nativeElement.children[i].style.display = 'none';
@@ -288,11 +297,15 @@ export class ContentDirective implements OnInit {
       }
     }
 
-    console.log("NPAGE", nPage);
+    if (this.lastPage !== nPage) {
+      // console.log("NPAGE", nPage);
+      this.lastPage = nPage;
+      // Update the pagecounter store array with the page number of the activePanel
+      const payload = { panelNumber: Number(this.nPanel), pageNumber: nPage }
+      this.store.dispatch(new UpdatePageCounter(payload));
+    }
 
-    // Update the pagecounter store array with the page number of the activePanel
-    const payload = { panelNumber: Number(this.nPanel), pageNumber: nPage }
-    this.store.dispatch(new UpdatePageCounter(payload));
+
   }
 
 }

@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ContentDirective } from '../../../../../shared/directives/content.directive';
 import { NgIf, NgClass } from '@angular/common';
-import { Store } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
 
 import { LogoComponent } from '../../../../../shared/components/logo/logo.component';
 import { ArrowComponent } from '../../../../../shared/components/arrow/arrow.component';
@@ -11,6 +11,11 @@ import { SwipeIconComponent } from '../../../../../shared/components/swipe-icon/
 import { Direction } from '../../../../../shared/interfaces/panel';
 import { TurnPage } from '../../../../../store/panel/panel.action';
 
+import { AppState } from 'app/store/general/general.state';
+import { AppStateModel } from 'app/store/general/general.model';
+import { ChangeAppState } from 'app/store/general/general.actions';
+import { Observable } from 'rxjs';
+
 @Component({
   selector: 'app-container1',
   standalone: true,
@@ -19,7 +24,9 @@ import { TurnPage } from '../../../../../store/panel/panel.action';
   styleUrls: ['./container1.component.scss', '../../main-sections-shared-styles.scss']
 })
 
-export class Container1 {
+export class Container1 implements OnInit {
+
+  @Select(AppState) appState$!: Observable<AppStateModel>;
 
   @ViewChild('video1') video1!: ElementRef;
   @ViewChild('video2') video2!: ElementRef;
@@ -27,64 +34,110 @@ export class Container1 {
 
   constructor(private store: Store) { }
 
-  onIntro: boolean = true;
+  onIntro!: boolean;
   onFinIntro: boolean = false;
+  onFingerAnim: boolean = false;
+
+  done1: boolean = false;
+  done2: boolean = false;
+  done3: boolean = false;
+  showSwipe: boolean = false;
+
+  appState!: AppStateModel;
+
+  ngOnInit(): void {
+    this.appState$.subscribe(newAppState => {
+      this.appState = newAppState;
+      this.onIntro = this.appState.appState.onIntro;
+    });
+  }
 
   ngAfterViewInit(): void {
+    this.video1.nativeElement.muted = true;
+    this.video1.nativeElement.play();
+    this.video1.nativeElement.addEventListener('timeupdate', () => {
+      this.timeCheckVideo1();
+    });
 
-    const video = this.video1.nativeElement;
-    video.muted = true;
-    video.play();
+    this.video3.nativeElement.style.visibility = "hidden";
+    this.video3.nativeElement.pause();
+  }
 
-    const video3 = this.video3.nativeElement;
-    video3.style.visibility = "hidden";
-
-    setTimeout(() => {
-      this.flipIntro();
-    }, 9000);
+  timeCheckVideo1() {
+    if (!this.done1) {
+      // console.log("timeCheckVideo1", this.video1.nativeElement.currentTime);
+      if (this.video1.nativeElement.currentTime > 4) {
+        this.showSwipe = true;
+      }
+      if (this.video1.nativeElement.currentTime > 8) {
+        this.done1 = true;
+        this.video1.nativeElement.removeEventListener('timeupdate', this.timeCheckVideo1);
+        this.flipIntro();
+      }
+    }
   }
 
   flipIntro(): void {
-    console.log("FI");
-
+    // console.log("flipIntro");
     const directionObj: Direction = { direction: "left" };
     this.store.dispatch(new TurnPage(directionObj));
 
-    const video = this.video2.nativeElement;
-    video.muted = true;
-    video.play();
-
-    setTimeout(() => {
-      this.flipBack();
-    }, 5000);
+    this.video2.nativeElement.muted = true;
+    this.video2.nativeElement.play();
+    this.video2.nativeElement.addEventListener('timeupdate', () => {
+      this.timeCheckVideo2();
+    });
   }
 
-  flipBack(): void {
-    console.log("FB");
+  timeCheckVideo2() {
+    if (!this.done2) {
+      // console.log("timeCheckVideo2", this.video2.nativeElement.currentTime);
+      if (this.video2.nativeElement.currentTime > 4.5) {
+        this.done2 = true;
+        this.video2.nativeElement.removeEventListener('timeupdate', this.timeCheckVideo2);
+        this.flipIntroBack();
+      }
+    }
+  }
 
+  flipIntroBack(): void {
+    // console.log("flipIntroBack");
     const directionObj: Direction = { direction: "right" };
     this.store.dispatch(new TurnPage(directionObj));
 
-    const video1 = this.video1.nativeElement;
-    video1.style.visibility = "hidden";
+    this.video1.nativeElement.style.visibility = "hidden";
 
-    const video3 = this.video3.nativeElement;
-    video3.muted = true;
-    video3.style.visibility = "visible";
-    video3.play(1);
+    this.video3.nativeElement.muted = true;
+    this.video3.nativeElement.style.visibility = "visible";
+    this.video3.nativeElement.currentTime = 2;
+    this.video3.nativeElement.play();
 
-    setTimeout(() => {
-      this.finIntro();
-    }, 3000);
+    this.video3.nativeElement.addEventListener('timeupdate', () => {
+      this.timeCheckVideo3();
+    });
+  }
+
+  timeCheckVideo3() {
+    if (!this.done3) {
+      // console.log("timeCheckVideo3", this.video3.nativeElement.currentTime);
+      if (this.onFingerAnim === false && this.video3.nativeElement.currentTime > 0.75 ) {
+        this.onFingerAnim = true;
+      }
+      if (this.video3.nativeElement.currentTime > 8.7) {
+        this.done3 = true;
+        this.finIntro();
+        this.video3.nativeElement.removeEventListener('timeupdate', this.timeCheckVideo3);
+      }
+    }
   }
 
   finIntro() {
     this.onFinIntro = true;
-    setTimeout(() => {
-      this.onIntro = false;
-    }, 2000);
+    console.log("this.onFinIntro", this.onFinIntro);
+    let appState: AppStateModel;
+    appState = { appState: { onIntro: false } };
+    this.store.dispatch(new ChangeAppState(appState.appState));
   }
-
 
 
 }

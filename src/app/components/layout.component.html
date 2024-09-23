@@ -1,4 +1,5 @@
 <div class="fullscreen-layout">
+    <img src="assets/images/background.jpg" class="bcg"/>
     <div #contentLayout class="content-layout">
         <!-- <span *ngIf="orientation === 'PORTRAIT'"> -->
         <span [ngClass]="{'hideForLandscape':!viewHeightOK}">
@@ -11,6 +12,7 @@
             <app-content [nContainer]=6 [startRotation]=300></app-content>
         </span>
     </div>
+
     <div #menuLayout class="menu-layout">
         <!-- <span *ngIf="orientation === 'PORTRAIT'"> -->
         <span [ngClass]="{'hideForLandscape':!viewHeightOK}">
@@ -25,4 +27,5 @@
     <div class="orientation-message" [ngClass]="{'hideForPortrait':viewHeightOK}">
         Please turn your phone to portrait
     </div>
+
 </div>

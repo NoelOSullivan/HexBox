@@ -1,0 +1,13 @@
+{
+    "carousel": {
+        "items": [
+            {"imageSrc":"assets/images/panel6/angular.svg"},
+            {"imageSrc":"assets/images/panel6/angularJS.svg"},
+            {"imageSrc":"assets/images/panel6/react.svg"},
+            {"imageSrc":"assets/images/panel6/d3.svg"},
+            {"imageSrc":"assets/images/panel6/leaflet.svg"},
+            {"imageSrc":"assets/images/panel6/pixijs.svg"},
+            {"imageSrc":"assets/images/panel6/phaser.svg"}
+        ]
+    } 
+}

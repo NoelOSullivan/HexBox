@@ -1,17 +1,22 @@
-@import "../scss/variables";
-
 .fullscreen-layout {
+    position: absolute;
     height: 100svh;
     width: 100svw;
-    background-size: cover;
-    background-image: url('../../assets/images/background.jpg');
-    background-position: 50% 50%;
+    // background-size: cover;
+    // background-image: url('./background.jpg');
+    // background-position: 50% 50%;
     overflow: hidden;
 }
 
+.bcg {
+    height: 100%;
+    width: 100%;
+}
+
 .content-layout {
+    pointer-events: none;
     position: absolute;
-    overflow: hidden;
+    // overflow: hidden;
     border-bottom: 5px solid rgba($color: #FFFFFF, $alpha: 0.5);
     box-sizing: border-box;
 }
@@ -36,7 +41,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    width: 100%; 
+    width: 100%;
     height: 100%;
     color: white;
     font-size: 24px;
