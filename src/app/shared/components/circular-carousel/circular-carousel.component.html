@@ -1,7 +1,14 @@
-<nav class="carousel-root">
+<!-- <div class="mouse-up-outside-detector"></div> -->
+<nav #carouselRoot class="carousel-root">
+    <div class="carousel-event-capture"></div>
     <div #carousel class="carousel">
-        <li class="carousel-item" *ngFor="let item of items; let  i = index" id="item{{i}}">
-            <img class="svg-icon" src="{{item.imageSrc}}" />
+        <li class="carousel-item" *ngFor="let item of items; let  i = index" id="item{{i}}" (click)="itemClicked($event,item)">
+            <div class="svg-holder">
+                <img class="svg-icon" src="{{item.imageSrc}}" />
+            </div>
+            <div class="intro">{{item.intro}}</div>
+            <div class="text">{{item.text}}</div>
+            <div #shadow class="shadow"></div>
         </li>
     </div>
 </nav>

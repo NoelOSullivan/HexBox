@@ -10,7 +10,7 @@ import { NgClass } from '@angular/common';
 })
 export class AirbusComponent {
 
-  @Input() pageNum!: number;
+  @Input() activePageNum!: number;
 
   anim:boolean = false;
 
@@ -19,7 +19,7 @@ export class AirbusComponent {
   }
 
   ngOnChanges(changes: any) {
-    if(changes.pageNum.currentValue === 1) {
+    if(changes.activePageNum.currentValue === 1) {
       this.anim = true;
     } else {
       this.anim = false;

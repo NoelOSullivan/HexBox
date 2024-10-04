@@ -14,12 +14,12 @@
                     [ngClass]="{'shunt-intro-text': onFinIntro===true}">
                     <div class="byline">Noel O'Sullivan</div>
                     <div class=" intro-title">
-                        Creative Web<br>Development
+                        Creative<br>Web Development
                     </div>
                     <div>
-                        <div class="intro-text">Twenty years of digital media</div>
-                        <div class="intro-text">Aeronautic, institutional, entertainment</div>
-                        <div class="intro-text">Data visualisation, marketing, games </div>
+                        <div class="intro-text">Good code - No limits</div>
+                        <!-- <div class="intro-text">Well coded</div>
+                        <div class="intro-text">Web Design</div> -->
                     </div>
                 </div>
             </div>
@@ -34,13 +34,16 @@
         <li class="common-side">
             <app-logo></app-logo>
             <div *ngIf="onIntro===false" class="vertical-space-between-holder basic-text">
-                <p>
+                <div class="intro-text">Twenty years of digital media</div>
+                <div class="intro-text">Aeronautic, institutional, entertainment</div>
+                <div class="intro-text">Data visualisation, marketing, games </div>
+                <!-- <p>
                     I have 25 years of experience in digital communication working in multiple sectors notably
                     industry, education and entertainment.<br><br>
                     Take a look at who I've worked for and what I did for them.
                 </p>
-                <br>
-                <app-direct-access [linkText]="'Who'" [hexNum]="2" [nPage]="1"></app-direct-access>
+                <br> -->
+                <!-- <app-direct-access [linkText]="'Who'" [hexNum]="2" [nPage]="1"></app-direct-access> -->
             </div>
             <div *ngIf="onIntro===true" class="video-holder">
                 <video #video2 class="video" src="assets/videos/white2.mp4"></video>

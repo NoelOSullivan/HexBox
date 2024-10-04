@@ -1,22 +1,22 @@
 <!-- <div swipeDirective #contentHolder class="content-holder" (touchstart)="logTouchstart($event)" (touchmove)="logTouchmove($event)" (touchend)="logTouchEnd($event)"> -->
 <div #contentHolder class="content-holder">
     <span *ngIf="nContainer===1" class="show-content" [ngClass]="{'hide-content':activePanelNumber!==1}">
-        <app-container1></app-container1>
+        <app-container1 [nContainer]="nContainer"></app-container1>
     </span>
     <span *ngIf="nContainer===2" class="show-content" [ngClass]="{'hide-content':activePanelNumber!==2}">
-        <app-container2></app-container2>
+        <app-container2 [nContainer]="nContainer"></app-container2>
     </span>
     <span *ngIf="nContainer===3" class="show-content" [ngClass]="{'hide-content':activePanelNumber!==3}">
-        <app-container3></app-container3>
+        <app-container3 [nContainer]="nContainer"></app-container3>
     </span>
     <span *ngIf="nContainer===4" class="show-content" [ngClass]="{'hide-content':activePanelNumber!==4}">
-        <app-container4></app-container4>
+        <app-container4 [nContainer]="nContainer"></app-container4>
     </span>
     <span *ngIf="nContainer===5" class="show-content" [ngClass]="{'hide-content':activePanelNumber!==5}">
-        <app-container5></app-container5>
+        <app-container5 [nContainer]="nContainer"></app-container5>
     </span>
     <span *ngIf="nContainer===6" class="show-content" [ngClass]="{'hide-content':activePanelNumber!==0}">
-        <app-container6></app-container6>
+        <app-container6 [nContainer]="nContainer"></app-container6>
     </span>
 </div>
 

@@ -13,6 +13,8 @@ import { CircularCarouselComponent } from 'app/shared/components/circular-carous
 })
 export class Container6  {
 
+  @Input() nContainer!: number;
+
   constructor() { }
 
 }

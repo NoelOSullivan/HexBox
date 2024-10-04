@@ -32,6 +32,7 @@ export class Language{
     defaults: {
         appState: {
             onIntro: true,
+            mouseUpDetected: false
         },
     }
 })

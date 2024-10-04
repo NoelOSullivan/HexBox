@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ContentDirective } from '../../../../../shared/directives/content.directive';
 import { NgIf } from '@angular/common';
 
@@ -10,6 +10,8 @@ import { NgIf } from '@angular/common';
   styleUrls: ['./container3.component.scss','../../main-sections-shared-styles.scss']
 })
 export class Container3  {
+
+  @Input() nContainer!: number;
 
   constructor() { }
 

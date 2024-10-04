@@ -3,6 +3,7 @@ body {
     margin: 0;
     // width: 100svh;
     // height: 100svw
+    overscroll-behavior: contain;
 }
 
 h1, h2, h3, p {

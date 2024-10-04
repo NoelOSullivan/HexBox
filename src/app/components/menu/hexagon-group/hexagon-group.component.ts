@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 import { DirectAccessModel } from '../../../store/panel/panel.model';
 import { AppStateModel } from 'app/store/general/general.model';
 import { AppState } from 'app/store/general/general.state';
+import { ChangeAppState } from 'app/store/general/general.actions';
 
 @Component({
   selector: 'hexagon-group',
@@ -47,6 +48,9 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
   // private onIntro: boolean = false;
   private menuAnimationFinished: boolean = false;
 
+  private introDone: boolean = false;
+  private allowCut: boolean = false;
+
   ngOnInit() {
 
     this.lastSelected = 0;
@@ -64,7 +68,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
         this.introHexagonWithDelay(i);
       }
     }, 1000);
-    
+
 
     // Calls change of menu after menu intro
     setTimeout(() => {
@@ -82,13 +86,14 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
       this.appState = newAppState;
       this.onIntro = this.appState.appState.onIntro;
 
-      if(this.onIntro === false) {
+      if (this.onIntro === false && this.introDone === false) {
+        this.introDone = true;
         this.manageMenu(2);
       }
-      console.log("XXXXXXXXXXXXXXXXXX", this.appState);
+      // console.log("XXXXXXXXXXXXXXXXXX", this.appState);
 
 
-      console.log("this.menuContent", this.menuContent);
+      // console.log("this.menuContent", this.menuContent);
       // console.log("this.content",this.content);
       // debugger;
       if (this.menuContent.length !== 0 && this.menuContent[2].indexOf("##") >= 0) {
@@ -120,11 +125,13 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
   }
 
   updateMenuHack(): void {
+    // Manages Click Me / Home button
     if (this.menuContent.length !== 0 && this.menuContent[2].indexOf("##") >= 0) {
       const contentText = this.menuContent[2].split("##");
       const twoPossibles = contentText[1].split("#");
       let newText = this.onIntro ? twoPossibles[0] : twoPossibles[1];
       this.menuContent2 = contentText[0] + newText + contentText[2];
+      this.allowCut = true;
     }
   }
 
@@ -147,8 +154,16 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
   }
 
   clickHexagon(hexIndex: any, location: any) {
-    if (this.onIntro) return;
-    this.manageMenu(hexIndex);
+    console.log("this.allowCut", this.allowCut);
+    if (this.onIntro) {
+      if(this.allowCut) {
+        let appState: AppStateModel;
+        appState = { appState: { onIntro: false, mouseUpDetected: this.appState.appState.mouseUpDetected } };
+        this.store.dispatch(new ChangeAppState(appState.appState));
+      }
+    } else {
+      this.manageMenu(hexIndex);
+    }
   }
 
   manageMenu(hexIndex: number | null | undefined) {

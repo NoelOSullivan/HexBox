@@ -1,9 +1,14 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { NgIf, NgClass } from '@angular/common';
+import { Select, Store } from '@ngxs/store';
 import { MenuComponent } from './menu/menu/menu.component';
 import { ContentComponent } from './content/content/content.component';
 import { ArrowComponent } from '../shared/components/arrow/arrow.component';
 import { TimeInterval } from 'rxjs/internal/operators/timeInterval';
+import { AppStateModel } from 'app/store/general/general.model';
+import { ChangeAppState } from 'app/store/general/general.actions';
+import { AppState } from 'app/store/general/general.state';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-layout',
@@ -18,6 +23,8 @@ export class LayoutComponent implements OnInit {
   @ViewChild('contentLayout') contentLayout!: ElementRef;
   @ViewChild('menuLayout') menuLayout!: ElementRef;
 
+  @Select(AppState) appState$!: Observable<AppStateModel>;
+
   originalShortSide!: number;
   originalLongSide!: number;
 
@@ -26,6 +33,8 @@ export class LayoutComponent implements OnInit {
 
   resizeTimeout: any;
   that: any;
+
+  appState!: AppStateModel;
 
   @HostListener('window:resize', ['$event'])
   onWindowResize() {
@@ -46,7 +55,15 @@ export class LayoutComponent implements OnInit {
     }
   }
 
-  constructor() { }
+  @HostListener('mouseup', ['$event']) mouseup(event: MouseEvent) {
+    // console.log("UPUPUPANDAWAY");
+
+    // let appState: AppStateModel;
+    // appState = { appState: { onIntro: this.appState.appState.onIntro, mouseUpDetected: !this.appState.appState.mouseUpDetected } };
+    // this.store.dispatch(new ChangeAppState(appState.appState));
+  }
+
+  constructor(private store: Store) { }
 
   screenWidth!: number;
   screenHeight!: number;
@@ -62,6 +79,10 @@ export class LayoutComponent implements OnInit {
     }
 
     this.viewHeightOK = this.checkViewHeight();
+
+    this.appState$.subscribe(newAppState => {
+      this.appState = newAppState;
+    });
   }
 
   checkViewHeight(): boolean {

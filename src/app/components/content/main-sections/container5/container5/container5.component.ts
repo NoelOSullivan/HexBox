@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ContentDirective } from '../../../../../shared/directives/content.directive';
 import { NgIf } from '@angular/common';
 import { DirectAccessComponent } from '../../../../../shared/components/direct-access/direct-access.component';
@@ -11,6 +11,8 @@ import { DirectAccessComponent } from '../../../../../shared/components/direct-a
   styleUrls: ['./container5.component.scss','../../main-sections-shared-styles.scss']
 })
 export class Container5  {
+
+  @Input() nContainer!: number;
 
   constructor() { }
 

@@ -1,0 +1,13 @@
+{
+    "carousel": {
+        "items": [
+            {"imageSrc":"assets/images/logos/logo-airbus.jpg","intro":"Tech Data - AirnavX - Airnaveo","text":"Interface design and dev\n\nsvg manipulation, 3D", "page":2},
+            {"imageSrc":"assets/images/logos/logo-dgac.png","intro":"Airplane management on ground Environment","text":"SVG, Big Data", "page":3},
+            {"imageSrc":"assets/images/logos/logo-ednat.jpg","intro":"Library for Single Page Apps","text":"Used at DTI, Gamesys", "page":4},
+            {"imageSrc":"assets/images/logos/logo-gamesys.jpg","intro":"Library for Data Visualisation","text":"Used at DTI", "page":5},
+            {"imageSrc":"assets/images/logos/logo-moneypenny.jpg","intro":"Library for Interactive Maps","text":"Used at DTI", "page":6},
+            {"imageSrc":"assets/images/logos/logo-thesun.jpg","intro":"Library for WebGL animation","text":"Used at Gamesys", "page":7},
+            {"imageSrc":"assets/images/logos/logo-milan.jpg","intro":"Library for WebGL animation","text":"Used at The Sun", "page":8}
+        ]
+    } 
+}

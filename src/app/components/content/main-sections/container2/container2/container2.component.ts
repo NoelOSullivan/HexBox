@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ContentDirective } from '../../../../../shared/directives/content.directive';
 import { NgIf } from '@angular/common';
 import { Store } from '@ngxs/store';
@@ -7,33 +7,36 @@ import { LinkIconComponent } from '../../../../../shared/components/link-icon/li
 import { AirbusComponent } from './airbus/airbus.component';
 import { DirectAccess } from '../../../../../shared/interfaces/panel';
 import { AccessPanelDirect } from '../../../../../store/panel/panel.action';
+import { CircularCarouselComponent } from 'app/shared/components/circular-carousel/circular-carousel.component';
 
 @Component({
   selector: 'app-container2',
   standalone: true, 
-  imports: [NgIf, ContentDirective, LinkIconComponent, AirbusComponent],
+  imports: [NgIf, ContentDirective, LinkIconComponent, AirbusComponent, CircularCarouselComponent],
   templateUrl: './container2.component.html',
   styleUrls: ['./container2.component.scss','../../main-sections-shared-styles.scss']
 })
 export class Container2  {
 
+  @Input() nContainer!: number;
+
   constructor(private store: Store) { }
 
   activePanel!: number;
-  pageNum!: number;
+  activePageNum!: number;
 
   changePanel(panel: number) {
     // console.log("changePanel", panel);
     this.activePanel = panel;
   }
 
-  changePageNum(pageNum: number) {
-    // console.log("changePageNum", pageNum);
-    this.pageNum = pageNum;
+  changePageNum(activePageNum: number) {
+    // console.log("changePageNum", activePageNum);
+    this.activePageNum = activePageNum;
   }
 
   goPage(pageNum: number) {
-    // console.log("GO PAGE");
+    console.log("GO PAGE", pageNum);
     const directAccess: DirectAccess = {hexNum: this.activePanel, nPage: pageNum};
     this.store.dispatch(new AccessPanelDirect(directAccess));
   }

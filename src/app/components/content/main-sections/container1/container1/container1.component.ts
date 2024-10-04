@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ContentDirective } from '../../../../../shared/directives/content.directive';
 import { NgIf, NgClass } from '@angular/common';
 import { Select, Store } from '@ngxs/store';
@@ -28,6 +28,8 @@ export class Container1 implements OnInit {
 
   @Select(AppState) appState$!: Observable<AppStateModel>;
 
+  @Input() nContainer!: number;
+
   @ViewChild('video1') video1!: ElementRef;
   @ViewChild('video2') video2!: ElementRef;
   @ViewChild('video3') video3!: ElementRef;
@@ -49,6 +51,22 @@ export class Container1 implements OnInit {
     this.appState$.subscribe(newAppState => {
       this.appState = newAppState;
       this.onIntro = this.appState.appState.onIntro;
+      if (this.video1) {
+        this.video1.nativeElement.removeEventListener('timeupdate', this.timeCheckVideo1);
+        this.video1.nativeElement.style.visibility = "hidden";
+      }
+      if (this.video2) {
+        this.video2.nativeElement.removeEventListener('timeupdate', this.timeCheckVideo2);
+        this.video2.nativeElement.style.visibility = "hidden";
+      }
+      if (this.video3) {
+        this.video3.nativeElement.removeEventListener('timeupdate', this.timeCheckVideo3);
+        this.video3.nativeElement.style.visibility = "hidden";
+      }
+      this.onFinIntro = true;
+      this.done1 = true;
+      this.done2 = true;
+      this.done3 = true;
     });
   }
 
@@ -120,7 +138,7 @@ export class Container1 implements OnInit {
   timeCheckVideo3() {
     if (!this.done3) {
       // console.log("timeCheckVideo3", this.video3.nativeElement.currentTime);
-      if (this.onFingerAnim === false && this.video3.nativeElement.currentTime > 0.75 ) {
+      if (this.onFingerAnim === false && this.video3.nativeElement.currentTime > 0.75) {
         this.onFingerAnim = true;
       }
       if (this.video3.nativeElement.currentTime > 8.7) {
@@ -133,9 +151,8 @@ export class Container1 implements OnInit {
 
   finIntro() {
     this.onFinIntro = true;
-    console.log("this.onFinIntro", this.onFinIntro);
     let appState: AppStateModel;
-    appState = { appState: { onIntro: false } };
+    appState = { appState: { onIntro: false, mouseUpDetected: this.appState.appState.mouseUpDetected } };
     this.store.dispatch(new ChangeAppState(appState.appState));
   }
 

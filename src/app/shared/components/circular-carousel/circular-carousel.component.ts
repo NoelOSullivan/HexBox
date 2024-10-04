@@ -1,6 +1,10 @@
-import { Component, ElementRef, HostListener, Input, OnInit, ViewChild, viewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild, viewChild } from '@angular/core';
 import { NgFor } from '@angular/common';
 import { DataService } from 'app/shared/services/data.service';
+import { Select } from '@ngxs/store';
+import { AppState } from 'app/store/general/general.state';
+import { Observable } from 'rxjs';
+import { AppStateModel } from 'app/store/general/general.model';
 
 @Component({
   selector: 'app-circular-carousel',
@@ -10,113 +14,191 @@ import { DataService } from 'app/shared/services/data.service';
   templateUrl: './circular-carousel.component.html',
   styleUrl: './circular-carousel.component.scss'
 })
-export class CircularCarouselComponent {
+export class CircularCarouselComponent implements OnInit {
 
+  @Input() nContainer!: number;
+  @Input() pageNum!: number;
+  @Output() carouselItemClicked = new EventEmitter<number>();
+
+  @ViewChild('carouselRoot') carouselRoot!: ElementRef;
   @ViewChild('carousel') carousel!: ElementRef;
+
+  @Select(AppState) appState$!: Observable<AppStateModel>;
 
   @Input() data!: string;
   @Input() orientation!: string;
+  @Input() perspective!: string;
+  @Input() itemHeightInput!: string;
+  // @Input() activePanel!: number;
+  // @Input() activePageNum!: number;
   items!: any;
   itemCount!: number;
+  itemHeight!: number;
   itemDegrees!: number;
-  itemSize!: number;
 
   radius!: number;
   index!: number;
-
-  touchStartTime!: number;
-  touchEndTime!: number;
-  touchStartY!: number;
+  startY!: number;
   touchEndY!: number;
   lastY!: number;
   degrees!: number;
+  isTouchOrMousedown: boolean = false;
 
-
+  itemCollection!: HTMLCollectionOf<HTMLElement>;
 
   constructor(private dataService: DataService) { }
+
+  ngOnInit(): void {
+    this.appState$.subscribe(() => {
+      if (this.isTouchOrMousedown) {
+        this.isTouchOrMousedown = false;
+      }
+    });
+  }
 
   ngAfterViewInit() {
     this.dataService.getData(this.data).subscribe((carouselData: any) => {
       this.items = carouselData.carousel.items;
-      console.log("this.items", this.items);
       this.initCarousel();
     });
   }
 
   initCarousel() {
     setTimeout(() => {
-      const itemCollection: HTMLCollectionOf<HTMLElement> = this.carousel.nativeElement.children;
-      console.log("itemCollection", itemCollection);
-
+      this.carouselRoot.nativeElement.style.perspective = this.perspective;
+      this.itemCollection = this.carousel.nativeElement.children;
       this.itemCount = this.items.length;
       this.itemDegrees = 360 / this.itemCount;
-      this.degrees = this.itemDegrees;
-      this.itemSize = this.orientation === 'vertical' ? this.carousel.nativeElement.offsetHeight : this.carousel.nativeElement.offsetWidth;
+      this.degrees = 0;
 
-      console.log("this.itemSize", this.itemSize);
-      this.radius = 250; //Math.round((this.itemSize / 2) / Math.tan(Math.PI / this.itemCount));
-      console.log("this.radius", this.radius);
+      for (let i = 0, length = this.itemCollection.length; i < length; i++) {
+        const item = this.itemCollection.namedItem("item" + i);
+        item!.style.height = this.itemHeightInput;
+      }
 
-      for (let i = 0, length = itemCollection.length; i < length; i++) {
-        const item = itemCollection.namedItem("item" + i);
-        let itemAngle = this.itemDegrees * i;
+      this.itemHeight = this.itemCollection.namedItem("item1")!.clientHeight;
+      this.radius = Math.round((this.itemHeight! / 2 / Math.tan(Math.PI / this.itemCount)));
+      this.carousel.nativeElement.style.transform = 'translateZ(' + -this.radius + 'px) ' + 'rotateX' + '(' + (this.degrees) + 'deg)';
+
+      for (let i = 0, length = this.itemCollection.length; i < length; i++) {
+        const item = this.itemCollection.namedItem("item" + i);
+        let itemAngle = this.itemDegrees * i * -1;
         item!.style.transform = 'rotateX' + '(' + itemAngle + 'deg) translateZ(' + this.radius + 'px)';
       }
+      this.manageShadow();
     }, 0);
+  }
 
+  @HostListener('wheel', ['$event']) wheel(event: WheelEvent) {
+    event.stopPropagation();
+    if (event.deltaY > 0) {
+      this.degrees -= this.itemDegrees / 5;
+    } else {
+      this.degrees += this.itemDegrees / 5;
+    }
+    this.degreesReference();
+    this.rotateCarousel();
   }
 
   @HostListener('touchstart', ['$event']) touchstart(event: TouchEvent) {
     event.stopPropagation();
-    this.lastY = this.touchStartY = event.changedTouches[0].clientY;
-    this.touchStartTime = event.timeStamp;
+    this.manageDown(event.changedTouches[0].clientY);
   }
 
   @HostListener('touchmove', ['$event']) touchmove(event: TouchEvent) {
-    
-    console.log("CAROUSEL");
-    const diffY = this.lastY - event.targetTouches[0].clientY;
-    this.lastY = event.targetTouches[0].clientY;
-
-
-    console.log("diffY", diffY);
-    // If swiping right calculate new rotation if not yet minimum value (0)
-    // TO DO : 3 is arbitary. Maybe find a rule.
-    // if (diffY < 0) {
-    //   // if (this.rotation.degrees < 0) {
-    //   //   this.rotation.degrees -= diffX * 3;
-    //   // }
-    //   this.degrees -= diffY; 
-      
-    // } else {
-    //   // If swiping left calculate new rotation if not yet maximum value (this.maxRotation)
-    //   // if (diffX > 0) {
-    //   //   if (this.rotation.degrees > this.maxRotation) {
-    //   //     this.rotation.degrees -= diffX * 3;
-    //   //   }
-    //   // }
-    //   this.degrees += diffY; 
-    // }
-    
-    // this.degrees += diffY * 3; 
-    this.degrees += diffY / 2; 
-
-    
-      event.stopPropagation();
-
-    this.rotateCarousel();
+    event.stopPropagation();
+      this.manageMove(event.targetTouches[0].clientY);
   }
 
   @HostListener('touchend', ['$event']) touchend(event: TouchEvent) {
     event.stopPropagation();
-    this.carousel.nativeElement.style.transform = 'translateZ(' + -this.radius + 'px) ' + 'rotateX' + '(' + (this.degrees - 45) + 'deg)';
+    this.manageUp();
+  }
+
+  @HostListener('mousedown', ['$event']) mousedown(event: MouseEvent) {
+    event.stopPropagation();
+    this.manageDown(event.clientY);
+  }
+
+  @HostListener('mousemove', ['$event']) mousemove(event: MouseEvent) {
+    event.stopPropagation();
+    this.manageMove(event.clientY);
+  }
+
+  @HostListener('mouseup', ['$event']) mouseup(event: MouseEvent) {
+    event.stopPropagation();
+    this.manageUp();
+  }
+
+  manageDown(posY: number): void {
+    this.isTouchOrMousedown = true;
+    this.lastY = this.startY = posY;
+  }
+
+  manageMove(posY: number): void {
+    if (this.isTouchOrMousedown) {
+      const diffY = this.lastY - posY;
+      this.lastY = posY;
+      this.degrees += diffY;
+
+      this.degreesReference();
+
+      this.rotateCarousel();
+    }
+  }
+
+  degreesReference(): void {
+    if (this.degrees > 360) {
+      this.degrees -= 360;
+    } else {
+      if (this.degrees < 0) {
+        this.degrees = 360 + this.degrees;
+      }
+    }
+  }
+
+  manageUp(): void {
+    this.isTouchOrMousedown = false;
+    this.carousel.nativeElement.style.transform = 'translateZ(' + -this.radius + 'px) ' + 'rotateX' + '(' + (this.degrees) + 'deg)';
   }
 
   rotateCarousel(): void {
-    console.log("this.degrees", this.degrees);
-    this.carousel.nativeElement.style.transform = 'translateZ(' + -this.radius + 'px) ' + 'rotateX' + '(' + (this.degrees - 45) + 'deg)';
-  
+    this.carousel.nativeElement.style.transform = 'translateZ(' + -this.radius + 'px) ' + 'rotateX' + '(' + (this.degrees) + 'deg)';
+    this.manageShadow();
+  }
 
+  manageShadow() {
+    let itemIndex = (this.degrees / this.itemDegrees);
+    for (let i = 0, length = this.itemCollection.length; i < length; i++) {
+      let shadow = this.itemCollection[i].lastChild as HTMLElement;
+      let abstractCoef = Math.abs(itemIndex - i);
+      // if(i === 0) {
+      //   console.log("abstractCoef", abstractCoef);
+      // }
+      let opacity = 0.4;
+      if (abstractCoef < 0.25 || abstractCoef > this.itemCount - 0.25) {
+        opacity = 0;
+      } else {
+        if (abstractCoef < 0.5 || abstractCoef > this.itemCount - 0.5) {
+          opacity = 0.1;
+        } else {
+          if (abstractCoef < 0.75 || abstractCoef > this.itemCount - 0.75) {
+            opacity = 0.2;
+          } else {
+            if (abstractCoef < 1 || abstractCoef > this.itemCount - 1) {
+              opacity = 0.3;
+            }
+          }
+        }
+      }
+      shadow.style.opacity = opacity.toString();
+    }
+  }
+
+  itemClicked(event: MouseEvent, item: any): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.carouselItemClicked.emit(item.page);
   }
 
 }

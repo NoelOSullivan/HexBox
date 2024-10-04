@@ -4,4 +4,5 @@ export interface Language {
 
 export interface AppState {
     onIntro: boolean;
+    mouseUpDetected: boolean;
 }
