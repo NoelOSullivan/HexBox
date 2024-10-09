@@ -1,0 +1,17 @@
+.lang-button {
+  position: absolute;
+  color: white;
+  width: 40px;
+  left: 30px;
+  margin-top: 10px;
+  backface-visibility: hidden;
+  transition: transform 0.5s;
+}
+
+.flipMe {
+  transform: rotateY(180deg);
+}
+
+.image {
+  width: 100%
+}

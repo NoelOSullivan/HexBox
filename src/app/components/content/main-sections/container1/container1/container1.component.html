@@ -23,8 +23,8 @@
                     </div>
                 </div>
             </div>
-            <div class="video-holder">
-                <video #video1 class="video" src="assets/videos/white1.mp4"></video>
+            <div #videoHolder class="video-holder">
+                <video #video1 class="video video1" src="assets/videos/white1.mp4"></video>
                 <video #video3 class="video" [ngClass]="{'shunt-intro-video': onFinIntro===true}"
                     src="assets/videos/white3.mp4"></video>
                 <div *ngIf="onIntro===true && showSwipe===true" class="swipe-me">Swipe Me</div>
@@ -46,7 +46,7 @@
                 <!-- <app-direct-access [linkText]="'Who'" [hexNum]="2" [nPage]="1"></app-direct-access> -->
             </div>
             <div *ngIf="onIntro===true" class="video-holder">
-                <video #video2 class="video" src="assets/videos/white2.mp4"></video>
+                <video #video2 class="video" src="assets/videos/white2new.mp4"></video>
                 <div *ngIf="onIntro===true" class="swipe-me-back">Swipe Me</div>
             </div>
         </li>

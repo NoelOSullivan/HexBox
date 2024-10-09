@@ -1,7 +1,7 @@
 import { Language, AppState } from "../../shared/interfaces/general";
 
 export class LanguageModel {
-    public language!: Language;
+    public language!: string;
 }
 
 export class AppStateModel {

@@ -23,7 +23,7 @@ export class ContentDirective implements OnInit {
   @Select(AppState) appState$!: Observable<AppStateModel>;
 
   @Input() nPanel!: string;
-  @Input() onIntro!: string;
+  // @Input() onIntro!: boolean;
   @Output() changeActivePanel = new EventEmitter<number>();
   @Output() changePageNum = new EventEmitter<number>();
   @Select(PageTurner) direction$!: Observable<PageTurnerModel>;
@@ -47,6 +47,7 @@ export class ContentDirective implements OnInit {
   finalAnimDirection!: String;
   blockWheelAndClick: boolean = true;
   activePanelNumber!: number;
+  onIntro!: boolean;
 
   appState!: AppStateModel;
 
@@ -70,11 +71,12 @@ export class ContentDirective implements OnInit {
     this.store.dispatch(new InitPageTotals(payload));
 
     this.direction$.subscribe(newDirection => {
-      if (!this.blockWheelAndClick) {
+      if (this.activePanelNumber === Number(this.nPanel)) {
+        console.log("newDirection", newDirection, this.blockWheelAndClick);
+        // if (!this.blockWheelAndClick) {
         // if (this.activePanelNumber === 0) this.activePanelNumber = 6;
-        if (this.activePanelNumber === Number(this.nPanel)) {
-          this.turnPage(newDirection.direction.direction);
-        }
+        this.turnPage(newDirection.direction.direction);
+        // }
       }
     });
 
@@ -87,7 +89,8 @@ export class ContentDirective implements OnInit {
     });
 
     this.appState$.subscribe(newAppState => {
-      if(newAppState.appState.onIntro === false) {
+      this.onIntro = newAppState.appState.onIntro;
+      if (newAppState.appState.onIntro === false) {
         this.blockWheelAndClick = false;
       }
     });
@@ -250,14 +253,18 @@ export class ContentDirective implements OnInit {
       if (this.rotation.degrees <= this.finalAnimRotation) {
         clearInterval(this.endInterval);
         this.rotation.degrees = this.finalAnimRotation;
-        this.blockWheelAndClick = false;
+        if (!this.onIntro) {
+          this.blockWheelAndClick = false;
+        }
         this.changePageNum.emit(this.count);
       }
     } else {
       if (this.rotation.degrees >= this.finalAnimRotation) {
         clearInterval(this.endInterval);
         this.rotation.degrees = this.finalAnimRotation;
-        this.blockWheelAndClick = false;
+        if (!this.onIntro) {
+          this.blockWheelAndClick = false;
+        }
         this.changePageNum.emit(this.count);
       }
     }

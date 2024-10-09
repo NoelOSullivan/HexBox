@@ -6,7 +6,7 @@ import { ContentComponent } from './content/content/content.component';
 import { ArrowComponent } from '../shared/components/arrow/arrow.component';
 import { TimeInterval } from 'rxjs/internal/operators/timeInterval';
 import { AppStateModel } from 'app/store/general/general.model';
-import { ChangeAppState } from 'app/store/general/general.actions';
+import { ChangeMouseUpDetected } from 'app/store/general/general.actions';
 import { AppState } from 'app/store/general/general.state';
 import { Observable } from 'rxjs';
 
@@ -56,11 +56,15 @@ export class LayoutComponent implements OnInit {
   }
 
   @HostListener('mouseup', ['$event']) mouseup(event: MouseEvent) {
-    // console.log("UPUPUPANDAWAY");
+    console.log("UPUPUPANDAWAY");
 
     // let appState: AppStateModel;
     // appState = { appState: { onIntro: this.appState.appState.onIntro, mouseUpDetected: !this.appState.appState.mouseUpDetected } };
     // this.store.dispatch(new ChangeAppState(appState.appState));
+
+    this.store.dispatch(new ChangeMouseUpDetected());
+
+
   }
 
   constructor(private store: Store) { }
@@ -69,6 +73,8 @@ export class LayoutComponent implements OnInit {
   screenHeight!: number;
 
   ngOnInit() {
+
+
 
     if (window.innerHeight > window.innerWidth) {
       this.originalShortSide = window.innerWidth;

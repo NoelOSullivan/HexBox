@@ -13,7 +13,7 @@ import { TurnPage } from '../../../../../store/panel/panel.action';
 
 import { AppState } from 'app/store/general/general.state';
 import { AppStateModel } from 'app/store/general/general.model';
-import { ChangeAppState } from 'app/store/general/general.actions';
+import { ChangeOnIntro } from 'app/store/general/general.actions';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -33,6 +33,7 @@ export class Container1 implements OnInit {
   @ViewChild('video1') video1!: ElementRef;
   @ViewChild('video2') video2!: ElementRef;
   @ViewChild('video3') video3!: ElementRef;
+  @ViewChild('videoHolder') videoHolder!: ElementRef;
 
   constructor(private store: Store) { }
 
@@ -51,40 +52,68 @@ export class Container1 implements OnInit {
     this.appState$.subscribe(newAppState => {
       this.appState = newAppState;
       this.onIntro = this.appState.appState.onIntro;
-      if (this.video1) {
-        this.video1.nativeElement.removeEventListener('timeupdate', this.timeCheckVideo1);
-        this.video1.nativeElement.style.visibility = "hidden";
+      if (this.onIntro === false) {
+        if (this.video1) {
+          this.video1.nativeElement.removeEventListener('timeupdate', this.timeCheckVideo1);
+          this.video1.nativeElement.style.visibility = "hidden";
+        }
+        if (this.video2) {
+          this.video2.nativeElement.removeEventListener('timeupdate', this.timeCheckVideo2);
+          this.video2.nativeElement.style.visibility = "hidden";
+        }
+        if (this.video3) {
+          this.video3.nativeElement.removeEventListener('timeupdate', this.timeCheckVideo3);
+          this.video3.nativeElement.style.visibility = "hidden";
+        }
+        if (this.done1 === true && this.done2 === false) {
+          const directionObj: Direction = { direction: "right" };
+          this.store.dispatch(new TurnPage(directionObj));
+        }
+        this.onFinIntro = true;
+        this.done1 = true;
+        this.done2 = true;
+        this.done3 = true;
       }
-      if (this.video2) {
-        this.video2.nativeElement.removeEventListener('timeupdate', this.timeCheckVideo2);
-        this.video2.nativeElement.style.visibility = "hidden";
-      }
-      if (this.video3) {
-        this.video3.nativeElement.removeEventListener('timeupdate', this.timeCheckVideo3);
-        this.video3.nativeElement.style.visibility = "hidden";
-      }
-      this.onFinIntro = true;
-      this.done1 = true;
-      this.done2 = true;
-      this.done3 = true;
     });
   }
 
   ngAfterViewInit(): void {
-    this.video1.nativeElement.muted = true;
-    this.video1.nativeElement.play();
+    this.video1.nativeElement.load();
+
+    let that = this;
+    this.video1.nativeElement.addEventListener('loadeddata', function () {
+      // Video is loaded and can be played
+      console.log("VH", that.videoHolder.nativeElement.clientHeight);
+      console.log("V", that.video1.nativeElement.clientHeight);
+      const holderHeight = that.videoHolder.nativeElement.clientHeight;
+      const videoHeight = that.video1.nativeElement.clientHeight;
+
+      if(videoHeight > holderHeight) {
+        console.log(Math.min(videoHeight-holderHeight,50));
+        that.video1.nativeElement.style.marginTop = -(Math.min(videoHeight-holderHeight,70))+"px";
+        that.video2.nativeElement.style.marginTop = -(Math.min(videoHeight-holderHeight,70))+"px";
+        that.video3.nativeElement.style.marginTop = -(Math.min(videoHeight-holderHeight,70))+"px";
+      }
+
+      that.video1.nativeElement.muted = true;
+      that.video1.nativeElement.currentTime = 2;
+      that.video1.nativeElement.play();
+    }, false);
+
+
     this.video1.nativeElement.addEventListener('timeupdate', () => {
       this.timeCheckVideo1();
     });
 
     this.video3.nativeElement.style.visibility = "hidden";
     this.video3.nativeElement.pause();
+
+
   }
 
   timeCheckVideo1() {
     if (!this.done1) {
-      // console.log("timeCheckVideo1", this.video1.nativeElement.currentTime);
-      if (this.video1.nativeElement.currentTime > 4) {
+      if (this.video1.nativeElement.currentTime > 3.9) {
         this.showSwipe = true;
       }
       if (this.video1.nativeElement.currentTime > 8) {
@@ -96,11 +125,11 @@ export class Container1 implements OnInit {
   }
 
   flipIntro(): void {
-    // console.log("flipIntro");
     const directionObj: Direction = { direction: "left" };
     this.store.dispatch(new TurnPage(directionObj));
 
     this.video2.nativeElement.muted = true;
+    this.video2.nativeElement.currentTime = 1;
     this.video2.nativeElement.play();
     this.video2.nativeElement.addEventListener('timeupdate', () => {
       this.timeCheckVideo2();
@@ -109,7 +138,6 @@ export class Container1 implements OnInit {
 
   timeCheckVideo2() {
     if (!this.done2) {
-      // console.log("timeCheckVideo2", this.video2.nativeElement.currentTime);
       if (this.video2.nativeElement.currentTime > 4.5) {
         this.done2 = true;
         this.video2.nativeElement.removeEventListener('timeupdate', this.timeCheckVideo2);
@@ -119,7 +147,6 @@ export class Container1 implements OnInit {
   }
 
   flipIntroBack(): void {
-    // console.log("flipIntroBack");
     const directionObj: Direction = { direction: "right" };
     this.store.dispatch(new TurnPage(directionObj));
 
@@ -127,7 +154,7 @@ export class Container1 implements OnInit {
 
     this.video3.nativeElement.muted = true;
     this.video3.nativeElement.style.visibility = "visible";
-    this.video3.nativeElement.currentTime = 2;
+    this.video3.nativeElement.currentTime = 3;
     this.video3.nativeElement.play();
 
     this.video3.nativeElement.addEventListener('timeupdate', () => {
@@ -137,11 +164,11 @@ export class Container1 implements OnInit {
 
   timeCheckVideo3() {
     if (!this.done3) {
-      // console.log("timeCheckVideo3", this.video3.nativeElement.currentTime);
-      if (this.onFingerAnim === false && this.video3.nativeElement.currentTime > 0.75) {
+      if (this.onFingerAnim === false && this.video3.nativeElement.currentTime > 0.5) {
         this.onFingerAnim = true;
       }
-      if (this.video3.nativeElement.currentTime > 8.7) {
+      if (this.video3.nativeElement.currentTime > 8.9) {
+        this.showSwipe = false;
         this.done3 = true;
         this.finIntro();
         this.video3.nativeElement.removeEventListener('timeupdate', this.timeCheckVideo3);
@@ -151,10 +178,9 @@ export class Container1 implements OnInit {
 
   finIntro() {
     this.onFinIntro = true;
-    let appState: AppStateModel;
-    appState = { appState: { onIntro: false, mouseUpDetected: this.appState.appState.mouseUpDetected } };
-    this.store.dispatch(new ChangeAppState(appState.appState));
+    setTimeout(() => {
+      this.store.dispatch(new ChangeOnIntro(false));
+    }, 500);
+
   }
-
-
 }

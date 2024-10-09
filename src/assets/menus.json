@@ -10,12 +10,12 @@
     ],
     "menu_1": [
         "<div class='centre-hex-1'><div id='menuMagic' class='menu-magic'></div><div #topHalf class='top-half'><div><span class='letter'>H</span>EX</div></div><div #bottomHalf class='bottom-half'><div>BO<span class='letter'>X</span></div></div></div>",
-        "<div class='menu-theme'>Technos</div>",
-        "<div class='menu-theme'>##Click Me#Accueil##</div>",
-        "<div class='menu-theme'>Pour<br>Qui</div>",
-        "<div class='menu-theme'>Cours</div>",
-        "<div class='menu-theme one-char'>?</div>",
-        "<div class='menu-theme'>Dev</div>"
+        "<div class='menu-theme'>##Technos#Soft##</div>",
+        "<div class='menu-theme'>##Accueil#Home##</div>",
+        "<div class='menu-theme'>##Clients#Clients##</div>",
+        "<div class='menu-theme'>##Cours#Courses##</div>",
+        "<div class='menu-theme one-char'>##?#?##</div>",
+        "<div class='menu-theme'>##Dev#Dev##</div>"
     ],
     "logo": [
         "<div class='centre-hex-logo'><div  class='top-half-logo'><div><span class='letter'>H</span>EX</div></div><div class='bottom-half-logo'><div>BO<span class='letter'>X</span></div></div></div>"

@@ -16,11 +16,12 @@
     <div #menuLayout class="menu-layout">
         <!-- <span *ngIf="orientation === 'PORTRAIT'"> -->
         <span [ngClass]="{'hideForLandscape':!viewHeightOK}">
-            <app-menu></app-menu>
             <footer class="menu-footer">
                 <div class="tel">O6 78 93 29 75</div>
-                <div class="mail">contact&#64;hex-box.com</div>
+                <div class="mail">noel&#64;hex-box.com</div>
             </footer>
+            
+            <app-menu></app-menu>
         </span>
     </div>
     <!-- <div class="orientation-message" *ngIf="orientation === 'LANDSCAPE'"> -->
