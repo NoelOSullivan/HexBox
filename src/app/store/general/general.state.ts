@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { State, Action, StateContext } from "@ngxs/store";
 
-import { LanguageModel, AppStateModel } from './general.model';
-import { ChangeLanguage, ChangeOnIntro, ChangeMouseUpDetected } from './general.actions';
+import { LanguageModel, AppStateModel, IntroState } from './general.model';
+import { ChangeLanguage, ChangeMouseUpDetected, ChangeIntroState } from './general.actions';
 import { patch } from '@ngxs/store/operators';
+// import { IntroState } from 'app/shared/interfaces/general';
 
 @State<LanguageModel>({
     name: 'language',
     defaults: {
         // language: {
-            language: "Fr",
+        language: "Fr",
         // },
     }
 })
@@ -28,13 +29,18 @@ export class Language {
 
 //------------------------------
 
+
+
+//------------------------------
+
 @State<AppStateModel>({
     name: 'appState',
     defaults: {
-        appState: {
-            onIntro: true,
-            mouseUpDetected: false
-        },
+        // appState: {
+        onIntro: true,
+        introState: IntroState.BLOCKALL,
+        mouseUpDetected: false
+        // },
     }
 })
 
@@ -52,14 +58,30 @@ export class AppState {
 
     @Action(ChangeMouseUpDetected) changeMouseUpDetected(ctx: StateContext<AppStateModel>) {
         const state = ctx.getState();
-        const newAppState:AppStateModel = { appState: { onIntro: state.appState.onIntro, mouseUpDetected: !state.appState.mouseUpDetected } };
-        ctx.setState(newAppState);
+        // const newAppState: AppStateModel = { appState: { onIntro: state.appState.onIntro, introState: state.appState.introState, mouseUpDetected: !state.appState.mouseUpDetected } };
+        // ctx.setState(newAppState);
+        ctx.setState({
+            ...state,
+            mouseUpDetected: !state.mouseUpDetected
+        })
     }
 
-    @Action(ChangeOnIntro) changeOnIntro(ctx: StateContext<AppStateModel>, action: ChangeOnIntro) {
+    // @Action(ChangeOnIntro) changeOnIntro(ctx: StateContext<AppStateModel>, action: ChangeOnIntro) {
+    //     const state = ctx.getState();
+    //     // const newAppState: AppStateModel = { appState: { onIntro: action.onIntro, introState: state.appState.introState, mouseUpDetected: state.appState.mouseUpDetected } };
+    //     // ctx.setState(newAppState);
+    //     ctx.setState({
+    //         ...state,
+    //         onIntro: action.onIntro
+    //     })
+    // }
+
+    @Action(ChangeIntroState) changeIntroState(ctx: StateContext<AppStateModel>, action: ChangeIntroState) {
         const state = ctx.getState();
-        const newAppState:AppStateModel = { appState: { onIntro: action.onIntro, mouseUpDetected: state.appState.mouseUpDetected } };
-        ctx.setState(newAppState);
+        ctx.setState({
+            ...state,
+            introState: action.introState
+        })
     }
 
 }

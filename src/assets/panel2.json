@@ -1,13 +1,62 @@
 {
     "carousel": {
         "items": [
-            {"imageSrc":"assets/images/logos/logo-airbus.jpg","intro":"Tech Data - AirnavX - Airnaveo","text":"Interface design and dev\n\nsvg manipulation, 3D", "page":2},
-            {"imageSrc":"assets/images/logos/logo-dgac.png","intro":"Airplane management on ground Environment","text":"SVG, Big Data", "page":3},
-            {"imageSrc":"assets/images/logos/logo-ednat.jpg","intro":"Library for Single Page Apps","text":"Used at DTI, Gamesys", "page":4},
-            {"imageSrc":"assets/images/logos/logo-gamesys.jpg","intro":"Library for Data Visualisation","text":"Used at DTI", "page":5},
-            {"imageSrc":"assets/images/logos/logo-moneypenny.jpg","intro":"Library for Interactive Maps","text":"Used at DTI", "page":6},
-            {"imageSrc":"assets/images/logos/logo-thesun.jpg","intro":"Library for WebGL animation","text":"Used at Gamesys", "page":7},
-            {"imageSrc":"assets/images/logos/logo-milan.jpg","intro":"Library for WebGL animation","text":"Used at The Sun", "page":8}
+            {
+                "imageSrc": "assets/images/logos/logo-airbus.jpg",
+                "introEn": "Four years with the Tech Data team",
+                "textEn": "Interface design and dev, tech drawing reader, 3D",
+                "introFr": "Quatre ans avec l'équipe Tech Data",
+                "textFr": "Design et dev des interfaces, lecteur de dessins techniques, 3D",
+                "page": 2
+            },
+            {
+                "imageSrc": "assets/images/logos/logo-dgac.png",
+                "introEn": "One year, two projects, two tech stacks",
+                "textEn": "Airplane ground management - Environment",
+                "introFr": "Un an, deux équipes, deux stacks techno",
+                "textFr": "Gestion d'avions au sol - Environnement",
+                "page": 3
+            },
+            {
+                "imageSrc": "assets/images/logos/logo-ednat.jpg",
+                "introEn": "One year on the Saxo project",
+                "textEn": "Forms on an industrial scale ;-)",
+                "introFr": "Un an sur le projet Saxo",
+                "textFr": "Des formulaires interconnectés à perte de vue ;-)",
+                "page": 4
+            },
+            {
+                "imageSrc": "assets/images/logos/logo-gamesys.jpg",
+                "introEn": "Eight months of online casino gaming",
+                "textEn": "Marketing games",
+                "introFr": "Huit mois de jeux casino enligne",
+                "textFr": "Jeux marketting",
+                "page": 5
+            },
+            {
+                "imageSrc": "assets/images/logos/logo-moneypenny.jpg",
+                "introEn": "Largest UK answering service provider",
+                "textEn": "Marketing content, Virtual assistant",
+                "introFr": "Plus grand société de permanence téléphonique du Royaume-uni",
+                "textFr": "Contenu marketting, Assistant virtuel",
+                "page": 6
+            },
+            {
+                "imageSrc": "assets/images/logos/logo-thesun.jpg",
+                "introEn": "Sunnation 2015 UK Election website",
+                "textEn": "Games, Quizzes, Activities on a daily basis for three months",
+                "introFr": "Sunnation 2015 site parodique sur les éléctions parlementaires au RU",
+                "textFr": "Jeux, quiz, activités chaque jour pendant trois mois",
+                "page": 7
+            },
+            {
+                "imageSrc": "assets/images/logos/logo-milan.jpg",
+                "introEn": "Fifteen years of interactive content creation for kids",
+                "textEn": "Games, documentairies, karaokés, activities, animated stories",
+                "introFr": "Quinze ans de contenu interactive",
+                "textFr": "Jeux, documentaires, karaokés, activités, contes animés",
+                "page": 8
+            }
         ]
-    } 
+    }
 }

@@ -56,7 +56,6 @@ export class LayoutComponent implements OnInit {
   }
 
   @HostListener('mouseup', ['$event']) mouseup(event: MouseEvent) {
-    console.log("UPUPUPANDAWAY");
 
     // let appState: AppStateModel;
     // appState = { appState: { onIntro: this.appState.appState.onIntro, mouseUpDetected: !this.appState.appState.mouseUpDetected } };

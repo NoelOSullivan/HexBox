@@ -1,13 +1,62 @@
 {
     "carousel": {
         "items": [
-            {"imageSrc":"assets/images/panel6/angular.svg","intro":"Framework for Single Page Apps","text":"Used at Airbus, DTI, Education Nationale"},
-            {"imageSrc":"assets/images/panel6/angularJS.svg","intro":"Framework for Single Page Apps","text":"Used at Airbus, Moneypenny, The Sun"},
-            {"imageSrc":"assets/images/panel6/react.svg","intro":"Library for Single Page Apps","text":"Used at DGAC, Gamesys"},
-            {"imageSrc":"assets/images/panel6/d3.svg","intro":"Library for Data Visualisation","text":"Used at DGAC"},
-            {"imageSrc":"assets/images/panel6/leaflet.svg","intro":"Library for Interactive Maps","text":"Used at DTI"},
-            {"imageSrc":"assets/images/panel6/pixijs.svg","intro":"Library for WebGL animation","text":"Used at Gamesys"},
-            {"imageSrc":"assets/images/panel6/phaser.svg","intro":"Library for WebGL animation","text":"Used at The Sun"}
+            {
+                "imageSrc": "assets/images/panel6/angular.svg",
+                "introEn": "Framework for Single Page Applications",
+                "textEn": "Projects: Airbus, DGAC, Education Nationale",
+                "introFr": "Framework pour Single Page Applications",
+                "textFr": "Projets: Airbus, DGAC, Education Nationale"
+            },
+            {
+                "imageSrc": "assets/images/panel6/angularJS.svg",
+                "introEn": "Framework for Single Page Apps",
+                "textEn": "Projects: Airbus, Moneypenny, The Sun",
+                "introFr": "Framework pour Single Page Applications",
+                "textFr": "Projets: Moneypenny, The Sun"
+            },
+            {
+                "imageSrc": "assets/images/panel6/react.png",
+                "introEn": "Library for Single Page Apps",
+                "textEn": "Projects: DGAC, Gamesys",
+                "introFr": "Librarie pour Single Page Applications",
+                "textFr": "Projets: DGAC, Gamesys"
+            },
+            {
+                "imageSrc": "assets/images/panel6/d3.svg",
+                "introEn": "Library for Data Visualisation",
+                "textEn": "Project: DGAC",
+                "introFr": "Librarie pour Visualisation des données",
+                "textFr": "Projet: DGAC"
+            },
+            {
+                "imageSrc": "assets/images/panel6/leaflet.svg",
+                "introEn": "Library for Interactive Maps",
+                "textEn": "Project: DGAC",
+                "introFr": "Librarie pour des cartes/plans interactives",
+                "textFr": "Projets: DGAC"
+            },
+            {
+                "imageSrc": "assets/images/panel6/pixijs.svg",
+                "introEn": "Library for WebGL animation",
+                "textEn": "Project: Gamesys",
+                "introFr": "Librairie pour animation WebGL",
+                "textFr": "Projet: Gamesys"
+            },
+            {
+                "imageSrc": "assets/images/panel6/phaser-planet-web.png",
+                "introEn": "Library for WebGL animation",
+                "textEn": "Project: The Sun",
+                "introFr": "Librairie pour animation WebGL",
+                "textFr": "Projet: The Sun"
+            },
+            {
+                "imageSrc": "assets/images/panel6/threeJS.png",
+                "introEn": "Library for 3D WebGL animation",
+                "textEn": "Project: Airbus, The Sun",
+                "introFr": "Librarie pour animation 3D WebGL",
+                "textFr": "Projet: Airbus, The Sun"
+            }
         ]
-    } 
+    }
 }

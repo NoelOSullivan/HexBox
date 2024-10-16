@@ -1,7 +1,7 @@
 <div class="container">
     <div #flipper contentControl nPanel="2" (changeActivePanel)="changePanel($event)" (changePageNum)="changePageNum($event)" class="flipper">
         <li class="common-side">
-            <app-circular-carousel (carouselItemClicked)="goPage($event)" [data]="'panel2.json'" [orientation]="'vertical'" [perspective]="'750px'" [itemHeightInput]="'55%'"></app-circular-carousel>
+            <app-circular-carousel [language]="language" (carouselItemClicked)="goPage($event)" [data]="'panel2.json'" [orientation]="'vertical'" [perspective]="'750px'" [itemHeightInput]="'55%'"></app-circular-carousel>
         </li>
         <li class="common-side">
             <app-airbus [activePageNum]="activePageNum" class="app-fill-container"></app-airbus>

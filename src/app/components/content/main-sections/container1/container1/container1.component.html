@@ -1,53 +1,45 @@
 <div class="container">
-    <!-- <app-arrow></app-arrow> -->
-
     <div contentControl nPanel="1" class="flipper">
-        <!-- <div class="intro2" [ngClass]="{'shuntIntro2': onFinIntro===true}"> -->
         <li class="common-side">
 
-            <div *ngIf="onIntro===true" class="finger" [ngClass]="{'finger-anim': onFingerAnim===true}">
+            <div *ngIf="introState!=='done' && introState!=='onFinalAnim'" class="finger" [ngClass]="{'finger-anim': onFingerAnim===true}">
                 <app-swipe-icon></app-swipe-icon>
             </div>
 
             <div class="text-holder">
                 <div class="intro-anim vertical-space-between-holder"
-                    [ngClass]="{'shunt-intro-text': onFinIntro===true}">
+                    [ngClass]="{'shunt-intro-text': introState==='onFinalAnim' ||introState==='done'}">
                     <div class="byline">Noel O'Sullivan</div>
                     <div class=" intro-title">
-                        Creative<br>Web Development
+                        <span *ngIf="language==='En'">Web<br>Development</span>
+                        <span *ngIf="language==='Fr'">Dévéloppement<br>Web</span>
                     </div>
                     <div>
-                        <div class="intro-text">Good code - No limits</div>
-                        <!-- <div class="intro-text">Well coded</div>
-                        <div class="intro-text">Web Design</div> -->
+                        <div class="intro-text">
+                            <span *ngIf="language==='En'">Creation  &  Code</span>
+                            <span *ngIf="language==='Fr'">Création  &  Code</span>
+                        </div>
                     </div>
                 </div>
             </div>
             <div #videoHolder class="video-holder">
-                <video #video1 class="video video1" src="assets/videos/white1.mp4"></video>
-                <video #video3 class="video" [ngClass]="{'shunt-intro-video': onFinIntro===true}"
-                    src="assets/videos/white3.mp4"></video>
-                <div *ngIf="onIntro===true && showSwipe===true" class="swipe-me">Swipe Me</div>
+                <video #video1 class="video video1" [ngClass]="{'shunt-intro-video': introState==='onFinalAnim'}" src="assets/videos/intro1.mp4"></video>
+                <video #video3 class="video" [ngClass]="{'shunt-intro-video': introState==='onFinalAnim'}"
+                    src="assets/videos/intro3.mp4"></video>
+                <div *ngIf="introState!=='onFinalAnim' && showSwipe===true" class="swipe-me">Swipe Me</div>
             </div>
             <app-logo></app-logo>
         </li>
         <li class="common-side">
             <app-logo></app-logo>
-            <div *ngIf="onIntro===false" class="vertical-space-between-holder basic-text">
+            <div class="vertical-space-between-holder basic-text" [ngClass]="{'shunt-intro-text': introState==='onFinalAnim'}">
                 <div class="intro-text">Twenty years of digital media</div>
                 <div class="intro-text">Aeronautic, institutional, entertainment</div>
                 <div class="intro-text">Data visualisation, marketing, games </div>
-                <!-- <p>
-                    I have 25 years of experience in digital communication working in multiple sectors notably
-                    industry, education and entertainment.<br><br>
-                    Take a look at who I've worked for and what I did for them.
-                </p>
-                <br> -->
-                <!-- <app-direct-access [linkText]="'Who'" [hexNum]="2" [nPage]="1"></app-direct-access> -->
             </div>
-            <div *ngIf="onIntro===true" class="video-holder">
-                <video #video2 class="video" src="assets/videos/white2new.mp4"></video>
-                <div *ngIf="onIntro===true" class="swipe-me-back">Swipe Me</div>
+            <div *ngIf="introState!=='done'" class="video-holder">
+                <video #video2 class="video" src="assets/videos/intro2.mp4" [ngClass]="{'shunt-intro-video': introState==='onFinalAnim'}"></video>
+                <div *ngIf="introState!=='onFinalAnim'" class="swipe-me-back">Swipe Me</div>
             </div>
         </li>
         <li class="common-side">
@@ -80,16 +72,6 @@
         <li class="common-side">
             <h2>You'll never walk alone</h2>
         </li>
-        <!-- </div> -->
-        <!-- <div class="intro1" [ngClass]="{'shuntIntro1': onFinIntro===true}">
-            <li class="common-side side1 test1">
-                <video #video1 class="testimage" src="../../../../../../assets/videos/flip1.mp4"></video>
-                <video #video3 class="testimage" src="../../../../../../assets/videos/flip3.mp4"></video>
-            </li>
-            <li class="common-side side1 test1">
-                <video #video2 class="testimage" src="../../../../../../assets/videos/flip2.mp4"></video>
-            </li>
-        </div> -->
     </div>
 
 

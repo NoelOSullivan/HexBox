@@ -2,7 +2,15 @@ export interface Language {
     language: string;
 }
 
-export interface AppState {
-    onIntro: boolean;
-    mouseUpDetected: boolean;
-}
+// export enum IntroState {
+//     "blockAll",
+//     "allowCut",
+//     "onFinalAnim",
+//     "done"
+// }
+
+// export interface AppState {
+//     onIntro: boolean;
+//     introState: IntroState;
+//     mouseUpDetected: boolean;
+// }

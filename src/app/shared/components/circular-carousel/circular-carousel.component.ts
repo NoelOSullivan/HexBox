@@ -1,15 +1,16 @@
 import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild, viewChild } from '@angular/core';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { DataService } from 'app/shared/services/data.service';
 import { Select } from '@ngxs/store';
 import { AppState } from 'app/store/general/general.state';
 import { Observable } from 'rxjs';
-import { AppStateModel } from 'app/store/general/general.model';
+import { AppStateModel, LanguageModel } from 'app/store/general/general.model';
+import { Language } from 'app/store/general/general.state';
 
 @Component({
   selector: 'app-circular-carousel',
   standalone: true,
-  imports: [NgFor],
+  imports: [NgFor, NgIf],
   providers: [DataService],
   templateUrl: './circular-carousel.component.html',
   styleUrl: './circular-carousel.component.scss'
@@ -18,6 +19,7 @@ export class CircularCarouselComponent implements OnInit {
 
   @Input() nContainer!: number;
   @Input() pageNum!: number;
+  @Input() language!: string;
   @Output() carouselItemClicked = new EventEmitter<number>();
 
   @ViewChild('carouselRoot') carouselRoot!: ElementRef;
@@ -159,7 +161,7 @@ export class CircularCarouselComponent implements OnInit {
 
   manageUp(): void {
     this.isTouchOrMousedown = false;
-    this.carousel.nativeElement.style.transform = 'translateZ(' + -this.radius + 'px) ' + 'rotateX' + '(' + (this.degrees) + 'deg)';
+    // this.carousel.nativeElement.style.transform = 'translateZ(' + -this.radius + 'px) ' + 'rotateX' + '(' + (this.degrees) + 'deg)';
   }
 
   rotateCarousel(): void {
@@ -172,9 +174,6 @@ export class CircularCarouselComponent implements OnInit {
     for (let i = 0, length = this.itemCollection.length; i < length; i++) {
       let shadow = this.itemCollection[i].lastChild as HTMLElement;
       let abstractCoef = Math.abs(itemIndex - i);
-      // if(i === 0) {
-      //   console.log("abstractCoef", abstractCoef);
-      // }
       let opacity = 0.4;
       if (abstractCoef < 0.25 || abstractCoef > this.itemCount - 0.25) {
         opacity = 0;

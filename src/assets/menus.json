@@ -12,7 +12,7 @@
         "<div class='centre-hex-1'><div id='menuMagic' class='menu-magic'></div><div #topHalf class='top-half'><div><span class='letter'>H</span>EX</div></div><div #bottomHalf class='bottom-half'><div>BO<span class='letter'>X</span></div></div></div>",
         "<div class='menu-theme'>##Technos#Soft##</div>",
         "<div class='menu-theme'>##Accueil#Home##</div>",
-        "<div class='menu-theme'>##Clients#Clients##</div>",
+        "<div class='menu-theme'>##Projets#Projects##</div>",
         "<div class='menu-theme'>##Cours#Courses##</div>",
         "<div class='menu-theme one-char'>##?#?##</div>",
         "<div class='menu-theme'>##Dev#Dev##</div>"

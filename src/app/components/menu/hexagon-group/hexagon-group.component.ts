@@ -9,9 +9,9 @@ import { ChangePanelNumber, ChangeRotation } from '../../../store/hexagon/hexago
 import { DirectAccess } from '../../../store/panel/panel.state';
 import { Observable } from 'rxjs';
 import { DirectAccessModel } from '../../../store/panel/panel.model';
-import { AppStateModel, LanguageModel } from 'app/store/general/general.model';
+import { AppStateModel, IntroState, LanguageModel } from 'app/store/general/general.model';
 import { AppState, Language } from 'app/store/general/general.state';
-import { ChangeOnIntro } from 'app/store/general/general.actions';
+import { ChangeIntroState } from 'app/store/general/general.actions';
 import { LangButtonComponent } from '../lang-button/lang-button.component';
 
 @Component({
@@ -33,7 +33,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
   menuRotate!: ElementRef;
 
   appState!: AppStateModel;
-  onIntro!: boolean;
+  introState!: IntroState;
 
   constructor(private dataService: DataService, private router: Router, private store: Store) {
   }
@@ -48,11 +48,8 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
   private menuRotation: number = 0;
   public rolled: number | null = null;
   private hexagons: Array<any> = [];
-  // private onIntro: boolean = false;
-  private menuAnimationFinished: boolean = false;
 
   private introDone: boolean = false;
-  private allowCut: boolean = false;
   private language!: string;
 
   ngOnInit() {
@@ -61,11 +58,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
 
     this.getMenus();
 
-    // this.onIntro = true;
-
     this.hexOpened = [false, false, false, false, false, false];
-
-    this.menuAnimationFinished = false;
 
     setTimeout(() => {
       for (let i = 0; i < 6; i++) {
@@ -76,7 +69,6 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
 
     // Calls change of menu after menu intro
     setTimeout(() => {
-      // this.onIntro = false;
       this.changeMenu();
     }, 5000);
 
@@ -87,12 +79,10 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
     });
 
     this.appState$.subscribe(newAppState => {
-      // To Do : this gets called every time for the mouseupoutside on intro.
+      // To Do : this gets called every time for the mouseupoutside on wheel menus
       // It keeps being called. No good.
-      this.appState = newAppState;
-      this.onIntro = this.appState.appState.onIntro;
-
-      if (this.onIntro === false && this.introDone === false) {
+      this.introState = newAppState.introState;
+      if (this.introState === 'onFinalAnim' && this.introDone === false) {
         this.introDone = true;
         this.menuLanguageChange();
         this.manageMenu(2);
@@ -124,6 +114,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
     this.menuContentLanguage = this.allMenus["menu_" + menu];
     // this.menuContent2 = this.menuContent[2];
     if (menu === 1) {
+      this.store.dispatch(new ChangeIntroState(IntroState.ALLOWCUT));
       this.menuLanguageChange();
     }
   }
@@ -136,13 +127,15 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
         const contentText = this.menuContent[i].split("##");
         const twoPossibles = contentText[1].split("#");
         let newText;
-        if (this.onIntro && i===2) {
+        if (this.introState !== 'done' && this.introState !== 'onFinalAnim' && i === 2) {
           newText = "Click Me";
         } else {
           newText = this.language == "Fr" ? twoPossibles[0] : twoPossibles[1];
         }
         this.menuContentLanguage.push(contentText[0] + newText + contentText[2]);
       }
+    } else {
+      this.menuContentLanguage = this.menuContent;
     }
   }
 
@@ -165,15 +158,18 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
   }
 
   clickHexagon(hexIndex: any, location: any) {
-    console.log("this.allowCut", this.allowCut);
-    if (this.onIntro) {
-      if (this.allowCut) {
-        this.store.dispatch(new ChangeOnIntro(false));
-        // let appState: AppStateModel;
-        // appState = { appState: { onIntro: false, mouseUpDetected: this.appState.appState.mouseUpDetected } };
-        // this.store.dispatch(new ChangeAppState(appState.appState));
+    if (this.introState === IntroState.BLOCKALL) {
+      return
+    }
+
+    if (this.introState === IntroState.ALLOWCUT) {
+
+      if (hexIndex === 2) {
+        this.store.dispatch(new ChangeIntroState(IntroState.ONFINALANIM));
       }
-    } else {
+    }
+
+    if (this.introState === IntroState.DONE) {
       this.manageMenu(hexIndex);
     }
   }
@@ -234,12 +230,12 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
   }
 
   overHexagon(index: number) {
-    if (this.onIntro) return;
+    if (this.introState !== 'done') return;
     this.rolled = index;
   }
 
   leaveHexagon() {
-    if (this.onIntro) return;
+    if (this.introState !== 'done') return;
     this.rolled = null;
   }
 

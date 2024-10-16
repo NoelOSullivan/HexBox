@@ -2,12 +2,21 @@
 <nav #carouselRoot class="carousel-root">
     <div class="carousel-event-capture"></div>
     <div #carousel class="carousel">
-        <li class="carousel-item" *ngFor="let item of items; let  i = index" id="item{{i}}" (click)="itemClicked($event,item)">
-            <div class="svg-holder">
+        <li class="carousel-item" *ngFor="let item of items; let  i = index" id="item{{i}}"
+            (click)="itemClicked($event,item)">
+            <div class="logo-holder">
                 <img class="svg-icon" src="{{item.imageSrc}}" />
             </div>
-            <div class="intro">{{item.intro}}</div>
-            <div class="text">{{item.text}}</div>
+            <div class="text-holder">
+                <div class="intro">
+                    <span *ngIf="language==='En'">{{item.introEn}}</span>
+                    <span *ngIf="language==='Fr'">{{item.introFr}}</span>
+                </div>
+                <div class="text">
+                    <span *ngIf="language==='En'">{{item.textEn}}</span>
+                    <span *ngIf="language==='Fr'">{{item.textFr}}</span>
+                </div>
+            </div>
             <div #shadow class="shadow"></div>
         </li>
     </div>

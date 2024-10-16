@@ -1,4 +1,6 @@
-import { AppState, Language } from "../../shared/interfaces/general";
+// import { Language } from "../../shared/interfaces/general";
+
+import { IntroState } from "./general.model";
 
 export class ChangeLanguage {
     static readonly type= '[Change language] ChangeLanguage';
@@ -10,9 +12,14 @@ export class ChangeLanguage {
 //     constructor(public AppState: AppState){}
 // }
 
-export class ChangeOnIntro {
-    static readonly type= '[Change on intro] ChangeOnIntro';
-    constructor(public onIntro: boolean){}
+// export class ChangeOnIntro {
+//     static readonly type= '[Change on intro] ChangeOnIntro';
+//     constructor(public onIntro: boolean){}
+// }
+
+export class ChangeIntroState {
+    static readonly type = '[Change intro state] ChangeIntroState';
+    constructor(public introState: IntroState){}
 }
 
 export class ChangeMouseUpDetected {

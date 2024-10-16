@@ -8,7 +8,7 @@ import { DirectAccessModel, PageTurnerModel } from '../../store/panel/panel.mode
 import { DirectAccess, PageTurner } from '../../store/panel/panel.state';
 import { ActivePanelNumberModel } from '../../store/hexagon/hexagon.model';
 import { ActivePanelNumber } from '../../store/hexagon/hexagon.state';
-import { AppStateModel } from 'app/store/general/general.model';
+import { AppStateModel, IntroState } from 'app/store/general/general.model';
 import { AppState } from 'app/store/general/general.state';
 
 @Directive({
@@ -23,7 +23,6 @@ export class ContentDirective implements OnInit {
   @Select(AppState) appState$!: Observable<AppStateModel>;
 
   @Input() nPanel!: string;
-  // @Input() onIntro!: boolean;
   @Output() changeActivePanel = new EventEmitter<number>();
   @Output() changePageNum = new EventEmitter<number>();
   @Select(PageTurner) direction$!: Observable<PageTurnerModel>;
@@ -47,11 +46,10 @@ export class ContentDirective implements OnInit {
   finalAnimDirection!: String;
   blockWheelAndClick: boolean = true;
   activePanelNumber!: number;
-  onIntro!: boolean;
-
+  introState!: IntroState;
+  isTouchOrMousedown: boolean = false;
   appState!: AppStateModel;
 
-  // counter: number = 0;
 
   constructor(private panel: ElementRef, private store: Store) { }
 
@@ -72,11 +70,7 @@ export class ContentDirective implements OnInit {
 
     this.direction$.subscribe(newDirection => {
       if (this.activePanelNumber === Number(this.nPanel)) {
-        console.log("newDirection", newDirection, this.blockWheelAndClick);
-        // if (!this.blockWheelAndClick) {
-        // if (this.activePanelNumber === 0) this.activePanelNumber = 6;
         this.turnPage(newDirection.direction.direction);
-        // }
       }
     });
 
@@ -89,8 +83,8 @@ export class ContentDirective implements OnInit {
     });
 
     this.appState$.subscribe(newAppState => {
-      this.onIntro = newAppState.appState.onIntro;
-      if (newAppState.appState.onIntro === false) {
+      this.introState = newAppState.introState;
+      if (newAppState.introState === 'done') {
         this.blockWheelAndClick = false;
       }
     });
@@ -104,13 +98,11 @@ export class ContentDirective implements OnInit {
       if (this.activePanelNumber === 0) this.activePanelNumber = 6;
       this.changeActivePanel.emit(this.activePanelNumber);
       this.lastPage = undefined;
-      // console.log("Content Directive subscribe : activePanelNumber", this.activePanelNumber);
     });
 
   }
 
   @HostListener('wheel', ['$event']) wheel(event: WheelEvent) {
-    // console.log("event", event);
     if (!this.blockWheelAndClick) {
       if (Number(this.nPanel) === this.activePanelNumber) {
         if (event.deltaY > 0) {
@@ -122,11 +114,21 @@ export class ContentDirective implements OnInit {
     }
   }
 
+  @HostListener('mouseup', ['$event']) mouseup(event: MouseEvent) {
+    if (!this.blockWheelAndClick) {
+      if (event.offsetX > this.panel.nativeElement.clientWidth / 2) {
+        this.turnPage("left");
+      } else {
+        this.turnPage("right");
+      }
+    }
+  }
+
   @HostListener('touchstart', ['$event']) touchstart(event: TouchEvent) {
     if (!this.blockWheelAndClick) {
       if (Number(this.nPanel) === this.activePanelNumber) {
-        this.lastX = this.touchStartX = event.changedTouches[0].clientX;
-        this.touchStartTime = event.timeStamp;
+        this.isTouchOrMousedown = true;
+        this.manageDown(event.changedTouches[0].clientX);
       }
     }
   }
@@ -134,49 +136,64 @@ export class ContentDirective implements OnInit {
   @HostListener('touchmove', ['$event']) touchmove(event: TouchEvent) {
     if (!this.blockWheelAndClick) {
       if (Number(this.nPanel) === this.activePanelNumber) {
-        // Detect movement of finger since last event
-        const diffX = this.lastX - event.targetTouches[0].clientX;
-        this.lastX = event.targetTouches[0].clientX;
-
-        // If swiping right calculate new rotation if not yet minimum value (0)
-        // TO DO : 3 is arbitary. Maybe find a rule.
-        if (diffX < 0) {
-          if (this.rotation.degrees < 0) {
-            this.rotation.degrees -= diffX * 3;
-          }
-        } else {
-          // If swiping left calculate new rotation if not yet maximum value (this.maxRotation)
-          if (diffX > 0) {
-            if (this.rotation.degrees > this.maxRotation) {
-              this.rotation.degrees -= diffX * 3;
-            }
-          }
-        }
-        this.managePanelDisplay();
+        this.manageMove(event.targetTouches[0].clientX);
       }
     }
   }
 
   @HostListener('touchend', ['$event']) touchend(event: TouchEvent) {
-    // console.log("TOUCH END");
     if (!this.blockWheelAndClick) {
       if (Number(this.nPanel) === this.activePanelNumber) {
-        this.touchEndX = event.changedTouches[0].clientX;
-        this.touchEndTime = event.timeStamp;
+        this.manageUp(event.changedTouches[0].clientX);
+      }
+    }
+  }
 
-        if (this.touchEndX < this.touchStartX) {
-          this.direction = "left"
-          // Calculate the final degrees that will be flipped to
-          this.finalAnimRotation = Math.round(this.rotation.degrees / 180) * 180;
-          this.finishFlipToCalculatedPage();
-        } else {
-          if (this.touchEndX > this.touchStartX) {
-            this.direction = "right"
-            // Calculate the final degrees that will be flipped to
-            this.finalAnimRotation = Math.round(this.rotation.degrees / 180) * 180;
-            this.finishFlipToCalculatedPage();
+  manageDown(posX: number): void {
+    this.lastX = this.touchStartX = posX;
+  }
+
+  manageMove(posX: number): void {
+    if (this.isTouchOrMousedown) {
+      
+      // Detect movement of finger since last event
+      const diffX = this.lastX - posX;
+      this.lastX = posX;
+
+      // If swiping right calculate new rotation if not yet minimum value (0)
+      // TO DO : 3 is arbitary. Maybe find a rule.
+      if (diffX < 0) {
+        if (this.rotation.degrees < 0) {
+          this.rotation.degrees -= diffX * 3;
+        }
+      } else {
+        // If swiping left calculate new rotation if not yet maximum value (this.maxRotation)
+        if (diffX > 0) {
+          if (this.rotation.degrees > this.maxRotation) {
+            this.rotation.degrees -= diffX * 3;
           }
         }
+      }
+      this.managePanelDisplay();
+    }
+
+  }
+
+  manageUp(posX: number): void {
+    this.isTouchOrMousedown = false;
+    this.touchEndX = posX;
+
+    if (this.touchEndX < this.touchStartX) {
+      this.direction = "left"
+      // Calculate the final degrees that will be flipped to
+      this.finalAnimRotation = Math.round(this.rotation.degrees / 180) * 180;
+      this.finishFlipToCalculatedPage();
+    } else {
+      if (this.touchEndX > this.touchStartX) {
+        this.direction = "right"
+        // Calculate the final degrees that will be flipped to
+        this.finalAnimRotation = Math.round(this.rotation.degrees / 180) * 180;
+        this.finishFlipToCalculatedPage();
       }
     }
   }
@@ -206,7 +223,6 @@ export class ContentDirective implements OnInit {
   turnPage(direction: string) {
     if (direction === "left") {
       if (this.rotation.degrees > this.maxRotation) {
-        // console.log(this.rotation.degrees + " : " + this.maxRotation);
         this.blockWheelAndClick = true;
         this.direction = "left"
         this.finalAnimRotation = this.rotation.degrees - 180;
@@ -223,7 +239,6 @@ export class ContentDirective implements OnInit {
   }
 
   finishFlipToCalculatedPage() {
-
     if (this.finalAnimRotation < this.rotation.degrees) {
       this.finalAnimDirection = "left";
     } else {
@@ -231,7 +246,6 @@ export class ContentDirective implements OnInit {
         this.finalAnimDirection = "right";
       }
     }
-
     // TODO : try to avoid this interval
     this.endInterval = setInterval(() => {
       this.finishFlip();
@@ -240,7 +254,6 @@ export class ContentDirective implements OnInit {
   }
 
   finishFlip() {
-
     if (this.finalAnimDirection === "left") {
       this.rotation.degrees -= 5;
     } else {
@@ -251,9 +264,10 @@ export class ContentDirective implements OnInit {
 
     if (this.finalAnimDirection === "left") {
       if (this.rotation.degrees <= this.finalAnimRotation) {
+
         clearInterval(this.endInterval);
         this.rotation.degrees = this.finalAnimRotation;
-        if (!this.onIntro) {
+        if (this.introState === 'done') {
           this.blockWheelAndClick = false;
         }
         this.changePageNum.emit(this.count);
@@ -262,7 +276,7 @@ export class ContentDirective implements OnInit {
       if (this.rotation.degrees >= this.finalAnimRotation) {
         clearInterval(this.endInterval);
         this.rotation.degrees = this.finalAnimRotation;
-        if (!this.onIntro) {
+        if (this.introState === 'done') {
           this.blockWheelAndClick = false;
         }
         this.changePageNum.emit(this.count);
@@ -316,7 +330,6 @@ export class ContentDirective implements OnInit {
     }
 
     if (this.lastPage !== nPage) {
-      // console.log("NPAGE", nPage);
       this.lastPage = nPage;
       // Update the pagecounter store array with the page number of the activePanel
       const payload = { panelNumber: Number(this.nPanel), pageNumber: nPage }
