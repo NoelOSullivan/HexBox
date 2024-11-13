@@ -1,5 +1,5 @@
 <div class="container">
-    <div contentControl nPanel="1" class="flipper">
+    <div contentControl nPanel="1" (changePageNum)="changePageNum($event)" class="flipper">
         <li class="common-side">
 
             <div *ngIf="introState!=='done' && introState!=='onFinalAnim'" class="finger" [ngClass]="{'finger-anim': onFingerAnim===true}">
@@ -43,6 +43,7 @@
             </div>
         </li>
         <li class="common-side">
+            <app-logo></app-logo>
             <div class="vertical-space-between-holder">
                 <p>
                     Web Apps can do lots of good stuff. Streamlining production, promoting products.

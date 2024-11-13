@@ -1,3 +1,5 @@
+@import "../../../../../../scss/variables";
+
 .airbus-holder {
     position: absolute;
     width: 100%;
@@ -6,223 +8,132 @@
 
 .animation-holder {
     position: absolute;
+    top: 0;
     width: 100%;
     height: 100%;
     overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.intro {
+    padding-top: 15%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
 }
 
 .logo-airbus {
-    width: 50%;
+    width: 100%;
 }
 
-.airnavx-title {
-    width: 50%;
+.airnavx-logo {
+    position: absolute;
+    left: 0;
+    width: 30%;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 5px;
+    padding-left: 10%;
+    padding-right: 35%;
+    top: 25%;
+}
+
+
+
+.airnaveo-logo {
+    position: absolute;
+    top: 190px;
+    right: 0;
+    width: 40%;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 5px;
+    top: 38%;
+    padding-right: 10%;
+    padding-left: 25%;
+}
+
+@media screen and (max-height: 650px) {
+    .airnavx-logo {
+        top: 90px;
+    }
+
+    .airnaveo-logo {
+        top: 95px;
+    }
+}
+
+.play {
+    position: absolute;
+    width: 60px;
+    bottom: 83px;
+    right: 20px;
+    z-index: 10;
+}
+
+.blurb {
+    position: absolute;
+    width: 80%;
+    padding-left: 10px;
+    padding-right: 6%;
+    color: black;
+    font-size: 14px;
+    background: rgba(255, 255, 255, 0.4);
+    font-weight: 300;
+    bottom: 10%;
+    box-sizing: border-box;
+    text-align: justify;
+    left: 0;
+}
+
+.blurb2 {
+    bottom: 5px;
+    display: flex;
+    flex-direction: row;
 }
 
 .init-anim-1 {
     position: absolute;
-    width: 1493px;
-    height: 700px;
-    min-height: 100%;
-    opacity: 0;
-    top: 0px;
-    left: 0px;
-}
-
-.image-anim-1 {
-    animation-name: anim-1;
-    animation-iteration-count: 1;
-    animation-duration: 120s;
-    animation-timing-function: linear;
-    animation-fill-mode: forwards;
-}
-
-@keyframes anim-1 {
-
-    0% {
-        opacity: 0;
-        left: 0;
-        top: 0;
-    }
-
-    2% {
-        opacity: 0.6;
-        left: 0;
-        top: 0;
-    }
-
-    3% {
-        opacity: 0.6;
-    }
-    
-
-    9% {
-        opacity: 0.6;
-    }
-
-    10% {
-        opacity: 0;
-        left: calc(-1493px + 100%);
-        top: calc(-700px + 100%);
-    }
-
-    100% {
-        opacity: 0;
-        left: calc(-1493px + 100%);
-        top: calc(-700px + 100%);
-    }
+    // margin-left: -50%;
+    height: 100%;
+    // transition: opacity 2s linear;
 }
 
 .init-anim-2 {
     position: absolute;
-    width: 1493px;
-    height: 700px;
+    height: 100%;
     opacity: 0;
-    right: 0;
+}
+
+.bullet-points {
+    position: absolute;
+}
+
+.point1 {
+    top: 20%;
+    left: 20%;
+}
+
+.bullet-points {
+    background-color: rgba(0, 0, 0, 0.4);
+    position: absolute;
+    color: white;
+    transition: opacity 2s linear;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    font-size: 16px;
+    font-weight: 100;
     bottom: 0;
-}
-
-.image-anim-2 {
-    animation-name: anim-2;
-    animation-iteration-count: 1;
-    animation-duration: 120s;
-    animation-timing-function: linear;
-    animation-fill-mode: forwards;
-}
-
-@keyframes anim-2 {
-    0% {
-        opacity: 0;
-        right: 0;
-        bottom: 0;
-    }
-
-    9% {
-        opacity: 0;
-        right: 0;
-        bottom: 0;
-    }
-
-    10% {
-        opacity: 0.6;
-    }
-
-    19% {
-        opacity: 0.6;
-    }
-
-    20% {
-        opacity: 0;
-        right: calc(-1493px + 100%);
-        bottom: calc(-700px + 100%);
-    }
-
-    100% {
-        opacity: 0;
-        right: calc(-1493px + 100%);
-        bottom: calc(-700px + 100%);
-    }
-
-}
-
-.init-anim-3 {
-    position: absolute;
-    width: 1498px;
-    height: 700px;
-    opacity: 0;
-    left: 0px;
-    bottom: 0px;
-}
-
-.image-anim-3 {
-    animation-name: anim-3;
-    animation-iteration-count: 1;
-    animation-duration: 120s;
-    animation-timing-function: linear;
-    animation-fill-mode: forwards;
-}
-
-@keyframes anim-3 {
-    0% {
-        opacity: 0;
-        left: 0;
-        bottom: 0;
-    }
-
-    19% {
-        opacity: 0;
-        left: 0;
-        bottom: 0;
-    }
-
-    20% {
-        opacity: 0.6;
-    }
-
-    29% {
-        opacity: 0.6;
-    }
-
-    30% {
-        opacity: 0;
-        left: calc(-1498px + 100%);
-        bottom: calc(-700px + 100%);
-    }
-
-    100% {
-        opacity: 0;
-        left: calc(-1498px + 100%);
-        bottom: calc(-700px + 100%);
-    }
-}
-
-.init-anim-4 {
-    position: absolute;
-    width: 1257px;
-    height: 700px;
-    opacity: 0;
-    left: 0px;
-    bottom: 0px;
-}
-
-.image-anim-4 {
-    animation-name: anim-4;
-    animation-iteration-count: 1;
-    animation-duration: 120s;
-    animation-timing-function: linear;
-    animation-fill-mode: forwards;
-}
-
-@keyframes anim-4 {
-    0% {
-        opacity: 0;
-        left: 0;
-        bottom: 0;
-    }
-
-    29% {
-        opacity: 0;
-        left: 0;
-        bottom: 0;
-    }
-
-    30% {
-        opacity: 0.6;
-    }
-
-    39% {
-        opacity: 0.6;
-    }
-
-    40% {
-        opacity: 0;
-        left: calc(-1257px + 100%);
-        bottom: calc(-700px + 100%);
-    }
-
-    100% {
-        opacity: 0;
-        left: calc(-1257px + 100%);
-        bottom: calc(-700px + 100%);
-    }
+    border-left: 10px solid $primary-hover-color;
+    justify-content: left;
+    text-align: left;
+    padding-left: 5px;
+    padding-right: 50px;
+    box-sizing: border-box;
 }

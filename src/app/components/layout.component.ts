@@ -6,7 +6,7 @@ import { ContentComponent } from './content/content/content.component';
 import { ArrowComponent } from '../shared/components/arrow/arrow.component';
 import { TimeInterval } from 'rxjs/internal/operators/timeInterval';
 import { AppStateModel } from 'app/store/general/general.model';
-import { ChangeMouseUpDetected } from 'app/store/general/general.actions';
+import { ChangeContentHeight, ChangeMouseUpDetected } from 'app/store/general/general.actions';
 import { AppState } from 'app/store/general/general.state';
 import { Observable } from 'rxjs';
 
@@ -61,7 +61,7 @@ export class LayoutComponent implements OnInit {
     // appState = { appState: { onIntro: this.appState.appState.onIntro, mouseUpDetected: !this.appState.appState.mouseUpDetected } };
     // this.store.dispatch(new ChangeAppState(appState.appState));
 
-    this.store.dispatch(new ChangeMouseUpDetected());
+    // this.store.dispatch(new ChangeMouseUpDetected());
 
 
   }
@@ -104,6 +104,9 @@ export class LayoutComponent implements OnInit {
 
   ngAfterViewInit(): void {
     if (this.viewHeightOK) {
+      // This value for the content holder height is stored primarily for use by the vertical carousel
+      // And the airbus animation ...
+      this.store.dispatch(new ChangeContentHeight(window.innerHeight - 225));
       this.updateLayout();
     }
   }
@@ -113,17 +116,17 @@ export class LayoutComponent implements OnInit {
     // console.log("this.originalLongSide", this.originalLongSide);
     // console.log("this.originalShortSide", this.originalShortSide);
 
-    this.contentLayout.nativeElement.style["height"] = 'calc(100svh - 200px)';
-    this.contentLayout.nativeElement.style["width"] = '100svw';
-    this.contentLayout.nativeElement.style["top"] = '0';
-    this.contentLayout.nativeElement.style["bottom"] = 'auto';
-    this.contentLayout.nativeElement.style["left"] = '0';
+    // this.contentLayout.nativeElement.style["height"] = 'calc(100svh - 200px)';
+    // this.contentLayout.nativeElement.style["width"] = '100svw';
+    // this.contentLayout.nativeElement.style["top"] = '0';
+    // this.contentLayout.nativeElement.style["bottom"] = 'auto';
+    // this.contentLayout.nativeElement.style["left"] = '0';
 
-    this.menuLayout.nativeElement.style["height"] = '200px';
-    this.menuLayout.nativeElement.style["width"] = '100svw';
-    this.menuLayout.nativeElement.style["bottom"] = '0';
-    this.menuLayout.nativeElement.style["top"] = 'auto';
-    this.menuLayout.nativeElement.style["left"] = '0';
+    // this.menuLayout.nativeElement.style["height"] = '200px';
+    // this.menuLayout.nativeElement.style["width"] = '100svw';
+    // this.menuLayout.nativeElement.style["bottom"] = '0';
+    // this.menuLayout.nativeElement.style["top"] = 'auto';
+    // this.menuLayout.nativeElement.style["left"] = '0';
 
     // if (window.innerHeight > window.innerWidth) {
     //   // PORTRAIT

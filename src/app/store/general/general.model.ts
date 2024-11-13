@@ -16,5 +16,8 @@ export interface AppStateModel {
     onIntro: boolean;
     introState: IntroState;
     mouseUpDetected: boolean;
+    contentHeight: number;
+    contentWidth: number;
+    backButtonClick: boolean;
 }
 

@@ -33,13 +33,13 @@ export class ContentDirective implements OnInit {
   directRotation!: number;
   nPages!: number;
   lastPage!: number | undefined;
-  count: number = 0;
+  activePage: number = 0;
   maxRotation!: number;
   touchStartTime!: number;
   touchEndTime!: number;
   touchStartX!: number;
   touchEndX!: number;
-  endInterval: any;
+  finalAnimInterval: any;
   directAccessInterval: any;
   finalAnimRotation!: number;
   direction!: String;
@@ -92,7 +92,6 @@ export class ContentDirective implements OnInit {
   }
 
   ngAfterViewInit() {
-
     this.activePanelNumber$.subscribe(newAPN => {
       this.activePanelNumber = newAPN.activePanelNumber.apn
       if (this.activePanelNumber === 0) this.activePanelNumber = 6;
@@ -106,23 +105,31 @@ export class ContentDirective implements OnInit {
     if (!this.blockWheelAndClick) {
       if (Number(this.nPanel) === this.activePanelNumber) {
         if (event.deltaY > 0) {
-          this.turnPage("left");
+          if (this.activePage < this.nPages - 1) {
+            this.turnPage("left");
+          }
         } else {
-          this.turnPage("right");
+          if (this.activePage > 0) {
+            this.turnPage("right");
+          }
         }
       }
     }
   }
 
-  @HostListener('mouseup', ['$event']) mouseup(event: MouseEvent) {
-    if (!this.blockWheelAndClick) {
-      if (event.offsetX > this.panel.nativeElement.clientWidth / 2) {
-        this.turnPage("left");
-      } else {
-        this.turnPage("right");
-      }
-    }
-  }
+  // @HostListener('mouseup', ['$event']) mouseup(event: MouseEvent) {
+  //   if (!this.blockWheelAndClick) {
+  //     if (event.offsetX > this.panel.nativeElement.clientWidth / 2) {
+  //       if (this.activePage < this.nPages - 1) {
+  //         this.turnPage("left");
+  //       }
+  //     } else {
+  //       if (this.activePage > 0) {
+  //         this.turnPage("right");
+  //       }
+  //     }
+  //   }
+  // }
 
   @HostListener('touchstart', ['$event']) touchstart(event: TouchEvent) {
     if (!this.blockWheelAndClick) {
@@ -155,7 +162,7 @@ export class ContentDirective implements OnInit {
 
   manageMove(posX: number): void {
     if (this.isTouchOrMousedown) {
-      
+
       // Detect movement of finger since last event
       const diffX = this.lastX - posX;
       this.lastX = posX;
@@ -182,7 +189,6 @@ export class ContentDirective implements OnInit {
   manageUp(posX: number): void {
     this.isTouchOrMousedown = false;
     this.touchEndX = posX;
-
     if (this.touchEndX < this.touchStartX) {
       this.direction = "left"
       // Calculate the final degrees that will be flipped to
@@ -200,20 +206,20 @@ export class ContentDirective implements OnInit {
 
   directAccess(page: number) {
     this.directRotation = (page) * -180;
-    const diff = page - this.count;
+    const diff = page - this.activePage;
     this.directAccessInterval = setInterval(() => {
       this.rotation.degrees -= diff;
       if (diff > 0) {
         if (this.rotation.degrees <= this.directRotation) {
           this.rotation.degrees = this.directRotation
           clearInterval(this.directAccessInterval);
-          this.changePageNum.emit(this.count + 1);
+          this.changePageNum.emit(this.activePage + 1);
         }
       } else {
         if (this.rotation.degrees >= this.directRotation) {
           this.rotation.degrees = this.directRotation
           clearInterval(this.directAccessInterval);
-          this.changePageNum.emit(this.count - 1);
+          this.changePageNum.emit(this.activePage - 1);
         }
       }
       this.managePanelDisplay();
@@ -222,14 +228,14 @@ export class ContentDirective implements OnInit {
 
   turnPage(direction: string) {
     if (direction === "left") {
-      if (this.rotation.degrees > this.maxRotation) {
+      if (this.rotation.degrees >= this.maxRotation) {
         this.blockWheelAndClick = true;
         this.direction = "left"
         this.finalAnimRotation = this.rotation.degrees - 180;
         this.finishFlipToCalculatedPage();
       }
     } else {
-      if (this.rotation.degrees < 0) {
+      if (this.rotation.degrees <= 0) {
         this.blockWheelAndClick = true;
         this.direction = "right"
         this.finalAnimRotation = this.rotation.degrees + 180;
@@ -239,17 +245,25 @@ export class ContentDirective implements OnInit {
   }
 
   finishFlipToCalculatedPage() {
+    let allowFinishFlip = false;
     if (this.finalAnimRotation < this.rotation.degrees) {
+      allowFinishFlip = true;
       this.finalAnimDirection = "left";
     } else {
       if (this.finalAnimRotation > this.rotation.degrees) {
+        allowFinishFlip = true;
         this.finalAnimDirection = "right";
+      } else {
+        // For when the user releases the flipper and no animation is needed
+        this.finishFlip();
       }
     }
     // TODO : try to avoid this interval
-    this.endInterval = setInterval(() => {
-      this.finishFlip();
-    }, 5);
+    if (allowFinishFlip) {
+      this.finalAnimInterval = setInterval(() => {
+        this.finishFlip();
+      }, 5);
+    }
 
   }
 
@@ -262,26 +276,32 @@ export class ContentDirective implements OnInit {
       }
     }
 
-    if (this.finalAnimDirection === "left") {
-      if (this.rotation.degrees <= this.finalAnimRotation) {
-
-        clearInterval(this.endInterval);
-        this.rotation.degrees = this.finalAnimRotation;
-        if (this.introState === 'done') {
-          this.blockWheelAndClick = false;
+    if(this.finalAnimDirection) {
+      if (this.finalAnimDirection === "left") {
+        if (this.rotation.degrees <= this.finalAnimRotation) {
+          clearInterval(this.finalAnimInterval);
+          this.rotation.degrees = this.finalAnimRotation;
+          if (this.introState === 'done') {
+            this.blockWheelAndClick = false;
+          }
+          if(this.activePage + 1 < this.nPages) {
+            this.changePageNum.emit(this.activePage + 1);
+          }
         }
-        this.changePageNum.emit(this.count);
-      }
+      } else {
+        if (this.rotation.degrees >= this.finalAnimRotation) {
+          clearInterval(this.finalAnimInterval);
+          this.rotation.degrees = this.finalAnimRotation;
+          if (this.introState === 'done') {
+            this.blockWheelAndClick = false;
+          }
+          this.changePageNum.emit(this.activePage);
+        }
+      } 
     } else {
-      if (this.rotation.degrees >= this.finalAnimRotation) {
-        clearInterval(this.endInterval);
-        this.rotation.degrees = this.finalAnimRotation;
-        if (this.introState === 'done') {
-          this.blockWheelAndClick = false;
-        }
-        this.changePageNum.emit(this.count);
-      }
+      this.changePageNum.emit(this.activePage);
     }
+    
 
     this.managePanelDisplay();
 
@@ -299,17 +319,17 @@ export class ContentDirective implements OnInit {
       }
     }
 
-    if (this.count !== Math.floor(this.rotation.degrees / -180)) {
-      this.count = Math.floor(this.rotation.degrees / -180);
+    if (this.activePage !== Math.floor(this.rotation.degrees / -180)) {
+      this.activePage = Math.floor(this.rotation.degrees / -180);
       // Turn off display of all pages
       for (let i = 0; i < this.nPages; i++) {
         this.panel.nativeElement.children[i].style.display = 'none';
       }
       // Display front facing panel
-      this.panel.nativeElement.children[this.count].style.display = 'flex';
+      this.panel.nativeElement.children[this.activePage].style.display = 'flex';
       // Display next probable front facing panel (the one we are turning to)
-      if (this.count < this.nPages - 1) {
-        this.panel.nativeElement.children[this.count + 1].style.display = 'flex';
+      if (this.activePage < this.nPages - 1) {
+        this.panel.nativeElement.children[this.activePage + 1].style.display = 'flex';
       }
     }
 
@@ -318,14 +338,14 @@ export class ContentDirective implements OnInit {
     // This patch forces the page number to 2 if the rotation is in first half turn
     // This patch forces the page number to nPages if the rotation is in last half turn
     // This ensures that the arrows update at the halfway point of the first and last flip
-    let nPage = this.count + 1;
+    let nPage = this.activePage + 1;
     if (this.rotation.degrees < -90 && this.rotation.degrees > -180) {
       nPage = 2;
     } else {
       if (this.rotation.degrees < this.maxRotation + 90) {
         nPage = this.nPages;
       } else {
-        nPage = this.count + 1;
+        nPage = this.activePage + 1;
       }
     }
 

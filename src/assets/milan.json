@@ -1,0 +1,62 @@
+{
+    "carousel": {
+        "captionTitleFr": "Toboclic et Mobiclic",
+        "captionTitleEn": "Toboclic and Mobiclic",
+        "items": [
+            {
+                "imageSrc": "assets/images/milan/milan_1.jpg",
+                "captionFr": "Magazines Interactives pour les 4 à 11 ans",
+                "captionEn": "Interactive magazines for 4 to 11 year olds"
+            },
+            {
+                "imageSrc": "assets/images/milan/milan_2.jpg",
+                "captionFr": "Pendant +10 ans, +250 numéros",
+                "captionEn": "For over 10 years, +250 issues"
+            },
+            {
+                "imageSrc": "assets/images/milan/milan_3.jpg",
+                "captionFr": "Des contenus ludiques et intéractives",
+                "captionEn": "Fun educational content"
+            },
+            {
+                "imageSrc": "assets/images/milan/milan_4.jpg",
+                "captionFr": "Contes animés et intéractive...",
+                "captionEn": "Animated interactive stories..."
+            },
+            {
+                "imageSrc": "assets/images/milan/milan_5.jpg",
+                "captionFr": "Comptine karaoké...",
+                "captionEn": "Nursery rhyme karaoke..."
+            },
+            {
+                "imageSrc": "assets/images/milan/milan_6.jpg",
+                "captionFr": "Documentaires... ",
+                "captionEn": "Documentaries..."
+            },
+            {
+                "imageSrc": "assets/images/milan/milan_7.jpg",
+                "captionFr": "Jeux... ",
+                "captionEn": "Games..."
+            },
+            {
+                "imageSrc": "assets/images/milan/milan_8.jpg",
+                "captionFr": "Activités d'art...",
+                "captionEn": "Art activities..."
+            },
+            {
+                "imageSrc": "assets/images/milan/milan_9.jpg",
+                "textFr": "Petite equipe de dev. Cycle de production mensuelle pour deux numéros.",
+                "textEn": "A small dev team. Monthly production cycle for two issues.",
+                "captionFr": "Poste: Dev lead",
+                "captionEn": "Position: Lead dev"
+            },
+            {
+                "imageSrc": "assets/images/milan/milan_10.jpg",
+                "textFr": "Nous avons changé de techno trois fois, sans disruption de la production",
+                "textEn": "We had to change technologies three times, without interrupting production",
+                "captionFr": "Points d'interèt",
+                "captionEn": "Points of interest"
+            }
+        ]
+    }
+}

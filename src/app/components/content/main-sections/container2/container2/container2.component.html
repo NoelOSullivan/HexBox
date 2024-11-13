@@ -1,28 +1,24 @@
 <div class="container">
-    <div #flipper contentControl nPanel="2" (changeActivePanel)="changePanel($event)" (changePageNum)="changePageNum($event)" class="flipper">
+    <div contentControl nPanel="2" (changeActivePanel)="changePanel($event)"
+        (changePageNum)="changePageNum($event)" class="flipper">
         <li class="common-side">
-            <app-circular-carousel [language]="language" (carouselItemClicked)="goPage($event)" [data]="'panel2.json'" [orientation]="'vertical'" [perspective]="'750px'" [itemHeightInput]="'55%'"></app-circular-carousel>
+            <app-logo></app-logo>
+            <app-circular-carousel [scrollType]="'manual'" [itemType]="'imageText'" [language]="language"
+                (carouselItemClicked)="goPage($event)" [data]="'panel2.json'" [orientation]="'vertical'"
+                [perspective]="'2000px'"></app-circular-carousel>
         </li>
         <li class="common-side">
-            <app-airbus [activePageNum]="activePageNum" class="app-fill-container"></app-airbus>
+            <app-logo></app-logo>
+            <app-airbus [myPageNum]="1" [myContainerIsActive]="iAmActive" [activePageNum]="activePageNum" [language]="language"  class="app-fill-container"></app-airbus>
         </li>
         <li class="common-side">
-            <h1>3</h1>
+            <h1>The Sun</h1>
         </li>
         <li class="common-side">
-            <h1>4</h1>
-        </li>
-        <li class="common-side">
-            <h1>5</h1>
-        </li>
-        <li class="common-side">
-            <h1>6</h1>
-        </li>
-        <li class="common-side">
-            <h1>7</h1>
-        </li>
-        <li class="common-side">
-            <h1>8</h1>
+            <app-logo></app-logo>
+            <app-circular-carousel [myPageNum]="3" [myContainerIsActive]="iAmActive" [activePageNum]="activePageNum" [scrollType]="'auto'"
+                [itemType]="'image'" [language]="language" (carouselItemClicked)="goPage($event)" [data]="'milan.json'"
+                [orientation]="'vertical'" [perspective]="'1000px'"></app-circular-carousel>
         </li>
     </div>
 </div>

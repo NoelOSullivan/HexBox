@@ -28,3 +28,7 @@
     </app-hexagon>
 </div>
 <app-lang-button></app-lang-button>
+
+<div class="back-button" [ngClass]="{'back-button-active': showBackButton}" (click)="clickBack()">
+    <app-swipe-icon [direction]="'left'"></app-swipe-icon>
+</div>

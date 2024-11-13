@@ -1,3 +1,5 @@
+@import "../../../scss/variables";
+
 .carousel-root {
     position: absolute;
     top: 0;
@@ -12,9 +14,9 @@
 }
 
 .carousel-event-capture {
-    position:absolute;
+    position: absolute;
     left: 10%;
-    width:80%;
+    width: 80%;
     height: 100%;
     pointer-events: auto;
     cursor: pointer;
@@ -36,14 +38,18 @@
     // pointer-events: auto;
 }
 
+.auto-animate {
+    transition:  transform 1s ease-in-out;
+}
+
 .carousel-item {
     position: absolute;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 80%;
-    height: 40%;
-    background: rgba(255,255,255,1);
+    width: 95%;
+    height: 45%;
+    background: rgba(255, 255, 255, 1);
     border: 1px solid black;
     box-sizing: border-box;
     overflow: hidden;
@@ -54,17 +60,41 @@
     // border-radius: 50%;
 }
 
+.item-holder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .logo-holder {
     width: 70%;
-    height: 30%; 
+    height: 35%;
     align-content: center;
     pointer-events: none;
     margin: 10px;
 }
 
+.image-holder {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image {
+    object-fit: contain;
+    max-width: 95%;
+    max-height: 95%;
+}
+
 .svg-icon {
     width: 100%;
-    object-fit: contain;;
+    object-fit: contain;
+    ;
     // max-width: 80%;
     max-height: 100%;
 }
@@ -86,6 +116,7 @@ li {
     font-size: 16px;
     margin-bottom: 10px;
 }
+
 .text {
     width: 95%;
     font-size: 14px
@@ -98,5 +129,45 @@ li {
     background: black;
     top: 0;
     opacity: 0;
-    transition: opacity 0.1s linear;
+    transition: opacity 500ms linear;
+}
+
+.caption-title {
+    background-color: rgba(0, 0, 0, 0.4);
+    position: absolute;
+    bottom: 40px;
+    padding: 5px;
+}
+
+.caption-text {
+    background-color: rgba(255, 255, 255, 0.9);
+    position: absolute;
+    bottom: 0px;
+    padding: 2px;
+    height: 40px;
+    color: black;
+    font-size: 0.8em;
+    width: 100%;
+    text-align: left;
+    font-weight: 300;
+    font-family: "Miriam Libre", sans-serif;
+}
+
+.click-indicator {
+    position: absolute;
+    width: 55px;
+    height: 45px;
+    border-bottom-left-radius: 100%;
+    top: 0;
+
+    right: 0;
+    border-left: 1px solid black;
+    border-bottom: 5px solid black;
+    background: $primary-background-color;
+    color: black;
+    font-size: 1em;
+}
+
+.icon-holder {
+    width: 100%;
 }

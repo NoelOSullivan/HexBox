@@ -2,7 +2,7 @@
     "carousel": {
         "items": [
             {
-                "imageSrc": "assets/images/logos/logo-airbus.jpg",
+                "imageSrc": "assets/images/logos/logo-airbus.png",
                 "introEn": "Four years with the Tech Data team",
                 "textEn": "Interface design and dev, tech drawing reader, 3D",
                 "introFr": "Quatre ans avec l'équipe Tech Data",
@@ -14,40 +14,36 @@
                 "introEn": "One year, two projects, two tech stacks",
                 "textEn": "Airplane ground management - Environment",
                 "introFr": "Un an, deux équipes, deux stacks techno",
-                "textFr": "Gestion d'avions au sol - Environnement",
-                "page": 3
+                "textFr": "Gestion d'avions au sol - Environnement"
             },
             {
                 "imageSrc": "assets/images/logos/logo-ednat.jpg",
                 "introEn": "One year on the Saxo project",
                 "textEn": "Forms on an industrial scale ;-)",
                 "introFr": "Un an sur le projet Saxo",
-                "textFr": "Des formulaires interconnectés à perte de vue ;-)",
-                "page": 4
+                "textFr": "Des formulaires interconnectés à perte de vue ;-)"
             },
             {
                 "imageSrc": "assets/images/logos/logo-gamesys.jpg",
                 "introEn": "Eight months of online casino gaming",
                 "textEn": "Marketing games",
                 "introFr": "Huit mois de jeux casino enligne",
-                "textFr": "Jeux marketting",
-                "page": 5
+                "textFr": "Jeux marketting"
             },
             {
                 "imageSrc": "assets/images/logos/logo-moneypenny.jpg",
                 "introEn": "Largest UK answering service provider",
                 "textEn": "Marketing content, Virtual assistant",
                 "introFr": "Plus grand société de permanence téléphonique du Royaume-uni",
-                "textFr": "Contenu marketting, Assistant virtuel",
-                "page": 6
+                "textFr": "Contenu marketting, Assistant virtuel"
             },
             {
                 "imageSrc": "assets/images/logos/logo-thesun.jpg",
                 "introEn": "Sunnation 2015 UK Election website",
-                "textEn": "Games, Quizzes, Activities on a daily basis for three months",
+                "textEn": "Games, Quizzes, Activities on a daily basis leading up to the election",
                 "introFr": "Sunnation 2015 site parodique sur les éléctions parlementaires au RU",
-                "textFr": "Jeux, quiz, activités chaque jour pendant trois mois",
-                "page": 7
+                "textFr": "Jeux, quiz, activités chaque jour pendant la periode des éléctions",
+                "page": 3
             },
             {
                 "imageSrc": "assets/images/logos/logo-milan.jpg",
@@ -55,7 +51,7 @@
                 "textEn": "Games, documentairies, karaokés, activities, animated stories",
                 "introFr": "Quinze ans de contenu interactive",
                 "textFr": "Jeux, documentaires, karaokés, activités, contes animés",
-                "page": 8
+                "page": 4
             }
         ]
     }

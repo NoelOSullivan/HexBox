@@ -1,3 +1,5 @@
+@import "../../../scss/variables";
+
 .menu-rotate {
     transform-origin: calc(100vw / 2) 26px;
     transition: transform 1s;
@@ -5,4 +7,30 @@
     min-width: 300px;
     pointer-events: none;
     margin-top: -10px;
+}
+
+.back-button {
+    width: 58px;
+    height: 48px;
+    position: absolute;
+    background: rgba(255, 255, 255, 0.3);
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom-right-radius: 100%;
+    border-right: 1px solid $primary-background-color;
+    border-bottom: 1px solid $primary-background-color;
+    color: white;
+    transform-origin: top left;
+    transform: rotateZ(-90deg);
+    transition: transform 250ms ease-in-out;
+
+    //   aspect-ratio: 1/cos(30deg);
+    //   clip-path: polygon(50% -50%,100% 50%,50% 150%,0 50%); 
+}
+
+.back-button-active {
+    transform: rotateZ(0deg);
 }

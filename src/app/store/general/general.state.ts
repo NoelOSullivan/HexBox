@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { State, Action, StateContext } from "@ngxs/store";
 
 import { LanguageModel, AppStateModel, IntroState } from './general.model';
-import { ChangeLanguage, ChangeMouseUpDetected, ChangeIntroState } from './general.actions';
+import { ChangeLanguage, ChangeMouseUpDetected, ChangeIntroState, ChangeContentHeight, ChangeContentWidth, BackButtonClick } from './general.actions';
 import { patch } from '@ngxs/store/operators';
 // import { IntroState } from 'app/shared/interfaces/general';
 
@@ -39,7 +39,10 @@ export class Language {
         // appState: {
         onIntro: true,
         introState: IntroState.BLOCKALL,
-        mouseUpDetected: false
+        mouseUpDetected: false,
+        contentHeight: 0,
+        contentWidth: 0,   
+        backButtonClick: false
         // },
     }
 })
@@ -66,6 +69,16 @@ export class AppState {
         })
     }
 
+    @Action(BackButtonClick) backButtonClick(ctx: StateContext<AppStateModel>) {
+        const state = ctx.getState();
+        // const newAppState: AppStateModel = { appState: { onIntro: state.appState.onIntro, introState: state.appState.introState, mouseUpDetected: !state.appState.mouseUpDetected } };
+        // ctx.setState(newAppState);
+        ctx.setState({
+            ...state,
+            backButtonClick: !state.backButtonClick
+        })
+    }
+
     // @Action(ChangeOnIntro) changeOnIntro(ctx: StateContext<AppStateModel>, action: ChangeOnIntro) {
     //     const state = ctx.getState();
     //     // const newAppState: AppStateModel = { appState: { onIntro: action.onIntro, introState: state.appState.introState, mouseUpDetected: state.appState.mouseUpDetected } };
@@ -81,6 +94,22 @@ export class AppState {
         ctx.setState({
             ...state,
             introState: action.introState
+        })
+    }
+
+    @Action(ChangeContentHeight) changeContentHeight(ctx: StateContext<AppStateModel>, action: ChangeContentHeight) {
+        const state = ctx.getState();
+        ctx.setState({
+            ...state,
+            contentHeight: action.contentHeight
+        })
+    }
+
+    @Action(ChangeContentWidth) changeContentWidth(ctx: StateContext<AppStateModel>, action: ChangeContentWidth) {
+        const state = ctx.getState();
+        ctx.setState({
+            ...state,
+            contentWidth: action.contentWidth
         })
     }
 

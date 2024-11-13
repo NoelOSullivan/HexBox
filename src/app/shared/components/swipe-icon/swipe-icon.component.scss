@@ -1,8 +1,21 @@
 .swipe-icon-holder {
-    position: absolute;
-    width:50px;
+    width:50%;
 }
 
 .swipe-icon-image {
     width: 100%;
+}
+
+.right {
+    position: absolute;
+    top:-6px;
+    right: 11px;
+    transform: rotateZ(90deg);
+}
+
+.left {
+    position: absolute;
+    top:-4px;
+    left: 11px;
+    transform: rotateZ(-90deg) rotateY(180deg);
 }

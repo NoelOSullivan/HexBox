@@ -45,12 +45,18 @@ export class Container1 implements OnInit {
   done2: boolean = false;
   done3: boolean = false;
   showSwipe: boolean = false;
+  activePageNum: number = 0;
 
   appState!: AppStateModel;
   introState!: IntroState;
   videosFinished: boolean = false;
   language!: string;
   introDone: boolean = false;
+
+  changePageNum(activePageNum: number) {
+    // console.log("changePageNum", activePageNum);
+    this.activePageNum = activePageNum;
+  }
 
   ngOnInit(): void {
     this.appState$.subscribe(newAppState => {
@@ -62,8 +68,11 @@ export class Container1 implements OnInit {
         this.video2.nativeElement.removeEventListener('ended', this.endVideo2);
         this.video3.nativeElement.removeEventListener('ended', this.endVideo3);
         this.showSwipe = false;
-        const directionObj: Direction = { direction: "right" };
-        this.store.dispatch(new TurnPage(directionObj));
+        // If the intro was cut by the user and we are on the 2nd page, go back to page 1
+        if(this.activePageNum === 1) {
+          const directionObj: Direction = { direction: "right" };
+          this.store.dispatch(new TurnPage(directionObj));
+        }
         setTimeout(() => {
           this.store.dispatch(new ChangeIntroState(IntroState.DONE));
         }, 500);

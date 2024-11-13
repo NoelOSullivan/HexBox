@@ -6,18 +6,20 @@ import { DataService } from '../../../shared/services/data.service';
 import { HexagonComponent } from '../hexagon/hexagon.component';
 import { Rotation, ActivePanelNumber } from '../../../shared/interfaces/hexagon';
 import { ChangePanelNumber, ChangeRotation } from '../../../store/hexagon/hexagon.actions';
-import { DirectAccess } from '../../../store/panel/panel.state';
+import { DirectAccess, PageCounters } from '../../../store/panel/panel.state';
 import { Observable } from 'rxjs';
-import { DirectAccessModel } from '../../../store/panel/panel.model';
+import { DirectAccessModel, PageCounterModel } from '../../../store/panel/panel.model';
 import { AppStateModel, IntroState, LanguageModel } from 'app/store/general/general.model';
 import { AppState, Language } from 'app/store/general/general.state';
-import { ChangeIntroState } from 'app/store/general/general.actions';
+import { BackButtonClick, ChangeIntroState } from 'app/store/general/general.actions';
 import { LangButtonComponent } from '../lang-button/lang-button.component';
+import { SwipeIconComponent } from 'app/shared/components/swipe-icon/swipe-icon.component';
+import { UpdatePageCounter } from 'app/store/panel/panel.action';
 
 @Component({
   selector: 'hexagon-group',
   standalone: true,
-  imports: [NgClass, NgIf, HexagonComponent, LangButtonComponent],
+  imports: [NgClass, NgIf, HexagonComponent, LangButtonComponent, SwipeIconComponent],
   providers: [DataService],
   templateUrl: './hexagon-group.component.html',
   styleUrls: ['./hexagon-group.component.scss']
@@ -28,12 +30,17 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
   @Select(DirectAccess) directAccess$!: Observable<DirectAccessModel>;
   @Select(AppState) appState$!: Observable<AppStateModel>;
   @Select(Language) language$!: Observable<LanguageModel>;
+  @Select(PageCounters) pageCounters$!: Observable<PageCounterModel>;
+  // @Select(ActivePanelNumber) activePanelNumber$!: Observable<ActivePanelNumberModel>;
 
   @ViewChild('menuRotate')
   menuRotate!: ElementRef;
 
   appState!: AppStateModel;
   introState!: IntroState;
+
+  showBackButton: boolean = false;
+  allowBackButton: boolean = false;
 
   constructor(private dataService: DataService, private router: Router, private store: Store) {
   }
@@ -51,6 +58,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
 
   private introDone: boolean = false;
   private language!: string;
+  pageCounters!: PageCounterModel;
 
   ngOnInit() {
 
@@ -94,6 +102,32 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
       this.menuLanguageChange();
     });
 
+    this.pageCounters$.subscribe(newPC => {
+      this.pageCounters = newPC;
+
+      this.detectIfBackButtonIsActive();
+    });
+
+  }
+
+  detectIfBackButtonIsActive(): void {
+    // Need this rubbish because button hex 2 shows panel 1.
+    let patchSelected;
+    if (this.selected === 1) {
+      patchSelected = 5
+    } else {
+      patchSelected = this.selected - 2;
+    }
+    // Check if page has changed. If not page 1 then show BACK button.
+    // allowBackButton avoids the button reappearing as the pages flip back to 1.
+    if (this.pageCounters.pageCounters.counters[patchSelected] > 1) {
+      if(this.allowBackButton) {
+        this.showBackButton = true;
+      }
+    } else {
+      this.showBackButton = false;
+      this.allowBackButton = true;
+    }
   }
 
   ngAfterViewInit() {
@@ -109,7 +143,6 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
   }
 
   setUpMenu(menu: number) {
-
     this.menuContent = this.allMenus["menu_" + menu];
     this.menuContentLanguage = this.allMenus["menu_" + menu];
     // this.menuContent2 = this.menuContent[2];
@@ -207,6 +240,8 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
       const activePanelNumber: ActivePanelNumber = { apn: hexIndex - 1 }
       this.store.dispatch(new ChangePanelNumber(activePanelNumber));
 
+      this.detectIfBackButtonIsActive();
+
     }
   }
 
@@ -237,6 +272,15 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
   leaveHexagon() {
     if (this.introState !== 'done') return;
     this.rolled = null;
+  }
+
+  clickBack(): void {
+    if (this.allowBackButton === true) {
+      console.log("clickBack");
+      this.showBackButton = false;
+      this.allowBackButton = false;
+      this.store.dispatch(new BackButtonClick());
+    }
   }
 
 }

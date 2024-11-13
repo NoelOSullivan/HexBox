@@ -26,3 +26,18 @@ export class ChangeMouseUpDetected {
     static readonly type= '[Mouse Up Detected] ChangeMouseUpDetected';
     constructor(){}
 }
+
+export class ChangeContentHeight {
+    static readonly type= '[Change Content Height] ChangeContentHeight';
+    constructor(public contentHeight: number){}
+}
+
+export class ChangeContentWidth {
+    static readonly type= '[Change Content Width] ChangeContentWidth';
+    constructor(public contentWidth: number){}
+}
+
+export class BackButtonClick {
+    static readonly type= '[BackButtonClick] BackButtonClick';
+    constructor(){}
+}

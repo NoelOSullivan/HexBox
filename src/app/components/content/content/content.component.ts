@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Store } from '@ngxs/store';
 import { NgIf, NgClass } from '@angular/common';
 import { Container1 } from '../main-sections/container1/container1/container1.component';
 import { Container4 } from '../main-sections/container4/container4/container4.component';
@@ -13,6 +14,7 @@ import { RotationToAdd } from '../../../store/hexagon/hexagon.state';
 import { ActivePanelNumberModel, RotationToAddModel } from '../../../store/hexagon/hexagon.model';
 import { Select } from '@ngxs/store';
 import { PageCounterModel } from '../../../store/panel/panel.model';
+import { ChangeContentWidth } from 'app/store/general/general.actions';
 
 @Component({
   selector: 'app-content',
@@ -42,8 +44,9 @@ export class ContentComponent implements OnInit {
 
   pageTotal: number = 0;
   pageNumber: number = 0;
+  // contentHeight!: number;
 
-  constructor() { }
+  constructor(private store: Store) { }
 
   ngOnInit() {
     this.actualRotation = this.startRotation;
@@ -60,6 +63,9 @@ export class ContentComponent implements OnInit {
         this.updateWidgetInfo();
       }
     });
+
+    
+    
 
   }
 
@@ -88,7 +94,9 @@ export class ContentComponent implements OnInit {
       }
       this.rotateMe(Number(newRot.rotationToAdd.degrees));
     });
+    console.log("CW",this.contentHolder.nativeElement.clientWidth); 
 
+    this.store.dispatch(new ChangeContentWidth(Math.min(this.contentHolder.nativeElement.clientWidth,400)));
     // this.pageWidgetInfo.pageTotal = this.pageCounters.pageCounters.totals[this.activePanelNumber - 1]
 
     // this.pageTotal = this.pageCounters.pageCounters.totals[this.activePanelNumber - 1];
