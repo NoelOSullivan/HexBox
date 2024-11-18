@@ -1,0 +1,36 @@
+<div class="game-holder">
+
+    <div *ngIf="playing===false" class="game">
+        <div class="blurb" *ngIf="language==='Fr'">
+            J'ai travaillé sur le site Sunnation du journal The Sun qui suivait l'election de 2015 au Royaume-Uni.<br>
+            Des jeux, des quizzes et des web-app.<br><br>Je me suis inspiré de cette expérience pour créér un application de
+            sondage en partenariat avec FiveThirtySeven et Ipsauce.<br><br>Il utilise des metriques de l'émotion et du
+            catharsis pour sonder la popularité des candidats.<br><br>Cliquer pour voir l'outil de sondage.
+        </div>
+        <div class="blurb" *ngIf="language==='En'">
+            I worked on Sunnation, The Suns UK election website in 2015.<br>Games, quizzes and webapps.<br><br>This experience inspired
+            me to create a polling application in partnership with FiveThirtySeven and Ipsauce.<br><br>It uses metrics of
+            emotion and catharsis to measure the popularity of candidats.<br><br>Click to seethe polling tool.
+        </div>
+    </div>
+
+    <div *ngIf="playing===true" class="game">
+        <div class="line back-line">
+            <app-headshot [headSrc]="hoop1Src"></app-headshot>
+            <app-headshot [headSrc]="hoop2Src"></app-headshot>
+        </div>
+        <div class="line middle-line">
+            <app-headshot [headSrc]="hoop3Src"></app-headshot>
+            <app-headshot [headSrc]="hoop4Src"></app-headshot>
+        </div>
+        <div class="line front-line">
+            <app-headshot [headSrc]="hoop5Src"></app-headshot>
+            <app-headshot [headSrc]="hoop6Src"></app-headshot>
+        </div>
+    </div>
+
+    <div class="play">
+        <app-play-button (playState)="managePlay($event)" [playing]="playing"></app-play-button>
+    </div>
+
+</div>

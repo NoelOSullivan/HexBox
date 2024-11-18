@@ -11,26 +11,26 @@ import { NgClass } from '@angular/common';
 
 export class PlayButtonComponent {
 
-  @Output() animState = new EventEmitter<boolean>();
-  @Input() animOn!: boolean;
+  @Output() playState = new EventEmitter<boolean>();
+  @Input() playing!: boolean;
 
   constructor() { }
 
   language!: String;
 
   ngOnChanges(changes: any) {
-    if (changes.animOn) {
-      console.log("changes.animOn", changes.animOn);
-      this.animOn = changes.animOn.currentValue;
+    if (changes.playing) {
+      console.log("changes.playing", changes.playing);
+      this.playing = changes.playing.currentValue;
     }
   }
 
-  startAnim() {
-    this.animState.emit(true);
+  clickPlay() {
+    this.playState.emit(true);
   }
 
-  stopAnim() {
-    this.animState.emit(false);
+  clickStop() {
+    this.playState.emit(false);
   }
 
 }

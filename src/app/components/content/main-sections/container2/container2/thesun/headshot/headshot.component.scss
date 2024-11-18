@@ -1,0 +1,61 @@
+.hoop-holder {
+    position: relative;
+    aspect-ratio: 1;
+    height: 100%;
+    filter: drop-shadow(0px 5px 4px black);
+    margin: 5px;
+  }
+  
+  .white-circle {
+    position: absolute;
+    top: 25%;
+    height: 100%;
+    width: 100%;
+    background: white;
+    border-radius: 50%;
+    transform: rotateX(80deg);
+  }
+  
+  .arc {
+    position: absolute;
+    --b: 10px;
+    --a: 180deg;
+    left: 0;
+    top: 25%;
+    width: 100%;
+    aspect-ratio: 1;
+    padding: var(--b);
+    border-radius: 50%;
+    box-sizing: border-box;
+    background: red;
+    --_g: /var(--b) var(--b) no-repeat radial-gradient(0% 0%, #000 97%, #0000);
+    mask: top var(--_g),
+      calc(50% + 50%*sin(var(--a))) calc(50% - 50%*cos(var(--a))) var(--_g),
+      linear-gradient(#0000 0 0) content-box intersect,
+      conic-gradient(#000 var(--a), #0000 0);
+  }
+  
+  .arc-top {
+    transform: rotateX(80deg) rotateZ(-90deg);
+  }
+  
+  .arc-bottom {
+    transform: rotateX(80deg) rotateZ(90deg);
+  }
+  
+  .head-holder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 82%;
+    width: 100%;
+    overflow: hidden;
+  }
+  
+  .head {
+    position: absolute;
+    top: 0;
+    left: 6%;
+    width: 85%;
+    transition: top 250ms linear;
+  }

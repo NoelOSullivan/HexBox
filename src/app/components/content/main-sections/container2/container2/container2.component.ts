@@ -7,6 +7,7 @@ import { Select, Store } from '@ngxs/store';
 import { LogoComponent } from '../../../../../shared/components/logo/logo.component';
 import { LinkIconComponent } from '../../../../../shared/components/link-icon/link-icon.component';
 import { AirbusComponent } from './airbus/airbus.component';
+import { ThesunComponent } from './thesun/thesun.component';
 import { DirectAccess } from '../../../../../shared/interfaces/panel';
 import { AccessPanelDirect } from '../../../../../store/panel/panel.action';
 import { CircularCarouselComponent } from 'app/shared/components/circular-carousel/circular-carousel.component';
@@ -18,7 +19,7 @@ import { AppState } from 'app/store/general/general.state';
 @Component({
   selector: 'app-container2',
   standalone: true,
-  imports: [NgIf, ContentDirective, LinkIconComponent, AirbusComponent, CircularCarouselComponent, LogoComponent],
+  imports: [NgIf, ContentDirective, LinkIconComponent, AirbusComponent, ThesunComponent, CircularCarouselComponent, LogoComponent],
   templateUrl: './container2.component.html',
   styleUrls: ['./container2.component.scss', '../../main-sections-shared-styles.scss']
 })

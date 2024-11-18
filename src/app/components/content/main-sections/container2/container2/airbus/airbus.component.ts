@@ -36,7 +36,7 @@ export class AirbusComponent {
   @ViewChild('bullets5') bullets5!: ElementRef;
   @ViewChild('image6') image6!: ElementRef;
 
-  animOn: boolean = false;
+  playing: boolean = false;
   contentHeight: number = 0;
   contentWidth: number = 0;
   ratio!: number;
@@ -142,25 +142,25 @@ export class AirbusComponent {
         }
       } else {
         // Changed page. No longer on right page. Reset and stop animation.
-        this.manageAnim(false);
+        // this.managePlay(false);
       }
     }
 
-    if (changes.myContainerIsActive) {
-      // Changed panel. Reset and stop animation.
-      if (changes.myContainerIsActive.currentValue === false) {
-        this.manageAnim(false);
-      }
-    }
+    // if (changes.myContainerIsActive) {
+    //   // Changed panel. Reset and stop animation.
+    //   if (changes.myContainerIsActive.currentValue === false) {
+    //     this.managePlay(false);
+    //   }
+    // }
 
     if (changes.language) {
       this.language = changes.language.currentValue;
     }
   }
 
-  manageAnim(animOn: boolean): void {
-    this.animOn = animOn;
-    if (animOn) {
+  managePlay(playing: boolean): void {
+    this.playing = playing;
+    if (playing) {
       this.startAnim();
     } else {
       this.initialiseAnim();
@@ -208,7 +208,7 @@ export class AirbusComponent {
       this.image6.nativeElement.style.opacity = 1;
     }, 45000);
     this.timeOut7 = setTimeout(() => {
-      this.manageAnim(false);
+      this.managePlay(false);
     }, 54000);
   }
 
