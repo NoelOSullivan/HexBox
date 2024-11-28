@@ -1,5 +1,5 @@
 <div #menuRotate class="menu-rotate">
-    <app-hexagon *ngIf="menuRotate && menuContent" [content]=menuContent[0] class="hex_0">
+    <app-hexagon *ngIf="menuRotate && menuContent" [content]=menuContent[0] [sunGameOn]="sunGameOn" class="hex_0">
     </app-hexagon>
     <!-- Remember that order is inverted for the needs of the opening animation-->
     <app-hexagon *ngIf="menuRotate && menuContent" [content]=menuContentLanguage[6] [hexNum]="6" class="hex_6"
@@ -26,8 +26,18 @@
         [ngClass]="{'hexagon-flip-animate':hexOpened[0], 'hexagon-selected':selected==1 || rolled==1}"
         (click)="clickHexagon(1,'/container1')" (mouseover)="overHexagon(1)" (mouseleave)="leaveHexagon()">
     </app-hexagon>
+
 </div>
 <app-lang-button></app-lang-button>
+
+<div #catapult *ngIf="sunGameOn===true" class="catapult" (touchstart)="touchstartCatapult($event)"
+    (touchmove)="touchmoveCatapult($event)" (touchend)="touchendCatapult($event)">
+    <div #egg class="egg">
+        <app-egg [sunGameOn]="sunGameOn"></app-egg>
+    </div>
+    <div #eggSight class="eggSight"></div>
+    <div #sling  class="sling"></div>
+</div>
 
 <div class="back-button" [ngClass]="{'back-button-active': showBackButton}" (click)="clickBack()">
     <app-swipe-icon [direction]="'left'"></app-swipe-icon>

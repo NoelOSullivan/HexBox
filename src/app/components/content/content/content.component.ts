@@ -94,7 +94,6 @@ export class ContentComponent implements OnInit {
       }
       this.rotateMe(Number(newRot.rotationToAdd.degrees));
     });
-    console.log("CW",this.contentHolder.nativeElement.clientWidth); 
 
     this.store.dispatch(new ChangeContentWidth(Math.min(this.contentHolder.nativeElement.clientWidth,400)));
     // this.pageWidgetInfo.pageTotal = this.pageCounters.pageCounters.totals[this.activePanelNumber - 1]

@@ -20,7 +20,7 @@ export class PlayButtonComponent {
 
   ngOnChanges(changes: any) {
     if (changes.playing) {
-      console.log("changes.playing", changes.playing);
+      // console.log("changes.playing", changes.playing);
       this.playing = changes.playing.currentValue;
     }
   }

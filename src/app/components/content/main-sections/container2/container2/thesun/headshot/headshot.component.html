@@ -1,8 +1,11 @@
 <div class="hoop-holder">
-    <div class="white-circle"></div>
+    <div class="background-circle"></div>
     <div class="arc arc-top"></div>
-    <div class="hoop head-holder">
-        <img class="head" src="{{headSrc}}">
+    <div class="head-holder">
+        <div #head class="head" [ngClass]="{'head-down':headUp ===false}">
+            <img class="head-image" src="{{headSrc}}">
+            <img #egg *ngIf="showEgg" class="egg-image" src="assets/images/thesun/cracked-egg.png">
+        </div>
     </div>
     <div class="arc arc-bottom"></div>
 </div>

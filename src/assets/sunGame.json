@@ -1,0 +1,54 @@
+{
+    "france": {
+        "candidates": [
+            {
+                "imageSrc": "assets/images/thesun/arthaud.png",
+                "name": "Arthaud"
+            },
+            {
+                "imageSrc": "assets/images/thesun/dupont-aignan.png",
+                "name": "Dupont-Aignon"
+            },
+            {
+                "imageSrc": "assets/images/thesun/hidalgo.png",
+                "name": "Hidalgo"
+            },
+            {
+                "imageSrc": "assets/images/thesun/jadot.png",
+                "name": "Jadot"
+            },
+            {
+                "imageSrc": "assets/images/thesun/lassalle.png",
+                "name": "Lassalle"
+            },
+            {
+                "imageSrc": "assets/images/thesun/lepen.png",
+                "name": "Lepen"
+            },
+            {
+                "imageSrc": "assets/images/thesun/macron.png",
+                "name": "Macron"
+            },
+            {
+                "imageSrc": "assets/images/thesun/melenchon.png",
+                "name": "Melenchon"
+            },
+            {
+                "imageSrc": "assets/images/thesun/pecresse.png",
+                "name": "Pecresse"
+            },
+            {
+                "imageSrc": "assets/images/thesun/poutou.png",
+                "name": "Poutou"
+            },
+            {
+                "imageSrc": "assets/images/thesun/roussel.png",
+                "name": "Roussel"
+            },
+            {
+                "imageSrc": "assets/images/thesun/zemmour.png",
+                "name": "Zemmour"
+            }
+        ]
+    }
+}

@@ -200,8 +200,6 @@
   user-select: none;
 }
 
-
-
 .hexagon-rotation {
   width: 100%;
   padding-top: 86.6%;
@@ -289,7 +287,7 @@
   height: 100%;
   transform: rotateY(180deg);
   font-family: 'Montserrat', sans-serif;
- 
+
   top: 4px;
   font-size: 36px;
 }
@@ -334,7 +332,7 @@
     background: black;
     width: 60px;
     height: 52px;
-    visibility: hidden;
+    // visibility: hidden;
   }
 
   .top-half {
@@ -354,6 +352,6 @@
     top: 54px;
     height: 26px;
     transition: top 1s ease-out;
-    color:black  ;
+    color: black;
   }
 }

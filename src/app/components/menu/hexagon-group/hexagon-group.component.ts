@@ -11,15 +11,17 @@ import { Observable } from 'rxjs';
 import { DirectAccessModel, PageCounterModel } from '../../../store/panel/panel.model';
 import { AppStateModel, IntroState, LanguageModel } from 'app/store/general/general.model';
 import { AppState, Language } from 'app/store/general/general.state';
-import { BackButtonClick, ChangeIntroState } from 'app/store/general/general.actions';
+import { BackButtonClick, ChangeEggState, ChangeIntroState, TransmitEggInfo } from 'app/store/general/general.actions';
 import { LangButtonComponent } from '../lang-button/lang-button.component';
 import { SwipeIconComponent } from 'app/shared/components/swipe-icon/swipe-icon.component';
+import { EggComponent } from 'app/shared/components/egg/egg.component';
 import { UpdatePageCounter } from 'app/store/panel/panel.action';
+import { DomRect, EggInfo } from 'app/shared/interfaces/general';
 
 @Component({
   selector: 'hexagon-group',
   standalone: true,
-  imports: [NgClass, NgIf, HexagonComponent, LangButtonComponent, SwipeIconComponent],
+  imports: [NgClass, NgIf, HexagonComponent, LangButtonComponent, SwipeIconComponent, EggComponent],
   providers: [DataService],
   templateUrl: './hexagon-group.component.html',
   styleUrls: ['./hexagon-group.component.scss']
@@ -33,14 +35,24 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
   @Select(PageCounters) pageCounters$!: Observable<PageCounterModel>;
   // @Select(ActivePanelNumber) activePanelNumber$!: Observable<ActivePanelNumberModel>;
 
-  @ViewChild('menuRotate')
-  menuRotate!: ElementRef;
+  @ViewChild('menuRotate') menuRotate!: ElementRef;
+  @ViewChild('catapult') catapult!: ElementRef;
+  @ViewChild('egg') egg!: ElementRef;
+  @ViewChild('eggSight') eggSight!: ElementRef;
+  @ViewChild('sling') sling!: ElementRef;
 
   appState!: AppStateModel;
   introState!: IntroState;
+  sunGameOn: boolean = false;
+  sunGameTargets: Array<DomRect> = [];
 
   showBackButton: boolean = false;
   allowBackButton: boolean = false;
+
+  startPoint: { x: number, y: number } = { x: 0, y: 0 };
+  movePoint: { x: number, y: number } = { x: 0, y: 0 };
+  endPoint: { x: number, y: number } = { x: 0, y: 0 };
+  vector: { x: number, y: number } = { x: 0, y: 0 };
 
   constructor(private dataService: DataService, private router: Router, private store: Store) {
   }
@@ -59,6 +71,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
   private introDone: boolean = false;
   private language!: string;
   pageCounters!: PageCounterModel;
+  contentHeight: number = 0;
 
   ngOnInit() {
 
@@ -95,6 +108,15 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
         this.menuLanguageChange();
         this.manageMenu(2);
       }
+      if (this.sunGameOn !== newAppState.sunGameOn) {
+        this.sunGameOn = newAppState.sunGameOn;
+      }
+      if (newAppState.contentHeight !== this.contentHeight) {
+        this.contentHeight = newAppState.contentHeight;
+      }
+      if (newAppState.sunGameTargets !== this.sunGameTargets) {
+        this.sunGameTargets = newAppState.sunGameTargets;
+      }
     });
 
     this.language$.subscribe(newLanguage => {
@@ -121,7 +143,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
     // Check if page has changed. If not page 1 then show BACK button.
     // allowBackButton avoids the button reappearing as the pages flip back to 1.
     if (this.pageCounters.pageCounters.counters[patchSelected] > 1) {
-      if(this.allowBackButton) {
+      if (this.allowBackButton) {
         this.showBackButton = true;
       }
     } else {
@@ -281,6 +303,124 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
       this.allowBackButton = false;
       this.store.dispatch(new BackButtonClick());
     }
+  }
+
+  touchstartCatapult(event: TouchEvent): void {
+    this.startPoint.x = event.touches[0].clientX;
+    this.startPoint.y = event.touches[0].clientY;
+  }
+
+  touchmoveCatapult(event: TouchEvent): void {
+    this.movePoint.x = event.touches[0].clientX;
+    this.movePoint.y = event.touches[0].clientY;
+
+    let AB = this.movePoint.x - this.startPoint.x;
+    let AC = this.movePoint.y - this.startPoint.y;
+    let BC = Math.sqrt((AB * AB) + (AC * AC));
+
+    let angle = Math.atan2(BC, AB) * (180 / Math.PI);
+
+    this.catapult.nativeElement.style.transform = "rotateZ(" + (angle - 90) + "deg)";
+
+    const lowerLimit = 20;
+    const upperLimit = 100;
+    const lowerTop = -70;
+    const upperTop = -(200 + this.contentHeight);
+
+    if (BC < lowerLimit) {
+      this.eggSight.nativeElement.style.top = "-70px";
+    } else {
+      if (BC > upperLimit) {
+        this.eggSight.nativeElement.style.top = "-500px";
+      } else {
+        const percent = BC / (upperLimit - lowerLimit) * 100;
+        const topDist = (upperTop - lowerTop) / 100 * percent;
+        this.eggSight.nativeElement.style.top = topDist + "px";
+      }
+    }
+
+    this.egg.nativeElement.style.top = BC + "px";
+    this.sling.nativeElement.style.top = BC + "px";
+
+  }
+
+  touchendCatapult(event: TouchEvent): void {
+
+    let AB = this.movePoint.x - this.startPoint.x;
+    let AC = this.movePoint.y - this.startPoint.y;
+    let BC = Math.sqrt((AB * AB) + (AC * AC));
+
+    // Bring sling and egg back to centre
+    this.egg.nativeElement.style.transition = 'all 250ms linear';
+    this.sling.nativeElement.style.transition = 'all 250ms linear';
+    this.egg.nativeElement.style.top = "0";
+    this.sling.nativeElement.style.top = "0";
+
+    // Calculate transition time for egg depending on catapult pull
+    let transitionSpeed;
+    if (BC < 20) {
+      transitionSpeed = 500;
+    } else {
+      if (BC > 100) {
+        transitionSpeed = 1000;
+      } else {
+        transitionSpeed = 750;
+      }
+    }
+
+    // Wait 250 for the sling and egg to centre before setting egg to final position
+    setTimeout(() => {
+      if (BC < 20) {
+        this.egg.nativeElement.style.top = "-70px";
+      } else {
+        if (BC > 100) {
+          this.egg.nativeElement.style.top = "-500px";
+        } else {
+          this.egg.nativeElement.style.top = this.eggSight.nativeElement.style.top;
+        }
+      }
+      this.egg.nativeElement.style.transition = 'all ' + transitionSpeed + 'ms ease-out';
+      this.store.dispatch(new ChangeEggState(true));
+    }, 250);
+
+    let eggInfo: EggInfo
+
+    // Detect if the egg hits a head
+    let sightRect = this.eggSight.nativeElement.getBoundingClientRect();
+    let sightCentreH = sightRect.left + ((sightRect.right - sightRect.left) / 2);
+    let sightCentreV = sightRect.top + ((sightRect.bottom - sightRect.top) / 2);
+    let targetHit: number | undefined = undefined;
+    let percentLeft, percentTop;
+    // Parse the head targets and check for collision
+    for (let i = 0, length = this.sunGameTargets.length; i < length; i++) {
+      let target = this.sunGameTargets[i];
+      let totalDistanceH = target.right - target.left;
+      let sightDistanceH = sightCentreH - target.left;
+      percentLeft = Math.floor(sightDistanceH / totalDistanceH * 100);
+      if (percentLeft >= 10 && percentLeft <= 90) {
+        let totalDistanceV = target.bottom - target.top;
+        let sightDistanceV = sightCentreV - target.top;
+        percentTop = Math.floor(sightDistanceV / totalDistanceV * 100);
+        if (percentTop >= 10 && percentTop <= 100) {
+          targetHit = i + 1;
+          eggInfo = {targetHit:targetHit, percentLeft:percentLeft, percentTop:percentTop}
+          break;
+        }
+      }
+    }
+
+    // When egg has reached destination send it back for next shot
+    // Transmit the egg info - target and position
+    setTimeout(() => {
+      this.store.dispatch(new ChangeEggState(false));
+      this.egg.nativeElement.style.transition = 'none';
+      this.sling.nativeElement.style.transition = 'none';
+      this.egg.nativeElement.style.top = "0";
+      if(eggInfo) {
+        this.store.dispatch(new TransmitEggInfo(eggInfo));
+      }
+    }, transitionSpeed + 250);
+
   }
 
 }

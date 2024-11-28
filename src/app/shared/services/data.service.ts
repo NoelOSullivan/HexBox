@@ -11,10 +11,6 @@ export class DataService {
       return this.http.get('assets/menus.json');
     }
 
-    getWhen() {
-        return this.http.get('assets/when.json');
-    }
-
     getData(url:string) {
       return this.http.get('assets/' + url);
     }

@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { State, Action, StateContext } from "@ngxs/store";
 
 import { LanguageModel, AppStateModel, IntroState } from './general.model';
-import { ChangeLanguage, ChangeMouseUpDetected, ChangeIntroState, ChangeContentHeight, ChangeContentWidth, BackButtonClick } from './general.actions';
-import { patch } from '@ngxs/store/operators';
+import { ChangeLanguage, ChangeMouseUpDetected, ChangeIntroState, ChangeContentHeight, ChangeContentWidth, BackButtonClick, ChangeSunGameState, ChangeEggState, AddEggDomRect, RemoveAllTargetRects, TransmitEggInfo } from './general.actions';
+import { append, patch } from '@ngxs/store/operators';
+import { DomRect } from 'app/shared/interfaces/general';
 // import { IntroState } from 'app/shared/interfaces/general';
 
 @State<LanguageModel>({
@@ -42,7 +43,11 @@ export class Language {
         mouseUpDetected: false,
         contentHeight: 0,
         contentWidth: 0,   
-        backButtonClick: false
+        backButtonClick: false,
+        sunGameOn: false,
+        eggActive: false,
+        sunGameTargets: [],
+        eggInfo: {targetHit:0, percentLeft:0, percentTop:0}
         // },
     }
 })
@@ -97,6 +102,22 @@ export class AppState {
         })
     }
 
+    @Action(ChangeSunGameState) changeSunGameState(ctx: StateContext<AppStateModel>, action: ChangeSunGameState) {
+        const state = ctx.getState();
+        ctx.setState({
+            ...state,
+            sunGameOn: action.sunGameOn
+        })
+    }
+
+    @Action(ChangeEggState) changeEggState(ctx: StateContext<AppStateModel>, action: ChangeEggState) {
+        const state = ctx.getState();
+        ctx.setState({
+            ...state,
+            eggActive: action.eggActive
+        })
+    }
+
     @Action(ChangeContentHeight) changeContentHeight(ctx: StateContext<AppStateModel>, action: ChangeContentHeight) {
         const state = ctx.getState();
         ctx.setState({
@@ -110,6 +131,32 @@ export class AppState {
         ctx.setState({
             ...state,
             contentWidth: action.contentWidth
+        })
+    }
+
+    @Action(AddEggDomRect) addEggDomRect(ctx: StateContext<AppStateModel>, action: AddEggDomRect) {
+        const state = ctx.getState();
+        let targets = state.sunGameTargets;
+        targets = [...targets, action.eggDomRect]
+        ctx.setState({
+            ...state,
+            sunGameTargets: targets
+        })
+    }
+
+    @Action(RemoveAllTargetRects) removeAllTargetRects(ctx: StateContext<AppStateModel>, action: RemoveAllTargetRects) {
+        const state = ctx.getState();
+        ctx.setState({
+            ...state,
+            sunGameTargets: []
+        })
+    }
+
+    @Action(TransmitEggInfo) transmitEggInfo(ctx: StateContext<AppStateModel>, action: TransmitEggInfo) {
+        const state = ctx.getState();
+        ctx.setState({
+            ...state,
+            eggInfo: action.eggInfo
         })
     }
 

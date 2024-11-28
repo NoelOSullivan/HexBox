@@ -34,3 +34,48 @@
 .back-button-active {
     transform: rotateZ(0deg);
 }
+
+.catapult {
+    position:absolute;
+    z-index: 20;
+    transform-origin: calc(100vw / 2) 26px;
+}
+
+.egg {
+    // transform-origin: 0 26px;
+    // background: red;
+    position:absolute;
+    top: 0px;
+    left: calc(50vw - 30px);
+    width: 60px;
+    height: 52px;
+    transition: none;
+}
+
+.sling {
+    position: absolute;
+    // transform-origin: 0 26px;
+    margin-top: 30px;
+    left: calc(50vw - 20px);
+    width: 40px;
+    height: 20px;
+    background: $primary-hover-color;
+    pointer-events: all;
+
+    border-radius: 0 0 20px 20px;
+    z-index: 21;
+}
+
+.eggSight{
+    position: absolute;
+    transform-origin: calc(100vw / 2) 26px;
+    left: calc(50vw - 15px);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 15px;
+    margin-top: 15px;
+    z-index: 25;
+    // background: rgba(255,0,0,0.2);
+}
+

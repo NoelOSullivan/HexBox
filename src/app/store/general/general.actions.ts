@@ -1,6 +1,8 @@
 // import { Language } from "../../shared/interfaces/general";
 
+import { DomSanitizer } from "@angular/platform-browser";
 import { IntroState } from "./general.model";
+import { DomRect, EggInfo } from "app/shared/interfaces/general";
 
 export class ChangeLanguage {
     static readonly type= '[Change language] ChangeLanguage';
@@ -41,3 +43,29 @@ export class BackButtonClick {
     static readonly type= '[BackButtonClick] BackButtonClick';
     constructor(){}
 }
+
+export class ChangeSunGameState {
+    static readonly type= '[ChangeSunGameState] ChangeSunGameState';
+    constructor(public sunGameOn: boolean){}
+}
+
+export class ChangeEggState {
+    static readonly type= '[ChangeEggState] ChangeEggState';
+    constructor(public eggActive: boolean){}
+}
+
+export class AddEggDomRect {
+    static readonly type= '[AddEggDomRect] AddEggDomRect';
+    constructor(public eggDomRect: DomRect){}
+}
+
+export class RemoveAllTargetRects {
+    static readonly type= '[RemoveAllTargetRects] RemoveAllTargetRects';
+    constructor(){}
+}
+
+export class TransmitEggInfo {
+    static readonly type= '[TransmitEggInfo] TransmitEggInfo';
+    constructor(public eggInfo: EggInfo){}
+}
+
