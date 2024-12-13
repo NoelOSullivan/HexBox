@@ -1,0 +1,69 @@
+.button-holder {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 20px;
+    pointer-events: none;
+}
+
+.next-button {
+    display: flex;
+    justify-content: end;
+    width: 50%;
+    height: 100%;
+    background: rgba(255,255,255,0.5);
+    color: black;
+    font-size: 16px;
+    pointer-events: all;
+    border-radius: 20px 0px;
+}
+
+.back-button-holder {
+    position: relative;
+    width: 50%;
+}
+
+.back-button {
+    display: flex;
+    justify-content: start;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.5);
+    color: black;
+    font-size: 16px;
+    pointer-events: all;
+    border-radius: 0px 20px;
+}
+
+.icon-holder {
+    position: relative;
+    width:20px;
+    height: 20px;
+    margin-left: 12px;
+    margin-right: 12px;
+}
+
+.icon {
+    position: absolute;
+    top:-12px;
+    left: 0;
+    height: 35px;
+    // margin-top: -14px;
+    // height: 100%;
+    // margin-right: 10px;
+}
+
+.icon-right{
+    transform: rotateZ(90deg);
+}
+
+.icon-left {
+    transform: rotateZ(-90deg) rotateY(180deg);
+    left: -5px;
+}
+
+.icon-holder {
+    // width:20px;
+    // margin-left: 10px;
+    // margin-right: 10px;
+}

@@ -1,0 +1,35 @@
+.word-holder {
+    position: absolute;
+    top: -54px;
+    left: 0px;
+    font-size: 34px;
+    font-weight: 900;
+    width: 50%;
+    height: 42px;
+    font-family: PassionOneBlack;
+}
+
+.word-bottom {
+    position:absolute;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    color: white;
+    background: black;
+    top: 2px;
+}
+
+.word-top {
+    position:absolute;
+    height:50%;
+    width: 100%;
+    overflow: hidden;
+    color: black;
+    background: white;
+}
+
+.word-text {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+}

@@ -90,6 +90,9 @@ export class CircularCarouselComponent implements OnInit {
 
     if (changes.myContainerIsActive) {
       if (!this.myContainerIsActive) {
+        if (this.carouselRoot) {
+          this.carouselRoot.nativeElement.style.pointerEvents = "none";
+        }
         this.lastActivePageNumber = undefined;
         this.activeItem = 0;
         if (this.scrollType === 'auto') {
@@ -97,7 +100,10 @@ export class CircularCarouselComponent implements OnInit {
         }
       } else {
         // this.lastActivePageNumber = this.myPageNum;
-        if(this.myPageNum === this.activePageNum) {
+        if (this.myPageNum === this.activePageNum) {
+          if (this.carouselRoot) {
+            this.carouselRoot.nativeElement.style.pointerEvents = "auto";
+          }
           if (this.scrollType === 'auto') {
             this.startAutoScroll();
           }
@@ -105,9 +111,9 @@ export class CircularCarouselComponent implements OnInit {
       }
     }
 
-    if (changes.language && this.itemType==='image') {
+    if (changes.language && this.itemType === 'image') {
       this.language = changes.language.currentValue;
-      if(this.items) {
+      if (this.items) {
         this.manageCaption();
       }
     }
@@ -168,6 +174,7 @@ export class CircularCarouselComponent implements OnInit {
 
   @HostListener('wheel', ['$event']) wheel(event: WheelEvent) {
     event.stopPropagation();
+    event.preventDefault();
     if (this.scrollType === "manual") {
       if (event.deltaY > 0) {
         this.degrees -= this.itemDegrees / 5;
@@ -181,7 +188,8 @@ export class CircularCarouselComponent implements OnInit {
 
   @HostListener('touchstart', ['$event']) touchstart(event: TouchEvent) {
     if (this.scrollType === "manual") {
-      event.stopPropagation();
+      // event.stopPropagation();
+      // event.preventDefault();
       this.manageDown(event.changedTouches[0].clientY);
     }
   }
@@ -189,20 +197,23 @@ export class CircularCarouselComponent implements OnInit {
   @HostListener('touchmove', ['$event']) touchmove(event: TouchEvent) {
     if (this.scrollType === "manual") {
       event.stopPropagation();
+      event.preventDefault();
       this.manageMove(event.targetTouches[0].clientY);
     }
   }
 
   @HostListener('touchend', ['$event']) touchend(event: TouchEvent) {
     if (this.scrollType === "manual") {
-      event.stopPropagation();
+      // event.stopPropagation();
+      // event.preventDefault();
       this.manageUp();
     }
   }
 
   @HostListener('mousedown', ['$event']) mousedown(event: MouseEvent) {
     if (this.scrollType === "manual") {
-      event.stopPropagation();
+      // event.stopPropagation();
+      // event.preventDefault();
       this.manageDown(event.clientY);
     }
   }
@@ -210,13 +221,15 @@ export class CircularCarouselComponent implements OnInit {
   @HostListener('mousemove', ['$event']) mousemove(event: MouseEvent) {
     if (this.scrollType === "manual") {
       event.stopPropagation();
+      event.preventDefault();
       this.manageMove(event.clientY);
     }
   }
 
   @HostListener('mouseup', ['$event']) mouseup(event: MouseEvent) {
     if (this.scrollType === "manual") {
-      event.stopPropagation();
+      // event.stopPropagation();
+      // event.preventDefault();
       this.manageUp();
     }
   }
@@ -260,7 +273,7 @@ export class CircularCarouselComponent implements OnInit {
   }
 
   manageCaption(): void {
-      this.captionText = this.language === "Fr" ? this.items[this.activeItem].captionFr : this.items[this.activeItem].captionEn;
+    this.captionText = this.language === "Fr" ? this.items[this.activeItem].captionFr : this.items[this.activeItem].captionEn;
   }
 
   rotateCarousel(): void {

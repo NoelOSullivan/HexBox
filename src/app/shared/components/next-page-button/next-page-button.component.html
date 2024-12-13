@@ -1,0 +1,16 @@
+<div class="button-holder">
+    <div class="back-button-holder">
+        <div *ngIf="!blockLeft" class="back-button" (click)="turnPageToLeft()">
+            <div class="icon-holder back">
+                <img src="assets/images/swipe.png" class="icon icon-left" />
+            </div>
+            <div *ngIf="!blockLeft">{{leftText}}</div>
+        </div>
+    </div>
+    <div *ngIf="!blockRight" class="next-button" (click)="turnPageToRight()">
+        <div>{{rightText}}</div>
+        <div class="icon-holder">
+            <img src="assets/images/swipe.png" class="icon icon-right" />
+        </div>
+    </div>
+</div>
