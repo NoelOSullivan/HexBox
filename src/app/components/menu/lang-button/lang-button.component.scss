@@ -2,10 +2,13 @@
   position: absolute;
   color: white;
   width: 40px;
-  left: 30px;
+  left: 10px;
+  bottom: 10px;
   margin-top: 10px;
   backface-visibility: hidden;
   transition: transform 0.5s;
+  z-index: 20;
+  cursor: pointer;
 }
 
 .flipMe {

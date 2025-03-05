@@ -1,79 +1,177 @@
 <div class="container">
-    <div contentControl nPanel="1" (changePageNum)="changePageNum($event)" class="flipper">
+    <div contentControl nPanel="1" (changePageNum)="changePageNum($event)" (setIsLastPage)="setIsLastPage($event)"
+        class="flipper">
         <li class="common-side">
-
-            <div *ngIf="introState!=='done' && introState!=='onFinalAnim'" class="finger" [ngClass]="{'finger-anim': onFingerAnim===true}">
+            <!-- Index finger animation for intro -->
+            <div *ngIf="introState!=='done' && introState!=='onFinalAnim'" class="finger"
+                [ngClass]="{'finger-anim': onFingerAnim===true}">
                 <app-swipe-icon></app-swipe-icon>
             </div>
-
-            <div class="text-holder">
-                <div class="intro-anim vertical-space-between-holder"
-                    [ngClass]="{'shunt-intro-text': introState==='onFinalAnim' ||introState==='done'}">
-                    <div class="byline">Noel O'Sullivan</div>
-                    <div class=" intro-title">
-                        <span *ngIf="language==='En'">Web<br>Development</span>
-                        <span *ngIf="language==='Fr'">Dévéloppement<br>Web</span>
-                    </div>
-                    <div>
-                        <div class="intro-text">
-                            <span *ngIf="language==='En'">Creation  &  Code</span>
-                            <span *ngIf="language==='Fr'">Création  &  Code</span>
-                        </div>
-                    </div>
+            <div #videoHolder class="video-holder">
+                <video #video1 playsinline class="video video1"
+                    [ngClass]="{'shunt-intro-video': introState==='onFinalAnim'}"
+                    src="assets/videos/introA.mp4"></video>
+                <video #video3 class="video" [ngClass]="{'shunt-intro-video': introState==='onFinalAnim'}"
+                    src="assets/videos/introC.mp4"></video>
+                <div *ngIf="introState!=='onFinalAnim' && showSwipe===true" class="swipe-me">
+                    <span *ngIf="language==='En'">Swipe Me</span>
+                    <span *ngIf="language==='Fr'">Balaie moi</span>
                 </div>
             </div>
-            <div #videoHolder class="video-holder">
-                <video #video1 class="video video1" [ngClass]="{'shunt-intro-video': introState==='onFinalAnim'}" src="assets/videos/intro1.mp4"></video>
-                <video #video3 class="video" [ngClass]="{'shunt-intro-video': introState==='onFinalAnim'}"
-                    src="assets/videos/intro3.mp4"></video>
-                <div *ngIf="introState!=='onFinalAnim' && showSwipe===true" class="swipe-me">Swipe Me</div>
+            <div class="text-holder">
+                <div class="intro-anim"
+                    [ngClass]="{'shunt-intro-text': introState==='onFinalAnim' ||introState==='done'}">
+                    <div class="intro-holder">
+                        <div class="byline">
+                            Noel O'Sullivan
+                        </div>
+                        <div class=" intro-title">
+                            <span *ngIf="language==='En'">Web<br>Development</span>
+                            <span *ngIf="language==='Fr'">Dévéloppement<br>Web</span>
+                        </div>
+                        <div class="intro-text">
+                            <span *ngIf="language==='En'">Creation & Code</span>
+                            <span *ngIf="language==='Fr'">Création & Code</span>
+                        </div>
+                        <div class="top-line"></div>
+                        <div class="left-line"></div>
+                        <div class="bottom-line"></div>
+                        <div class="right-line"></div>
+                    </div>
+                    <div class="offer" *ngIf="language==='Fr'">
+                        <div>&#x2022; Sites Web &#x2022; Web Apps &#x2022;</div>
+                        <div>&#x2022; Gamification &#x2022;</div>
+                        <div>&#x2022; Jeux HTML &#x2022;</div>
+                        <div>&#x2022; Formation &#x2022;</div>
+                    </div>
+                    <div class="offer" *ngIf="language==='En'">
+                        <div>&#x2022; Web Sites &#x2022; Web Apps &#x2022;</div>
+                        <div>&#x2022; Gamification &#x2022;</div>
+                        <div>&#x2022; HTML Games &#x2022;</div>
+                        <div>&#x2022; Training &#x2022;</div>
+                    </div>
+                    <app-next-page-button class="next-page-button" [activePageNum]="activePageNum" [language]="language"
+                        [rightTextFrEn]="'Qui suis-je ?#Who am I?'"></app-next-page-button>
+                </div>
             </div>
+
             <app-logo></app-logo>
         </li>
         <li class="common-side">
             <app-logo></app-logo>
-            <div class="vertical-space-between-holder basic-text" [ngClass]="{'shunt-intro-text': introState==='onFinalAnim'}">
-                <div class="intro-text">Twenty years of digital media</div>
-                <div class="intro-text">Aeronautic, institutional, entertainment</div>
-                <div class="intro-text">Data visualisation, marketing, games </div>
-            </div>
             <div *ngIf="introState!=='done'" class="video-holder">
-                <video #video2 class="video" src="assets/videos/intro2.mp4" [ngClass]="{'shunt-intro-video': introState==='onFinalAnim'}"></video>
-                <div *ngIf="introState!=='onFinalAnim'" class="swipe-me-back">Swipe Me</div>
+                <video #video2 class="video" src="assets/videos/introB.mp4"
+                    [ngClass]="{'shunt-intro-video': introState==='onFinalAnim'}"></video>
+                <div *ngIf="introState!=='onFinalAnim'" class="swipe-me-back">
+                    <span *ngIf="language==='En'">Swipe Me</span>
+                    <span *ngIf="language==='Fr'">Balaie moi</span>
+                </div>
+            </div>
+            <div *ngIf="introState==='done'" class="vertical-space-between-holder">
+                <!-- <div *ngIf="introState==='done'" class="vertical-space-between-holder basic-text"
+                [ngClass]="{'shunt-intro-text': introState==='onFinalAnim'}"> -->
+                <app-bichrome-title *ngIf="language==='Fr'" [text]="'QUI'"></app-bichrome-title>
+                <app-bichrome-title *ngIf="language==='En'" [text]="'WHO'"></app-bichrome-title>
+                <div class="basic-text">
+                    <div class="sub-title" *ngIf="language==='Fr'">Noel O'Sullivan</div>
+                    <div class="sub-text" *ngIf="language==='Fr'">20 ans de développement pour des institutions, des
+                        grands comptes, des PME, des éditeurs, dans l'audio-visuel et avec des organismes de formation.
+                    </div>
+                    <div class="sub-title" *ngIf="language==='En'">Noel O'Sullivan</div>
+                    <div class="sub-text" *ngIf="language==='En'">20 years of development for government ministries,
+                        industry, small businesses, publishers, in audio-visual and with training companies.</div>
+                </div>
+                <div class="basic-text">
+                    <div class="sub-title" *ngIf="language==='Fr'">Développeur Web Créative</div>
+                    <div class="sub-text" *ngIf="language==='Fr'">Je donne de la personnalité à des applications.
+                        J'utilise du 'Motion Design' couplé à des interfaces innovantes pour créer une expérience
+                        unique. Je crée du contenu responsive et fluide qui se charge efficacement. Je suis des bonnes
+                        pratiques de développement pour assurer que mes webapps fonctionne.</div>
+                    <div class="sub-title" *ngIf="language==='En'">Creative Web Developer</div>
+                    <div class="sub-text" *ngIf="language==='En'">I give applications a personality. I use Motion
+                        Design along with innovative interfaces to create a unique experience. I make responsive, fluid
+                        content that loads efficiently. I follow accepted and best development practices to ensure that
+                        my webapps work.</div>
+                </div>
+                <app-next-page-button class="next-page-button" [language]="language" [leftTextFrEn]="'Accueil#Home'"
+                    [rightTextFrEn]="'Ce que je fais#What I do'"></app-next-page-button>
             </div>
         </li>
         <li class="common-side">
             <app-logo></app-logo>
             <div class="vertical-space-between-holder">
-                <p>
-                    Web Apps can do lots of good stuff. Streamlining production, promoting products.
-                    Have a look at our offers.
-                </p>
-                <app-direct-access [linkText]="'Apps and Sites'" [hexNum]="1" [nPage]="4"></app-direct-access>
-                <p>
-                    I offer a range of B2B training packages in high-end front end development.
-                    All courses are based on real-life scenarios.
-                </p>
-                <app-direct-access [linkText]="'Cours'" [hexNum]="1" [nPage]="5"></app-direct-access>
+                <app-bichrome-title *ngIf="language==='Fr'" [text]="'QUOI'"></app-bichrome-title>
+                <app-bichrome-title *ngIf="language==='En'" [text]="'WHAT'"></app-bichrome-title>
+                <div class="basic-text">
+                    <div class="sub-title" *ngIf="language==='Fr'">Sites web uniques</div>
+                    <div class="sub-text" *ngIf="language==='Fr'">A partir des envies et besoins des clients, je crée
+                        des sites et apps originaux qui se demarquent.</div>
+                    <div class="sub-title" *ngIf="language==='En'">Unique web sites</div>
+                    <div class="sub-text" *ngIf="language==='En'">Based on the wishes and needs of clients I create
+                        original sites that stand out.</div>
+                </div>
+                <div class="basic-text">
+                    <div class="sub-title" *ngIf="language==='Fr'">Modules interactifs</div>
+                    <div class="sub-text" *ngIf="language==='Fr'">Pour expliquer, montrer, vendre, amuser via
+                        l'immersion de l'utilisateur : La gamification.</div>
+                    <div class="sub-title" *ngIf="language==='En'">Interactive modules</div>
+                    <div class="sub-text" *ngIf="language==='En'">Explain, show, sell, entertain via user immersion:
+                        Gamification.</div>
+                </div>
+                <div class="basic-text">
+                    <div class="sub-title" *ngIf="language==='Fr'">Applications Web</div>
+                    <div class="sub-text" *ngIf="language==='Fr'">Des progiciels et outils sur mesure qui fonctionnent
+                        dans le navigateur.</div>
+                    <div class="sub-title" *ngIf="language==='En'">Web Apps</div>
+                    <div class="sub-text" *ngIf="language==='En'">Made to measure progiciels and tools that run in
+                        navigators.</div>
+                </div>
+                <div class="basic-text">
+                    <div class="sub-title" *ngIf="language==='Fr'">Formation</div>
+                    <div class="sub-text" *ngIf="language==='Fr'">Des formations pratiques et immersives.
+                    </div>
+                    <div class="sub-title" *ngIf="language==='En'">Training</div>
+                    <div class="sub-text" *ngIf="language==='En'">Practical and immersive training packages.</div>
+                </div>
+                <app-next-page-button class="next-page-button" [language]="language"
+                    [leftTextFrEn]="'Qui suis-je ?#Who am I'"
+                    [rightTextFrEn]="'Mes outils ?#My tools'"></app-next-page-button>
             </div>
         </li>
         <li class="common-side">
             <app-logo></app-logo>
-            <h2>APPS AND SITES</h2>
-        </li>
-        <li class="common-side">
-            <h2>COURS</h2>
-        </li>
-        <li class="common-side">
-            <h2>FFFFFFFFFFFFFFFFFFFFFFFFF</h2>
-        </li>
-        <li class="common-side">
-            <h2>Top, Top, Top of the league</h2>
-        </li>
-        <li class="common-side">
-            <h2>You'll never walk alone</h2>
+            <div class="vertical-space-between-holder">
+                <app-bichrome-title *ngIf="language==='Fr'" [text]="'COMMENT'"></app-bichrome-title>
+                <app-bichrome-title *ngIf="language==='En'" [text]="'HOW'"></app-bichrome-title>
+                <div class="basic-text">
+                    <div class="sub-title" *ngIf="language==='Fr'">HTML/CSS</div>
+                    <div class="sub-text" *ngIf="language==='Fr'">Des connaissances accrues en CSS me permettent de
+                        créer des expériences uniques. Fait main. Pas de template. Pas de thèmes.</div>
+                    <div class="sub-title" *ngIf="language==='En'">HTML/CSS</div>
+                    <div class="sub-text" *ngIf="language==='En'">A real knowledge of CSS allows me to create unique
+                        experiences. Hand made. No templates. No themes.</div>
+                </div>
+                <div class="basic-text">
+                    <div class="sub-title" *ngIf="language==='Fr'">Javascript / Typescript</div>
+                    <div class="sub-text" *ngIf="language==='Fr'">La maîtrise de la logique et des algorithmes est
+                        essentielle si on veut créer des interactions originaux.</div>
+                    <div class="sub-title" *ngIf="language==='En'">Javascript / Typescript</div>
+                    <div class="sub-text" *ngIf="language==='En'">Expertise in logic and algorithms is essential in
+                        order to créate original interactivity.</div>
+                </div>
+                <div class="basic-text">
+                    <div class="sub-title" *ngIf="language==='Fr'">Libraries javascript tiers</div>
+                    <div class="sub-text" *ngIf="language==='Fr'">Savoir intégrer des libraries parmi des milliers
+                        disponibles est indispensable. Pour faire de l'animation WebGL (2D & 3D) par exemple, mais aussi
+                        pour des petites taches.</div>
+                    <div class="sub-title" *ngIf="language==='En'">Third party libraries</div>
+                    <div class="sub-text" *ngIf="language==='En'">Knowing how to integrate libraries from the thousands
+                        available is indispensable. For animation WebGl (2D & 3D) for example, but also for smaller
+                        tasks.</div>
+                </div>
+                <app-next-page-button class="next-page-button" [isLastPage]="true" [language]="language"
+                    [leftTextFrEn]="'Ce que je fais#What I do'"></app-next-page-button>
+            </div>
         </li>
     </div>
-
-
 </div>

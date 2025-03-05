@@ -4,7 +4,6 @@ import { NgIf, NgClass } from '@angular/common';
 import { Select, Store } from '@ngxs/store';
 
 import { LogoComponent } from '../../../../../shared/components/logo/logo.component';
-import { ArrowComponent } from '../../../../../shared/components/arrow/arrow.component';
 import { DirectAccessComponent } from '../../../../../shared/components/direct-access/direct-access.component';
 import { SwipeIconComponent } from '../../../../../shared/components/swipe-icon/swipe-icon.component';
 
@@ -16,11 +15,13 @@ import { AppStateModel, IntroState, LanguageModel } from 'app/store/general/gene
 import { ChangeIntroState } from 'app/store/general/general.actions';
 import { Observable } from 'rxjs';
 import { Language } from 'app/store/general/general.state';
+import { NextPageButtonComponent } from 'app/shared/components/next-page-button/next-page-button.component';
+import { BichromeTitleComponent } from 'app/shared/components/bichrome-title/bichrome-title.component';
 
 @Component({
   selector: 'app-container1',
   standalone: true,
-  imports: [NgIf, NgClass, ContentDirective, LogoComponent, ArrowComponent, DirectAccessComponent, SwipeIconComponent],
+  imports: [NgIf, NgClass, ContentDirective, LogoComponent, BichromeTitleComponent, DirectAccessComponent, SwipeIconComponent, NextPageButtonComponent],
   templateUrl: './container1.component.html',
   styleUrls: ['./container1.component.scss', '../../main-sections-shared-styles.scss']
 })
@@ -46,6 +47,7 @@ export class Container1 implements OnInit {
   done3: boolean = false;
   showSwipe: boolean = false;
   activePageNum: number = 0;
+  isLastPage: boolean = false;
 
   appState!: AppStateModel;
   introState!: IntroState;
@@ -54,8 +56,13 @@ export class Container1 implements OnInit {
   introDone: boolean = false;
 
   changePageNum(activePageNum: number) {
-    // console.log("changePageNum", activePageNum);
-    this.activePageNum = activePageNum;
+    if(this.activePageNum !== activePageNum) {
+      this.activePageNum = activePageNum;
+    }
+  }
+
+  setIsLastPage(isLastPage: boolean) {
+    this.isLastPage = isLastPage;
   }
 
   ngOnInit(): void {
@@ -69,7 +76,7 @@ export class Container1 implements OnInit {
         this.video3.nativeElement.removeEventListener('ended', this.endVideo3);
         this.showSwipe = false;
         // If the intro was cut by the user and we are on the 2nd page, go back to page 1
-        if(this.activePageNum === 1) {
+        if (this.activePageNum === 1) {
           const directionObj: Direction = { direction: "right" };
           this.store.dispatch(new TurnPage(directionObj));
         }
@@ -125,11 +132,6 @@ export class Container1 implements OnInit {
       that.video1.nativeElement.addEventListener("ended", () => {
         that.endVideo1();
       });
-
-
-
-
-
     }, false);
 
     this.video3.nativeElement.style.visibility = "hidden";
@@ -192,4 +194,5 @@ export class Container1 implements OnInit {
       this.store.dispatch(new ChangeIntroState(IntroState.DONE));
     }, 500);
   }
+
 }

@@ -44,6 +44,7 @@ export class ContentComponent implements OnInit {
 
   pageTotal: number = 0;
   pageNumber: number = 0;
+  rotating: boolean = false;
   // contentHeight!: number;
 
   constructor(private store: Store) { }
@@ -53,7 +54,6 @@ export class ContentComponent implements OnInit {
 
     this.pageCounters$.subscribe(newPC => {
       this.pageCounters = newPC;
-      // console.log("pageCounters-----", this.pageCounters);
       this.updateWidgetInfo();
     });
 
@@ -63,25 +63,16 @@ export class ContentComponent implements OnInit {
         this.updateWidgetInfo();
       }
     });
-
-    
-    
-
   }
 
   updateWidgetInfo(): void {
-
-    // console.log("this.activePanelNumber", this.activePanelNumber);
 
     let apn = this.activePanelNumber;
     if (apn === 0) apn = 6;
     this.pageTotal = this.pageCounters.pageCounters.totals[apn - 1];
     this.pageNumber = this.pageCounters.pageCounters.counters[apn - 1];
 
-    // console.log("WIDGET", this.pageTotal, this.pageNumber);
-
     if (this.pageWidget) {
-      // console.log(this.pageNumber / this.pageTotal * 100);
       this.pageWidget.nativeElement.style.width = this.pageNumber / this.pageTotal * 100 + '%';
     }
   }
@@ -95,17 +86,27 @@ export class ContentComponent implements OnInit {
       this.rotateMe(Number(newRot.rotationToAdd.degrees));
     });
 
-    this.store.dispatch(new ChangeContentWidth(Math.min(this.contentHolder.nativeElement.clientWidth,400)));
+    this.store.dispatch(new ChangeContentWidth(Math.min(this.contentHolder.nativeElement.clientWidth, 400)));
     // this.pageWidgetInfo.pageTotal = this.pageCounters.pageCounters.totals[this.activePanelNumber - 1]
 
     // this.pageTotal = this.pageCounters.pageCounters.totals[this.activePanelNumber - 1];
     // this.pageNumber = this.pageCounters.pageCounters.counters[this.activePanelNumber - 1];
 
-    // console.log("WIDGET", this.pageTotal, this.pageNumber);
 
   }
 
+  manageVisibilityDuringRotation() {
+    // Need to show the hidden inactive panels during the rotation of the panels
+    this.rotating = true;
+    setTimeout(() => {
+      this.rotating = false;
+    }, 1000)
+  }
+
   rotateMe(degrees: number) {
+    if(degrees!==0) {
+      this.manageVisibilityDuringRotation();
+    }
     this.actualRotation += degrees;
     this.contentHolder.nativeElement.style.transform = "rotate(" + this.actualRotation + "deg)";
   }

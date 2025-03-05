@@ -13,6 +13,12 @@ export enum IntroState {
     DONE = "done",
 }
 
+export enum SunGameState {
+    GAMEOFF = "gameOff",
+    GAMEON = "gameOn",
+    GAMEOVER = "gameOver",
+}
+
 export interface AppStateModel {
     // public appState!: AppState;
     onIntro: boolean;
@@ -21,7 +27,7 @@ export interface AppStateModel {
     contentHeight: number;
     contentWidth: number;
     backButtonClick: boolean;
-    sunGameOn: boolean;
+    sunGameState: SunGameState;
     eggActive: boolean;
     sunGameTargets: Array<DomRect>;
     eggInfo: EggInfo;

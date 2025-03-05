@@ -21,7 +21,10 @@ export class Container6 implements OnInit {
 
   @Input() nContainer!: number;
 
+  activePanel!: number;
+  activePageNum: number = 0;
   language!: string;
+  iAmActive: boolean = false;
 
   constructor() { }
 
@@ -29,6 +32,11 @@ export class Container6 implements OnInit {
     this.language$.subscribe(newLanguage => {
       this.language! = newLanguage.language;
     });
+  }
+
+  changePanel(panel: number) {
+    this.activePanel = panel;
+    this.iAmActive = this.nContainer === this.activePanel;
   }
 
 }

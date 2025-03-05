@@ -9,7 +9,7 @@ import { ChangePanelNumber, ChangeRotation } from '../../../store/hexagon/hexago
 import { DirectAccess, PageCounters } from '../../../store/panel/panel.state';
 import { Observable } from 'rxjs';
 import { DirectAccessModel, PageCounterModel } from '../../../store/panel/panel.model';
-import { AppStateModel, IntroState, LanguageModel } from 'app/store/general/general.model';
+import { AppStateModel, IntroState, LanguageModel, SunGameState } from 'app/store/general/general.model';
 import { AppState, Language } from 'app/store/general/general.state';
 import { BackButtonClick, ChangeEggState, ChangeIntroState, TransmitEggInfo } from 'app/store/general/general.actions';
 import { LangButtonComponent } from '../lang-button/lang-button.component';
@@ -39,20 +39,27 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
   @ViewChild('catapult') catapult!: ElementRef;
   @ViewChild('egg') egg!: ElementRef;
   @ViewChild('eggSight') eggSight!: ElementRef;
-  @ViewChild('sling') sling!: ElementRef;
+  @ViewChild('eggShadow') eggShadow!: ElementRef;
+  @ViewChild('slingLeft') slingLeft!: ElementRef;
+  @ViewChild('slingRight') slingRight!: ElementRef;
+  @ViewChild('slingAnchor') slingAnchor!: ElementRef;
+  @ViewChild('leftElastic') leftElastic!: ElementRef;
+  @ViewChild('rightElastic') rightElastic!: ElementRef;
+  @ViewChild('slingButton') slingButton!: ElementRef;
 
   appState!: AppStateModel;
   introState!: IntroState;
-  sunGameOn: boolean = false;
+  sunGameState!: SunGameState;
   sunGameTargets: Array<DomRect> = [];
+  allowCatapult: boolean = true;
 
   showBackButton: boolean = false;
   allowBackButton: boolean = false;
 
   startPoint: { x: number, y: number } = { x: 0, y: 0 };
   movePoint: { x: number, y: number } = { x: 0, y: 0 };
-  endPoint: { x: number, y: number } = { x: 0, y: 0 };
-  vector: { x: number, y: number } = { x: 0, y: 0 };
+  // endPoint: { x: number, y: number } = { x: 0, y: 0 };
+  // vector: { x: number, y: number } = { x: 0, y: 0 };
 
   constructor(private dataService: DataService, private router: Router, private store: Store) {
   }
@@ -61,17 +68,18 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
   public menuContentLanguage: Array<any> = [];
   public menuContent2: string = "Click Me";
   public hexOpened: Array<any> = [];
-  private allMenus!: any;
   public selected!: number;
+  public rolled: number | null = null;
+
+  private allMenus!: any;
   private lastSelected!: number;
   private menuRotation: number = 0;
-  public rolled: number | null = null;
   private hexagons: Array<any> = [];
-
   private introDone: boolean = false;
   private language!: string;
-  pageCounters!: PageCounterModel;
-  contentHeight: number = 0;
+  private pageCounters!: PageCounterModel;
+  private contentHeight: number = 0;
+  private slingWasPressed: boolean = false;
 
   ngOnInit() {
 
@@ -108,8 +116,27 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
         this.menuLanguageChange();
         this.manageMenu(2);
       }
-      if (this.sunGameOn !== newAppState.sunGameOn) {
-        this.sunGameOn = newAppState.sunGameOn;
+      if (this.sunGameState !== newAppState.sunGameState) {
+        this.sunGameState = newAppState.sunGameState;
+        switch (this.sunGameState) {
+          case SunGameState.GAMEOFF:
+          case SunGameState.GAMEOVER:
+            if (this.catapult) {
+              this.catapult.nativeElement.style.transition = "opacity 0.75s ease-out";
+              setTimeout(() => {
+                this.catapult.nativeElement.style.opacity = 0;
+              }, 0);
+              this.catapult.nativeElement.style.pointerEvents = 'none';
+            }
+            break;
+          case SunGameState.GAMEON:
+            this.catapult.nativeElement.style.transition = "opacity 1.25s ease-in";
+            setTimeout(() => {
+              this.catapult.nativeElement.style.opacity = 100;
+            }, 0);
+            this.catapult.nativeElement.style.pointerEvents = 'all';
+            break;
+        }
       }
       if (newAppState.contentHeight !== this.contentHeight) {
         this.contentHeight = newAppState.contentHeight;
@@ -298,7 +325,6 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
 
   clickBack(): void {
     if (this.allowBackButton === true) {
-      console.log("clickBack");
       this.showBackButton = false;
       this.allowBackButton = false;
       this.store.dispatch(new BackButtonClick());
@@ -306,13 +332,44 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
   }
 
   touchstartCatapult(event: TouchEvent): void {
-    this.startPoint.x = event.touches[0].clientX;
-    this.startPoint.y = event.touches[0].clientY;
+    if (this.allowCatapult === true) {
+      this.slingWasPressed = true;
+      this.slingButton.nativeElement.style.opacity = 0;
+      this.startPoint.x = event.touches[0].clientX;
+      this.startPoint.y = event.touches[0].clientY;
+      this.eggSight.nativeElement.style.opacity = 0.3;
+    }
+  }
+
+  mousedownCatapult(event: MouseEvent): void {
+    if (this.allowCatapult === true) {
+      this.slingWasPressed = true;
+      this.slingButton.nativeElement.style.opacity = 0;
+      this.startPoint.x = event.clientX;
+      this.startPoint.y = event.clientY;
+      this.eggSight.nativeElement.style.opacity = 0.3;
+    }
   }
 
   touchmoveCatapult(event: TouchEvent): void {
-    this.movePoint.x = event.touches[0].clientX;
-    this.movePoint.y = event.touches[0].clientY;
+    if (this.allowCatapult === true && this.slingWasPressed === true) {
+      event.preventDefault();
+      this.movePoint.x = event.touches[0].clientX;
+      this.movePoint.y = event.touches[0].clientY;
+      this.manageCatapult();
+    }
+  }
+
+  mousemoveCatapult(event: MouseEvent): void {
+    if (this.allowCatapult === true && this.slingWasPressed === true) {
+      event.preventDefault();
+      this.movePoint.x = event.clientX;
+      this.movePoint.y = event.clientY;
+      this.manageCatapult();
+    }
+  }
+
+  manageCatapult(): void {
 
     let AB = this.movePoint.x - this.startPoint.x;
     let AC = this.movePoint.y - this.startPoint.y;
@@ -338,89 +395,145 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
         this.eggSight.nativeElement.style.top = topDist + "px";
       }
     }
+    this.leftElastic.nativeElement.style.height = BC + 1 + "px";
+    this.rightElastic.nativeElement.style.height = BC + 1 + "px";
+
+    if (this.leftElastic.nativeElement.clientWidth > this.leftElastic.nativeElement.clientHeight) {
+      this.leftElastic.nativeElement.style.opacity = 0;
+      this.rightElastic.nativeElement.style.opacity = 0;
+    } else {
+      this.leftElastic.nativeElement.style.opacity = 100;
+      this.rightElastic.nativeElement.style.opacity = 100;
+    }
 
     this.egg.nativeElement.style.top = BC + "px";
-    this.sling.nativeElement.style.top = BC + "px";
-
+    this.slingLeft.nativeElement.style.top = BC + "px";
+    this.slingRight.nativeElement.style.top = BC + "px";
+    // }
   }
 
   touchendCatapult(event: TouchEvent): void {
+    this.releaseCatapult()
+  }
 
-    let AB = this.movePoint.x - this.startPoint.x;
-    let AC = this.movePoint.y - this.startPoint.y;
-    let BC = Math.sqrt((AB * AB) + (AC * AC));
+  mouseupCatapult(event: Event):void {
+    this.releaseCatapult()
+  }
 
-    // Bring sling and egg back to centre
-    this.egg.nativeElement.style.transition = 'all 250ms linear';
-    this.sling.nativeElement.style.transition = 'all 250ms linear';
-    this.egg.nativeElement.style.top = "0";
-    this.sling.nativeElement.style.top = "0";
+  releaseCatapult(): void {
+    if (this.allowCatapult === true && this.slingWasPressed === true) {
+      this.slingWasPressed = false;
+      this.allowCatapult = false;
+      // this.slingButton.nativeElement.style.opacity = 1;
+      this.eggSight.nativeElement.style.opacity = 0;
 
-    // Calculate transition time for egg depending on catapult pull
-    let transitionSpeed;
-    if (BC < 20) {
-      transitionSpeed = 500;
-    } else {
-      if (BC > 100) {
-        transitionSpeed = 1000;
-      } else {
-        transitionSpeed = 750;
-      }
-    }
+      let AB = this.movePoint.x - this.startPoint.x;
+      let AC = this.movePoint.y - this.startPoint.y;
+      let BC = Math.sqrt((AB * AB) + (AC * AC));
 
-    // Wait 250 for the sling and egg to centre before setting egg to final position
-    setTimeout(() => {
+      // Bring sling and egg back to centre
+      let transition = 'all 100ms linear';
+      this.egg.nativeElement.style.transition = transition;
+      this.slingRight.nativeElement.style.transition = transition;
+      this.slingLeft.nativeElement.style.transition = transition;
+      this.leftElastic.nativeElement.style.transition = transition;
+      this.rightElastic.nativeElement.style.transition = transition;
+      this.egg.nativeElement.style.top = "0";
+      this.slingRight.nativeElement.style.top = "0";
+      this.slingLeft.nativeElement.style.top = "0";
+
+      this.leftElastic.nativeElement.style.height = "1px";
+      this.rightElastic.nativeElement.style.height = "1px";
+
+      setTimeout(() => {
+        this.leftElastic.nativeElement.style.opacity = "0";
+        this.rightElastic.nativeElement.style.opacity = "0";
+      }, 40);
+
+      // Calculate transition time for egg depending on catapult pull
+      let transitionSpeed;
       if (BC < 20) {
-        this.egg.nativeElement.style.top = "-70px";
+        transitionSpeed = 500;
       } else {
         if (BC > 100) {
-          this.egg.nativeElement.style.top = "-500px";
+          transitionSpeed = 1000;
         } else {
-          this.egg.nativeElement.style.top = this.eggSight.nativeElement.style.top;
+          transitionSpeed = 750;
         }
       }
-      this.egg.nativeElement.style.transition = 'all ' + transitionSpeed + 'ms ease-out';
-      this.store.dispatch(new ChangeEggState(true));
-    }, 250);
 
-    let eggInfo: EggInfo
+      this.eggShadow.nativeElement.style.transition = 'all ' + transitionSpeed / 2 + 'ms linear';
+      setTimeout(() => {
+        this.eggShadow.nativeElement.style.left = "10px";
+        this.eggShadow.nativeElement.style.width = "25px";
+        this.eggShadow.nativeElement.style.height = "25px";
+      }, transitionSpeed / 2);
 
-    // Detect if the egg hits a head
-    let sightRect = this.eggSight.nativeElement.getBoundingClientRect();
-    let sightCentreH = sightRect.left + ((sightRect.right - sightRect.left) / 2);
-    let sightCentreV = sightRect.top + ((sightRect.bottom - sightRect.top) / 2);
-    let targetHit: number | undefined = undefined;
-    let percentLeft, percentTop;
-    // Parse the head targets and check for collision
-    for (let i = 0, length = this.sunGameTargets.length; i < length; i++) {
-      let target = this.sunGameTargets[i];
-      let totalDistanceH = target.right - target.left;
-      let sightDistanceH = sightCentreH - target.left;
-      percentLeft = Math.floor(sightDistanceH / totalDistanceH * 100);
-      if (percentLeft >= 10 && percentLeft <= 90) {
-        let totalDistanceV = target.bottom - target.top;
-        let sightDistanceV = sightCentreV - target.top;
-        percentTop = Math.floor(sightDistanceV / totalDistanceV * 100);
-        if (percentTop >= 10 && percentTop <= 100) {
-          targetHit = i + 1;
-          eggInfo = {targetHit:targetHit, percentLeft:percentLeft, percentTop:percentTop}
-          break;
+      // Wait for the sling and egg to centre before setting egg to final position
+      setTimeout(() => {
+        if (BC < 20) {
+          this.egg.nativeElement.style.top = "-70px";
+        } else {
+          if (BC > 100) {
+            this.egg.nativeElement.style.top = "-500px";
+          } else {
+            this.egg.nativeElement.style.top = this.eggSight.nativeElement.style.top;
+          }
+        }
+        this.eggShadow.nativeElement.style.left = "-25px";
+        this.eggShadow.nativeElement.style.width = "50px";
+        this.eggShadow.nativeElement.style.height = "40px";
+        this.egg.nativeElement.style.transition = 'all ' + transitionSpeed + 'ms ease-out';
+        this.store.dispatch(new ChangeEggState(true));
+      }, 100);
+
+      let eggInfo: EggInfo
+
+      // Detect if the egg hits a head
+      let sightRect = this.eggSight.nativeElement.getBoundingClientRect();
+      let sightCentreH = sightRect.left + ((sightRect.right - sightRect.left) / 2);
+      let sightCentreV = sightRect.top + ((sightRect.bottom - sightRect.top) / 2);
+      let targetHit: number | undefined = undefined;
+      let percentLeft, percentTop;
+      // Parse the head targets and check for collision
+      for (let i = 0, length = this.sunGameTargets.length; i < length; i++) {
+        let target = this.sunGameTargets[i];
+        let totalDistanceH = target.right - target.left;
+        let sightDistanceH = sightCentreH - target.left;
+        percentLeft = Math.floor(sightDistanceH / totalDistanceH * 100);
+        if (percentLeft >= 10 && percentLeft <= 90) {
+          let totalDistanceV = target.bottom - target.top;
+          let sightDistanceV = sightCentreV - target.top;
+          percentTop = Math.floor(sightDistanceV / totalDistanceV * 100);
+          if (percentTop >= 10 && percentTop <= 100) {
+            targetHit = i + 1;
+            eggInfo = { targetHit: targetHit, percentLeft: percentLeft, percentTop: percentTop }
+            break;
+          }
         }
       }
+
+      // When egg has reached destination send it back for next shot
+      // Transmit the egg info - target and position
+      setTimeout(() => {
+        this.store.dispatch(new ChangeEggState(false));
+        this.egg.nativeElement.style.transition = 'none';
+        this.slingLeft.nativeElement.style.transition = 'none';
+        this.slingRight.nativeElement.style.transition = 'none';
+        this.leftElastic.nativeElement.style.transition = 'none';
+        this.rightElastic.nativeElement.style.transition = 'none';
+        this.eggShadow.nativeElement.style.transition = 'none';
+        this.egg.nativeElement.style.top = "0";
+        this.eggShadow.nativeElement.style.left = "10px";
+        this.eggShadow.nativeElement.style.width = "25px";
+        this.eggShadow.nativeElement.style.height = "25px";
+        if (eggInfo) {
+          this.store.dispatch(new TransmitEggInfo(eggInfo));
+        }
+        this.allowCatapult = true;
+      }, transitionSpeed + 100);
+
     }
-
-    // When egg has reached destination send it back for next shot
-    // Transmit the egg info - target and position
-    setTimeout(() => {
-      this.store.dispatch(new ChangeEggState(false));
-      this.egg.nativeElement.style.transition = 'none';
-      this.sling.nativeElement.style.transition = 'none';
-      this.egg.nativeElement.style.top = "0";
-      if(eggInfo) {
-        this.store.dispatch(new TransmitEggInfo(eggInfo));
-      }
-    }, transitionSpeed + 250);
-
   }
 
 }

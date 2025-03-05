@@ -17,10 +17,8 @@
 }
 
 .hide-content {
-    opacity: 0.2;
+    opacity: 0;
 }
-
-
 
 .page-counter {
     position: absolute;
@@ -30,3 +28,48 @@
     top: 100%;
     transition: width 100ms linear;
 }
+
+// .bg-L1 {
+//     width: 46px; height: 85px;
+//     background: url('css_sprites.png') -10px -160px;
+// }
+// .bg-L2 {
+//     width: 104px; height: 35px;
+//     background: url('css_sprites.png') -76px -160px;
+// }
+// .bg-L3 {
+//     width: 87px; height: 41px;
+//     background: url('css_sprites.png') -10px -265px;
+// }
+// .bg-L4 {
+//     width: 68px; height: 98px;
+//     background: url('css_sprites.png') -92px -10px;
+// }
+// .bg-LA {
+//     width: 17px; height: 57px;
+//     background: url('css_sprites.png') -329px -76px;
+// }
+// .bg-R1 {
+//     width: 46px; height: 91px;
+//     background: url('css_sprites.png') -263px -10px;
+// }
+// .bg-Thorax {
+//     width: 62px; height: 130px;
+//     background: url('css_sprites.png') -10px -10px;
+// }
+// .bg-R2 {
+//     width: 78px; height: 46px;
+//     background: url('css_sprites.png') -329px -10px;
+// }
+// .bg-R3 {
+//     width: 86px; height: 27px;
+//     background: url('css_sprites.png') -200px -160px;
+// }
+// .bg-RA {
+//     width: 17px; height: 48px;
+//     background: url('css_sprites.png') -366px -76px;
+// }
+// .bg-R4 {
+//     width: 63px; height: 98px;
+//     background: url('css_sprites.png') -180px -10px;
+// }

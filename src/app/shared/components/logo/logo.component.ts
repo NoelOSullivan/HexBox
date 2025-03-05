@@ -9,26 +9,6 @@ import { DataService } from '../../services/data.service';
   templateUrl: './logo.component.html',
   styleUrl: './logo.component.scss'
 })
-export class LogoComponent implements OnInit {
-
-  private allMenus!: any;
-  public menuContent: Array<any> = [];
-
-  constructor(private dataService: DataService) { }
-
-  ngOnInit() {
-    this.getMenus();
-  }
-
-  getMenus() {
-    this.dataService.getMenus().subscribe((res: any) => {
-      this.allMenus = res;
-      this.setUpMenu();
-    });
-  }
-
-  setUpMenu() {
-    this.menuContent = this.allMenus["logo"][0];
-  }
+export class LogoComponent {
 
 }

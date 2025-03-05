@@ -1,46 +1,44 @@
 <div class="container">
     <div #flipper contentControl nPanel="3" class="flipper">
         <li class="common-side">
-            <h1>1</h1>
-        </li>
-        <li class="common-side">
-            2
-        </li>
-        <li class="common-side">
-            3
-        </li>
-        <li class="common-side">
-            4
-        </li>
-        <li class="common-side">
-            5
-        </li>
-        <li class="common-side">
-            6
-        </li>
-        <li class="common-side">
-            7
-        </li>
-        <li class="common-side">
-            8
-        </li>
-        <li class="common-side">
-            9
-        </li>
-        <li class="common-side">
-            10
-        </li>
-        <li class="common-side">
-            11
-        </li>
-        <li class="common-side">
-            12
-        </li>
-        <li class="common-side">
-            13
-        </li>
-        <li class="common-side">
-            14
+            <app-logo></app-logo>
+            <div class="vertical-space-between-holder">
+                <app-bichrome-title *ngIf="language==='Fr'" [text]="'LES 1-0-1'"></app-bichrome-title>
+                <app-bichrome-title *ngIf="language==='En'" [text]="'THE 1-0-1s'"></app-bichrome-title>
+                <div class="basic-text">
+                    <div class="sub-title" *ngIf="language==='Fr'">Les 101's</div>
+                    <div class="sub-text" *ngIf="language==='Fr'">Une série de cours intensifs et pratique de 30 heures.
+                    </div>
+                    <div class="sub-title" *ngIf="language==='En'">The 101's</div>
+                    <div class="sub-text" *ngIf="language==='En'">A series of intensive, practical courses of 30 hours.
+                    </div>
+                </div>
+                <div class="basic-text">
+                    <div class="sub-title" *ngIf="language==='Fr'">Vanilla Front End</div>
+                    <div class="sub-text" *ngIf="language==='Fr'">HTML, CSS, Javascript. Apprendre les fondamentaux.
+                    </div>
+                    <div class="sub-title" *ngIf="language==='En'">Vanilla Front End</div>
+                    <div class="sub-text" *ngIf="language==='En'">HTML, CSS, Javascript. Learn the fundamentals.</div>
+                </div>
+                <div class="basic-text">
+                    <div class="sub-title" *ngIf="language==='Fr'">Création d'Interfaces Magique</div>
+                    <div class="sub-text" *ngIf="language==='Fr'">Apprendre à donner de la personnalité à une
+                        application
+                        web.
+                    </div>
+                    <div class="sub-title" *ngIf="language==='En'">Magical Interface Creation</div>
+                    <div class="sub-text" *ngIf="language==='En'">Learn how to give a personality to a web app.</div>
+                </div>
+                <div class="basic-text">
+                    <div class="sub-title" *ngIf="language==='Fr'">HTML Canvas</div>
+                    <div class="sub-text" *ngIf="language==='Fr'">Apprendre Leaflet, D3, PixiJS et ThreeJS en
+                        construisant une application moderne.</div>
+                    <div class="sub-title" *ngIf="language==='En'">HTML Canvas</div>
+                    <div class="sub-text" *ngIf="language==='En'">Learn Leaflet, D3, PixiJS and ThreeJS while building a
+                        modern web application.</div>
+                </div>
+                <div></div>
+            </div>
         </li>
     </div>
 </div>

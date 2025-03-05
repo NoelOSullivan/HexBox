@@ -3,17 +3,17 @@ import { NgIf, NgClass } from '@angular/common';
 import { Select, Store } from '@ngxs/store';
 import { MenuComponent } from './menu/menu/menu.component';
 import { ContentComponent } from './content/content/content.component';
-import { ArrowComponent } from '../shared/components/arrow/arrow.component';
-import { TimeInterval } from 'rxjs/internal/operators/timeInterval';
+import { ActivePanelNumber } from 'app/store/hexagon/hexagon.state';
 import { AppStateModel } from 'app/store/general/general.model';
 import { ChangeContentHeight, ChangeMouseUpDetected } from 'app/store/general/general.actions';
 import { AppState } from 'app/store/general/general.state';
 import { Observable } from 'rxjs';
+import { ActivePanelNumberModel } from 'app/store/hexagon/hexagon.model';
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [NgIf, NgClass, MenuComponent, ContentComponent, ArrowComponent],
+  imports: [NgIf, NgClass, MenuComponent, ContentComponent],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss'
 })
@@ -22,8 +22,10 @@ export class LayoutComponent implements OnInit {
 
   @ViewChild('contentLayout') contentLayout!: ElementRef;
   @ViewChild('menuLayout') menuLayout!: ElementRef;
+  @ViewChild('backgroundImage') backgroundImage!: ElementRef;
 
   @Select(AppState) appState$!: Observable<AppStateModel>;
+  @Select(ActivePanelNumber) activePanelNumber$!: Observable<ActivePanelNumberModel>;
 
   originalShortSide!: number;
   originalLongSide!: number;
@@ -34,11 +36,13 @@ export class LayoutComponent implements OnInit {
   resizeTimeout: any;
   that: any;
 
-  appState!: AppStateModel;
-
   @HostListener('window:resize', ['$event'])
   onWindowResize() {
-    this.viewHeightOK = this.checkViewHeight();
+    if(document.fullscreenElement != null) {
+      this.viewHeightOK = true;
+    }else {
+      this.viewHeightOK = this.checkViewHeight();
+    }
 
     if (window.innerHeight > window.innerWidth) {
       this.originalShortSide = window.innerWidth;
@@ -72,9 +76,6 @@ export class LayoutComponent implements OnInit {
   screenHeight!: number;
 
   ngOnInit() {
-
-
-
     if (window.innerHeight > window.innerWidth) {
       this.originalShortSide = window.innerWidth;
       this.originalLongSide = window.innerHeight;
@@ -85,13 +86,10 @@ export class LayoutComponent implements OnInit {
 
     this.viewHeightOK = this.checkViewHeight();
 
-    this.appState$.subscribe(newAppState => {
-      this.appState = newAppState;
-    });
+
   }
 
   checkViewHeight(): boolean {
-
     if (window.innerHeight > window.innerWidth) {
       return true;
     } else {
@@ -109,6 +107,17 @@ export class LayoutComponent implements OnInit {
       this.store.dispatch(new ChangeContentHeight(window.innerHeight - 225));
       this.updateLayout();
     }
+
+    this.activePanelNumber$.subscribe(newActivePanelNumber => {
+      this.changeBackgroundHue(newActivePanelNumber.activePanelNumber.apn);
+    });
+  }
+
+  changeBackgroundHue(panel: number): void {
+
+    const rotation = (panel - 1) * 60;
+    this.backgroundImage.nativeElement.style.filter = `hue-rotate(${rotation}deg)`;
+
   }
 
   updateLayout() {

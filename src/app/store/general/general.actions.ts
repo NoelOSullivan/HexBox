@@ -1,7 +1,7 @@
 // import { Language } from "../../shared/interfaces/general";
 
 import { DomSanitizer } from "@angular/platform-browser";
-import { IntroState } from "./general.model";
+import { IntroState, SunGameState } from "./general.model";
 import { DomRect, EggInfo } from "app/shared/interfaces/general";
 
 export class ChangeLanguage {
@@ -46,7 +46,7 @@ export class BackButtonClick {
 
 export class ChangeSunGameState {
     static readonly type= '[ChangeSunGameState] ChangeSunGameState';
-    constructor(public sunGameOn: boolean){}
+    constructor(public sunGameState: SunGameState){}
 }
 
 export class ChangeEggState {

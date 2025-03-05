@@ -1,5 +1,6 @@
 <div #menuRotate class="menu-rotate">
-    <app-hexagon *ngIf="menuRotate && menuContent" [content]=menuContent[0] [sunGameOn]="sunGameOn" class="hex_0">
+    <app-hexagon *ngIf="menuRotate && menuContent" [content]=menuContentLanguage[0] [sunGameState]="sunGameState"
+        class="hex_0">
     </app-hexagon>
     <!-- Remember that order is inverted for the needs of the opening animation-->
     <app-hexagon *ngIf="menuRotate && menuContent" [content]=menuContentLanguage[6] [hexNum]="6" class="hex_6"
@@ -30,15 +31,36 @@
 </div>
 <app-lang-button></app-lang-button>
 
-<div #catapult *ngIf="sunGameOn===true" class="catapult" (touchstart)="touchstartCatapult($event)"
-    (touchmove)="touchmoveCatapult($event)" (touchend)="touchendCatapult($event)">
-    <div #egg class="egg">
-        <app-egg [sunGameOn]="sunGameOn"></app-egg>
+<!-- <div #catapult *ngIf="sunGameState==='gameOn'" class="catapult" (touchstart)="touchstartCatapult($event)" -->
+<div #catapult class="catapult" (mousedown)="mousedownCatapult($event)" (mousemove)="mousemoveCatapult($event)" (mouseup)="mouseupCatapult($event)" (touchstart)="touchstartCatapult($event)" (touchmove)="touchmoveCatapult($event)"
+    (touchend)="touchendCatapult($event)">
+    <div #leftElastic class="left-elastic">
+        <svg width='100%' height='100%' viewBox='0 0 1 1' preserveAspectRatio='none'>
+            <line x1="0" y1="0" x2="1" y2="1" vector-effect="non-scaling-stroke" stroke="black" stroke-width="2" />
+        </svg>
     </div>
+    <div #rightElastic class="right-elastic">
+        <svg width='100%' height='100%' viewBox='0 0 1 1' preserveAspectRatio='none'>
+            <line x1="0" y1="0" x2="1" y2="1" vector-effect="non-scaling-stroke" stroke="black" stroke-width="2" />
+        </svg>
+    </div>
+    <img #slingAnchor class="sling-anchor" src="assets/images/thesun/sling-anchor.png">
+    <img #slingRight class="sling-right" src="assets/images/thesun/sling-right.png">
+    <div #egg class="egg">
+        <div #eggShadow class="egg-shadow"></div>
+        <app-egg [sunGameState]="sunGameState"></app-egg>
+    </div>
+    <img #slingLeft class="sling-left" src="assets/images/thesun/sling-left.png">
+    <!-- <div #sling  class="sling"></div> -->
     <div #eggSight class="eggSight"></div>
-    <div #sling  class="sling"></div>
+    <div #slingButton class="sling-button">
+        <app-swipe-icon [direction]="'left'"></app-swipe-icon>
+    </div>
+    <div class="catch-all-events"></div>
 </div>
 
-<div class="back-button" [ngClass]="{'back-button-active': showBackButton}" (click)="clickBack()">
-    <app-swipe-icon [direction]="'left'"></app-swipe-icon>
+<div class="back-button-holder">
+    <div class="back-button" [ngClass]="{'back-button-active': showBackButton}" (click)="clickBack()">
+        <app-swipe-icon [direction]="'left'"></app-swipe-icon>
+    </div>
 </div>

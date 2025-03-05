@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { State, Action, StateContext } from "@ngxs/store";
 
-import { LanguageModel, AppStateModel, IntroState } from './general.model';
+import { LanguageModel, AppStateModel, IntroState, SunGameState } from './general.model';
 import { ChangeLanguage, ChangeMouseUpDetected, ChangeIntroState, ChangeContentHeight, ChangeContentWidth, BackButtonClick, ChangeSunGameState, ChangeEggState, AddEggDomRect, RemoveAllTargetRects, TransmitEggInfo } from './general.actions';
 import { append, patch } from '@ngxs/store/operators';
 import { DomRect } from 'app/shared/interfaces/general';
@@ -44,7 +44,7 @@ export class Language {
         contentHeight: 0,
         contentWidth: 0,   
         backButtonClick: false,
-        sunGameOn: false,
+        sunGameState: SunGameState.GAMEOFF,
         eggActive: false,
         sunGameTargets: [],
         eggInfo: {targetHit:0, percentLeft:0, percentTop:0}
@@ -106,7 +106,7 @@ export class AppState {
         const state = ctx.getState();
         ctx.setState({
             ...state,
-            sunGameOn: action.sunGameOn
+            sunGameState: action.sunGameState
         })
     }
 

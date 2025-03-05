@@ -3,7 +3,7 @@
         (changePageNum)="changePageNum($event)" class="flipper">
         <li class="common-side">
             <app-logo></app-logo>
-            <app-circular-carousel [scrollType]="'manual'" [itemType]="'imageText'" [language]="language"
+            <app-circular-carousel [myContainerIsActive]="iAmActive" [scrollType]="'manual'" [itemType]="'imageText'" [language]="language"
                 (carouselItemClicked)="goPage($event)" [data]="'panel2.json'" [orientation]="'vertical'"
                 [perspective]="'2000px'"></app-circular-carousel>
         </li>
@@ -17,8 +17,8 @@
         </li>
         <li class="common-side">
             <app-logo></app-logo>
-            <app-circular-carousel [myPageNum]="3" [myContainerIsActive]="iAmActive" [activePageNum]="activePageNum" [scrollType]="'auto'"
-                [itemType]="'image'" [language]="language" (carouselItemClicked)="goPage($event)" [data]="'milan.json'"
+            <app-circular-carousel [myContainerIsActive]="iAmActive" [scrollType]="'manual'" [hasCaption]="true"
+                [itemType]="'image'" [language]="language" [data]="'milan.json'"
                 [orientation]="'vertical'" [perspective]="'1000px'"></app-circular-carousel>
         </li>
     </div>

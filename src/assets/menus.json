@@ -16,8 +16,5 @@
         "<div class='menu-theme'>##Cours#Courses##</div>",
         "<div class='menu-theme one-char'>##?#?##</div>",
         "<div class='menu-theme'>##Dev#Dev##</div>"
-    ],
-    "logo": [
-        "<div class='centre-hex-logo'><div  class='top-half-logo'><div><span class='letter'>H</span>EX</div></div><div class='bottom-half-logo'><div>BO<span class='letter'>X</span></div></div></div>"
     ]
 }

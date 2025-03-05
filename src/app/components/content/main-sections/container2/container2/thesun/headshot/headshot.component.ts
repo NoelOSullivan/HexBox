@@ -17,11 +17,14 @@ export class HeadshotComponent {
 
   @ViewChild('egg') egg!: ElementRef;
   @ViewChild('head') head!: ElementRef;
+  @ViewChild('hoopHolder') hoopHolder!: ElementRef;
 
   @Input() headSrc!: string;
   @Input() nHead!: number;
   @Input() eggInfo!: EggInfo;
   @Input() headUp!: boolean;
+  @Input() left!: string;
+  @Input() right!: string;
 
   showEgg: boolean = false;
   timeCounter: any;
@@ -31,7 +34,15 @@ export class HeadshotComponent {
   ngAfterViewInit() {
     let elements = document.querySelectorAll('.head-holder');
     // Add only info from this head to the targets in the store
-    this.store.dispatch(new AddEggDomRect(elements[this.nHead - 1].getBoundingClientRect()));
+
+    if(this.left) {
+      this.hoopHolder.nativeElement.style.left = this.left;
+      this.store.dispatch(new AddEggDomRect(elements[this.nHead - 1].getBoundingClientRect()));
+    }
+    if(this.right) {
+      this.hoopHolder.nativeElement.style.right = this.right;
+      this.store.dispatch(new AddEggDomRect(elements[this.nHead - 1].getBoundingClientRect()));
+    }
   }
 
   ngOnChanges(changes: any) {
@@ -42,7 +53,7 @@ export class HeadshotComponent {
       this.timeCounter = null;
       this.timeCounter = setTimeout(() => {
         this.switchHeads.emit();
-      }, 20000);
+      }, 10000);
     }
 
     if (changes.eggInfo) {
@@ -63,9 +74,24 @@ export class HeadshotComponent {
         }
       }
     }
+
+    // if (changes.left) {
+    //   console.log("changes.left.currentValue", changes.left.currentValue);
+    //   if (this.hoopHolder) {
+    //     this.hoopHolder.nativeElement.style.left = changes.left.currentValue;
+    //   }
+    // }
+
+    // if (changes.right) {
+    //   console.log("changes.right.currentValue", changes.right.currentValue);
+    //   if (this.hoopHolder) {
+    //     this.hoopHolder.nativeElement.style.left = changes.right.currentValue;
+    //   }
+    // }
+
   }
 
-  ngOnDestroy():void {
+  ngOnDestroy(): void {
     clearTimeout(this.timeCounter);
   }
 

@@ -25,6 +25,7 @@ export class ContentDirective implements OnInit {
   @Input() nPanel!: string;
   @Output() changeActivePanel = new EventEmitter<number>();
   @Output() changePageNum = new EventEmitter<number>();
+  @Output() setIsLastPage = new EventEmitter<boolean>();
   @Select(PageTurner) direction$!: Observable<PageTurnerModel>;
   @Select(ActivePanelNumber) activePanelNumber$!: Observable<ActivePanelNumberModel>;
 
@@ -41,6 +42,7 @@ export class ContentDirective implements OnInit {
   touchEndX!: number;
   finalAnimInterval: any;
   directAccessInterval: any;
+  onDirectAccess: boolean = false;
   finalAnimRotation!: number;
   direction!: String;
   finalAnimDirection!: String;
@@ -49,7 +51,7 @@ export class ContentDirective implements OnInit {
   introState!: IntroState;
   isTouchOrMousedown: boolean = false;
   appState!: AppStateModel;
-
+  firstClick: boolean = true;
 
   constructor(private panel: ElementRef, private store: Store) { }
 
@@ -86,6 +88,7 @@ export class ContentDirective implements OnInit {
       this.introState = newAppState.introState;
       if (newAppState.introState === 'done') {
         this.blockWheelAndClick = false;
+        this.panel.nativeElement.children[this.activePage].style.pointerEvents = 'all';
       }
     });
 
@@ -117,20 +120,6 @@ export class ContentDirective implements OnInit {
     }
   }
 
-  // @HostListener('mouseup', ['$event']) mouseup(event: MouseEvent) {
-  //   if (!this.blockWheelAndClick) {
-  //     if (event.offsetX > this.panel.nativeElement.clientWidth / 2) {
-  //       if (this.activePage < this.nPages - 1) {
-  //         this.turnPage("left");
-  //       }
-  //     } else {
-  //       if (this.activePage > 0) {
-  //         this.turnPage("right");
-  //       }
-  //     }
-  //   }
-  // }
-
   @HostListener('touchstart', ['$event']) touchstart(event: TouchEvent) {
     if (!this.blockWheelAndClick) {
       if (Number(this.nPanel) === this.activePanelNumber) {
@@ -142,6 +131,7 @@ export class ContentDirective implements OnInit {
 
   @HostListener('touchmove', ['$event']) touchmove(event: TouchEvent) {
     if (!this.blockWheelAndClick) {
+      event.preventDefault();
       if (Number(this.nPanel) === this.activePanelNumber) {
         this.manageMove(event.targetTouches[0].clientX);
       }
@@ -158,6 +148,7 @@ export class ContentDirective implements OnInit {
 
   manageDown(posX: number): void {
     this.lastX = this.touchStartX = posX;
+    this.firstClick = true;
   }
 
   manageMove(posX: number): void {
@@ -166,22 +157,23 @@ export class ContentDirective implements OnInit {
       // Detect movement of finger since last event
       const diffX = this.lastX - posX;
       this.lastX = posX;
-
       // If swiping right calculate new rotation if not yet minimum value (0)
       // TO DO : 3 is arbitary. Maybe find a rule.
       if (diffX < 0) {
+        this.direction = "right"
         if (this.rotation.degrees < 0) {
           this.rotation.degrees -= diffX * 3;
         }
       } else {
         // If swiping left calculate new rotation if not yet maximum value (this.maxRotation)
         if (diffX > 0) {
+          this.direction = "left"
           if (this.rotation.degrees > this.maxRotation) {
             this.rotation.degrees -= diffX * 3;
           }
         }
       }
-      this.managePanelDisplay();
+      this.managePanelDisplay(false);
     }
 
   }
@@ -211,19 +203,21 @@ export class ContentDirective implements OnInit {
       this.rotation.degrees -= diff;
       if (diff > 0) {
         if (this.rotation.degrees <= this.directRotation) {
+          this.onDirectAccess = true;
           this.rotation.degrees = this.directRotation
           clearInterval(this.directAccessInterval);
           this.changePageNum.emit(this.activePage + 1);
         }
       } else {
         if (this.rotation.degrees >= this.directRotation) {
+          this.onDirectAccess = true;
           this.rotation.degrees = this.directRotation
           clearInterval(this.directAccessInterval);
           this.changePageNum.emit(this.activePage - 1);
         }
       }
-      this.managePanelDisplay();
-    }, 1);
+      this.managePanelDisplay(false);
+    }, 0);
   }
 
   turnPage(direction: string) {
@@ -276,7 +270,9 @@ export class ContentDirective implements OnInit {
       }
     }
 
-    if(this.finalAnimDirection) {
+    let flipFinished = false;
+
+    if (this.finalAnimDirection) {
       if (this.finalAnimDirection === "left") {
         if (this.rotation.degrees <= this.finalAnimRotation) {
           clearInterval(this.finalAnimInterval);
@@ -284,8 +280,9 @@ export class ContentDirective implements OnInit {
           if (this.introState === 'done') {
             this.blockWheelAndClick = false;
           }
-          if(this.activePage + 1 < this.nPages) {
-            this.changePageNum.emit(this.activePage + 1);
+          if (this.activePage + 1 < this.nPages) {
+            flipFinished = true;
+            // this.changePageNum.emit(this.activePage + 1);
           }
         }
       } else {
@@ -295,22 +292,22 @@ export class ContentDirective implements OnInit {
           if (this.introState === 'done') {
             this.blockWheelAndClick = false;
           }
-          this.changePageNum.emit(this.activePage);
+          flipFinished = true;
+          // this.changePageNum.emit(this.activePage);
         }
-      } 
+      }
     } else {
       this.changePageNum.emit(this.activePage);
     }
-    
 
-    this.managePanelDisplay();
+    this.managePanelDisplay(flipFinished);
 
     this.panel.nativeElement.style.transform = "rotateY(" + this.rotation.degrees + "deg)";
   }
 
-  managePanelDisplay() {
+  managePanelDisplay(flipFinished: boolean) {
 
-    // If new rotation goes too far in either direction, correct to zero or max
+    // If new rotation goes too far in either direction, correct to zero or max 
     if (this.rotation.degrees > 0) {
       this.rotation.degrees = 0;
     } else {
@@ -319,18 +316,35 @@ export class ContentDirective implements OnInit {
       }
     }
 
-    if (this.activePage !== Math.floor(this.rotation.degrees / -180)) {
-      this.activePage = Math.floor(this.rotation.degrees / -180);
+    // if (this.activePage !== Math.floor(this.rotation.degrees / -180) || this.firstClick) {
+    if (this.activePage !== -Math.round(-this.rotation.degrees / -180) || this.firstClick || flipFinished) {
+      this.firstClick = false;
+      // this.activePage = Math.floor(this.rotation.degrees / -180);
+      this.activePage = -Math.round(-this.rotation.degrees / -180);
+
+      this.changePageNum.emit(this.activePage);
+      this.setIsLastPage.emit(this.activePage===this.nPages-1);
+
       // Turn off display of all pages
-      for (let i = 0; i < this.nPages; i++) {
-        this.panel.nativeElement.children[i].style.display = 'none';
-      }
+      this.turnOffAllPages();
       // Display front facing panel
       this.panel.nativeElement.children[this.activePage].style.display = 'flex';
+      this.panel.nativeElement.children[this.activePage].style.pointerEvents = 'all';
       // Display next probable front facing panel (the one we are turning to)
-      if (this.activePage < this.nPages - 1) {
-        this.panel.nativeElement.children[this.activePage + 1].style.display = 'flex';
+      if (!flipFinished && this.onDirectAccess === false) {
+        if (this.direction === 'left') {
+          if (this.activePage < this.nPages - 1) {
+            this.panel.nativeElement.children[this.activePage + 1].style.display = 'flex';
+          }
+        } else {
+          if (this.direction === 'right') {
+            if (this.activePage > 0) {
+              this.panel.nativeElement.children[this.activePage - 1].style.display = 'flex';
+            }
+          }
+        }
       }
+      this.onDirectAccess = false;
     }
 
     this.panel.nativeElement.style.transform = "rotateY(" + this.rotation.degrees + "deg)";
@@ -355,8 +369,13 @@ export class ContentDirective implements OnInit {
       const payload = { panelNumber: Number(this.nPanel), pageNumber: nPage }
       this.store.dispatch(new UpdatePageCounter(payload));
     }
+  }
 
-
+  turnOffAllPages(): void {
+    for (let i = 0; i < this.nPages; i++) {
+      this.panel.nativeElement.children[i].style.display = 'none';
+      this.panel.nativeElement.children[i].style.pointerEvents = 'none';
+    }
   }
 
 }

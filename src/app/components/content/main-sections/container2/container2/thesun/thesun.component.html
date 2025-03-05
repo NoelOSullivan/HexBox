@@ -19,28 +19,28 @@
 
     <div *ngIf="playing===true" class="game">
         <div class="line back-line">
-            <app-headshot (switchHeads)="switchHeads(1, false)" [nHead]="1" [headSrc]="activeSrc[0]"
-                [headUp]="headUp[0]" [eggInfo]="eggInfo"></app-headshot>
-            <app-headshot (switchHeads)="switchHeads(2, false)" [nHead]="2" [headSrc]="activeSrc[1]"
-                [headUp]="headUp[1]" [eggInfo]="eggInfo"></app-headshot>
+            <app-headshot (switchHeads)="switchHeads(1, false)" [nHead]="1" [headSrc]="activeHeadSrc[0]"
+                [headUp]="headUp[0]" [eggInfo]="eggInfo" [left]="'18%'"></app-headshot>
+            <app-headshot (switchHeads)="switchHeads(2, false)" [nHead]="2" [headSrc]="activeHeadSrc[1]"
+                [headUp]="headUp[1]" [eggInfo]="eggInfo" [right]="'18%'"></app-headshot>
         </div>
         <div class="line middle-line">
-            <app-headshot (switchHeads)="switchHeads(3, false)" [nHead]="3" [headSrc]="activeSrc[2]"
-                [headUp]="headUp[2]" [eggInfo]="eggInfo"></app-headshot>
-            <app-headshot (switchHeads)="switchHeads(4, false)" [nHead]="4" [headSrc]="activeSrc[3]"
-                [headUp]="headUp[3]" [eggInfo]="eggInfo"></app-headshot>
+            <app-headshot (switchHeads)="switchHeads(3, false)" [nHead]="3" [headSrc]="activeHeadSrc[2]"
+                [headUp]="headUp[2]" [eggInfo]="eggInfo" [left]="'10%'"></app-headshot>
+            <app-headshot (switchHeads)="switchHeads(4, false)" [nHead]="4" [headSrc]="activeHeadSrc[3]"
+                [headUp]="headUp[3]" [eggInfo]="eggInfo" [right]="'10%'"></app-headshot>
         </div>
         <div class="line front-line">
-            <app-headshot (switchHeads)="switchHeads(5, false)" [nHead]="5" [headSrc]="activeSrc[4]"
-                [headUp]="headUp[4]" [eggInfo]="eggInfo"></app-headshot>
-            <app-headshot (switchHeads)="switchHeads(6, false)" [nHead]="6" [headSrc]="activeSrc[5]"
-                [headUp]="headUp[5]" [eggInfo]="eggInfo"></app-headshot>
+            <app-headshot (switchHeads)="switchHeads(5, false)" [nHead]="5" [headSrc]="activeHeadSrc[4]"
+                [headUp]="headUp[4]" [eggInfo]="eggInfo" [left]="'1%'"></app-headshot>
+            <app-headshot (switchHeads)="switchHeads(6, false)" [nHead]="6" [headSrc]="activeHeadSrc[5]"
+                [headUp]="headUp[5]" [eggInfo]="eggInfo" [right]="'1%'"></app-headshot>
         </div>
-        <app-chrono class="chrono" [chrono]="chrono"></app-chrono>
-        <app-results *ngIf="gameOver===true" class="results" [headInfos]="finalHeadInfos"></app-results>
+        <app-chrono *ngIf="sunGameState==='gameOn'" class="chrono" [chrono]="chrono"></app-chrono>
+        <app-results *ngIf="sunGameState==='gameOver'" class="results" [headInfos]="finalHeadInfos"></app-results>
     </div>
 
-    <div *ngIf="gameOver===false" class="play">
+    <div class="play">
         <app-play-button (playState)="managePlay($event)" [playing]="playing"></app-play-button>
     </div>
 

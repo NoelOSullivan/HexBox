@@ -1,3 +1,5 @@
+@import "../../../scss/variables";
+
 .container {
     width: 100%;
     height: 100%;
@@ -8,7 +10,7 @@
 }
 
 .flipper {
-    max-width: 400px;
+    max-width: 500px;
     width: 100%;
     height: 100%;
     transform-style: preserve-3d;
@@ -16,7 +18,7 @@
     background: rgb(192, 192, 192, 0.3);
     margin: auto;
     position: relative;
-    pointer-events: all;
+    // pointer-events: all;
     // overflow: hidden;
     // transition: transform 1s; 
 }
@@ -32,28 +34,31 @@ li:nth-child(even) {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
     backface-visibility: hidden;
+    transform: rotateX(0deg);
     font-size: 20px;
     font-family: 'Miriam Libre', sans-serif;
-    font-weight: 600;
+    font-weight: 300;
     text-align: center;
     color: white;
     border: solid 1px grey;
-    padding-bottom: 10px;
+    justify-content: space-between;
+    // padding-bottom: 10px;
     box-sizing: border-box;
 }
 
 .vertical-space-between-holder {
+    position: relative;
     width: 100%;
     margin-left: 40px;
     margin-right: 40px;
     height: 100%;
     display: flex;
     flex-direction: column;
-    // align-items: center;
-    justify-content: space-around;
-    padding-top: 40px;
+    justify-content: space-between;
+    align-items: center;
+    // justify-content: space-around;
+    // padding-top: 40px;
     box-sizing: border-box;
     // overflow-y: scroll;
 }
@@ -68,4 +73,93 @@ li:nth-child(even) {
 
 header {
     display: flex;
+}
+
+.next-page-button {
+    width: 100%;
+}
+
+.title {
+    
+    
+}
+
+.word-holder {
+    position: absolute;
+    top: -54px;
+    left: 0px;
+    font-size: 34px;
+    font-weight: 900;
+    width: 50%;
+    height: 42px;
+    font-family: PassionOneBlack;
+}
+
+.word-bottom {
+    position:absolute;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    color: white;
+    background: black;
+    top: 2px;
+}
+
+.word-top {
+    position:absolute;
+    height:50%;
+    width: 100%;
+    overflow: hidden;
+    color: black;
+    background: white;
+}
+
+.word-text {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+}
+
+
+.basic-text {
+    font-size: 16px;
+    margin-left: 10px;
+    margin-right: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    width: 100%;
+}
+
+.sub-title {
+    padding-left: 15px;
+    font-size: 20px;
+    background: black;
+    // color: $primary-first-letter-color;
+    color: $primary-background-color;
+    font-weight: 600;
+    text-align: left;
+}
+
+.sub-text {
+    text-align: justify;
+    padding-left: 50px;
+    padding-right: 5px;
+}
+
+@media screen and (max-height: 660px) {
+    .sub-title {
+        font-size: 18px;
+    }
+    .basic-text {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-height: 600px) {
+    .sub-title {
+        font-size: 16px;
+    }
+    .basic-text {
+        font-size: 12px;
+    }
 }

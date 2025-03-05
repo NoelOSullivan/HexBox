@@ -1,11 +1,35 @@
 <div class="container">
     <div #flipper contentControl nPanel="5" class="flipper">
         <li class="common-side side1">
-            1
-            <app-direct-access [linkText]="'Pot P - 5'" [hexNum]="4" [nPage]="5"></app-direct-access>
-        </li>
-        <li class="common-side side2">
-            2
+            <app-logo></app-logo>
+            <div class="vertical-space-between-holder">
+                <div class="basic-text">
+                    <div class="sub-title" *ngIf="language==='Fr'">Architecture Front End : Les choix</div>
+                    <div class="sub-text" *ngIf="language==='Fr'">Outils de dév, build et déploiement (CI/CD) - Version
+                        contrôle méthodologie - Outils et règles UI - Gestion API et de l'état de l'application -
+                        Routing et navigation - Méthodes d'optimisation, de sécurité et d'accessibilité - Stratégie de
+                        teste - Règles de codage - Micro ou monolithe</div>
+                    <div class="sub-title" *ngIf="language==='En'">Front End Architecture : Choices</div>
+                    <div class="sub-text" *ngIf="language==='En'">Dev, build and deployment (CI/CD) tools - Version
+                        control methodology - UI rules and tools - API and application state management - Routing and
+                        navigation - Optimisation, security and accessibilty methods - Test strategy - Coding rules - Micro or monolith</div>
+                </div>
+                <div class="basic-text">
+                    <div class="sub-title" *ngIf="language==='Fr'">Design d'Interfaces</div>
+                    <div class="sub-text" *ngIf="language==='Fr'">J'aide à créer des interfaces originaux et pertinents
+                        grâce à une maîtrise du css et du javascript.</div>
+                    <div class="sub-title" *ngIf="language==='En'">Interface Design</div>
+                    <div class="sub-text" *ngIf="language==='En'">I help to create original and pertinent
+                        interfaces through an extensive knowledge of css and javascript.</div>
+                </div>
+                <div class="basic-text">
+                    <div class="sub-title" *ngIf="language==='Fr'">CSS Animations-SVG-Canvas</div>
+                    <div class="sub-text" *ngIf="language==='Fr'">Un peu de magie si vous avez envie ;-)</div>
+                    <div class="sub-title" *ngIf="language==='En'">CSS Animations-SVG-Canvas</div>
+                    <div class="sub-text" *ngIf="language==='En'">A little bit of magic if you like that sort of thing ;-)</div>
+                </div>
+                <div></div>
+            </div>
         </li>
     </div>
 </div>

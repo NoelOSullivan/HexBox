@@ -23,6 +23,7 @@ export class CircularCarouselComponent implements OnInit {
   @Input() orientation!: string;
   @Input() perspective!: string;
   @Input() scrollType!: string;
+  @Input() hasCaption!: boolean;
   @Input() itemType!: string;
   @Input() language!: string;
   @Input() myPageNum!: number;
@@ -137,6 +138,7 @@ export class CircularCarouselComponent implements OnInit {
       this.itemCount = this.items.length;
       this.itemDegrees = 360 / this.itemCount;
       this.degrees = 0;
+      console.log("this.itemDegrees", this.itemDegrees);
 
       for (let i = 0, length = this.itemCollection.length; i < length; i++) {
         const item = this.itemCollection.namedItem("item" + i);
@@ -273,11 +275,19 @@ export class CircularCarouselComponent implements OnInit {
   }
 
   manageCaption(): void {
-    this.captionText = this.language === "Fr" ? this.items[this.activeItem].captionFr : this.items[this.activeItem].captionEn;
+    if(this.language) {
+      this.captionText = this.language === "Fr" ? this.items[this.activeItem].captionFr : this.items[this.activeItem].captionEn;
+    }
   }
 
   rotateCarousel(): void {
     if (this.carousel) {
+      if (this.hasCaption) {
+        let correctedDegrees = (this.degrees + this.itemDegrees / 2);
+        if (correctedDegrees > 359) correctedDegrees = correctedDegrees - 360;
+        this.activeItem = Math.floor(correctedDegrees / this.itemDegrees);
+        this.manageCaption();
+      }
       this.carousel.nativeElement.style.transform = 'translateZ(' + -this.radius + 'px) ' + 'rotateX' + '(' + (this.degrees) + 'deg)';
       this.manageShadow();
     }

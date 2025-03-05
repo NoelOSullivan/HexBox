@@ -58,16 +58,6 @@
     padding-left: 25%;
 }
 
-@media screen and (max-height: 650px) {
-    .airnavx-logo {
-        top: 90px;
-    }
-
-    .airnaveo-logo {
-        top: 95px;
-    }
-}
-
 .play {
     position: absolute;
     width: 60px;
@@ -110,9 +100,9 @@
     opacity: 0;
 }
 
-.bullet-points {
-    position: absolute;
-}
+// .bullet-points {
+//     position: absolute;
+// }
 
 .point1 {
     top: 20%;
@@ -136,4 +126,20 @@
     padding-left: 5px;
     padding-right: 50px;
     box-sizing: border-box;
+    opacity: 0;
+}
+
+@media screen and (max-height: 650px) {
+    .airnavx-logo {
+        top: 90px;
+    }
+
+    .airnaveo-logo {
+        top: 95px;
+    }
+
+    .blurb {
+        bottom: 2%;
+        padding-left: 2px;
+    }
 }

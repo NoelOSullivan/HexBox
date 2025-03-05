@@ -9,13 +9,20 @@
     margin-top: -10px;
 }
 
-.back-button {
+.back-button-holder {
     width: 58px;
     height: 48px;
     position: absolute;
-    background: rgba(255, 255, 255, 0.3);
     top: 0;
     left: 0;
+    overflow: hidden;
+    z-index: 20;
+}
+
+.back-button {
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.3);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -26,9 +33,7 @@
     transform-origin: top left;
     transform: rotateZ(-90deg);
     transition: transform 250ms ease-in-out;
-
-    //   aspect-ratio: 1/cos(30deg);
-    //   clip-path: polygon(50% -50%,100% 50%,50% 150%,0 50%); 
+    cursor: pointer;
 }
 
 .back-button-active {
@@ -36,46 +41,122 @@
 }
 
 .catapult {
-    position:absolute;
+    position: absolute;
     z-index: 20;
-    transform-origin: calc(100vw / 2) 26px;
+    left: calc(50vw - 35px);
+    // transform-origin: calc(100vw / 2) 26px;
+    opacity: 0;
+    transition: opacity 1s ease-in;
+    width: 60px;
+    height: 40px;
+    margin-top: 8px;
+    pointer-events: none;
+    box-shadow:
+        0 0 50px 20px #fff,
+        0 0 75px 40px $primary-background-color,
+        0 0 100px 50px $primary-hover-color;
+    border: 2px solid black;
+    border-radius: 25% 25% 50% 50%;
+    background: $primary-hover-color;
+    cursor: pointer;
 }
 
 .egg {
-    // transform-origin: 0 26px;
-    // background: red;
-    position:absolute;
-    top: 0px;
-    left: calc(50vw - 30px);
+    position: absolute;
+    top: 5px;
+    // left: calc(50vw - 30px);
     width: 60px;
     height: 52px;
     transition: none;
+    pointer-events: none;
+}
+
+.egg-shadow {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 25px;
+    height: 25px;
+    transition: none;
+    border-radius: 50%;
+    background: black;
+    opacity: 0.2;
+    transition: none;
+    pointer-events: none;
+}
+
+.sling-right,
+.sling-left,
+.sling-anchor {
+    position: absolute;
+    pointer-events: none;
+    // left: calc(50vw - 30px);
+}
+
+.left-elastic {
+    position: absolute;
+    // left: calc(50vw - 26px);
+    left: 4px;
+    top: 1px;
+    width: 9px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.right-elastic {
+    position: absolute;
+    // left: calc(50vw + 18px);
+    left: 45px;
+    width: 9px;
+    height: 1px;
+    opacity: 0;
+    transform: scale(-1, 1);
+    pointer-events: none;
 }
 
 .sling {
     position: absolute;
-    // transform-origin: 0 26px;
-    margin-top: 30px;
-    left: calc(50vw - 20px);
+    // left: calc(50vw - 20px);
     width: 40px;
     height: 20px;
     background: $primary-hover-color;
     pointer-events: all;
-
     border-radius: 0 0 20px 20px;
     z-index: 21;
+    pointer-events: none;
 }
 
-.eggSight{
+.eggSight {
     position: absolute;
-    transform-origin: calc(100vw / 2) 26px;
-    left: calc(50vw - 15px);
+    // transform-origin: calc(100vw / 2) 26px;
+    // left: calc(50vw - 15px);
+    left: 15px;
     width: 30px;
     height: 30px;
     border-radius: 50%;
     margin-right: 15px;
     margin-top: 15px;
     z-index: 25;
-    // background: rgba(255,0,0,0.2);
+    background: yellow;
+    opacity: 0;
+    pointer-events: none;
 }
 
+.sling-button {
+    position: absolute;
+    // left: calc(50vw);
+    left: 20px;
+    width: 50px;
+    top: 60px;
+    transform: rotate(90deg);
+    color: red;
+    pointer-events: none;
+}
+
+.catch-all-events {
+    position: absolute;
+    left: -70px;
+    width: 200px;
+    height: 200px;
+}

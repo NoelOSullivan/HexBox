@@ -1,9 +1,20 @@
 <div class="container">
     <div #flipper contentControl nPanel="4" class="flipper">
-        <li class="common-side side1">
-            <video class="video" controls>
-                <source src="assets/videos/Mix-Chasing Cars-FC-M.mp4" type="video/mp4">
-            </video>
+        <li class="common-side">
+            <div class="vertical-space-between-holder">
+                <div></div>
+                <div class="basic-text">
+                    <div class="sub-title">The Purps</div>
+                    <div class="sub-text" *ngIf="language==='Fr'">Disponible pour des concerts dans le sud-ouest de la France</div>
+                    <div class="sub-text" *ngIf="language==='En'">Available for concerts in South-West France !</div>
+                </div>
+                <div class="video-holder">
+                    <video class="video" controls>
+                        <source src="assets/videos/Mix-Chasing Cars-FC-M.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div></div>
+            </div>
         </li>
     </div>
 </div>
