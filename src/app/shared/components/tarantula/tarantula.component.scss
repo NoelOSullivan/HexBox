@@ -1,0 +1,321 @@
+$leg-speed: 500ms;
+
+.tarantula {
+    width: 100%;
+    height: 100%;
+    background-size: 170px, 170px;
+}
+
+.shared {
+    position: absolute;
+    scale: 0.85;
+    animation-iteration-count: infinite;
+    animation-duration: $leg-speed;
+    animation-timing-function: ease-in-out;
+}
+
+.thorax {
+    width: 62px;
+    height: 130px;
+    top: 45px;
+    background: url('images/css_sprites.png') -10px -10px;
+    left: calc(50% - 31px);
+    filter: drop-shadow(5px 5px 4px black);
+}
+
+//----------------------------------------------------------------------------------
+
+.LA {
+    width: 17px;
+    height: 44px;
+    top: 27px;
+    background: url('images/css_sprites.png') -329px -76px;
+    left: calc(50% - 22px);
+    transform-origin: bottom;
+}
+
+.RA {
+    width: 17px;
+    height: 48px;
+    top: 25px;
+    background: url('images/css_sprites.png') -366px -76px;
+    left: calc(50% + 2px);
+    transform-origin: bottom;
+}
+
+//----------------------------------------------------------------------------------
+
+.L1 {
+    width: 46px;
+    height: 85px;
+    top: -6px;
+    background: url('images/css_sprites.png') -10px -160px;
+    left: calc(50% - 59px);
+    transform-origin: bottom right;
+    filter: drop-shadow(0px 7px 3px black);
+}
+
+.L1-anim {
+    animation-name: L1-A;
+}
+
+@keyframes L1-A {
+    0% {
+        transform: scale(1, 1);
+        filter: drop-shadow(0px 7px 3px black);
+    }
+
+    50% {
+        transform: scale(1.2, 0.8);
+        rotate: -10deg;
+        filter: drop-shadow(0px 7px 3px black);
+    }
+
+    70% {
+        filter: drop-shadow(2px 12px 5px black);
+    }
+
+    80% {
+        filter: drop-shadow(2px 12px 5px black);
+    }
+}
+
+//----------------------------------------------------------------------------------
+
+.L2 {
+    width: 74px;
+    height: 35px;
+    top: 55px;
+    background: url('images/css_sprites.png') -76px -160px;
+    left: -10px;
+    transform-origin: right;
+}
+
+.L2-anim {
+    animation-name: L2-A;
+}
+
+@keyframes L2-A {
+    0% {
+        filter: drop-shadow(0px 12px 4px black);
+        rotate: -20deg;
+    }
+
+    50% {
+        rotate: -5deg;
+        filter: drop-shadow(0px 7px 3px black);
+    }
+
+    100% {
+        rotate: -20deg;
+        filter: drop-shadow(0px 12px 4px black);
+    }
+}
+
+//----------------------------------------------------------------------------------
+
+.L3 {
+    width: 87px;
+    height: 41px;
+    top: 80px;
+    background: url('images/css_sprites.png') -10px -265px;
+    left: -6px;
+    transform-origin: top right;
+    filter: drop-shadow(0px 7px 3px black);
+}
+
+.L3-anim {
+    animation-name: L3-A;
+}
+
+@keyframes L3-A {
+    0% {
+        transform: scale(1, 1);
+        filter: drop-shadow(0px 7px 3px black);
+        rotate: 0deg;
+    }
+
+    30% {
+        transform: scale(1, 0.8);
+        rotate: -20deg;
+        filter: drop-shadow(0px 7px 3px black);
+    }
+
+    70% {
+        filter: drop-shadow(2px 12px 5px black);
+    }
+
+    80% {
+        filter: drop-shadow(2px 12px 5px black);
+    }
+}
+
+//----------------------------------------------------------------------------------
+
+.L4 {
+    width: 68px;
+    height: 98px;
+    top: 103px;
+    background: url('images/css_sprites.png') -92px -10px;
+    left: 13px;
+    transform-origin: top right;
+}
+
+.L4-anim {
+    animation-name: L4-A;
+}
+
+@keyframes L4-A {
+
+    0% {
+        transform: scale(1, 1);
+        filter: drop-shadow(0px 7px 3px black);
+    }
+
+    50% {
+        transform: scale(1, 0.7);
+        filter: drop-shadow(5px 12px 4px black);
+    }
+
+    100% {
+        transform: scale(1, 1);
+        filter: drop-shadow(0px 7px 3px black);
+    }
+}
+
+//----------------------------------------------------------------------------------
+
+.R1 {
+    width: 46px;
+    height: 91px;
+    top: -13px;
+    background: url('images/css_sprites.png') -263px -10px;
+    left: 97px;
+    transform-origin: bottom left;
+}
+
+.R1-anim {
+    animation-name: R1-A;
+}
+
+@keyframes R1-A {
+
+    0% {
+        transform: scale(1.1, 0.7);
+        rotate: 10deg;
+        filter: drop-shadow(0px 7px 3px black);
+    }
+
+    60% {
+        transform: scale(1, 1);
+        rotate: 0deg;
+        filter: drop-shadow(0px 7px 3px black);
+    }
+
+    100% {
+        transform: scale(1.1, 0.7);
+        rotate: 10deg;
+        filter: drop-shadow(2px 12px 5px black);
+    }
+}
+
+//----------------------------------------------------------------------------------
+
+.R2 {
+    width: 78px;
+    height: 46px;
+    top: 43px;
+    background: url('images/css_sprites.png') -329px -10px;
+    left: 103px;
+    transform-origin: bottom left;
+}
+
+.R2-anim {
+    animation-name: R2-A;
+}
+
+@keyframes R2-A {
+
+    0% {
+        rotate: 5deg;
+        filter: drop-shadow(0px 7px 3px black);
+    }
+
+    60% {
+        filter: drop-shadow(10px 5px 4px black);
+        transform: scale(0.8, 1);
+        rotate: 20deg;
+    }
+
+    100% {
+        rotate: 5deg;
+        filter: drop-shadow(0px 7px 3px black);
+    }
+}
+
+//----------------------------------------------------------------------------------
+
+.R3 {
+    width: 86px;
+    height: 27px;
+    top: 85px;
+    background: url('images/css_sprites.png') -200px -160px;
+    left: 89px;
+    transform-origin: left;
+}
+
+.R3-anim {
+    animation-name: R3-A;
+}
+
+@keyframes R3-A {
+    0% {
+        transform: scale(1, 0.8);
+        rotate: 20deg;
+        filter: drop-shadow(2px 12px 5px black);
+    }
+    40% {
+        transform: scale(1, 1);
+        filter: drop-shadow(0px 7px 3px black);
+        rotate: 0deg;
+    }
+
+    100% {
+        transform: scale(1, 0.8);
+        rotate: 20deg;
+        filter: drop-shadow(2px 12px 5px black);
+    }
+}
+
+//----------------------------------------------------------------------------------
+
+.R4 {
+    width: 63px;
+    height: 98px;
+    top: 104px;
+    background: url('images/css_sprites.png') -180px -10px;
+    left: 89px;
+    transform-origin: top left;
+}
+
+.R4-anim {
+    animation-name: R4-A;
+}
+
+@keyframes R4-A {
+
+    0% {
+        transform: scale(1, 0.7);
+        filter: drop-shadow(5px 12px 4px black);
+    }
+
+    40% {
+        transform: scale(1, 1);
+        filter: drop-shadow(0px 7px 3px black);
+    }
+
+    100% {
+        transform: scale(1, 0.7);
+        filter: drop-shadow(5px 12px 4px black);
+    }
+}
