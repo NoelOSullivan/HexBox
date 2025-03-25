@@ -1,6 +1,6 @@
 <div #fullscreen class="fullscreen-layout">
     <img #backgroundImage src="assets/images/background.jpg" class="bcg"/>
-    <div #contentLayout class="content-layout" [ngClass]="{'no-borders':!viewHeightOK}">
+    <div #contentLayout id="contentLayout" class="content-layout" [ngClass]="{'no-borders':!viewHeightOK}">
         <!-- <span *ngIf="orientation === 'PORTRAIT'"> -->
         <span [ngClass]="{'hideForLandscape':!viewHeightOK}">
             <app-content [nContainer]=1 [startRotation]=0></app-content>
@@ -14,14 +14,14 @@
 
     <div #menuLayout class="menu-layout" [ngClass]="{'no-borders':!viewHeightOK}">
         <!-- <span *ngIf="orientation === 'PORTRAIT'"> -->
-        <span [ngClass]="{'hideForLandscape':!viewHeightOK}">
+        <div [ngClass]="{'hideForLandscape':!viewHeightOK}">
             <footer class="menu-footer">
                 <div class="tel">+33 (0)6 78 93 29 75</div>
                 <div class="mail">noel&#64;hex-box.com</div>
             </footer>
             
             <app-menu></app-menu>
-        </span>
+        </div>
     </div>
     <!-- <div class="orientation-message" *ngIf="orientation === 'LANDSCAPE'"> -->
     <div class="orientation-message" [ngClass]="{'hideForPortrait':viewHeightOK}">

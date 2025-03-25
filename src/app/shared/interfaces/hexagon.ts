@@ -9,3 +9,8 @@ export interface Rotation {
 export interface ActivePanelNumber {
     apn: number;
 }
+
+export interface HexBoxInterface {
+    topOpen: boolean;
+    bottomOpen: boolean;
+}

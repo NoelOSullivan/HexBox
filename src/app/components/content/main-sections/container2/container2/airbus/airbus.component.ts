@@ -22,6 +22,7 @@ export class AirbusComponent {
   @Input() myContainerIsActive!: boolean;
   @Input() myPageNum!: number;
   @Input() language!: string;
+  @Input() robotAirbusAnim!: boolean;
     
   @ViewChild('animHolder') animHolder!: ElementRef;
   @ViewChild('image1') image1!: ElementRef;
@@ -142,19 +143,24 @@ export class AirbusComponent {
         }
       } else {
         // Changed page. No longer on right page. Reset and stop animation.
-        // this.managePlay(false);
+        this.managePlay(false);
       }
     }
 
-    // if (changes.myContainerIsActive) {
-    //   // Changed panel. Reset and stop animation.
-    //   if (changes.myContainerIsActive.currentValue === false) {
-    //     this.managePlay(false);
-    //   }
-    // }
+    if (changes.myContainerIsActive) {
+      // Changed panel. Reset and stop animation.
+      if (changes.myContainerIsActive.currentValue === false) {
+        this.managePlay(false);
+      }
+    }
 
     if (changes.language) {
       this.language = changes.language.currentValue;
+    }
+
+    if (changes.robotAirbusAnim) {
+      this.robotAirbusAnim = changes.robotAirbusAnim.currentValue;
+      this.managePlay(this.robotAirbusAnim);
     }
   }
 
@@ -168,6 +174,7 @@ export class AirbusComponent {
   }
 
   startAnim(): void {
+    if(!this.image1) return;
     this.image1.nativeElement.style.transition = 'left 10s ease-in, opacity 2s ease-in';
     this.bullets1.nativeElement.style.transition = 'opacity 2s ease-in';
     this.image2.nativeElement.style.transition = 'left 10s ease-in, opacity 2s ease-in';

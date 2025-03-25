@@ -1,4 +1,4 @@
-import { RotationToAdd, ActivePanelNumber } from "../../shared/interfaces/hexagon";
+import { RotationToAdd, ActivePanelNumber, HexBoxInterface } from "../../shared/interfaces/hexagon";
 
 export class ChangeRotation {
     static readonly type= '[New rotation] ChangeRotation';
@@ -8,4 +8,9 @@ export class ChangeRotation {
 export class ChangePanelNumber {
     static readonly type= '[New panel number] ChangePanelNumber';
     constructor(public ActivePanelNumber: ActivePanelNumber){}
+}
+
+export class ChangeHexBox {
+    static readonly type= '[ChangeHexBox] ChangeHexBox';
+    constructor(public HexBox: HexBoxInterface){}
 }

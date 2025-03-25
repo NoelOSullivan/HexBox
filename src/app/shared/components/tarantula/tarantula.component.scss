@@ -1,59 +1,96 @@
 $leg-speed: 500ms;
 
 .tarantula {
+    position: absolute;
     width: 100%;
     height: 100%;
+    top: 100%;
+    scale: 40%;
+    rotate:0deg;
     background-size: 170px, 170px;
+    transition: all 2s linear, rotate 0.5s linear;
+}
+
+.tarantula-out {
+    top: 0%;
+    scale: 70%;
 }
 
 .shared {
     position: absolute;
-    scale: 0.85;
     animation-iteration-count: infinite;
     animation-duration: $leg-speed;
     animation-timing-function: ease-in-out;
 }
 
 .thorax {
-    width: 62px;
-    height: 130px;
-    top: 45px;
-    background: url('images/css_sprites.png') -10px -10px;
-    left: calc(50% - 31px);
+    width: 31px;
+    height: 65px;
+    top: 31px;
+    background: url('assets/images/tarantula/css_sprites.png') -10px -10px;
+    left: calc(50% - 16px);
     filter: drop-shadow(5px 5px 4px black);
 }
 
 //----------------------------------------------------------------------------------
 
 .LA {
-    width: 17px;
-    height: 44px;
-    top: 27px;
-    background: url('images/css_sprites.png') -329px -76px;
-    left: calc(50% - 22px);
+    width: 9px;
+    height: 29px;
+    top: 13px;
+    background: url('assets/images/tarantula/css_sprites.png') -210px -53px;
+    left: calc(50% - 11px);
     transform-origin: bottom;
 }
 
 .RA {
-    width: 17px;
-    height: 48px;
-    top: 25px;
-    background: url('images/css_sprites.png') -366px -76px;
-    left: calc(50% + 2px);
+    width: 9px;
+    height: 24px;
+    top: 13px;
+    background: url('assets/images/tarantula/css_sprites.png') -239px -53px;
+    left: calc(50% + 1px);
     transform-origin: bottom;
 }
+
+// .LA {
+//     width: 17px;
+//     height: 44px;
+//     top: 27px;
+//     background: url('images/css_sprites.png') -329px -76px;
+//     left: calc(50% - 22px);
+//     transform-origin: bottom;
+// }
+
+// .RA {
+//     width: 17px;
+//     height: 48px;
+//     top: 25px;
+//     background: url('images/css_sprites.png') -366px -76px;
+//     left: calc(50% + 2px);
+//     transform-origin: bottom;
+// }
 
 //----------------------------------------------------------------------------------
 
 .L1 {
-    width: 46px;
-    height: 85px;
-    top: -6px;
-    background: url('images/css_sprites.png') -10px -160px;
-    left: calc(50% - 59px);
+    width: 23px;
+    height: 43px;
+    top: 0px;
+    background: url('assets/images/tarantula/css_sprites.png') -167px -10px;
+    left: calc(50% - 30px);
     transform-origin: bottom right;
     filter: drop-shadow(0px 7px 3px black);
 }
+
+// .L1 {
+//     width: 46px;
+//     height: 85px;
+//     top: -6px;
+//     background: url('images/css_sprites.png') -10px -160px;
+//     left: calc(50% - 59px);
+//     transform-origin: bottom right;
+//     filter: drop-shadow(0px 7px 3px black);
+// }
 
 .L1-anim {
     animation-name: L1-A;
@@ -83,13 +120,23 @@ $leg-speed: 500ms;
 //----------------------------------------------------------------------------------
 
 .L2 {
-    width: 74px;
-    height: 35px;
-    top: 55px;
-    background: url('images/css_sprites.png') -76px -160px;
-    left: -10px;
+    width: 52px;
+    height: 18px;
+    top: 30px;
+    background: url('assets/images/tarantula/css_sprites.png') -53px -95px;
+    left: 0px;
     transform-origin: right;
+    filter: drop-shadow(0px 12px 4px black);
 }
+
+// .L2 {
+//     width: 74px;
+//     height: 35px;
+//     top: 55px;
+//     background: url('images/css_sprites.png') -76px -160px;
+//     left: -10px;
+//     transform-origin: right;
+// }
 
 .L2-anim {
     animation-name: L2-A;
@@ -115,14 +162,24 @@ $leg-speed: 500ms;
 //----------------------------------------------------------------------------------
 
 .L3 {
-    width: 87px;
-    height: 41px;
-    top: 80px;
-    background: url('images/css_sprites.png') -10px -265px;
-    left: -6px;
+    width: 44px;
+    height: 21px;
+    top: 47px;
+    background: url('assets/images/tarantula/css_sprites.png') -10px -161px;
+    left: 3px;
     transform-origin: top right;
     filter: drop-shadow(0px 7px 3px black);
 }
+
+// .L3 {
+//     width: 87px;
+//     height: 41px;
+//     top: 80px;
+//     background: url('images/css_sprites.png') -10px -265px;
+//     left: -6px;
+//     transform-origin: top right;
+//     filter: drop-shadow(0px 7px 3px black);
+// }
 
 .L3-anim {
     animation-name: L3-A;
@@ -153,13 +210,23 @@ $leg-speed: 500ms;
 //----------------------------------------------------------------------------------
 
 .L4 {
-    width: 68px;
-    height: 98px;
-    top: 103px;
-    background: url('images/css_sprites.png') -92px -10px;
-    left: 13px;
+    width: 34px;
+    height: 49px;
+    top: 60px;
+    background: url('assets/images/tarantula/css_sprites.png') -61px -10px;
+    left: 12px;
     transform-origin: top right;
+    filter: drop-shadow(0px 7px 3px black);
 }
+
+// .L4 {
+//     width: 68px;
+//     height: 98px;
+//     top: 103px;
+//     background: url('images/css_sprites.png') -92px -10px;
+//     left: 13px;
+//     transform-origin: top right;
+// }
 
 .L4-anim {
     animation-name: L4-A;
@@ -186,13 +253,23 @@ $leg-speed: 500ms;
 //----------------------------------------------------------------------------------
 
 .R1 {
-    width: 46px;
-    height: 91px;
-    top: -13px;
-    background: url('images/css_sprites.png') -263px -10px;
-    left: 97px;
+    width: 23px;
+    height: 46px;
+    top: 0px;
+    background: url('assets/images/tarantula/css_sprites.png') -10px -95px;
+    left: 56px;
     transform-origin: bottom left;
+    filter: drop-shadow(0px 7px 3px black);
 }
+
+// .R1 {
+//     width: 46px;
+//     height: 91px;
+//     top: -13px;
+//     background: url('images/css_sprites.png') -263px -10px;
+//     left: 97px;
+//     transform-origin: bottom left;
+// }
 
 .R1-anim {
     animation-name: R1-A;
@@ -222,13 +299,23 @@ $leg-speed: 500ms;
 //----------------------------------------------------------------------------------
 
 .R2 {
-    width: 78px;
-    height: 46px;
-    top: 43px;
-    background: url('images/css_sprites.png') -329px -10px;
-    left: 103px;
+    width: 39px;
+    height: 23px;
+    top: 27px;
+    background: url('assets/images/tarantula/css_sprites.png') -210px -10px;
+    left: 60px;
     transform-origin: bottom left;
+    filter: drop-shadow(0px 7px 3px black);
 }
+
+// .R2 {
+//     width: 78px;
+//     height: 46px;
+//     top: 43px;
+//     background: url('images/css_sprites.png') -329px -10px;
+//     left: 103px;
+//     transform-origin: bottom left;
+// }
 
 .R2-anim {
     animation-name: R2-A;
@@ -256,13 +343,23 @@ $leg-speed: 500ms;
 //----------------------------------------------------------------------------------
 
 .R3 {
-    width: 86px;
-    height: 27px;
-    top: 85px;
-    background: url('images/css_sprites.png') -200px -160px;
-    left: 89px;
+    width: 43px;
+    height: 14px;
+    top: 49px;
+    background: url('assets/images/tarantula/css_sprites.png') -74px -161px;
+    left: 52px;
     transform-origin: left;
+    filter: drop-shadow(2px 12px 5px black);
 }
+
+// .R3 {
+//     width: 86px;
+//     height: 27px;
+//     top: 85px;
+//     background: url('images/css_sprites.png') -200px -160px;
+//     left: 89px;
+//     transform-origin: left;
+// }
 
 .R3-anim {
     animation-name: R3-A;
@@ -274,6 +371,7 @@ $leg-speed: 500ms;
         rotate: 20deg;
         filter: drop-shadow(2px 12px 5px black);
     }
+
     40% {
         transform: scale(1, 1);
         filter: drop-shadow(0px 7px 3px black);
@@ -290,13 +388,24 @@ $leg-speed: 500ms;
 //----------------------------------------------------------------------------------
 
 .R4 {
-    width: 63px;
-    height: 98px;
-    top: 104px;
-    background: url('images/css_sprites.png') -180px -10px;
-    left: 89px;
+    width: 32px;
+    height: 49px;
+    top: 59px;
+    background: url('assets/images/tarantula/css_sprites.png') -115px -10px;
+    left: 53px;
     transform-origin: top left;
+    filter: drop-shadow(5px 12px 4px black);
 }
+
+// .R4 {
+//     width: 63px;
+//     height: 98px;
+//     top: 104px;
+//     background: url('images/css_sprites.png') -180px -10px;
+//     left: 89px;
+//     transform-origin: top left;
+//     filter: drop-shadow(5px 12px 4px black);
+// }
 
 .R4-anim {
     animation-name: R4-A;
@@ -319,3 +428,79 @@ $leg-speed: 500ms;
         filter: drop-shadow(5px 12px 4px black);
     }
 }
+
+
+
+
+
+
+// .bg-L1 {
+//     width: 23px; height: 43px;
+//     background: url('css_sprites.png') -167px -10px;
+// }
+
+// x
+// .bg-L2 {
+//     width: 52px; height: 18px;
+//     background: url('css_sprites.png') -53px -95px;
+// }
+
+// x
+// .bg-L3 {
+//     width: 44px; height: 21px;
+//     background: url('css_sprites.png') -10px -161px;
+// }
+
+// x
+// .bg-L4 {
+//     width: 34px; height: 49px;
+//     background: url('css_sprites.png') -61px -10px;
+// }
+
+// x
+// .bg-LA {
+//     width: 9px; height: 29px;
+//     background: url('css_sprites.png') -210px -53px;
+// }
+
+// x
+// .bg-R1 {
+//     width: 23px; height: 46px;
+//     background: url('css_sprites.png') -10px -95px;
+// }
+
+// x
+// .bg-R2 {
+//     width: 39px; height: 23px;
+//     background: url('css_sprites.png') -210px -10px;
+// }
+
+// x
+// .bg-R3 {
+//     width: 43px; height: 14px;
+//     background: url('css_sprites.png') -74px -161px;
+// }
+
+// x
+// .bg-R4 {
+//     width: 32px; height: 49px;
+//     background: url('css_sprites.png') -115px -10px;
+// }
+
+// x
+// .bg-RA {
+//     width: 9px; height: 24px;
+//     background: url('css_sprites.png') -239px -53px;
+// }
+
+// x
+// .bg-Thorax {
+//     width: 31px; height: 65px;
+//     background: url('css_sprites.png') -10px -10px;
+// }
+
+// x
+// .bg-download {
+//     width: 23px; height: 43px;
+//     background: url('css_sprites.png') -167px -73px;
+// }

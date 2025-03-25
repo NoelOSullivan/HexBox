@@ -13,7 +13,7 @@ import { AccessPanelDirect } from '../../../../../store/panel/panel.action';
 import { CircularCarouselComponent } from 'app/shared/components/circular-carousel/circular-carousel.component';
 import { AppStateModel, LanguageModel } from 'app/store/general/general.model';
 import { Observable } from 'rxjs';
-import { Language,  } from 'app/store/general/general.state';
+import { Language, } from 'app/store/general/general.state';
 import { AppState } from 'app/store/general/general.state';
 
 @Component({
@@ -38,6 +38,8 @@ export class Container2 {
   language!: string;
   iAmActive: boolean = false;
   backButtonClick!: boolean;
+  robotAirbusAnim!: boolean;
+  recentreCarousel: boolean = false;
 
   ngOnInit() {
     this.language$.subscribe(newLanguage => {
@@ -45,11 +47,9 @@ export class Container2 {
     });
 
     this.appState$.subscribe(appState => {
-      if(this.backButtonClick !== appState.backButtonClick) {
-        this.backButtonClick = appState.backButtonClick;
-        this.goPage(1);
+      if (this.robotAirbusAnim !== appState.robotAirbusAnim) {
+        this.robotAirbusAnim = appState.robotAirbusAnim;
       }
-
     })
 
   }
@@ -58,8 +58,17 @@ export class Container2 {
   // It is only needed for panels which need to communicate info to a child eg:carousel
 
   changePanel(panel: number) {
+    // activePanel takes the value of the new panel after hexagon click
     this.activePanel = panel;
-    this.iAmActive = this.nContainer === this.activePanel;
+    // detect if this container is the active one
+    if (this.activePanel === this.nContainer) {
+      this.iAmActive = true;
+      this.recentreCarousel = true;
+    } else {
+      this.iAmActive = false;
+      this.recentreCarousel = false;
+      this.goPage(1);
+    }
   }
 
   changePageNum(activePageNum: number) {
@@ -67,8 +76,10 @@ export class Container2 {
   }
 
   goPage(pageNum: number) {
-    const directAccess: DirectAccess = { hexNum: this.activePanel, nPage: pageNum };
+    // if (this.nContainer === this.activePanel) {
+    const directAccess: DirectAccess = { hexNum: this.nContainer, nPage: pageNum };
     this.store.dispatch(new AccessPanelDirect(directAccess));
+    // }
   }
 
 }

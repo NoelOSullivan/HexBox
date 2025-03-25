@@ -1,13 +1,13 @@
-<div class="tarantula">
-    <div class="shared R4 R4-anim"></div>
-    <div class="shared R3 R3-anim"></div>
-    <div class="shared R2 R2-anim"></div>
-    <div class="shared R1 R1-anim"></div>
+<div class="tarantula" [ngClass]="{'tarantula-out': tarantulaIsOut}">
+    <div class="shared R4" [ngClass]="{'R4-anim': tarantulaIsMoving}"></div>
+    <div class="shared R3" [ngClass]="{'R3-anim': tarantulaIsMoving}"></div>
+    <div class="shared R2" [ngClass]="{'R2-anim': tarantulaIsMoving}"></div>
+    <div class="shared R1" [ngClass]="{'R1-anim': tarantulaIsMoving}"></div>
     <div class="shared RA"></div>
-    <div class="shared L4 L4-anim"></div>
-    <div class="shared L3 L3-anim"></div>
-    <div class="shared L2 L2-anim"></div>
-    <div class="shared L1 L1-anim"></div>
+    <div class="shared L4" [ngClass]="{'L4-anim': tarantulaIsMoving}"></div>
+    <div class="shared L3" [ngClass]="{'L3-anim': tarantulaIsMoving}"></div>
+    <div class="shared L2" [ngClass]="{'L2-anim': tarantulaIsMoving}"></div>
+    <div class="shared L1" [ngClass]="{'L1-anim': tarantulaIsMoving}"></div>
     <div class="shared LA"></div>
     <div class="shared thorax"></div>
 </div>

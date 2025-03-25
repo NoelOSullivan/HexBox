@@ -51,12 +51,13 @@ export class Container1 implements OnInit {
 
   appState!: AppStateModel;
   introState!: IntroState;
+  blockAll!: boolean;
   videosFinished: boolean = false;
   language!: string;
   introDone: boolean = false;
 
   changePageNum(activePageNum: number) {
-    if(this.activePageNum !== activePageNum) {
+    if (this.activePageNum !== activePageNum) {
       this.activePageNum = activePageNum;
     }
   }
@@ -99,6 +100,9 @@ export class Container1 implements OnInit {
         this.done1 = true;
         this.done2 = true;
         this.done3 = true;
+      }
+      if (this.appState.blockAll !== this.blockAll) {
+        this.blockAll = this.appState.blockAll
       }
     });
 

@@ -28,6 +28,7 @@ export class CircularCarouselComponent implements OnInit {
   @Input() language!: string;
   @Input() myPageNum!: number;
   @Input() myContainerIsActive!: boolean;
+  @Input() recentreCarousel!: boolean;
 
   @Output() carouselItemClicked = new EventEmitter<number>();
 
@@ -55,6 +56,7 @@ export class CircularCarouselComponent implements OnInit {
   public captionText: string = "";
   private lastActivePageNumber: number | undefined;
   private contentHeight!: number;
+  private blockAll!: boolean;
 
   constructor(private dataService: DataService) { }
 
@@ -70,6 +72,9 @@ export class CircularCarouselComponent implements OnInit {
         this.contentHeight = appState.contentHeight;
         this.itemHeight = Math.floor(this.contentHeight * .45);
       }
+      if (appState.blockAll !== this.blockAll) {
+        this.blockAll = appState.blockAll;
+      }
     });
   }
 
@@ -80,12 +85,20 @@ export class CircularCarouselComponent implements OnInit {
         // Condition stops carousel restart if user flips just a little before releasing and the flip comes back
         if (this.lastActivePageNumber !== this.myPageNum) {
           this.lastActivePageNumber = this.myPageNum;
-          this.startAutoScroll();
+          // this.startAutoScroll();
         }
       } else {
         this.lastActivePageNumber = undefined;
         this.activeItem = 0;
-        this.stopAutoScroll();
+        // this.stopAutoScroll();
+      }
+    }
+
+    if (changes.recentreCarousel) {
+      if (changes.recentreCarousel.currentValue === true) {
+        console.log("changes.recentreCarousel", changes.recentreCarousel.currentValue);
+        this.degrees = 0;
+        this.rotateCarousel();
       }
     }
 
@@ -96,18 +109,18 @@ export class CircularCarouselComponent implements OnInit {
         }
         this.lastActivePageNumber = undefined;
         this.activeItem = 0;
-        if (this.scrollType === 'auto') {
-          this.stopAutoScroll();
-        }
+        // if (this.scrollType === 'auto') {
+        //   this.stopAutoScroll();
+        // }
       } else {
         // this.lastActivePageNumber = this.myPageNum;
         if (this.myPageNum === this.activePageNum) {
           if (this.carouselRoot) {
             this.carouselRoot.nativeElement.style.pointerEvents = "auto";
           }
-          if (this.scrollType === 'auto') {
-            this.startAutoScroll();
-          }
+          // if (this.scrollType === 'auto') {
+          //   this.startAutoScroll();
+          // }
         }
       }
     }
@@ -138,7 +151,6 @@ export class CircularCarouselComponent implements OnInit {
       this.itemCount = this.items.length;
       this.itemDegrees = 360 / this.itemCount;
       this.degrees = 0;
-      console.log("this.itemDegrees", this.itemDegrees);
 
       for (let i = 0, length = this.itemCollection.length; i < length; i++) {
         const item = this.itemCollection.namedItem("item" + i);
@@ -177,6 +189,7 @@ export class CircularCarouselComponent implements OnInit {
   @HostListener('wheel', ['$event']) wheel(event: WheelEvent) {
     event.stopPropagation();
     event.preventDefault();
+    if (this.blockAll) return;
     if (this.scrollType === "manual") {
       if (event.deltaY > 0) {
         this.degrees -= this.itemDegrees / 5;
@@ -189,6 +202,7 @@ export class CircularCarouselComponent implements OnInit {
   }
 
   @HostListener('touchstart', ['$event']) touchstart(event: TouchEvent) {
+    if (this.blockAll) return;
     if (this.scrollType === "manual") {
       // event.stopPropagation();
       // event.preventDefault();
@@ -197,6 +211,7 @@ export class CircularCarouselComponent implements OnInit {
   }
 
   @HostListener('touchmove', ['$event']) touchmove(event: TouchEvent) {
+    if (this.blockAll) return;
     if (this.scrollType === "manual") {
       event.stopPropagation();
       event.preventDefault();
@@ -205,6 +220,7 @@ export class CircularCarouselComponent implements OnInit {
   }
 
   @HostListener('touchend', ['$event']) touchend(event: TouchEvent) {
+    if (this.blockAll) return;
     if (this.scrollType === "manual") {
       // event.stopPropagation();
       // event.preventDefault();
@@ -213,6 +229,7 @@ export class CircularCarouselComponent implements OnInit {
   }
 
   @HostListener('mousedown', ['$event']) mousedown(event: MouseEvent) {
+    if (this.blockAll) return;
     if (this.scrollType === "manual") {
       // event.stopPropagation();
       // event.preventDefault();
@@ -221,6 +238,7 @@ export class CircularCarouselComponent implements OnInit {
   }
 
   @HostListener('mousemove', ['$event']) mousemove(event: MouseEvent) {
+    if (this.blockAll) return;
     if (this.scrollType === "manual") {
       event.stopPropagation();
       event.preventDefault();
@@ -229,6 +247,7 @@ export class CircularCarouselComponent implements OnInit {
   }
 
   @HostListener('mouseup', ['$event']) mouseup(event: MouseEvent) {
+    if (this.blockAll) return;
     if (this.scrollType === "manual") {
       // event.stopPropagation();
       // event.preventDefault();
@@ -275,7 +294,7 @@ export class CircularCarouselComponent implements OnInit {
   }
 
   manageCaption(): void {
-    if(this.language) {
+    if (this.language) {
       this.captionText = this.language === "Fr" ? this.items[this.activeItem].captionFr : this.items[this.activeItem].captionEn;
     }
   }
@@ -321,6 +340,7 @@ export class CircularCarouselComponent implements OnInit {
   }
 
   itemClicked(event: MouseEvent, item: any): void {
+    if (this.blockAll) return;
     event.preventDefault();
     event.stopPropagation();
     this.carouselItemClicked.emit(item.page);

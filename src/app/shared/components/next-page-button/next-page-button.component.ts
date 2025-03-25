@@ -19,6 +19,7 @@ export class NextPageButtonComponent {
   @Input() leftTextFrEn!: string;
   @Input() rightTextFrEn!: string;
   @Input() language!: string;
+  @Input() blockAll!: boolean;
 
   rightText: string = "";
   leftText: string = "";
@@ -27,35 +28,35 @@ export class NextPageButtonComponent {
   blockLeft: boolean = false;
   blockRight: boolean = false;
 
-  constructor(private store: Store) {}
+  constructor(private store: Store) { }
 
   ngOnChanges(changes: any): void {
     if (changes.language) {
-      if(this.twoPossiblesRight) {
+      if (this.twoPossiblesRight) {
         this.rightText = this.language === "Fr" ? this.twoPossiblesRight[0] : this.twoPossiblesRight[1];
       }
-      if(this.twoPossiblesLeft) {
+      if (this.twoPossiblesLeft) {
         this.leftText = this.language === "Fr" ? this.twoPossiblesLeft[0] : this.twoPossiblesLeft[1];
       }
     }
 
     if (changes.rightTextFrEn) {
       this.twoPossiblesRight = changes.rightTextFrEn.currentValue.split("#");
-      if(this.language) {
+      if (this.language) {
         this.rightText = this.language === "Fr" ? this.twoPossiblesRight[0] : this.twoPossiblesRight[1];
       }
     }
 
     if (changes.leftTextFrEn) {
       this.twoPossiblesLeft = changes.leftTextFrEn.currentValue.split("#");
-      if(this.language) {
+      if (this.language) {
         this.leftText = this.language === "Fr" ? this.twoPossiblesLeft[0] : this.twoPossiblesLeft[1];
       }
     }
 
     let that = this;
     if (changes.activePageNum) {
-      if(changes.activePageNum.currentValue<=0) {
+      if (changes.activePageNum.currentValue <= 0) {
         that.blockLeft = true;
       } else {
         that.blockLeft = false;
@@ -67,15 +68,19 @@ export class NextPageButtonComponent {
     }
   }
 
-  turnPageToRight():void {
-    const directionObj: Direction = { direction: "left" };
-    this.store.dispatch(new TurnPage(directionObj));
+  turnPageToRight(): void {
+    if (!this.blockAll) {
+      const directionObj: Direction = { direction: "left" };
+      this.store.dispatch(new TurnPage(directionObj));
+    }
   }
 
-  turnPageToLeft():void {
-    const directionObj: Direction = { direction: "right" };
-    this.store.dispatch(new TurnPage(directionObj));
+  turnPageToLeft(): void {
+    if (!this.blockAll) {
+      const directionObj: Direction = { direction: "right" };
+      this.store.dispatch(new TurnPage(directionObj));
+    }
   }
-  
+
 
 }

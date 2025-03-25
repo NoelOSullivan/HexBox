@@ -4,12 +4,12 @@
         <li class="common-side">
             <app-logo></app-logo>
             <app-circular-carousel [myContainerIsActive]="iAmActive" [scrollType]="'manual'" [itemType]="'imageText'" [language]="language"
-                (carouselItemClicked)="goPage($event)" [data]="'panel2.json'" [orientation]="'vertical'"
+                (carouselItemClicked)="goPage($event)" [data]="'panel2.json'" [orientation]="'vertical'" [recentreCarousel]="recentreCarousel"
                 [perspective]="'2000px'"></app-circular-carousel>
         </li>
         <li class="common-side">
             <app-logo></app-logo>
-            <app-airbus [myPageNum]="1" [myContainerIsActive]="iAmActive" [activePageNum]="activePageNum" [language]="language"  class="app-fill-container"></app-airbus>
+            <app-airbus [myPageNum]="1" [myContainerIsActive]="iAmActive" [activePageNum]="activePageNum" [language]="language" [robotAirbusAnim]="robotAirbusAnim"  class="app-fill-container"></app-airbus>
         </li>
         <li class="common-side">
             <app-logo></app-logo>

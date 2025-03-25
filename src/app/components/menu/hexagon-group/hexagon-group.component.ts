@@ -1,27 +1,30 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, viewChild, effect, viewChildren } from '@angular/core';
 import { Router, Event as NavigationEvent } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { Location, NgClass, NgIf } from '@angular/common';
 import { DataService } from '../../../shared/services/data.service';
 import { HexagonComponent } from '../hexagon/hexagon.component';
-import { Rotation, ActivePanelNumber } from '../../../shared/interfaces/hexagon';
-import { ChangePanelNumber, ChangeRotation } from '../../../store/hexagon/hexagon.actions';
+import { Rotation, ActivePanelNumber, HexBoxInterface } from '../../../shared/interfaces/hexagon';
+import { ChangePanelNumber, ChangeRotation, ChangeHexBox } from '../../../store/hexagon/hexagon.actions';
+import { HexBox } from 'app/store/hexagon/hexagon.state';
 import { DirectAccess, PageCounters } from '../../../store/panel/panel.state';
 import { Observable } from 'rxjs';
 import { DirectAccessModel, PageCounterModel } from '../../../store/panel/panel.model';
 import { AppStateModel, IntroState, LanguageModel, SunGameState } from 'app/store/general/general.model';
 import { AppState, Language } from 'app/store/general/general.state';
-import { BackButtonClick, ChangeEggState, ChangeIntroState, TransmitEggInfo } from 'app/store/general/general.actions';
+import { BackButtonClick, ChangeBlockAllState, ChangeEggState, ChangeIntroState, RobotAirbusAnim, TransmitEggInfo } from 'app/store/general/general.actions';
 import { LangButtonComponent } from '../lang-button/lang-button.component';
 import { SwipeIconComponent } from 'app/shared/components/swipe-icon/swipe-icon.component';
 import { EggComponent } from 'app/shared/components/egg/egg.component';
-import { UpdatePageCounter } from 'app/store/panel/panel.action';
+import { TarantulaComponent } from 'app/shared/components/tarantula/tarantula.component';
+import { AccessPanelDirect, UpdatePageCounter } from 'app/store/panel/panel.action';
 import { DomRect, EggInfo } from 'app/shared/interfaces/general';
+import { HexBoxModel } from 'app/store/hexagon/hexagon.model';
 
 @Component({
   selector: 'hexagon-group',
   standalone: true,
-  imports: [NgClass, NgIf, HexagonComponent, LangButtonComponent, SwipeIconComponent, EggComponent],
+  imports: [NgClass, NgIf, HexagonComponent, LangButtonComponent, SwipeIconComponent, EggComponent, TarantulaComponent],
   providers: [DataService],
   templateUrl: './hexagon-group.component.html',
   styleUrls: ['./hexagon-group.component.scss']
@@ -31,6 +34,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
 
   @Select(DirectAccess) directAccess$!: Observable<DirectAccessModel>;
   @Select(AppState) appState$!: Observable<AppStateModel>;
+  @Select(HexBox) hexbox$!: Observable<HexBoxModel>;
   @Select(Language) language$!: Observable<LanguageModel>;
   @Select(PageCounters) pageCounters$!: Observable<PageCounterModel>;
   // @Select(ActivePanelNumber) activePanelNumber$!: Observable<ActivePanelNumberModel>;
@@ -46,8 +50,11 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
   @ViewChild('leftElastic') leftElastic!: ElementRef;
   @ViewChild('rightElastic') rightElastic!: ElementRef;
   @ViewChild('slingButton') slingButton!: ElementRef;
+  @ViewChild('tarantulaHolder') tarantulaHolder!: ElementRef;
+  @ViewChild('otherStuff') otherStuff!: ElementRef;
 
   appState!: AppStateModel;
+  hexbox!: HexBoxModel;
   introState!: IntroState;
   sunGameState!: SunGameState;
   sunGameTargets: Array<DomRect> = [];
@@ -61,8 +68,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
   // endPoint: { x: number, y: number } = { x: 0, y: 0 };
   // vector: { x: number, y: number } = { x: 0, y: 0 };
 
-  constructor(private dataService: DataService, private router: Router, private store: Store) {
-  }
+  constructor(private dataService: DataService, private router: Router, private store: Store) { }
 
   public menuContent: Array<any> = [];
   public menuContentLanguage: Array<any> = [];
@@ -70,12 +76,16 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
   public hexOpened: Array<any> = [];
   public selected!: number;
   public rolled: number | null = null;
+  public tarantulaIsOut: boolean = false;
+  public tarantulaIsMoving: boolean = true;
 
   private allMenus!: any;
   private lastSelected!: number;
   private menuRotation: number = 0;
   private hexagons: Array<any> = [];
+  private hexagonFlips: Array<any> = [];
   private introDone: boolean = false;
+  private blockAll: boolean = false;
   private language!: string;
   private pageCounters!: PageCounterModel;
   private contentHeight: number = 0;
@@ -101,10 +111,16 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
       this.changeMenu();
     }, 5000);
 
-    this.directAccess$.subscribe(newDA => {
-      if (newDA.directAccess.hexNum) {
-        this.manageMenu(newDA.directAccess.hexNum + 1);
-      }
+    // To do : check for use of this and erase
+    // this.directAccess$.subscribe(newDA => {
+    //   if (newDA.directAccess.hexNum) {
+    //     console.log("YEEHAW");
+    //     // this.manageMenu(newDA.directAccess.hexNum + 1);
+    //   }
+    // });
+
+    this.hexbox$.subscribe(newHexBox => {
+      this.hexbox = newHexBox;
     });
 
     this.appState$.subscribe(newAppState => {
@@ -144,6 +160,9 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
       if (newAppState.sunGameTargets !== this.sunGameTargets) {
         this.sunGameTargets = newAppState.sunGameTargets;
       }
+      if (newAppState.blockAll !== this.blockAll) {
+        this.blockAll = newAppState.blockAll;
+      }
     });
 
     this.language$.subscribe(newLanguage => {
@@ -182,6 +201,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     //  1 to 6 were inverted for the start animation. Order is 0,6,5,4,3,2,1
     this.hexagons = this.menuRotate.nativeElement.getElementsByClassName('hexagon-content-holder');
+    this.hexagonFlips = this.menuRotate.nativeElement.getElementsByClassName('hexagon-flip');
   }
 
   getMenus() {
@@ -239,7 +259,10 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
     }, 1000);
   }
 
-  clickHexagon(hexIndex: any, location: any) {
+  clickHexagon(hexIndex: any, location: any, overrideBlock?: boolean) {
+
+    if (this.blockAll && !overrideBlock) return;
+
     if (this.introState === IntroState.BLOCKALL) {
       return
     }
@@ -314,20 +337,22 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
   }
 
   overHexagon(index: number) {
+    if (this.blockAll) return;
     if (this.introState !== 'done') return;
     this.rolled = index;
   }
 
   leaveHexagon() {
+    if (this.blockAll) return;
     if (this.introState !== 'done') return;
     this.rolled = null;
   }
 
   clickBack(): void {
-    if (this.allowBackButton === true) {
+    if (this.allowBackButton === true && !this.blockAll) {
       this.showBackButton = false;
       this.allowBackButton = false;
-      this.store.dispatch(new BackButtonClick());
+      this.store.dispatch(new BackButtonClick(true));
     }
   }
 
@@ -416,7 +441,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
     this.releaseCatapult()
   }
 
-  mouseupCatapult(event: Event):void {
+  mouseupCatapult(event: Event): void {
     this.releaseCatapult()
   }
 
@@ -536,4 +561,122 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
     }
   }
 
+
+  //-------------------------------------
+
+  directAccessWW(): void {
+
+    this.store.dispatch(new ChangeBlockAllState(true));
+
+    const myHexNum = 3;
+    const myContainer = '/container' + (myHexNum + 1);
+    const myDegreesArray = [-60, 0, 60, 120, 180, -120];
+    const myDegrees = myDegreesArray[myHexNum - 1];
+
+    this.hexagons[0].style.transform = "rotate(" + myDegrees + "deg)";
+    this.tarantulaHolder.nativeElement.style.transform = "rotate(" + myDegrees + "deg)";
+
+    let hexBoxState: HexBoxInterface = { topOpen: true, bottomOpen: false };
+
+    // Spider appears
+    setTimeout(() => {
+      this.store.dispatch(new ChangeHexBox(hexBoxState));
+      this.tarantulaIsOut = true;
+      this.tarantulaIsMoving = true;
+    }, 1000);
+
+    setTimeout(() => {
+      this.tarantulaIsMoving = false;
+    }, 3000);
+
+    setTimeout(() => {
+      hexBoxState = { topOpen: false, bottomOpen: false };
+      this.store.dispatch(new ChangeHexBox(hexBoxState));
+      this.tarantulaHolder.nativeElement.style.transform = "rotate(0deg)";
+      this.clickHexagon(myHexNum, myContainer, true);
+    }, 4000);
+
+    setTimeout(() => {
+      this.initNextMove(document.getElementById("contentLayout"), 50, 110);
+      this.tarantulaIsMoving = true;
+    }, 5000);
+
+    setTimeout(() => {
+      this.tarantulaIsMoving = false;
+      const directAccess = { hexNum: myHexNum - 1, nPage: 2, degrees: 0 };
+      this.store.dispatch(new AccessPanelDirect(directAccess));
+    }, 8000);
+
+    setTimeout(() => {
+      this.initNextMove(document.getElementById("airbusPlay"), 70, 150);
+      this.tarantulaHolder.nativeElement.firstElementChild.firstElementChild.style.rotate = "130deg";
+      this.tarantulaIsMoving = true;
+    }, 9000);
+
+    setTimeout(() => {
+      this.tarantulaIsMoving = false;
+      this.store.dispatch(new RobotAirbusAnim());
+    }, 12000);
+
+    setTimeout(() => {
+      this.tarantulaIsMoving = true;
+      this.tarantulaHolder.nativeElement.style.top = "-94px";
+      this.tarantulaHolder.nativeElement.style.left = "calc(50% - 50px)";
+      this.tarantulaHolder.nativeElement.firstElementChild.firstElementChild.style.rotate = "220deg";
+    }, 13000);
+
+    setTimeout(() => {
+      this.tarantulaIsMoving = false;
+      hexBoxState = { topOpen: true, bottomOpen: false };
+    }, 16000);
+
+    setTimeout(() => {
+      hexBoxState = { topOpen: true, bottomOpen: false };
+      this.store.dispatch(new ChangeHexBox(hexBoxState));
+      this.tarantulaHolder.nativeElement.firstElementChild.firstElementChild.style.rotate = "180deg";
+      this.tarantulaIsOut = false;
+      this.tarantulaIsMoving = true;
+    }, 17000);
+
+    setTimeout(() => {
+      hexBoxState = { topOpen: false, bottomOpen: false };
+      this.store.dispatch(new ChangeHexBox(hexBoxState));
+      this.tarantulaIsMoving = false;
+      this.tarantulaHolder.nativeElement.firstElementChild.firstElementChild.style.rotate = "0deg";
+    }, 19000);
+
+    setTimeout(() => {
+      hexBoxState = { topOpen: false, bottomOpen: false };
+      this.store.dispatch(new ChangeHexBox(hexBoxState));
+      this.tarantulaIsMoving = false;
+      this.tarantulaHolder.nativeElement.firstElementChild.firstElementChild.style.rotate = "0deg";
+    }, 19000);
+
+    setTimeout(() => {
+      this.store.dispatch(new ChangeBlockAllState(false));
+    }, 20000);
+
+  }
+
+  initNextMove(nextTarget: any, correctionX: number, correctionY: number): void {
+    let nextRect, nextX, nextY, taraRect, taraX, taraY;
+    nextRect = nextTarget.getBoundingClientRect();
+    nextX = (nextRect.x + nextRect?.width / 2);
+    nextY = (nextRect.y + nextRect?.height / 2);
+    taraRect = this.tarantulaHolder.nativeElement.getBoundingClientRect();
+    taraX = (taraRect.x + taraRect?.width / 2);
+    taraY = (taraRect.y + taraRect?.height / 2);
+    const diffX = nextX - taraX;
+    const diffY = nextY - taraY;
+
+    let offsetY = this.otherStuff.nativeElement.getBoundingClientRect().y;
+
+    let newX = (taraX + diffX - correctionX) + "px";
+    let newY = (taraY + diffY - (offsetY + correctionY)) + "px";
+    this.tarantulaHolder.nativeElement.style.left = newX;
+    this.tarantulaHolder.nativeElement.style.top = newY;
+  }
+
 }
+
+

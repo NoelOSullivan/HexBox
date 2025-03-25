@@ -14,7 +14,7 @@
         technical data on all Airbus planes.<br><br>I had ownership of the svg reader, the interface for tracking new
         and amended documents and Airnaveo, for interactive 3D maintenance.
     </div>
-    <div class="play">
+    <div id="airbusPlay" class="play">
         <app-play-button (playState)="managePlay($event)" [playing]="playing"></app-play-button>
     </div>
     <img #image1 class="image init-anim-2" src="assets/images/airbus/airnavX-2.jpg">

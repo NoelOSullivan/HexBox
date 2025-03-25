@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { State, Action, StateContext } from "@ngxs/store";
 
 import { LanguageModel, AppStateModel, IntroState, SunGameState } from './general.model';
-import { ChangeLanguage, ChangeMouseUpDetected, ChangeIntroState, ChangeContentHeight, ChangeContentWidth, BackButtonClick, ChangeSunGameState, ChangeEggState, AddEggDomRect, RemoveAllTargetRects, TransmitEggInfo } from './general.actions';
+import { ChangeLanguage, ChangeMouseUpDetected, ChangeIntroState, ChangeContentHeight, ChangeContentWidth, BackButtonClick, ChangeSunGameState, ChangeEggState, AddEggDomRect, RemoveAllTargetRects, TransmitEggInfo, RobotAirbusAnim, ChangeBlockAllState } from './general.actions';
 import { append, patch } from '@ngxs/store/operators';
 import { DomRect } from 'app/shared/interfaces/general';
 // import { IntroState } from 'app/shared/interfaces/general';
@@ -40,10 +40,12 @@ export class Language {
         // appState: {
         onIntro: true,
         introState: IntroState.BLOCKALL,
+        blockAll: false,
         mouseUpDetected: false,
         contentHeight: 0,
         contentWidth: 0,   
         backButtonClick: false,
+        robotAirbusAnim: false,
         sunGameState: SunGameState.GAMEOFF,
         eggActive: false,
         sunGameTargets: [],
@@ -81,6 +83,24 @@ export class AppState {
         ctx.setState({
             ...state,
             backButtonClick: !state.backButtonClick
+        })
+    }
+
+    @Action(RobotAirbusAnim) robotAirbusAnim(ctx: StateContext<AppStateModel>) {
+        const state = ctx.getState();
+        // const newAppState: AppStateModel = { appState: { onIntro: state.appState.onIntro, introState: state.appState.introState, mouseUpDetected: !state.appState.mouseUpDetected } };
+        // ctx.setState(newAppState);
+        ctx.setState({
+            ...state,
+            robotAirbusAnim: !state.robotAirbusAnim
+        })
+    }
+
+    @Action(ChangeBlockAllState) changeBlockAllState(ctx: StateContext<AppStateModel>, action: ChangeBlockAllState) {
+        const state = ctx.getState();
+        ctx.setState({
+            ...state,
+            blockAll: action.blockAll
         })
     }
 

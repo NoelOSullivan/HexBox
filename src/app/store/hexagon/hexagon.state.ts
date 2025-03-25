@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { State, Action, StateContext } from "@ngxs/store";
 
-import { ActivePanelNumberModel, RotationToAddModel } from './hexagon.model';
-import { ChangePanelNumber, ChangeRotation } from './hexagon.actions';
+import { ActivePanelNumberModel, HexBoxModel, RotationToAddModel } from './hexagon.model';
+import { ChangeHexBox, ChangePanelNumber, ChangeRotation } from './hexagon.actions';
 
 @State<RotationToAddModel>({
     name: 'rotationToAdd',
@@ -38,6 +38,25 @@ export class ActivePanelNumber{
         ctx.setState({
             ...state,
             activePanelNumber: action.ActivePanelNumber
+        })
+    }
+}
+
+@State<HexBoxModel>({
+    name: 'hexbox',
+    defaults: {
+        hexbox: {topOpen: false, bottomOpen: false}
+    }
+})
+
+@Injectable()
+export class HexBox{
+    constructor(){}
+    @Action(ChangeHexBox) changeHexBox(ctx: StateContext<HexBoxModel>, action:ChangeHexBox){
+        const state = ctx.getState();
+        ctx.setState({
+            ...state,
+            hexbox: action.HexBox
         })
     }
 }

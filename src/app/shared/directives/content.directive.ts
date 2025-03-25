@@ -46,12 +46,13 @@ export class ContentDirective implements OnInit {
   finalAnimRotation!: number;
   direction!: String;
   finalAnimDirection!: String;
-  blockWheelAndClick: boolean = true;
+  blockAll: boolean = true;
   activePanelNumber!: number;
   introState!: IntroState;
   isTouchOrMousedown: boolean = false;
   appState!: AppStateModel;
   firstClick: boolean = true;
+  backButtonClick: boolean = false;
 
   constructor(private panel: ElementRef, private store: Store) { }
 
@@ -87,17 +88,27 @@ export class ContentDirective implements OnInit {
     this.appState$.subscribe(newAppState => {
       this.introState = newAppState.introState;
       if (newAppState.introState === 'done') {
-        this.blockWheelAndClick = false;
+        this.blockAll = false;
         this.panel.nativeElement.children[this.activePage].style.pointerEvents = 'all';
       }
-    });
+      if (newAppState.blockAll !== this.blockAll) {
+        this.blockAll = newAppState.blockAll;
+      }
 
+      if (this.backButtonClick !== newAppState.backButtonClick) {
+        this.backButtonClick = newAppState.backButtonClick;
+        if (Number(this.nPanel) === this.activePanelNumber) {
+          this.directAccess(0);
+        }
+      }
+    });
   }
 
   ngAfterViewInit() {
     this.activePanelNumber$.subscribe(newAPN => {
       this.activePanelNumber = newAPN.activePanelNumber.apn
       if (this.activePanelNumber === 0) this.activePanelNumber = 6;
+      // console.log(this.nPanel, "ngAfterViewInit this.activePanelNumber", this.activePanelNumber);
       this.changeActivePanel.emit(this.activePanelNumber);
       this.lastPage = undefined;
     });
@@ -105,7 +116,7 @@ export class ContentDirective implements OnInit {
   }
 
   @HostListener('wheel', ['$event']) wheel(event: WheelEvent) {
-    if (!this.blockWheelAndClick) {
+    if (!this.blockAll) {
       if (Number(this.nPanel) === this.activePanelNumber) {
         if (event.deltaY > 0) {
           if (this.activePage < this.nPages - 1) {
@@ -121,7 +132,7 @@ export class ContentDirective implements OnInit {
   }
 
   @HostListener('touchstart', ['$event']) touchstart(event: TouchEvent) {
-    if (!this.blockWheelAndClick) {
+    if (!this.blockAll) {
       if (Number(this.nPanel) === this.activePanelNumber) {
         this.isTouchOrMousedown = true;
         this.manageDown(event.changedTouches[0].clientX);
@@ -130,7 +141,7 @@ export class ContentDirective implements OnInit {
   }
 
   @HostListener('touchmove', ['$event']) touchmove(event: TouchEvent) {
-    if (!this.blockWheelAndClick) {
+    if (!this.blockAll) {
       event.preventDefault();
       if (Number(this.nPanel) === this.activePanelNumber) {
         this.manageMove(event.targetTouches[0].clientX);
@@ -139,7 +150,7 @@ export class ContentDirective implements OnInit {
   }
 
   @HostListener('touchend', ['$event']) touchend(event: TouchEvent) {
-    if (!this.blockWheelAndClick) {
+    if (!this.blockAll) {
       if (Number(this.nPanel) === this.activePanelNumber) {
         this.manageUp(event.changedTouches[0].clientX);
       }
@@ -204,18 +215,19 @@ export class ContentDirective implements OnInit {
       if (diff > 0) {
         if (this.rotation.degrees <= this.directRotation) {
           this.onDirectAccess = true;
-          this.rotation.degrees = this.directRotation
+          this.rotation.degrees = this.directRotation;
           clearInterval(this.directAccessInterval);
           this.changePageNum.emit(this.activePage + 1);
         }
       } else {
         if (this.rotation.degrees >= this.directRotation) {
           this.onDirectAccess = true;
-          this.rotation.degrees = this.directRotation
+          this.rotation.degrees = this.directRotation;
           clearInterval(this.directAccessInterval);
           this.changePageNum.emit(this.activePage - 1);
         }
       }
+
       this.managePanelDisplay(false);
     }, 0);
   }
@@ -223,14 +235,14 @@ export class ContentDirective implements OnInit {
   turnPage(direction: string) {
     if (direction === "left") {
       if (this.rotation.degrees >= this.maxRotation) {
-        this.blockWheelAndClick = true;
+        this.blockAll = true;
         this.direction = "left"
         this.finalAnimRotation = this.rotation.degrees - 180;
         this.finishFlipToCalculatedPage();
       }
     } else {
       if (this.rotation.degrees <= 0) {
-        this.blockWheelAndClick = true;
+        this.blockAll = true;
         this.direction = "right"
         this.finalAnimRotation = this.rotation.degrees + 180;
         this.finishFlipToCalculatedPage();
@@ -278,7 +290,7 @@ export class ContentDirective implements OnInit {
           clearInterval(this.finalAnimInterval);
           this.rotation.degrees = this.finalAnimRotation;
           if (this.introState === 'done') {
-            this.blockWheelAndClick = false;
+            this.blockAll = false;
           }
           if (this.activePage + 1 < this.nPages) {
             flipFinished = true;
@@ -290,7 +302,7 @@ export class ContentDirective implements OnInit {
           clearInterval(this.finalAnimInterval);
           this.rotation.degrees = this.finalAnimRotation;
           if (this.introState === 'done') {
-            this.blockWheelAndClick = false;
+            this.blockAll = false;
           }
           flipFinished = true;
           // this.changePageNum.emit(this.activePage);
@@ -307,14 +319,19 @@ export class ContentDirective implements OnInit {
 
   managePanelDisplay(flipFinished: boolean) {
 
+    // debugger;
+    // console.log("MMMMMMMMMMMMMMMMMMPPPPPPPPPPPPPPPPPPPPPPDDDDDDDDDDDDDDDDD");
+
     // If new rotation goes too far in either direction, correct to zero or max 
-    if (this.rotation.degrees > 0) {
+    if (this.rotation.degrees >= 0) {
       this.rotation.degrees = 0;
     } else {
-      if (this.rotation.degrees < this.maxRotation) {
+      if (this.rotation.degrees <= this.maxRotation) {
         this.rotation.degrees = this.maxRotation;
       }
     }
+
+    // if (this.rotation.degrees === 0) debugger;
 
     // if (this.activePage !== Math.floor(this.rotation.degrees / -180) || this.firstClick) {
     if (this.activePage !== -Math.round(-this.rotation.degrees / -180) || this.firstClick || flipFinished) {
@@ -323,7 +340,7 @@ export class ContentDirective implements OnInit {
       this.activePage = -Math.round(-this.rotation.degrees / -180);
 
       this.changePageNum.emit(this.activePage);
-      this.setIsLastPage.emit(this.activePage===this.nPages-1);
+      this.setIsLastPage.emit(this.activePage === this.nPages - 1);
 
       // Turn off display of all pages
       this.turnOffAllPages();

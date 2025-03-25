@@ -9,6 +9,7 @@
   transition: transform 0.5s;
   z-index: 20;
   cursor: pointer;
+  pointer-events: all;
 }
 
 .flipMe {

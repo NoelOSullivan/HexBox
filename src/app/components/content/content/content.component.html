@@ -1,4 +1,4 @@
-<div #contentHolder class="content-holder">
+<div #contentHolder id="contentHolder" class="content-holder">
     <span *ngIf="nContainer===1" class="show-content" [ngClass]="{'hide-content':activePanelNumber!==1 && rotating === false}">
         <app-container1 [nContainer]="nContainer"></app-container1>
     </span>

@@ -6,14 +6,14 @@ import { environment } from '../environments/environment.development';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 
-import { RotationToAdd, ActivePanelNumber } from './store/hexagon/hexagon.state';
+import { RotationToAdd, ActivePanelNumber, HexBox } from './store/hexagon/hexagon.state';
 import { PageCounters, PageTurner, DirectAccess } from './store/panel/panel.state';
 import { Language, AppState } from './store/general/general.state';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes),
     provideHttpClient(),
-    importProvidersFrom(NgxsModule.forRoot([ActivePanelNumber, DirectAccess, RotationToAdd, PageCounters, PageTurner, Language, AppState], {developmentMode: !environment.production})),
+    importProvidersFrom(NgxsModule.forRoot([ActivePanelNumber, HexBox, DirectAccess, RotationToAdd, PageCounters, PageTurner, Language, AppState], {developmentMode: !environment.production})),
     importProvidersFrom(NgxsReduxDevtoolsPluginModule.forRoot({
       disabled: environment.production
     }))]

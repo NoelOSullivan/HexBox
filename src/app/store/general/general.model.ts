@@ -23,10 +23,12 @@ export interface AppStateModel {
     // public appState!: AppState;
     onIntro: boolean;
     introState: IntroState;
+    blockAll: boolean;
     mouseUpDetected: boolean;
     contentHeight: number;
     contentWidth: number;
     backButtonClick: boolean;
+    robotAirbusAnim: boolean;
     sunGameState: SunGameState;
     eggActive: boolean;
     sunGameTargets: Array<DomRect>;

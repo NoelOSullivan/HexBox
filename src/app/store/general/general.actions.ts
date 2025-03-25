@@ -9,6 +9,11 @@ export class ChangeLanguage {
     constructor(public Language: string){}
 }
 
+export class RobotAirbusAnim {
+    static readonly type= '[RobotAirbusAnim] RobotAirbusAnim';
+    constructor(){}
+}
+
 // export class ChangeAppState {
 //     static readonly type= '[Change app state] ChangeAppState';
 //     constructor(public AppState: AppState){}
@@ -41,12 +46,17 @@ export class ChangeContentWidth {
 
 export class BackButtonClick {
     static readonly type= '[BackButtonClick] BackButtonClick';
-    constructor(){}
+    constructor(public backButtonClick: boolean){}
 }
 
 export class ChangeSunGameState {
     static readonly type= '[ChangeSunGameState] ChangeSunGameState';
     constructor(public sunGameState: SunGameState){}
+}
+
+export class ChangeBlockAllState {
+    static readonly type= '[ChangeBlockAllState] ChangeBlockAllState';
+    constructor(public blockAll: boolean){}
 }
 
 export class ChangeEggState {
