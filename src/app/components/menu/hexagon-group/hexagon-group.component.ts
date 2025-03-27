@@ -17,6 +17,7 @@ import { LangButtonComponent } from '../lang-button/lang-button.component';
 import { SwipeIconComponent } from 'app/shared/components/swipe-icon/swipe-icon.component';
 import { EggComponent } from 'app/shared/components/egg/egg.component';
 import { TarantulaComponent } from 'app/shared/components/tarantula/tarantula.component';
+import { CircularTextComponent } from 'app/shared/components/circular-text/circular-text.component';
 import { AccessPanelDirect, UpdatePageCounter } from 'app/store/panel/panel.action';
 import { DomRect, EggInfo } from 'app/shared/interfaces/general';
 import { HexBoxModel } from 'app/store/hexagon/hexagon.model';
@@ -24,7 +25,7 @@ import { HexBoxModel } from 'app/store/hexagon/hexagon.model';
 @Component({
   selector: 'hexagon-group',
   standalone: true,
-  imports: [NgClass, NgIf, HexagonComponent, LangButtonComponent, SwipeIconComponent, EggComponent, TarantulaComponent],
+  imports: [NgClass, NgIf, HexagonComponent, LangButtonComponent, SwipeIconComponent, EggComponent, TarantulaComponent, CircularTextComponent],
   providers: [DataService],
   templateUrl: './hexagon-group.component.html',
   styleUrls: ['./hexagon-group.component.scss']
@@ -65,6 +66,8 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
 
   startPoint: { x: number, y: number } = { x: 0, y: 0 };
   movePoint: { x: number, y: number } = { x: 0, y: 0 };
+
+  turnDirection = "anti-clockwise";
   // endPoint: { x: number, y: number } = { x: 0, y: 0 };
   // vector: { x: number, y: number } = { x: 0, y: 0 };
 
@@ -78,6 +81,10 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
   public rolled: number | null = null;
   public tarantulaIsOut: boolean = false;
   public tarantulaIsMoving: boolean = true;
+  public daTarantulaIsOut: boolean = false;
+  public daTarantulaIsMoving: boolean = true;
+  public daActivated: boolean = false;
+  public directAccessOpen: boolean = false;
 
   private allMenus!: any;
   private lastSelected!: number;
@@ -131,6 +138,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
         this.introDone = true;
         this.menuLanguageChange();
         this.manageMenu(2);
+        this.activateDirectAccess();
       }
       if (this.sunGameState !== newAppState.sunGameState) {
         this.sunGameState = newAppState.sunGameState;
@@ -313,6 +321,13 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
       this.store.dispatch(new ChangePanelNumber(activePanelNumber));
 
       this.detectIfBackButtonIsActive();
+
+      // Manage direct access
+      if (hexIndex !== 2) {
+        this.disactivateDirectAccess();
+      } else {
+        this.activateDirectAccess();
+      }
 
     }
   }
@@ -564,6 +579,51 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
 
   //-------------------------------------
 
+  activateDirectAccess(): void {
+    if (!this.daActivated) {
+      this.daTarantulaIsOut = true;
+      this.daTarantulaIsMoving = true;
+      this.daActivated = true;
+      setTimeout(() => {
+        this.daTarantulaIsMoving = false;
+      }, 2000);
+    }
+  }
+
+  disactivateDirectAccess(): void {
+    if (this.daActivated) {
+      if (this.directAccessOpen) {
+        this.directAccessOpen = false;
+        setTimeout(() => {
+          this.daTarantulaIsOut = false;
+          setTimeout(() => {
+            this.daTarantulaIsMoving = false;
+          }, 2000);
+        }, 2000);
+      } else {
+        this.daTarantulaIsOut = false;
+      }
+      setTimeout(() => {
+        this.daTarantulaIsOut = false;
+        setTimeout(() => {
+          this.daTarantulaIsMoving = false;
+        }, 2000);
+      }, 2000);
+      this.daTarantulaIsMoving = true;
+      this.daActivated = false;
+    }
+  }
+
+  manageDirectAccess() {
+    if (this.daActivated) {
+      this.directAccessOpen = !this.directAccessOpen;
+      this.daTarantulaIsMoving = true;
+      setTimeout(() => {
+        this.daTarantulaIsMoving = false;
+      }, 2000);
+    }
+  }
+
   directAccessWW(): void {
 
     this.store.dispatch(new ChangeBlockAllState(true));
@@ -620,7 +680,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
 
     setTimeout(() => {
       this.tarantulaIsMoving = true;
-      this.tarantulaHolder.nativeElement.style.top = "-94px";
+      this.tarantulaHolder.nativeElement.style.top = "-101px";
       this.tarantulaHolder.nativeElement.style.left = "calc(50% - 50px)";
       this.tarantulaHolder.nativeElement.firstElementChild.firstElementChild.style.rotate = "220deg";
     }, 13000);

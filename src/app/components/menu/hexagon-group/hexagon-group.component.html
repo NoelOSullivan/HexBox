@@ -32,8 +32,36 @@
     </div>
 
     <div #otherStuff class="other-stuff">
-        <app-lang-button></app-lang-button>
-        <div class="direct-access" (click)="directAccessWW()"></div>
+        <!-- <app-lang-button></app-lang-button> -->
+        <div class="menu-direct-access-holder">
+
+            <div class="direct-access-toggle" [ngClass]="{'direct-access-open':directAccessOpen===true}">
+
+                <!-- <div class="direct-access-background"></div> -->
+
+                <div class="top" (click)="manageDirectAccess()">
+                    <div class="dome-tarantula-holder">
+                        <app-tarantula [tarantulaIsOut]="daTarantulaIsOut"
+                            [tarantulaIsMoving]="daTarantulaIsMoving"></app-tarantula>
+                    </div>
+                    <div class="circular-text-holder">
+                        <app-circular-text [text]="'DIRECT ACCESS WITH WEB WORKERS'"
+                            [turn]="turnDirection" class="da-text" [ngClass]="{'show-da-text':daActivated===true && directAccessOpen===false}"></app-circular-text>
+                    </div>
+                    <div class="sphere">
+                        <img class="sphere-image" src="../../../../assets/images/sphere.png">
+                    </div>
+                </div>
+                <div class="direct-link">AIRBUS</div>
+                <div class="direct-link">THE PURPS</div>
+                <div></div>
+
+                <!-- <div class="direct-access-list"></div> -->
+            </div>
+        </div>
+
+
+        <!-- <div class="direct-access" (click)="directAccessWW()"></div> -->
         <div class="back-button-holder">
             <div class="back-button" [ngClass]="{'back-button-active': showBackButton}" (click)="clickBack()">
                 <app-swipe-icon [direction]="'left'"></app-swipe-icon>
@@ -70,12 +98,12 @@
         <div class="catch-all-events"></div>
     </div>
 
-   
+
 
     <div #tarantulaHolder class="tarantula-holder">
         <app-tarantula [tarantulaIsOut]="tarantulaIsOut" [tarantulaIsMoving]="tarantulaIsMoving"></app-tarantula>
     </div>
 
-    
+
 
 </div>

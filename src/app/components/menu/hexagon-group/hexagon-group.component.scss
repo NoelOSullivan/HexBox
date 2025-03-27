@@ -6,7 +6,7 @@
     width: 100vw;
     min-width: 300px;
     pointer-events: none;
-    margin-top: -10px;
+    margin-top: -18px;
 }
 
 .bollocks-holder {
@@ -180,7 +180,105 @@
     height: 200px;
 }
 
-.direct-access{
+.menu-direct-access-holder {
+    position: absolute;
+    width: 80px;
+    height: 170px;
+    bottom: 0;
+    left: 10px;
+    // align-items: center;
+    // background: grey;
+}
+
+.direct-access-toggle {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    // justify-content: center;
+    color: white;
+    font-family: "Miriam Libre", sans-serif;
+    line-height: 18px;
+    align-items: center;
+    transition: top 2s ease-in;
+    top: 130px;
+}
+
+.direct-access-open {
+    top: 0;
+}
+
+.top {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    pointer-events: all;
+}
+
+.direct-link {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-sizing: border-box;
+    width: 100%;
+    text-align: center;
+}
+
+.direct-access-background {
+    width: 100%;
+    height: 70%;
+    position: absolute;
+    top: 30%;
+    border-radius: 20px 20px 0px 0px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.direct-access-list {
+    background: blue;
+}
+
+.sphere {
+    position: absolute;
+    top: 10px;
+    height: 60px;
+    border-radius: 60px;
+    background: transparent;
+}
+
+.sphere-image {
+    width: 100%;
+    height: 100%;
+}
+
+.circular-text-holder {
+    width: 100%;
+    height: 100%;
+}
+
+.da-text {
+    opacity: 0;
+    transition: opacity 2s linear;
+}
+
+.show-da-text {
+    opacity: 1;
+}
+
+.dome-tarantula-holder {
+    position: absolute;
+    width: 100px;
+    height: 110px;
+    scale: 0.45;
+    overflow: hidden;
+    top: -15px;
+    // background: lightpink;
+}
+
+.direct-access {
     width: 20px;
     height: 20px;
     top: 50%;
@@ -194,10 +292,16 @@
     z-index: 20;
     width: 100px;
     height: 110px;
-    top: -94px;
+    top: -101px;
     left: calc(50% - 50px);
     transform-origin: 50% bottom;
     overflow: hidden;
     pointer-events: none;
+    scale: 0.7;
     transition: transform 1s, top 3s ease-in, left 3s ease-in;
+}
+
+.menu-tarantula {
+    width: 50px;
+    height: 60px;
 }

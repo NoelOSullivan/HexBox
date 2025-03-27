@@ -1,5 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgClass } from '@angular/common';
+import { AppState } from 'app/store/general/general.state';
+import { Select } from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { AppStateModel } from 'app/store/general/general.model';
 
 @Component({
   selector: 'app-play-button',
@@ -13,10 +17,21 @@ export class PlayButtonComponent {
 
   @Output() playState = new EventEmitter<boolean>();
   @Input() playing!: boolean;
+  @Select(AppState) appState$!: Observable<AppStateModel>;
+
+  private blockAll!: boolean;
 
   constructor() { }
 
   language!: String;
+
+  ngOnInit(): void {
+    this.appState$.subscribe((appState) => {
+      if (appState.blockAll !== this.blockAll) {
+        this.blockAll = appState.blockAll;
+      }
+    });
+  }
 
   ngOnChanges(changes: any) {
     if (changes.playing) {
@@ -26,11 +41,15 @@ export class PlayButtonComponent {
   }
 
   clickPlay() {
-    this.playState.emit(true);
+    if (!this.blockAll) {
+      this.playState.emit(true);
+    }
   }
 
   clickStop() {
-    this.playState.emit(false);
+    if (!this.blockAll) {
+      this.playState.emit(false);
+    }
   }
 
 }

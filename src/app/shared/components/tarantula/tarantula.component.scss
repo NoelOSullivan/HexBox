@@ -9,11 +9,12 @@ $leg-speed: 500ms;
     rotate:0deg;
     background-size: 170px, 170px;
     transition: all 2s linear, rotate 0.5s linear;
+    // background: white;
 }
 
 .tarantula-out {
     top: 0%;
-    scale: 70%;
+    scale: 100%;
 }
 
 .shared {
@@ -30,6 +31,10 @@ $leg-speed: 500ms;
     background: url('assets/images/tarantula/css_sprites.png') -10px -10px;
     left: calc(50% - 16px);
     filter: drop-shadow(5px 5px 4px black);
+}
+
+.thorax-image {
+
 }
 
 //----------------------------------------------------------------------------------
@@ -257,7 +262,7 @@ $leg-speed: 500ms;
     height: 46px;
     top: 0px;
     background: url('assets/images/tarantula/css_sprites.png') -10px -95px;
-    left: 56px;
+    left: 58%;
     transform-origin: bottom left;
     filter: drop-shadow(0px 7px 3px black);
 }

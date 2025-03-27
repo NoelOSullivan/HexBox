@@ -159,8 +159,8 @@ export class AirbusComponent {
     }
 
     if (changes.robotAirbusAnim) {
-      this.robotAirbusAnim = changes.robotAirbusAnim.currentValue;
-      this.managePlay(this.robotAirbusAnim);
+      // this.robotAirbusAnim = changes.robotAirbusAnim.currentValue;
+      this.managePlay(true);
     }
   }
 
