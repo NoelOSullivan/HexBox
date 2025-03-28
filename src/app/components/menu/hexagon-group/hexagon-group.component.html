@@ -37,26 +37,22 @@
 
             <div class="direct-access-toggle" [ngClass]="{'direct-access-open':directAccessOpen===true}">
 
-                <!-- <div class="direct-access-background"></div> -->
-
                 <div class="top" (click)="manageDirectAccess()">
-                    <div class="dome-tarantula-holder">
+                    <div #domeTarantulaHolder class="dome-tarantula-holder">
                         <app-tarantula [tarantulaIsOut]="daTarantulaIsOut"
-                            [tarantulaIsMoving]="daTarantulaIsMoving"></app-tarantula>
+                            [tarantulaIsMoving]="daTarantulaIsMoving" [tarantulaIsForward]="daTarantulaIsForward"></app-tarantula>
                     </div>
                     <div class="circular-text-holder">
-                        <app-circular-text [text]="'DIRECT ACCESS WITH WEB WORKERS'"
+                        <app-circular-text [text]="'DIRECT ACCESS &#x2022; WEB WORKERS &#x2022; '"
                             [turn]="turnDirection" class="da-text" [ngClass]="{'show-da-text':daActivated===true && directAccessOpen===false}"></app-circular-text>
                     </div>
                     <div class="sphere">
                         <img class="sphere-image" src="../../../../assets/images/sphere.png">
                     </div>
                 </div>
-                <div class="direct-link">AIRBUS</div>
-                <div class="direct-link">THE PURPS</div>
+                <div class="direct-link" (click)="directAccessWW(1)">AIRBUS</div>
+                <div class="direct-link" (click)="directAccessWW(2)">THE PURPS</div>
                 <div></div>
-
-                <!-- <div class="direct-access-list"></div> -->
             </div>
         </div>
 

@@ -12,8 +12,17 @@ $leg-speed: 500ms;
     // background: white;
 }
 
+.dome-tarantula {
+    // scale: 100%;
+}
+
 .tarantula-out {
     top: 0%;
+    scale: 100%;
+}
+
+.tarantula-forward-till-outside-overflow {
+    top: -100%;
     scale: 100%;
 }
 

@@ -11,6 +11,7 @@ import { NgClass } from '@angular/common';
 export class TarantulaComponent {
   
   @Input() tarantulaIsOut!: boolean;
+  @Input() tarantulaIsForward!: boolean;
   @Input() tarantulaIsMoving!: boolean;
 
   // tarantulaIsOut: boolean = false;

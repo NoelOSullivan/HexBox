@@ -225,6 +225,7 @@
     box-sizing: border-box;
     width: 100%;
     text-align: center;
+    pointer-events: all;
 }
 
 .direct-access-background {
@@ -275,6 +276,8 @@
     scale: 0.45;
     overflow: hidden;
     top: -15px;
+    rotate: 0deg;
+    transition: transform 500ms linear;
     // background: lightpink;
 }
 
