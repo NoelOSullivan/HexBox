@@ -201,7 +201,7 @@
     font-family: "Miriam Libre", sans-serif;
     line-height: 18px;
     align-items: center;
-    transition: top 2s ease-in;
+    transition: top 1s ease-in;
     top: 130px;
 }
 
@@ -215,6 +215,7 @@
     display: flex;
     justify-content: center;
     pointer-events: all;
+    cursor: pointer;
 }
 
 .direct-link {
@@ -226,6 +227,8 @@
     width: 100%;
     text-align: center;
     pointer-events: all;
+    user-select: none;
+    cursor: pointer;
 }
 
 .direct-access-background {

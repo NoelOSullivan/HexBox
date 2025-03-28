@@ -624,7 +624,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
       this.daTarantulaIsMoving = true;
       setTimeout(() => {
         this.daTarantulaIsMoving = false;
-      }, 2000);
+      }, 1000);
     }
   }
 

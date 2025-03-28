@@ -45,17 +45,13 @@
             },
             {
                 "imageSrc": "assets/images/milan/milan_9.jpg",
-                "textFr": "Petite equipe de dev. Cycle de production mensuelle pour deux numéros.",
-                "textEn": "A small dev team. Monthly production cycle for two issues.",
-                "captionFr": "Poste: Dev lead",
-                "captionEn": "Position: Lead dev"
+                "captionFr": "Petite equipe de dev. Cycle de production mensuelle pour deux numéros",
+                "captionEn": "A small dev team. Monthly production cycle for two issues"
             },
             {
                 "imageSrc": "assets/images/milan/milan_10.jpg",
-                "textFr": "Nous avons changé de techno trois fois, sans disruption de la production",
-                "textEn": "We had to change technologies three times, without interrupting production",
-                "captionFr": "Points d'interèt",
-                "captionEn": "Points of interest"
+                "captionFr": "Nous avons changé de techno trois fois, sans disruption de la production",
+                "captionEn": "We had to change technologies three times, without interrupting production"
             }
         ]
     }
