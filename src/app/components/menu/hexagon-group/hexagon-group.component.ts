@@ -87,6 +87,10 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
   public daTarantulaIsForward: boolean = false;
   public daActivated: boolean = false;
   public directAccessOpen: boolean = false;
+  public toolsOpen: boolean = false;
+  public toolsActivated: boolean = false;
+  public toolsAreOut: boolean = false;
+  public toolsAreMoving: boolean = false;
 
   private allMenus!: any;
   private lastSelected!: number;
@@ -99,8 +103,12 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
   private pageCounters!: PageCounterModel;
   private contentHeight: number = 0;
   private slingWasPressed: boolean = false;
-  
+
   private myDegreesArray = [-60, 0, 60, 120, 180, -120];
+
+  private introVideoLoaded: boolean = false;
+  public daTextContent!: string;
+  public toolsTextContent!: string;
 
   ngOnInit() {
 
@@ -110,17 +118,17 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
 
     this.hexOpened = [false, false, false, false, false, false];
 
-    setTimeout(() => {
-      for (let i = 0; i < 6; i++) {
-        this.introHexagonWithDelay(i);
-      }
-    }, 1000);
+    // setTimeout(() => {
+    //   for (let i = 0; i < 6; i++) {
+    //     this.introHexagonWithDelay(i);
+    //   }
+    // }, 1000);
 
 
     // Calls change of menu after menu intro
-    setTimeout(() => {
-      this.changeMenu();
-    }, 5000);
+    // setTimeout(() => {
+    //   this.changeMenu();
+    // }, 5000);
 
     // To do : check for use of this and erase
     // this.directAccess$.subscribe(newDA => {
@@ -135,6 +143,12 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
     });
 
     this.appState$.subscribe(newAppState => {
+
+      if (newAppState.introVideoLoaded !== this.introVideoLoaded) {
+        this.introVideoLoaded = newAppState.introVideoLoaded;
+        this.startHexagonIntroAnim();
+      }
+
       // To Do : this gets called every time for the mouseupoutside on wheel menus
       // It keeps being called. No good.
       this.introState = newAppState.introState;
@@ -143,6 +157,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
         this.menuLanguageChange();
         this.manageMenu(2);
         this.activateDirectAccess();
+        this.activateTools();
       }
       if (this.sunGameState !== newAppState.sunGameState) {
         this.sunGameState = newAppState.sunGameState;
@@ -187,6 +202,18 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
 
       this.detectIfBackButtonIsActive();
     });
+
+  }
+
+  startHexagonIntroAnim(): void {
+    for (let i = 0; i < 6; i++) {
+      this.introHexagonWithDelay(i);
+    }
+
+    // Calls change of menu after menu intro
+    setTimeout(() => {
+      this.changeMenu();
+    }, 4000);
 
   }
 
@@ -242,7 +269,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
         const twoPossibles = contentText[1].split("#");
         let newText;
         if (this.introState !== 'done' && this.introState !== 'onFinalAnim' && i === 2) {
-          newText = "Click Me";
+          newText = this.language == "Fr" ? "Cliquer" : "Click Me";
         } else {
           newText = this.language == "Fr" ? twoPossibles[0] : twoPossibles[1];
         }
@@ -251,6 +278,8 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
     } else {
       this.menuContentLanguage = this.menuContent;
     }
+    this.daTextContent = this.language == "Fr" ? "LA SELECTION par WEB WORKERS" : "THE SELECTION by WEB WORKERS";
+    this.toolsTextContent = this.language == "Fr" ? "---- OUTILS ---- OUTILS ---- OUTILS " : "TOOLS TOOLS TOOLS";
   }
 
   // Hexagons open/rotate one after the other
@@ -602,8 +631,8 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
           this.daTarantulaIsOut = false;
           setTimeout(() => {
             this.daTarantulaIsMoving = false;
-          }, 2000);
-        }, 2000);
+          }, 1000);
+        }, 1000);
       } else {
         this.daTarantulaIsOut = false;
       }
@@ -611,8 +640,8 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
         this.daTarantulaIsOut = false;
         setTimeout(() => {
           this.daTarantulaIsMoving = false;
-        }, 2000);
-      }, 2000);
+        }, 1000);
+      }, 1000);
       this.daTarantulaIsMoving = true;
       this.daActivated = false;
     }
@@ -628,25 +657,25 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
     }
   }
 
-  directAccessWW(version:number): void {
+  directAccessWW(version: number): void {
 
     this.store.dispatch(new ChangeBlockAllState(true));
 
-    if(version === 1) {
+    if (version === 1) {
       const myHexNum = 3;
 
       const myContainer = '/container' + (myHexNum + 1);
       const myDegrees = this.myDegreesArray[myHexNum - 1];
-  
+
       this.hexagons[0].style.transform = "rotate(" + myDegrees + "deg)";
-  
+
       this.tarantulaHolder.nativeElement.style.transform = "rotate(" + myDegrees + "deg)";
-  
+
       this.domeTarantulaHolder.nativeElement.style.transform = "rotate(" + myDegrees + "deg)";
       this.daTarantulaIsMoving = true;
-  
+
       let hexBoxState: HexBoxInterface = { topOpen: true, bottomOpen: false };
-  
+
       // Spider appears
       setTimeout(() => {
         this.store.dispatch(new ChangeHexBox(hexBoxState));
@@ -654,52 +683,52 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
         this.tarantulaIsMoving = true;
         this.daTarantulaIsForward = true;
       }, 1000);
-  
+
       setTimeout(() => {
         this.tarantulaIsMoving = false;
       }, 3000);
-  
+
       setTimeout(() => {
         hexBoxState = { topOpen: false, bottomOpen: false };
         this.store.dispatch(new ChangeHexBox(hexBoxState));
         this.tarantulaHolder.nativeElement.style.transform = "rotate(0deg)";
         this.clickHexagon(myHexNum, myContainer, true);
       }, 4000);
-  
+
       setTimeout(() => {
         this.initNextMove(document.getElementById("contentLayout"), 50, 110);
         this.tarantulaIsMoving = true;
       }, 5000);
-  
+
       setTimeout(() => {
         this.tarantulaIsMoving = false;
         const directAccess = { hexNum: myHexNum - 1, nPage: 2, degrees: 0 };
         this.store.dispatch(new AccessPanelDirect(directAccess));
       }, 8000);
-  
+
       setTimeout(() => {
         this.initNextMove(document.getElementById("airbusPlay"), 70, 150);
         this.tarantulaHolder.nativeElement.firstElementChild.firstElementChild.style.rotate = "130deg";
         this.tarantulaIsMoving = true;
       }, 9000);
-  
+
       setTimeout(() => {
         this.tarantulaIsMoving = false;
         this.store.dispatch(new RobotAirbusAnim());
       }, 12000);
-  
+
       setTimeout(() => {
         this.tarantulaIsMoving = true;
-        this.tarantulaHolder.nativeElement.style.top = "-101px";
+        this.tarantulaHolder.nativeElement.style.top = "-103px";
         this.tarantulaHolder.nativeElement.style.left = "calc(50% - 50px)";
         this.tarantulaHolder.nativeElement.firstElementChild.firstElementChild.style.rotate = "220deg";
       }, 13000);
-  
+
       setTimeout(() => {
         this.tarantulaIsMoving = false;
         hexBoxState = { topOpen: true, bottomOpen: false };
       }, 16000);
-  
+
       setTimeout(() => {
         hexBoxState = { topOpen: true, bottomOpen: false };
         this.store.dispatch(new ChangeHexBox(hexBoxState));
@@ -711,21 +740,21 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
         this.daTarantulaIsMoving = true;
         this.domeTarantulaHolder.nativeElement.style.transform = "rotate(0deg)";
       }, 17000);
-  
+
       setTimeout(() => {
         hexBoxState = { topOpen: false, bottomOpen: false };
         this.store.dispatch(new ChangeHexBox(hexBoxState));
         this.tarantulaIsMoving = false;
         this.tarantulaHolder.nativeElement.firstElementChild.firstElementChild.style.rotate = "0deg";
       }, 19000);
-  
+
       setTimeout(() => {
         hexBoxState = { topOpen: false, bottomOpen: false };
         this.store.dispatch(new ChangeHexBox(hexBoxState));
         this.tarantulaIsMoving = false;
         this.tarantulaHolder.nativeElement.firstElementChild.firstElementChild.style.rotate = "0deg";
       }, 19000);
-  
+
       setTimeout(() => {
         this.store.dispatch(new ChangeBlockAllState(false));
       }, 20000);
@@ -734,14 +763,14 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
 
       const myContainer = '/container' + (myHexNum + 1);
       const myDegrees = this.myDegreesArray[myHexNum - 1];
-  
+
       this.hexagons[0].style.transform = "rotate(" + myDegrees + "deg)";
-  
+
       this.tarantulaHolder.nativeElement.style.transform = "rotate(" + myDegrees + "deg)";
-  
+
       this.domeTarantulaHolder.nativeElement.style.transform = "rotate(" + myDegrees + "deg)";
       this.daTarantulaIsMoving = true;
-  
+
       let hexBoxState: HexBoxInterface = { topOpen: true, bottomOpen: false };
 
       setTimeout(() => {
@@ -750,11 +779,11 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
         this.tarantulaIsMoving = true;
         this.daTarantulaIsForward = true;
       }, 1000);
-  
+
       setTimeout(() => {
         this.tarantulaIsMoving = false;
       }, 3000);
-  
+
       setTimeout(() => {
         this.tarantulaHolder.nativeElement.style.transform = "rotate(0deg)";
         this.domeTarantulaHolder.nativeElement.style.transform = "rotate(0deg)";
@@ -798,6 +827,31 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
     let newY = (taraY + diffY - (offsetY + correctionY)) + "px";
     this.tarantulaHolder.nativeElement.style.left = newX;
     this.tarantulaHolder.nativeElement.style.top = newY;
+  }
+
+
+  activateTools(): void {
+    this.toolsActivated = true;
+    this.toolsAreOut = true;
+    this.toolsAreMoving = true;
+    setTimeout(() => {
+      this.toolsAreMoving = false;
+    }, 1000);
+  }
+
+  manageTools() {
+    if (this.toolsActivated) {
+      if (this.toolsOpen) {
+        this.toolsOpen = false;
+        this.toolsAreMoving = false;
+        // setTimeout(() => {
+        //   this.toolsAreMoving = false;
+        // }, 500);
+      } else {
+        this.toolsOpen = true;
+        this.toolsAreMoving = true;
+      }
+    }
   }
 
 }

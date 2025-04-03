@@ -11,7 +11,7 @@
                 <video #video1 playsinline class="video video1"
                     [ngClass]="{'shunt-intro-video': introState==='onFinalAnim'}"
                     src="assets/videos/introA.mp4"></video>
-                <video #video3 class="video" [ngClass]="{'shunt-intro-video': introState==='onFinalAnim'}"
+                <video #video3 playsinline class="video" [ngClass]="{'shunt-intro-video': introState==='onFinalAnim'}"
                     src="assets/videos/introC.mp4"></video>
                 <div *ngIf="introState!=='onFinalAnim' && showSwipe===true" class="swipe-me">
                     <span *ngIf="language==='En'">Swipe Me</span>
@@ -60,7 +60,7 @@
         <li class="common-side">
             <app-logo></app-logo>
             <div *ngIf="introState!=='done'" class="video-holder">
-                <video #video2 class="video" src="assets/videos/introB.mp4"
+                <video #video2 playsinline class="video" src="assets/videos/introB.mp4"
                     [ngClass]="{'shunt-intro-video': introState==='onFinalAnim'}"></video>
                 <div *ngIf="introState!=='onFinalAnim'" class="swipe-me-back">
                     <span *ngIf="language==='En'">Swipe Me</span>

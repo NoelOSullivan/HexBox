@@ -32,7 +32,7 @@
     </div>
 
     <div #otherStuff class="other-stuff">
-        <!-- <app-lang-button></app-lang-button> -->
+        
         <div class="menu-direct-access-holder">
 
             <div class="direct-access-toggle" [ngClass]="{'direct-access-open':directAccessOpen===true}">
@@ -42,9 +42,9 @@
                         <app-tarantula [tarantulaIsOut]="daTarantulaIsOut"
                             [tarantulaIsMoving]="daTarantulaIsMoving" [tarantulaIsForward]="daTarantulaIsForward"></app-tarantula>
                     </div>
-                    <div class="circular-text-holder">
-                        <app-circular-text [text]="'THE SELECTION by WEB WORKERS &#x2022; '"
-                            [turn]="turnDirection" class="da-text" [ngClass]="{'show-da-text':daActivated===true && directAccessOpen===false}"></app-circular-text>
+                    <div class="da-text" [ngClass]="{'show-da-text':daActivated===true && directAccessOpen===false}">
+                        <app-circular-text [text]="daTextContent"
+                            [turn]="turnDirection"></app-circular-text>
                     </div>
                     <div class="sphere">
                         <img class="sphere-image" src="../../../../assets/images/sphere.png">
@@ -55,6 +55,30 @@
                 <div></div>
             </div>
         </div>
+
+        <div class="tools-holder">
+
+            <div class="tools-toggle" [ngClass]="{'tools-open':toolsOpen===true}">
+
+                <div class="top" (click)="manageTools()">
+                    <div #domeToolsHolder class="dome-tools-holder" [ngClass]="{'dome-tools-holder-out':toolsAreOut===true}">
+                        <img class="cog1-image" src="../../../../assets/images/cog1.png" [ngClass]="{'cog1-image-open':toolsAreMoving===true}">
+                        <img class="cog2-image" src="../../../../assets/images/cog2.png" [ngClass]="{'cog2-image-open':toolsAreMoving===true}">
+                        <img class="cog3-image" src="../../../../assets/images/cog3.png" [ngClass]="{'cog3-image-open':toolsAreMoving===true}">
+                    </div>
+                    <div class="tools-text" [ngClass]="{'show-da-text':toolsActivated===true && toolsOpen===false}">
+                        <app-circular-text [text]="toolsTextContent"
+                            [turn]="turnDirection"></app-circular-text>
+                    </div>
+                    <div class="sphere">
+                        <img class="sphere-image" src="../../../../assets/images/sphere.png">
+                    </div>
+                </div>
+                <app-lang-button class="lang-button"></app-lang-button>
+                <div></div>
+            </div>
+        </div>
+
 
 
         <!-- <div class="direct-access" (click)="directAccessWW()"></div> -->

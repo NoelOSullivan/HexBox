@@ -24,6 +24,7 @@ export interface AppStateModel {
     onIntro: boolean;
     introState: IntroState;
     blockAll: boolean;
+    introVideoLoaded: boolean;
     mouseUpDetected: boolean;
     contentHeight: number;
     contentWidth: number;

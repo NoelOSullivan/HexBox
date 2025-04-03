@@ -29,6 +29,11 @@ export class ChangeIntroState {
     constructor(public introState: IntroState){}
 }
 
+export class ChangeIntroVideoLoadedState {
+    static readonly type = '[Change intro video loaded state] ChangeIntroVideoLoadedState';
+    constructor(public introVideoLoadedState: boolean){}
+}
+
 export class ChangeMouseUpDetected {
     static readonly type= '[Mouse Up Detected] ChangeMouseUpDetected';
     constructor(){}

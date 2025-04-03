@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { State, Action, StateContext } from "@ngxs/store";
 
 import { LanguageModel, AppStateModel, IntroState, SunGameState } from './general.model';
-import { ChangeLanguage, ChangeMouseUpDetected, ChangeIntroState, ChangeContentHeight, ChangeContentWidth, BackButtonClick, ChangeSunGameState, ChangeEggState, AddEggDomRect, RemoveAllTargetRects, TransmitEggInfo, RobotAirbusAnim, ChangeBlockAllState } from './general.actions';
+import { ChangeLanguage, ChangeMouseUpDetected, ChangeIntroState, ChangeContentHeight, ChangeContentWidth, BackButtonClick, ChangeSunGameState, ChangeEggState, AddEggDomRect, RemoveAllTargetRects, TransmitEggInfo, RobotAirbusAnim, ChangeBlockAllState, ChangeIntroVideoLoadedState } from './general.actions';
 import { append, patch } from '@ngxs/store/operators';
 import { DomRect } from 'app/shared/interfaces/general';
 // import { IntroState } from 'app/shared/interfaces/general';
@@ -41,6 +41,7 @@ export class Language {
         onIntro: true,
         introState: IntroState.BLOCKALL,
         blockAll: false,
+        introVideoLoaded: false,
         mouseUpDetected: false,
         contentHeight: 0,
         contentWidth: 0,   
@@ -119,6 +120,14 @@ export class AppState {
         ctx.setState({
             ...state,
             introState: action.introState
+        })
+    }
+
+    @Action(ChangeIntroVideoLoadedState) changIntroVideoLoaded(ctx: StateContext<AppStateModel>, action: ChangeIntroVideoLoadedState) {
+        const state = ctx.getState();
+        ctx.setState({
+            ...state,
+            introVideoLoaded: action.introVideoLoadedState
         })
     }
 

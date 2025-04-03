@@ -12,7 +12,7 @@ import { TurnPage } from '../../../../../store/panel/panel.action';
 
 import { AppState } from 'app/store/general/general.state';
 import { AppStateModel, IntroState, LanguageModel } from 'app/store/general/general.model';
-import { ChangeIntroState } from 'app/store/general/general.actions';
+import { ChangeIntroState, ChangeIntroVideoLoadedState } from 'app/store/general/general.actions';
 import { Observable } from 'rxjs';
 import { Language } from 'app/store/general/general.state';
 import { NextPageButtonComponent } from 'app/shared/components/next-page-button/next-page-button.component';
@@ -116,6 +116,8 @@ export class Container1 implements OnInit {
 
     let that = this;
     this.video1.nativeElement.addEventListener('loadeddata', function () {
+
+      that.store.dispatch(new ChangeIntroVideoLoadedState(true));
       // Video is loaded and can be played
       const holderHeight = that.videoHolder.nativeElement.clientHeight;
       const videoHeight = that.video1.nativeElement.clientHeight;
@@ -127,6 +129,7 @@ export class Container1 implements OnInit {
       }
 
       that.video1.nativeElement.muted = true;
+      that.video1.nativeElement.currentTime = 0;
       that.video1.nativeElement.play();
 
       setTimeout(() => {
@@ -156,7 +159,8 @@ export class Container1 implements OnInit {
     this.store.dispatch(new TurnPage(directionObj));
 
     this.video2.nativeElement.muted = true;
-    this.video2.nativeElement.play();
+    this.video2.nativeElement.style.visibility = "visible";
+    this.video2.nativeElement.play(1);
 
     this.video2.nativeElement.addEventListener("ended", () => {
       this.endVideo2();
@@ -177,7 +181,7 @@ export class Container1 implements OnInit {
 
     this.video3.nativeElement.muted = true;
     this.video3.nativeElement.style.visibility = "visible";
-    this.video3.nativeElement.play();
+    this.video3.nativeElement.play(1);
 
     this.onFingerAnim = true;
 
