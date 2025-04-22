@@ -1,54 +1,76 @@
 {
-    "france": {
-        "candidates": [
-            {
-                "imageSrc": "assets/images/thesun/arthaud.png",
-                "name": "Arthaud"
-            },
-            {
-                "imageSrc": "assets/images/thesun/dupont-aignan.png",
-                "name": "Dupont-Aignon"
-            },
-            {
-                "imageSrc": "assets/images/thesun/hidalgo.png",
-                "name": "Hidalgo"
-            },
-            {
-                "imageSrc": "assets/images/thesun/jadot.png",
-                "name": "Jadot"
-            },
-            {
-                "imageSrc": "assets/images/thesun/lassalle.png",
-                "name": "Lassalle"
-            },
-            {
-                "imageSrc": "assets/images/thesun/lepen.png",
-                "name": "Lepen"
-            },
-            {
-                "imageSrc": "assets/images/thesun/macron.png",
-                "name": "Macron"
-            },
-            {
-                "imageSrc": "assets/images/thesun/melenchon.png",
-                "name": "Melenchon"
-            },
-            {
-                "imageSrc": "assets/images/thesun/pecresse.png",
-                "name": "Pecresse"
-            },
-            {
-                "imageSrc": "assets/images/thesun/poutou.png",
-                "name": "Poutou"
-            },
-            {
-                "imageSrc": "assets/images/thesun/roussel.png",
-                "name": "Roussel"
-            },
-            {
-                "imageSrc": "assets/images/thesun/zemmour.png",
-                "name": "Zemmour"
-            }
-        ]
-    }
+    "candidates": [
+        {
+            "imageSrcFr": "assets/images/thesun/arthaud.png",
+            "nameFr": "Arthaud",
+            "imageSrcUk": "assets/images/thesun/sturgeon.png",
+            "nameUk": "Sturgeon"
+        },
+        {
+            "imageSrcFr": "assets/images/thesun/dupont-aignan.png",
+            "nameFr": "Dupont-Aignon",
+            "imageSrcUk": "assets/images/thesun/truss.png",
+            "nameUk": "Truss"
+        },
+        {
+            "imageSrcFr": "assets/images/thesun/hidalgo.png",
+            "nameFr": "Hidalgo",
+            "imageSrcUk": "assets/images/thesun/starmer.png",
+            "nameUk": "Starmer"
+        },
+        {
+            "imageSrcFr": "assets/images/thesun/jadot.png",
+            "nameFr": "Jadot",
+            "imageSrcUk": "assets/images/thesun/miliband.png",
+            "nameUk": "Miliband"
+        },
+        {
+            "imageSrcFr": "assets/images/thesun/lassalle.png",
+            "nameFr": "Lassalle",
+            "imageSrcUk": "assets/images/thesun/may.png",
+            "nameUk": "May"
+        },
+        {
+            "imageSrcFr": "assets/images/thesun/lepen.png",
+            "nameFr": "Lepen",
+            "imageSrcUk": "assets/images/thesun/johnson.png",
+            "nameUk": "Johnson"
+        },
+        {
+            "imageSrcFr": "assets/images/thesun/macron.png",
+            "nameFr": "Macron",
+            "imageSrcUk": "assets/images/thesun/sunak.png",
+            "nameUk": "Sunak"
+        },
+        {
+            "imageSrcFr": "assets/images/thesun/melenchon.png",
+            "nameFr": "Melenchon",
+            "imageSrcUk": "assets/images/thesun/corbyn.png",
+            "nameUk": "Corbyn"
+        },
+        {
+            "imageSrcFr": "assets/images/thesun/pecresse.png",
+            "nameFr": "Pecresse",
+            "imageSrcUk": "assets/images/thesun/badenoch.png",
+            "nameUk": "Badenoch"
+        },
+        {
+            "imageSrcFr": "assets/images/thesun/poutou.png",
+            "nameFr": "Poutou",
+            "imageSrcUk": "assets/images/thesun/flynn.png",
+            "nameUk": "Flynn"
+        },
+        {
+            "imageSrcFr": "assets/images/thesun/roussel.png",
+            "nameFr": "Roussel",
+            "imageSrcUk": "assets/images/thesun/davey.png",
+            "nameUk": "Davey"
+        },
+        {
+            "imageSrcFr": "assets/images/thesun/zemmour.png",
+            "nameFr": "Zemmour",
+            "imageSrcUk": "assets/images/thesun/farage.png",
+            "nameUk": "Farage"
+        }
+    ]
 }

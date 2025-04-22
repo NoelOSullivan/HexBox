@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import * as d3 from 'd3';
 import { HeadInfo } from 'app/shared/interfaces/general';
 import { AppState } from 'app/store/general/general.state';
@@ -10,7 +10,7 @@ import { Select } from '@ngxs/store';
 @Component({
   selector: 'app-results',
   standalone: true,
-  imports: [NgFor],
+  imports: [NgFor, NgIf],
   templateUrl: './results.component.html',
   styleUrl: './results.component.scss'
 })
@@ -22,6 +22,7 @@ export class ResultsComponent {
   @ViewChild('graph') graph!: ElementRef;
 
   @Input() headInfos!: Array<HeadInfo>
+  @Input() language!: string;
 
   graphWidth!: number;
   contentHeight!: number;
@@ -38,6 +39,13 @@ export class ResultsComponent {
     this.graphWidth = this.graph.nativeElement.clientWidth;
     this.createGraph();
   }
+
+  // ngOnChanges() {
+  //   if (changes.language) {
+  //     this.changeHeads(changes.language.currentValue);
+
+  //   }
+  // }
 
   createGraph(): void {
     // Make a results array using the headInfos result key
@@ -56,7 +64,13 @@ export class ResultsComponent {
     for (let i = 0, length = itemCollection.length; i < length; i++) {
       const bar = itemCollection.namedItem("bar" + i);
       // Add corresponding head as background image. Calculated to show the eyes.
-      bar.style.backgroundImage = "url('" + this.headInfos[i].imageSrc + "')";
+
+      if(this.language === "Fr") {
+        bar.style.backgroundImage = "url('" + this.headInfos[i].imageSrcFr + "')";
+      } else {
+        bar.style.backgroundImage = "url('" + this.headInfos[i].imageSrcUk + "')";
+      }
+
       bar.style.backgroundPosition = "center center";
       bar.style.backgroundSize = "200px 200px";
       bar.style.backgroundRepeat = "no-repeat"

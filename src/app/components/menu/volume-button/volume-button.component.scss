@@ -1,0 +1,128 @@
+.volume-button {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 21;
+  cursor: pointer;
+  pointer-events: all;
+}
+
+.volume {
+  position: absolute;
+  top: 8px;
+  left: 22px;
+  color: black;
+  font-weight: 600;
+}
+
+.volume-switch {
+  position: absolute;
+  width: 20px;
+  height: 40px;
+  top: -50px;
+  background: black;
+  left: -50px;
+  opacity: 0;
+  perspective: 200px;
+  border: 2px solid grey;
+  z-index: 21;
+  overflow: hidden;
+}
+
+.volume-cog-holder {
+  position: absolute;
+  width: 15px;
+  height: 28px;
+  top: -9px;
+  left: -19px;
+  opacity: 0;
+  z-index: 20;
+}
+
+.cog-volume-1 {
+  position: absolute;
+  top: 10px;
+  left: 0px;
+  width: 35px;
+  // height: 60%;
+  rotate: 0deg;
+  transition: transform 0.2s linear;
+}
+
+.cog-volume-2 {
+  position: absolute;
+  top: -8px;
+  left: -16px;
+  width: 30px;
+  // height: 60%;
+  rotate: 0deg;
+  transition: transform 0.15s linear;
+}
+
+.top {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  height: 40%;
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+}
+
+.bottom {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  height: 40%;
+  background-image: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+}
+
+.show-volume-switch {
+  opacity: 1;
+}
+
+.volume-carousel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform-style: preserve-3d;
+  transition: transform 100ms linear;
+  width: 100%;
+  height: 100%;
+}
+
+.volume-choice {
+  position: absolute;
+  backface-visibility: hidden;
+  // top: 10px;
+  // left: -20px;
+  // transform-origin: 30px;
+  font-weight: 600;
+  user-select: none;
+}
+
+.choice0 {
+  transform: rotateX(0deg) translateZ(20px);
+}
+
+.choice1 {
+  transform: rotateX(-40deg) translateZ(20px);
+}
+
+.choice2 {
+  transform: rotateX(-80deg) translateZ(20px);
+}
+
+.choice3 {
+  transform: rotateX(-120deg) translateZ(20px);
+}
+
+.choice4 {
+  transform: rotateX(-160deg) translateZ(20px);
+}
+
+.flipMe {
+  transform: rotateY(180deg);
+}
+
+.image {
+  width: 100%
+}

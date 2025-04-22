@@ -14,6 +14,7 @@ import { AppStateModel, IntroState, LanguageModel, SunGameState } from 'app/stor
 import { AppState, Language } from 'app/store/general/general.state';
 import { BackButtonClick, ChangeBlockAllState, ChangeEggState, ChangeIntroState, RobotAirbusAnim, TransmitEggInfo } from 'app/store/general/general.actions';
 import { LangButtonComponent } from '../lang-button/lang-button.component';
+import { VolumeButtonComponent } from '../volume-button/volume-button.component';
 import { SwipeIconComponent } from 'app/shared/components/swipe-icon/swipe-icon.component';
 import { EggComponent } from 'app/shared/components/egg/egg.component';
 import { TarantulaComponent } from 'app/shared/components/tarantula/tarantula.component';
@@ -21,11 +22,12 @@ import { CircularTextComponent } from 'app/shared/components/circular-text/circu
 import { AccessPanelDirect, UpdatePageCounter } from 'app/store/panel/panel.action';
 import { DomRect, EggInfo } from 'app/shared/interfaces/general';
 import { HexBoxModel } from 'app/store/hexagon/hexagon.model';
+import { Howl, Howler } from 'howler';
 
 @Component({
   selector: 'hexagon-group',
   standalone: true,
-  imports: [NgClass, NgIf, HexagonComponent, LangButtonComponent, SwipeIconComponent, EggComponent, TarantulaComponent, CircularTextComponent],
+  imports: [NgClass, NgIf, HexagonComponent, LangButtonComponent, VolumeButtonComponent, SwipeIconComponent, EggComponent, TarantulaComponent, CircularTextComponent],
   providers: [DataService],
   templateUrl: './hexagon-group.component.html',
   styleUrls: ['./hexagon-group.component.scss']
@@ -110,7 +112,35 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
   public daTextContent!: string;
   public toolsTextContent!: string;
 
+  private spiderFeetSound!: any;
+  private hToolsSound!: any;
+  private hexSound!: any;
+  private catapultSound!: any;
+  private eggFlightSound!: any;
+  private eggSmashSound!: any;
+  private volume: number = 0;
+
   ngOnInit() {
+
+    this.hToolsSound = new Howl({ src: ['assets/audio/cogOK.mp3'], volume: this.volume, html5: true, autoplay: false, onend: () => { this.hToolsSound.unload(); } });
+    this.spiderFeetSound = new Howl({ src: ['assets/audio/spiderFeet.mp3'], volume: this.volume, html5: true, autoplay: false, loop: true, onend: () => { this.spiderFeetSound.unload(); } });
+    this.hexSound = new Howl({ src: ['assets/audio/hex.mp3'], volume: this.volume, html5: true, autoplay: false, onend: () => { this.hToolsSound.unload(); } });
+    this.catapultSound = new Howl({ src: ['assets/audio/catapult.mp3'], volume: this.volume, html5: true, autoplay: false, onend: () => { this.catapultSound.unload(); } });
+    this.eggFlightSound = new Howl({ src: ['assets/audio/eggFlight.mp3'], volume: this.volume, html5: true, autoplay: false, onend: () => { this.eggFlightSound.unload(); } });
+    this.eggSmashSound = new Howl({ src: ['assets/audio/eggSmash.mp3'], volume: this.volume, html5: true, autoplay: false, onend: () => { this.eggSmashSound.unload(); } });
+
+    // this.hToolsSound.volume(0.2);
+
+    // this.toolsSound = new Audio();
+
+    // this.toolsSound = new Audio();
+    // this.toolsSound.src = "assets/audio/tools.mp3";
+    // this.toolsSound.preload = 'auto';
+    // this.toolsSound.load();
+    // this.toolsSound.volume = 0;
+    // this.toolsSound.play();
+
+    // this.toolsSound = new Audio("assets/audio/toolsSound.mp3");
 
     this.lastSelected = 0;
 
@@ -189,6 +219,9 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
       }
       if (newAppState.blockAll !== this.blockAll) {
         this.blockAll = newAppState.blockAll;
+      }
+      if (newAppState.volume !== this.volume) {
+        this.volume = newAppState.volume;
       }
     });
 
@@ -279,7 +312,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
       this.menuContentLanguage = this.menuContent;
     }
     this.daTextContent = this.language == "Fr" ? "LA SELECTION par WEB WORKERS" : "THE SELECTION by WEB WORKERS";
-    this.toolsTextContent = this.language == "Fr" ? "---- OUTILS ---- OUTILS ---- OUTILS " : "TOOLS TOOLS TOOLS";
+    this.toolsTextContent = this.language == "Fr" ? "---- OUTILS ---- OUTILS ---- OUTILS " : "----- TOOLS ----- TOOLS ----- TOOLS ";
   }
 
   // Hexagons open/rotate one after the other
@@ -322,6 +355,12 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
 
   manageMenu(hexIndex: number | null | undefined) {
     if ((hexIndex !== 0) && (hexIndex !== null) && (hexIndex !== undefined)) {
+
+      if (this.volume > 0) {
+        this.hexSound.volume(this.volume);
+        this.hexSound.play();
+      }
+
       if (this.selected !== null) {
         this.lastSelected = this.selected;
       }
@@ -523,6 +562,14 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
         this.rightElastic.nativeElement.style.opacity = "0";
       }, 40);
 
+      if (this.volume > 0) {
+        this.catapultSound.volume(this.volume);
+        this.catapultSound.play();
+
+        this.eggFlightSound.volume(this.volume);
+        this.eggFlightSound.play();
+      }
+
       // Calculate transition time for egg depending on catapult pull
       let transitionSpeed;
       if (BC < 20) {
@@ -589,6 +636,12 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
       // When egg has reached destination send it back for next shot
       // Transmit the egg info - target and position
       setTimeout(() => {
+        if (this.volume > 0) {
+          if (targetHit) {
+            this.eggSmashSound.volume(this.volume);
+            this.eggSmashSound.play();
+          }
+        }
         this.store.dispatch(new ChangeEggState(false));
         this.egg.nativeElement.style.transition = 'none';
         this.slingLeft.nativeElement.style.transition = 'none';
@@ -651,8 +704,13 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
     if (this.daActivated) {
       this.directAccessOpen = !this.directAccessOpen;
       this.daTarantulaIsMoving = true;
+      if (this.volume > 0) {
+        this.spiderFeetSound.volume(this.volume);
+        this.spiderFeetSound.play();
+      }
       setTimeout(() => {
         this.daTarantulaIsMoving = false;
+        this.spiderFeetSound.stop();
       }, 1000);
     }
   }
@@ -673,6 +731,11 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
 
       this.domeTarantulaHolder.nativeElement.style.transform = "rotate(" + myDegrees + "deg)";
       this.daTarantulaIsMoving = true;
+      this.spiderFeetSound.loop = true;
+      if (this.volume > 0) {
+        this.spiderFeetSound.volume(this.volume);
+        this.spiderFeetSound.play();
+      }
 
       let hexBoxState: HexBoxInterface = { topOpen: true, bottomOpen: false };
 
@@ -686,6 +749,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
 
       setTimeout(() => {
         this.tarantulaIsMoving = false;
+        // this.spiderFeetSound.stop();
       }, 3000);
 
       setTimeout(() => {
@@ -698,10 +762,14 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
       setTimeout(() => {
         this.initNextMove(document.getElementById("contentLayout"), 50, 110);
         this.tarantulaIsMoving = true;
+        if (this.volume > 0) {
+          this.spiderFeetSound.play();
+        }
       }, 5000);
 
       setTimeout(() => {
         this.tarantulaIsMoving = false;
+        this.spiderFeetSound.stop();
         const directAccess = { hexNum: myHexNum - 1, nPage: 2, degrees: 0 };
         this.store.dispatch(new AccessPanelDirect(directAccess));
       }, 8000);
@@ -710,15 +778,22 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
         this.initNextMove(document.getElementById("airbusPlay"), 70, 150);
         this.tarantulaHolder.nativeElement.firstElementChild.firstElementChild.style.rotate = "130deg";
         this.tarantulaIsMoving = true;
+        if (this.volume > 0) {
+          this.spiderFeetSound.play();
+        }
       }, 9000);
 
       setTimeout(() => {
         this.tarantulaIsMoving = false;
+        this.spiderFeetSound.stop();
         this.store.dispatch(new RobotAirbusAnim());
       }, 12000);
 
       setTimeout(() => {
         this.tarantulaIsMoving = true;
+        if (this.volume > 0) {
+          this.spiderFeetSound.play();
+        }
         this.tarantulaHolder.nativeElement.style.top = "-103px";
         this.tarantulaHolder.nativeElement.style.left = "calc(50% - 50px)";
         this.tarantulaHolder.nativeElement.firstElementChild.firstElementChild.style.rotate = "220deg";
@@ -726,6 +801,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
 
       setTimeout(() => {
         this.tarantulaIsMoving = false;
+        this.spiderFeetSound.stop();
         hexBoxState = { topOpen: true, bottomOpen: false };
       }, 16000);
 
@@ -738,6 +814,10 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
         this.daTarantulaIsOut = false;
         this.daTarantulaIsForward = false;
         this.daTarantulaIsMoving = true;
+        if (this.volume > 0) {
+          this.spiderFeetSound.volume(this.volume);
+          this.spiderFeetSound.play();
+        }
         this.domeTarantulaHolder.nativeElement.style.transform = "rotate(0deg)";
       }, 17000);
 
@@ -745,15 +825,16 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
         hexBoxState = { topOpen: false, bottomOpen: false };
         this.store.dispatch(new ChangeHexBox(hexBoxState));
         this.tarantulaIsMoving = false;
+        this.spiderFeetSound.stop();
         this.tarantulaHolder.nativeElement.firstElementChild.firstElementChild.style.rotate = "0deg";
       }, 19000);
 
-      setTimeout(() => {
-        hexBoxState = { topOpen: false, bottomOpen: false };
-        this.store.dispatch(new ChangeHexBox(hexBoxState));
-        this.tarantulaIsMoving = false;
-        this.tarantulaHolder.nativeElement.firstElementChild.firstElementChild.style.rotate = "0deg";
-      }, 19000);
+      // setTimeout(() => {
+      //   hexBoxState = { topOpen: false, bottomOpen: false };
+      //   this.store.dispatch(new ChangeHexBox(hexBoxState));
+      //   this.tarantulaIsMoving = false;
+      //   this.tarantulaHolder.nativeElement.firstElementChild.firstElementChild.style.rotate = "0deg";
+      // }, 19000);
 
       setTimeout(() => {
         this.store.dispatch(new ChangeBlockAllState(false));
@@ -770,6 +851,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
 
       this.domeTarantulaHolder.nativeElement.style.transform = "rotate(" + myDegrees + "deg)";
       this.daTarantulaIsMoving = true;
+      this.spiderFeetSound.play();
 
       let hexBoxState: HexBoxInterface = { topOpen: true, bottomOpen: false };
 
@@ -782,6 +864,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
 
       setTimeout(() => {
         this.tarantulaIsMoving = false;
+        this.spiderFeetSound.stop();
       }, 3000);
 
       setTimeout(() => {
@@ -792,6 +875,9 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
 
       setTimeout(() => {
         this.tarantulaIsMoving = true;
+        if (this.volume > 0) {
+          this.spiderFeetSound.play();
+        }
         this.tarantulaIsOut = false;
         this.daTarantulaIsForward = false;
         this.daTarantulaIsMoving = true;
@@ -799,6 +885,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
 
       setTimeout(() => {
         this.daTarantulaIsOut = false;
+        this.spiderFeetSound.stop();
         hexBoxState = { topOpen: false, bottomOpen: false };
         this.store.dispatch(new ChangeHexBox(hexBoxState));
       }, 8000);
@@ -841,12 +928,16 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
 
   manageTools() {
     if (this.toolsActivated) {
+      if (this.volume > 0) {
+        this.hToolsSound.volume(this.volume)
+        this.hToolsSound.play();
+      }
+      setTimeout(() => {
+        this.hToolsSound.stop();
+      }, 1000);
       if (this.toolsOpen) {
         this.toolsOpen = false;
         this.toolsAreMoving = false;
-        // setTimeout(() => {
-        //   this.toolsAreMoving = false;
-        // }, 500);
       } else {
         this.toolsOpen = true;
         this.toolsAreMoving = true;
@@ -857,3 +948,4 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
 }
 
 
+// Starmer Badenoch Sunak Corbyn Johnson Miliband Sturgeon Truss Farage May Davey Flynn

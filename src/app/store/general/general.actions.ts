@@ -84,3 +84,8 @@ export class TransmitEggInfo {
     constructor(public eggInfo: EggInfo){}
 }
 
+export class ChangeVolume {
+    static readonly type= '[Change Volume] ChangeVolume';
+    constructor(public volume: number){}
+}
+

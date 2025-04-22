@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { State, Action, StateContext } from "@ngxs/store";
 
 import { LanguageModel, AppStateModel, IntroState, SunGameState } from './general.model';
-import { ChangeLanguage, ChangeMouseUpDetected, ChangeIntroState, ChangeContentHeight, ChangeContentWidth, BackButtonClick, ChangeSunGameState, ChangeEggState, AddEggDomRect, RemoveAllTargetRects, TransmitEggInfo, RobotAirbusAnim, ChangeBlockAllState, ChangeIntroVideoLoadedState } from './general.actions';
+import { ChangeLanguage, ChangeMouseUpDetected, ChangeIntroState, ChangeContentHeight, ChangeContentWidth, BackButtonClick, ChangeSunGameState, ChangeEggState, AddEggDomRect, RemoveAllTargetRects, TransmitEggInfo, RobotAirbusAnim, ChangeBlockAllState, ChangeIntroVideoLoadedState, ChangeVolume } from './general.actions';
 import { append, patch } from '@ngxs/store/operators';
 import { DomRect } from 'app/shared/interfaces/general';
 // import { IntroState } from 'app/shared/interfaces/general';
@@ -50,7 +50,8 @@ export class Language {
         sunGameState: SunGameState.GAMEOFF,
         eggActive: false,
         sunGameTargets: [],
-        eggInfo: {targetHit:0, percentLeft:0, percentTop:0}
+        eggInfo: {targetHit:0, percentLeft:0, percentTop:0},
+        volume: 0
         // },
     }
 })
@@ -186,6 +187,14 @@ export class AppState {
         ctx.setState({
             ...state,
             eggInfo: action.eggInfo
+        })
+    }
+
+    @Action(ChangeVolume) changeVolume(ctx: StateContext<AppStateModel>, action: ChangeVolume) {
+        const state = ctx.getState();
+        ctx.setState({
+            ...state,
+            volume: action.volume
         })
     }
 

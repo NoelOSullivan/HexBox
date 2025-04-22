@@ -206,7 +206,7 @@
 }
 
 .direct-access-open {
-    top: 0;
+    top: -30px;
 }
 
 .tools-holder {
@@ -251,7 +251,7 @@
 }
 
 .tools-open {
-    top: 0;
+    top: -30px;
 }
 
 .tools-text {
@@ -305,10 +305,18 @@
 
 .lang-button {
     position: absolute;
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     top: 80px;
-    right: 14px;
+    right: 10px;
+}
+
+.volume-button {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: 98px;
+    right: 40px;
 }
 
 .top {

@@ -19,25 +19,25 @@
 
     <div *ngIf="playing===true" class="game">
         <div class="line back-line">
-            <app-headshot (switchHeads)="switchHeads(1, false)" [nHead]="1" [headSrc]="activeHeadSrc[0]"
-                [headUp]="headUp[0]" [eggInfo]="eggInfo" [left]="'18%'"></app-headshot>
-            <app-headshot (switchHeads)="switchHeads(2, false)" [nHead]="2" [headSrc]="activeHeadSrc[1]"
-                [headUp]="headUp[1]" [eggInfo]="eggInfo" [right]="'18%'"></app-headshot>
+            <app-headshot (switchHeads)="switchHeads(1, false)" [nHead]="1" [headSrcFr]="activeHeadSrcFr[0]" [headSrcUk]="activeHeadSrcUk[0]"
+                [headUp]="headUp[0]" [eggInfo]="eggInfo" [left]="'18%'" [language]="language"></app-headshot>
+            <app-headshot (switchHeads)="switchHeads(2, false)" [nHead]="2" [headSrcFr]="activeHeadSrcFr[1]" [headSrcUk]="activeHeadSrcUk[1]"
+                [headUp]="headUp[1]" [eggInfo]="eggInfo" [right]="'18%'" [language]="language"></app-headshot>
         </div>
         <div class="line middle-line">
-            <app-headshot (switchHeads)="switchHeads(3, false)" [nHead]="3" [headSrc]="activeHeadSrc[2]"
-                [headUp]="headUp[2]" [eggInfo]="eggInfo" [left]="'10%'"></app-headshot>
-            <app-headshot (switchHeads)="switchHeads(4, false)" [nHead]="4" [headSrc]="activeHeadSrc[3]"
-                [headUp]="headUp[3]" [eggInfo]="eggInfo" [right]="'10%'"></app-headshot>
+            <app-headshot (switchHeads)="switchHeads(3, false)" [nHead]="3" [headSrcFr]="activeHeadSrcFr[2]" [headSrcUk]="activeHeadSrcUk[2]"
+                [headUp]="headUp[2]" [eggInfo]="eggInfo" [left]="'10%'" [language]="language"></app-headshot>
+            <app-headshot (switchHeads)="switchHeads(4, false)" [nHead]="4" [headSrcFr]="activeHeadSrcFr[3]" [headSrcUk]="activeHeadSrcUk[3]"
+                [headUp]="headUp[3]" [eggInfo]="eggInfo" [right]="'10%'" [language]="language"></app-headshot>
         </div>
         <div class="line front-line">
-            <app-headshot (switchHeads)="switchHeads(5, false)" [nHead]="5" [headSrc]="activeHeadSrc[4]"
-                [headUp]="headUp[4]" [eggInfo]="eggInfo" [left]="'1%'"></app-headshot>
-            <app-headshot (switchHeads)="switchHeads(6, false)" [nHead]="6" [headSrc]="activeHeadSrc[5]"
-                [headUp]="headUp[5]" [eggInfo]="eggInfo" [right]="'1%'"></app-headshot>
+            <app-headshot (switchHeads)="switchHeads(5, false)" [nHead]="5" [headSrcFr]="activeHeadSrcFr[4]" [headSrcUk]="activeHeadSrcUk[4]"
+                [headUp]="headUp[4]" [eggInfo]="eggInfo" [left]="'1%'" [language]="language"></app-headshot>
+            <app-headshot (switchHeads)="switchHeads(6, false)" [nHead]="6" [headSrcFr]="activeHeadSrcFr[5]" [headSrcUk]="activeHeadSrcUk[5]"
+                [headUp]="headUp[5]" [eggInfo]="eggInfo" [right]="'1%'" [language]="language"></app-headshot>
         </div>
         <app-chrono *ngIf="sunGameState==='gameOn'" class="chrono" [chrono]="chrono"></app-chrono>
-        <app-results *ngIf="sunGameState==='gameOver'" class="results" [headInfos]="finalHeadInfos"></app-results>
+        <app-results *ngIf="sunGameState==='gameOver'" class="results" [headInfos]="finalHeadInfos" [language]="language"></app-results>
     </div>
 
     <div class="play">

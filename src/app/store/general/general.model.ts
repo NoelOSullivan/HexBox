@@ -34,5 +34,6 @@ export interface AppStateModel {
     eggActive: boolean;
     sunGameTargets: Array<DomRect>;
     eggInfo: EggInfo;
+    volume: number;
 }
 

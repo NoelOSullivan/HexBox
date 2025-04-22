@@ -54,9 +54,14 @@ export class ContentDirective implements OnInit {
   firstClick: boolean = true;
   backButtonClick: boolean = false;
 
+  pageSound: any;
+  volume: number = 0;
+
   constructor(private panel: ElementRef, private store: Store) { }
 
   ngOnInit() {
+
+    this.pageSound = new Howl({ src: ['assets/audio/page.mp3'], volume: this.volume, html5: true, autoplay: false, onend: () => { this.pageSound.unload(); } });
 
     // Count the number of pages in the panel
     this.nPages = this.panel.nativeElement.children.length;
@@ -100,6 +105,10 @@ export class ContentDirective implements OnInit {
         if (Number(this.nPanel) === this.activePanelNumber) {
           this.directAccess(0);
         }
+      }
+
+      if (newAppState.volume !== this.volume) {
+        this.volume = newAppState.volume;
       }
     });
   }
@@ -251,6 +260,7 @@ export class ContentDirective implements OnInit {
   }
 
   finishFlipToCalculatedPage() {
+
     let allowFinishFlip = false;
     if (this.finalAnimRotation < this.rotation.degrees) {
       allowFinishFlip = true;
@@ -371,17 +381,38 @@ export class ContentDirective implements OnInit {
     // This ensures that the arrows update at the halfway point of the first and last flip
     let nPage = this.activePage + 1;
     if (this.rotation.degrees < -90 && this.rotation.degrees > -180) {
-      nPage = 2;
+      if (nPage !== 2) {
+
+        nPage = 2;
+
+        // this.pageSound.volume(this.volume)
+        // this.pageSound.play();
+      }
     } else {
       if (this.rotation.degrees < this.maxRotation + 90) {
-        nPage = this.nPages;
+        if (nPage !== this.nPages) {
+          nPage = this.nPages;
+          // this.pageSound.volume(this.volume)
+          // this.pageSound.play();
+        }
+        // nPage = this.nPages;
       } else {
-        nPage = this.activePage + 1;
+        if (nPage !== this.activePage + 1) {
+          nPage = this.activePage + 1;
+          // this.pageSound.volume(this.volume)
+          // this.pageSound.play();
+        }
+        // nPage = this.activePage + 1;
       }
     }
 
     if (this.lastPage !== nPage) {
+      this.pageSound.stop();
       this.lastPage = nPage;
+      if(this.volume > 0) {
+        this.pageSound.volume(this.volume);
+        this.pageSound.play();
+      }
       // Update the pagecounter store array with the page number of the activePanel
       const payload = { panelNumber: Number(this.nPanel), pageNumber: nPage }
       this.store.dispatch(new UpdatePageCounter(payload));

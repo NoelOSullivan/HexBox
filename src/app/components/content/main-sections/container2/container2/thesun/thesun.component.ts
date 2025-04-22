@@ -36,7 +36,7 @@ export class ThesunComponent implements OnInit {
   // If true, results are mocked and game ends after imparted time
   testGame: boolean = false;
   testGameTime: number = 5;
-  gameTime: number = 60; 
+  gameTime: number = 60;
 
   playing: boolean = false;
   eggInfo!: EggInfo;
@@ -47,18 +47,22 @@ export class ThesunComponent implements OnInit {
 
   headList: Array<number> = [];
   totalHeads!: number;
-  activeHeadSrc: Array<string> = ["", "", "", "", "", ""];
+  activeHeadSrcFr: Array<string> = ["", "", "", "", "", ""];
+  activeHeadSrcUk: Array<string> = ["", "", "", "", "", ""];
   headUp: Array<boolean> = [true, true, true, true, true, true];
 
   timeInSeconds!: number;
   counterInterval: any;
   chrono!: string;
   sunGameState!: SunGameState;
+  headJSON!: any;
 
   ngOnInit() {
     // Get data for candidates
     this.dataService.getData("sunGame.json").subscribe((headJSON: any) => {
-      this.headInfos = headJSON.france.candidates;
+      this.headJSON = headJSON;
+      // this.changeHeads(this.language);
+      this.headInfos = headJSON.candidates;
       this.initHeadInfo();
       this.headList = this.initHeadList();
     });
@@ -93,6 +97,19 @@ export class ThesunComponent implements OnInit {
       if (!this.myContainerIsActive) {
         this.managePlay(false);
       }
+    }
+
+    if (changes.language) {
+      this.changeHeads(changes.language.currentValue);
+
+    }
+  }
+
+  changeHeads(language: string): void {
+    if (this.headJSON) {
+      this.headInfos = this.headJSON.candidates;
+      this.initHeadInfo();
+      this.headList = this.initHeadList();
     }
   }
 
@@ -148,16 +165,43 @@ export class ThesunComponent implements OnInit {
   applyHead(headNumber: number): void {
     let random = Math.floor(Math.random() * this.totalHeads);
     let candidateNumber = this.headList[random];
-    let src = this.headInfos[candidateNumber - 1].imageSrc;
-
+    let srcFr, srcUk;
     // Avoid having more than one of the same head
-    while (this.activeHeadSrc.indexOf(src) !== -1) {
+    // Apply to array sent to headshot instances
+    srcFr = this.headInfos[candidateNumber - 1].imageSrcFr;
+    while (this.activeHeadSrcFr.indexOf(srcFr) !== -1) {
       random = Math.floor(Math.random() * this.totalHeads);
       candidateNumber = this.headList[random];
-      src = this.headInfos[candidateNumber - 1].imageSrc;
+      srcFr = this.headInfos[candidateNumber - 1].imageSrcFr;
     }
-    // Apply to array sent to headshot instances
-    this.activeHeadSrc[headNumber - 1] = src;
+    this.activeHeadSrcFr[headNumber - 1] = srcFr;
+    srcUk = this.headInfos[candidateNumber - 1].imageSrcUk;
+    while (this.activeHeadSrcUk.indexOf(srcUk) !== -1) {
+      random = Math.floor(Math.random() * this.totalHeads);
+      candidateNumber = this.headList[random];
+      srcUk = this.headInfos[candidateNumber - 1].imageSrcUk;
+    }
+    this.activeHeadSrcUk[headNumber - 1] = srcUk;
+
+    // if (this.language === "Fr") {
+    //   src = this.headInfos[candidateNumber - 1].imageSrcFr;
+    //   while (this.activeHeadSrcFr.indexOf(src) !== -1) {
+    //     random = Math.floor(Math.random() * this.totalHeads);
+    //     candidateNumber = this.headList[random];
+    //     src = this.headInfos[candidateNumber - 1].imageSrcFr;
+    //   }
+    //   this.activeHeadSrcFr[headNumber - 1] = src;
+    // } else {
+    //   src = this.headInfos[candidateNumber - 1].imageSrcUk;
+    //   while (this.activeHeadSrcUk.indexOf(src) !== -1) {
+    //     random = Math.floor(Math.random() * this.totalHeads);
+    //     candidateNumber = this.headList[random];
+    //     src = this.headInfos[candidateNumber - 1].imageSrcUk;
+    //   }
+    //   this.activeHeadSrcUk[headNumber - 1] = src;
+    // }
+
+
   }
 
   switchHeads(head: number, targetWasHit: boolean): void {
@@ -166,7 +210,7 @@ export class ThesunComponent implements OnInit {
       this.headUp[head - 1] = false;
       // Manage scoring
       // Find corresponding object for a head
-      const targetIndex = this.headInfos.findIndex(f => f.imageSrc === this.activeHeadSrc[head - 1]);
+      let targetIndex = this.headInfos.findIndex(f => f.imageSrcFr === this.activeHeadSrcFr[head - 1]);
 
       // Update the result for the specific head
       if (targetWasHit) {

@@ -96,7 +96,6 @@ export class CircularCarouselComponent implements OnInit {
 
     if (changes.recentreCarousel) {
       if (changes.recentreCarousel.currentValue === true) {
-        console.log("changes.recentreCarousel", changes.recentreCarousel.currentValue);
         this.degrees = 0;
         this.rotateCarousel();
       }

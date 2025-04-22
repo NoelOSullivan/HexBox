@@ -20,8 +20,10 @@ export interface EggInfo {
 }
 
 export interface HeadInfo {
-  imageSrc: string;
-  name: string;
+  imageSrcFr: string;
+  imageSrcUk: string;
+  nameFr: string;
+  nameUk: string;
   result: number;
 }
 

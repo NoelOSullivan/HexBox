@@ -19,12 +19,14 @@ export class HeadshotComponent {
   @ViewChild('head') head!: ElementRef;
   @ViewChild('hoopHolder') hoopHolder!: ElementRef;
 
-  @Input() headSrc!: string;
+  @Input() headSrcFr!: string;
+  @Input() headSrcUk!: string;
   @Input() nHead!: number;
   @Input() eggInfo!: EggInfo;
   @Input() headUp!: boolean;
   @Input() left!: string;
   @Input() right!: string;
+  @Input() language!: string;
 
   showEgg: boolean = false;
   timeCounter: any;
@@ -47,8 +49,9 @@ export class HeadshotComponent {
 
   ngOnChanges(changes: any) {
 
-    if (changes.headSrc) {
-      this.headSrc = changes.headSrc.currentValue;
+    if (changes.headSrcFr) {
+      this.headSrcFr = changes.headSrcFr.currentValue;
+      this.headSrcUk = changes.headSrcUk.currentValue;
       clearTimeout(this.timeCounter);
       this.timeCounter = null;
       this.timeCounter = setTimeout(() => {
