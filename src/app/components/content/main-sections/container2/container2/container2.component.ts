@@ -8,18 +8,19 @@ import { LogoComponent } from '../../../../../shared/components/logo/logo.compon
 import { LinkIconComponent } from '../../../../../shared/components/link-icon/link-icon.component';
 import { AirbusComponent } from './airbus/airbus.component';
 import { ThesunComponent } from './thesun/thesun.component';
-import { DirectAccess } from '../../../../../shared/interfaces/panel';
+import { DirectAccess, PageChange } from '../../../../../shared/interfaces/panel';
 import { AccessPanelDirect } from '../../../../../store/panel/panel.action';
 import { CircularCarouselComponent } from 'app/shared/components/circular-carousel/circular-carousel.component';
 import { AppStateModel, LanguageModel } from 'app/store/general/general.model';
 import { Observable } from 'rxjs';
 import { Language, } from 'app/store/general/general.state';
 import { AppState } from 'app/store/general/general.state';
+import { NextPageButtonComponent } from 'app/shared/components/next-page-button/next-page-button.component';
 
 @Component({
   selector: 'app-container2',
   standalone: true,
-  imports: [NgIf, ContentDirective, LinkIconComponent, AirbusComponent, ThesunComponent, CircularCarouselComponent, LogoComponent],
+  imports: [NgIf, ContentDirective, LinkIconComponent, AirbusComponent, ThesunComponent, CircularCarouselComponent, LogoComponent, NextPageButtonComponent],
   templateUrl: './container2.component.html',
   styleUrls: ['./container2.component.scss', '../../main-sections-shared-styles.scss']
 })
@@ -28,18 +29,22 @@ export class Container2 {
   @Select(Language) language$!: Observable<LanguageModel>;
   @Select(AppState) appState$!: Observable<AppStateModel>;
 
+  // appState: AppStateModel;
+
   @Input() nContainer!: number;
   // @Input() contentHeight!: number;
 
   constructor(private store: Store) { }
 
   activePanel!: number;
-  activePageNum: number = 0;
+  activePageNum: number  | undefined= 0;
+  subPageNum: number | undefined = 2;
   language!: string;
   iAmActive: boolean = false;
   backButtonClick!: boolean;
   robotAirbusAnim!: boolean;
   recentreCarousel: boolean = false;
+  blockAll: boolean = false;
 
   ngOnInit() {
     this.language$.subscribe(newLanguage => {
@@ -49,6 +54,10 @@ export class Container2 {
     this.appState$.subscribe(appState => {
       if (this.robotAirbusAnim !== appState.robotAirbusAnim) {
         this.robotAirbusAnim = appState.robotAirbusAnim;
+      }
+
+      if (appState.blockAll !== this.blockAll) {
+        this.blockAll = appState.blockAll
       }
     })
 
@@ -67,19 +76,26 @@ export class Container2 {
     } else {
       this.iAmActive = false;
       this.recentreCarousel = false;
-      this.goPage(1);
+      // this.goPage(1);
     }
   }
 
-  changePageNum(activePageNum: number) {
-    this.activePageNum = activePageNum;
+  changePageNum(pageChange: PageChange) {
+    // debugger;
+    console.log("pageChange", pageChange);
+    this.subPageNum = pageChange.subPageNum;
+    this.activePageNum = pageChange.nPage;
   }
 
-  goPage(pageNum: number) {
+  goPage(pageNum:number) {
     // if (this.nContainer === this.activePanel) {
-    const directAccess: DirectAccess = { hexNum: this.nContainer, nPage: pageNum };
-    this.store.dispatch(new AccessPanelDirect(directAccess));
-    // }
+    if(pageNum) {
+      this.subPageNum = pageNum;
+      console.log("subPageNum", this.subPageNum);
+      const directAccess: DirectAccess = { hexNum: this.nContainer, nPage: 1, subPageNum: pageNum };
+      this.store.dispatch(new AccessPanelDirect(directAccess));
+    }
+    // } 
   }
 
 }

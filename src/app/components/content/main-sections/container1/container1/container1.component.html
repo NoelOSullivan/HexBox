@@ -50,11 +50,11 @@
                         <div>&#x2022; HTML Games &#x2022;</div>
                         <div>&#x2022; Training &#x2022;</div>
                     </div>
-                    <app-next-page-button class="next-page-button" [activePageNum]="activePageNum" [language]="language" [blockAll]="blockAll"
-                        [rightTextFrEn]="'Qui suis-je ?#Who am I?'"></app-next-page-button>
+                    
                 </div>
             </div>
-
+            <app-next-page-button *ngIf="introState==='done'" class="next-page-button" [activePageNum]="activePageNum" [language]="language" [blockAll]="blockAll"
+            [rightTextFrEn]="'Qui ?#Who ?'"></app-next-page-button>
             <app-logo></app-logo>
         </li>
         <li class="common-side">
@@ -94,7 +94,7 @@
                         my webapps work.</div>
                 </div>
                 <app-next-page-button class="next-page-button" [language]="language" [blockAll]="blockAll"  [leftTextFrEn]="'Accueil#Home'"
-                    [rightTextFrEn]="'Ce que je fais#What I do'"></app-next-page-button>
+                    [rightTextFrEn]="'Quoi ?#What ?'"></app-next-page-button>
             </div>
         </li>
         <li class="common-side">
@@ -134,8 +134,8 @@
                     <div class="sub-text" *ngIf="language==='En'">Practical and immersive training packages.</div>
                 </div>
                 <app-next-page-button class="next-page-button" [language]="language" [blockAll]="blockAll" 
-                    [leftTextFrEn]="'Qui suis-je ?#Who am I'"
-                    [rightTextFrEn]="'Mes outils ?#My tools'"></app-next-page-button>
+                    [leftTextFrEn]="'Qui ?#Who ?'"
+                    [rightTextFrEn]="'Comment ?#How ?'"></app-next-page-button>
             </div>
         </li>
         <li class="common-side">
@@ -170,7 +170,7 @@
                         tasks.</div>
                 </div>
                 <app-next-page-button class="next-page-button" [isLastPage]="true" [language]="language" [blockAll]="blockAll" 
-                    [leftTextFrEn]="'Ce que je fais#What I do'"></app-next-page-button>
+                    [leftTextFrEn]="'Quoi ?#What ?'"></app-next-page-button>
             </div>
         </li>
     </div>

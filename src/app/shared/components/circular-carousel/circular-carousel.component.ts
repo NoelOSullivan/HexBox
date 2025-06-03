@@ -201,6 +201,7 @@ export class CircularCarouselComponent implements OnInit {
   }
 
   @HostListener('touchstart', ['$event']) touchstart(event: TouchEvent) {
+    console.log("event", event);
     if (this.blockAll) return;
     if (this.scrollType === "manual") {
       // event.stopPropagation();

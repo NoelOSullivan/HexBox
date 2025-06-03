@@ -77,6 +77,8 @@ header {
 
 .next-page-button {
     width: 100%;
+    position: absolute;
+    top: calc(100% + 13px);
 }
 
 .title {

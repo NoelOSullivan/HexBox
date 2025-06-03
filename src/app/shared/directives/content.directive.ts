@@ -10,6 +10,7 @@ import { ActivePanelNumberModel } from '../../store/hexagon/hexagon.model';
 import { ActivePanelNumber } from '../../store/hexagon/hexagon.state';
 import { AppStateModel, IntroState } from 'app/store/general/general.model';
 import { AppState } from 'app/store/general/general.state';
+import { PageChange } from '../interfaces/panel';
 
 @Directive({
   selector: '[contentControl]',
@@ -24,7 +25,7 @@ export class ContentDirective implements OnInit {
 
   @Input() nPanel!: string;
   @Output() changeActivePanel = new EventEmitter<number>();
-  @Output() changePageNum = new EventEmitter<number>();
+  @Output() changePageNum = new EventEmitter<PageChange>();
   @Output() setIsLastPage = new EventEmitter<boolean>();
   @Select(PageTurner) direction$!: Observable<PageTurnerModel>;
   @Select(ActivePanelNumber) activePanelNumber$!: Observable<ActivePanelNumberModel>;
@@ -85,7 +86,7 @@ export class ContentDirective implements OnInit {
     this.directAccess$.subscribe(newDA => {
       if (newDA.directAccess.nPage) {
         if (Number(this.nPanel) === newDA.directAccess.hexNum) {
-          this.directAccess(newDA.directAccess.nPage - 1);
+          this.directAccess(newDA.directAccess.nPage - 1, newDA.directAccess.subPageNum);
         }
       }
     });
@@ -103,7 +104,7 @@ export class ContentDirective implements OnInit {
       if (this.backButtonClick !== newAppState.backButtonClick) {
         this.backButtonClick = newAppState.backButtonClick;
         if (Number(this.nPanel) === this.activePanelNumber) {
-          this.directAccess(0);
+          this.directAccess(0, undefined);
         }
       }
 
@@ -216,7 +217,8 @@ export class ContentDirective implements OnInit {
     }
   }
 
-  directAccess(page: number) {
+  directAccess(page: number, subPageNum: number | undefined) {
+    debugger;
     this.directRotation = (page) * -180;
     const diff = page - this.activePage;
     this.directAccessInterval = setInterval(() => {
@@ -226,14 +228,16 @@ export class ContentDirective implements OnInit {
           this.onDirectAccess = true;
           this.rotation.degrees = this.directRotation;
           clearInterval(this.directAccessInterval);
-          this.changePageNum.emit(this.activePage + 1);
+          const pageChangeInfo: PageChange = {nPage:this.activePage + 1, subPageNum:subPageNum}
+          this.changePageNum.emit(pageChangeInfo);
         }
       } else {
         if (this.rotation.degrees >= this.directRotation) {
           this.onDirectAccess = true;
           this.rotation.degrees = this.directRotation;
           clearInterval(this.directAccessInterval);
-          this.changePageNum.emit(this.activePage - 1);
+          const pageChangeInfo: PageChange = {nPage:this.activePage + 1, subPageNum:subPageNum}
+          this.changePageNum.emit(pageChangeInfo);
         }
       }
 
@@ -319,7 +323,10 @@ export class ContentDirective implements OnInit {
         }
       }
     } else {
-      this.changePageNum.emit(this.activePage);
+      console.log("FF",this.activePage);
+      
+      const pageChangeInfo: PageChange = {nPage:this.activePage + 1, subPageNum:undefined}
+      this.changePageNum.emit(pageChangeInfo);
     }
 
     this.managePanelDisplay(flipFinished);
@@ -348,8 +355,8 @@ export class ContentDirective implements OnInit {
       this.firstClick = false;
       // this.activePage = Math.floor(this.rotation.degrees / -180);
       this.activePage = -Math.round(-this.rotation.degrees / -180);
-
-      this.changePageNum.emit(this.activePage);
+      const pageChangeInfo: PageChange = {nPage:this.activePage, subPageNum:undefined}
+      this.changePageNum.emit(pageChangeInfo);
       this.setIsLastPage.emit(this.activePage === this.nPages - 1);
 
       // Turn off display of all pages

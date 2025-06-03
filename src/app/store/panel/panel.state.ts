@@ -71,7 +71,8 @@ export class PageTurner {
     defaults: {
         directAccess: {
             hexNum: 0,
-            nPage: 0
+            nPage: 0,
+            subPageNum: undefined
         },
     }
 })

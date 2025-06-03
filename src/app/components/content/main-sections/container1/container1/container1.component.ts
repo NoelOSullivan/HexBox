@@ -7,7 +7,7 @@ import { LogoComponent } from '../../../../../shared/components/logo/logo.compon
 import { DirectAccessComponent } from '../../../../../shared/components/direct-access/direct-access.component';
 import { SwipeIconComponent } from '../../../../../shared/components/swipe-icon/swipe-icon.component';
 
-import { Direction } from '../../../../../shared/interfaces/panel';
+import { Direction, PageChange } from '../../../../../shared/interfaces/panel';
 import { TurnPage } from '../../../../../store/panel/panel.action';
 
 import { AppState } from 'app/store/general/general.state';
@@ -46,7 +46,7 @@ export class Container1 implements OnInit {
   done2: boolean = false;
   done3: boolean = false;
   showSwipe: boolean = false;
-  activePageNum: number = 0;
+  activePageNum: number | undefined = 0;
   isLastPage: boolean = false;
 
   appState!: AppStateModel;
@@ -56,9 +56,10 @@ export class Container1 implements OnInit {
   language!: string;
   introDone: boolean = false;
 
-  changePageNum(activePageNum: number) {
-    if (this.activePageNum !== activePageNum) {
-      this.activePageNum = activePageNum;
+  changePageNum(pageChange: PageChange) {
+    console.log("pageChange", pageChange);
+    if (this.activePageNum !== pageChange.nPage) {
+      this.activePageNum = pageChange.nPage;
     }
   }
 
@@ -95,7 +96,7 @@ export class Container1 implements OnInit {
           this.video2.nativeElement.style.visibility = "hidden";
         }
         if (this.video3) {
-          this.video3.nativeElement.style.visibility = "hidden";
+            this.video3.nativeElement.style.visibility = "hidden";
         }
         this.done1 = true;
         this.done2 = true;

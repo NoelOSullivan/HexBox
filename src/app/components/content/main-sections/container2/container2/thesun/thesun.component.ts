@@ -27,7 +27,7 @@ export class ThesunComponent implements OnInit {
   @Select(AppState) appState$!: Observable<AppStateModel>;
 
   @Input() language!: string;
-  @Input() activePageNum!: number;
+  @Input() activePageNum!: number | undefined;
   @Input() myPageNum!: number;
   @Input() myContainerIsActive!: boolean;
 

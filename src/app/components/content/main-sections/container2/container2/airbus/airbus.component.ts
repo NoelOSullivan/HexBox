@@ -18,12 +18,12 @@ export class AirbusComponent {
 
   @Select(AppState) appState$!: Observable<AppStateModel>;
 
-  @Input() activePageNum!: number;
+  @Input() activePageNum!: number | undefined;
   @Input() myContainerIsActive!: boolean;
   @Input() myPageNum!: number;
   @Input() language!: string;
   @Input() robotAirbusAnim!: boolean;
-    
+
   @ViewChild('animHolder') animHolder!: ElementRef;
   @ViewChild('image1') image1!: ElementRef;
   @ViewChild('bullets1') bullets1!: ElementRef;
@@ -124,6 +124,7 @@ export class AirbusComponent {
   ngOnChanges(changes: any) {
     if (changes.activePageNum) {
       // If page change to this page and container is active
+      console.log("XXX", changes.activePageNum.currentValue, this.myPageNum);
       if (changes.activePageNum.currentValue === this.myPageNum) {
         if (this.myContainerIsActive) {
 
@@ -158,14 +159,17 @@ export class AirbusComponent {
       this.language = changes.language.currentValue;
     }
 
-    if (changes.robotAirbusAnim) {
+    if (changes.robotAirbusAnim && changes.robotAirbusAnim.currentValue === true) {
       // this.robotAirbusAnim = changes.robotAirbusAnim.currentValue;
+      console.log("changes.robotAirbusAnim", changes.robotAirbusAnim);
+      // debugger;
       this.managePlay(true);
     }
   }
 
   managePlay(playing: boolean): void {
     this.playing = playing;
+    console.log("playing", playing);
     if (playing) {
       this.startAnim();
     } else {
@@ -174,7 +178,7 @@ export class AirbusComponent {
   }
 
   startAnim(): void {
-    if(!this.image1) return;
+    if (!this.image1) return;
     this.image1.nativeElement.style.transition = 'left 10s ease-in, opacity 2s ease-in';
     this.bullets1.nativeElement.style.transition = 'opacity 2s ease-in';
     this.image2.nativeElement.style.transition = 'left 10s ease-in, opacity 2s ease-in';

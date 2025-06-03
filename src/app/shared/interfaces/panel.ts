@@ -10,4 +10,10 @@ export interface Direction {
 export interface DirectAccess {
     hexNum: number | undefined;
     nPage: number | undefined;
+    subPageNum: number | undefined;
+}
+
+export interface PageChange {
+    nPage: number | undefined;
+    subPageNum: number | undefined;
 }

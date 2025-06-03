@@ -1,13 +1,27 @@
 <div class="container">
-    <div contentControl nPanel="2" (changeActivePanel)="changePanel($event)"
-        (changePageNum)="changePageNum($event)" class="flipper">
+    <div contentControl nPanel="2" (changeActivePanel)="changePanel($event)" (changePageNum)="changePageNum($event)"
+        class="flipper">
         <li class="common-side">
             <app-logo></app-logo>
-            <app-circular-carousel [myContainerIsActive]="iAmActive" [scrollType]="'manual'" [itemType]="'imageText'" [language]="language"
-                (carouselItemClicked)="goPage($event)" [data]="'panel2.json'" [orientation]="'vertical'" [recentreCarousel]="recentreCarousel"
+            <app-circular-carousel [myContainerIsActive]="iAmActive" [scrollType]="'manual'" [itemType]="'imageText'"
+                [language]="language" (carouselItemClicked)="goPage($event)" [data]="'panel2.json'"
+                [orientation]="'vertical'" [recentreCarousel]="recentreCarousel"
                 [perspective]="'2000px'"></app-circular-carousel>
         </li>
         <li class="common-side">
+            <app-logo></app-logo>
+            <app-airbus *ngIf="subPageNum == 2" [myPageNum]="1" [myContainerIsActive]="iAmActive"
+                [activePageNum]="activePageNum" [language]="language" [robotAirbusAnim]="robotAirbusAnim"
+                class="app-fill-container"></app-airbus>
+            <app-thesun *ngIf="subPageNum === 3" class="the-sun" [language]="language" [myPageNum]="2"
+                [myContainerIsActive]="iAmActive" [activePageNum]="activePageNum"></app-thesun>
+            <app-circular-carousel *ngIf="subPageNum === 4" [myContainerIsActive]="iAmActive" [scrollType]="'manual'"
+                [hasCaption]="true" [itemType]="'image'" [language]="language" [data]="'milan.json'"
+                [orientation]="'vertical'" [perspective]="'1000px'"></app-circular-carousel>
+            <app-next-page-button class="next-page-button" [isLastPage]="true" [language]="language"
+                [blockAll]="blockAll" [leftTextFrEn]="'Projets#Projects'"></app-next-page-button>
+        </li>
+        <!-- <li class="common-side">
             <app-logo></app-logo>
             <app-airbus [myPageNum]="1" [myContainerIsActive]="iAmActive" [activePageNum]="activePageNum" [language]="language" [robotAirbusAnim]="robotAirbusAnim"  class="app-fill-container"></app-airbus>
         </li>
@@ -20,6 +34,6 @@
             <app-circular-carousel [myContainerIsActive]="iAmActive" [scrollType]="'manual'" [hasCaption]="true"
                 [itemType]="'image'" [language]="language" [data]="'milan.json'"
                 [orientation]="'vertical'" [perspective]="'1000px'"></app-circular-carousel>
-        </li>
+        </li> -->
     </div>
 </div>

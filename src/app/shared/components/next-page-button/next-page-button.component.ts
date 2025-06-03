@@ -14,7 +14,7 @@ import { TurnPage } from 'app/store/panel/panel.action';
 })
 export class NextPageButtonComponent {
 
-  @Input() activePageNum!: number;
+  @Input() activePageNum!: number | undefined;
   @Input() isLastPage!: boolean;
   @Input() leftTextFrEn!: string;
   @Input() rightTextFrEn!: string;
