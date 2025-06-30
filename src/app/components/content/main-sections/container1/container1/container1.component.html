@@ -50,8 +50,9 @@
                         <div>&#x2022; HTML Games &#x2022;</div>
                         <div>&#x2022; Training &#x2022;</div>
                     </div>
-                    <app-next-page-button class="next-page-button" [activePageNum]="activePageNum" [language]="language" [blockAll]="blockAll"
-                        [rightTextFrEn]="'Qui suis-je ?#Who am I?'"></app-next-page-button>
+                    <div></div>
+                    <app-next-page-button *ngIf="introDone===true" class="next-page-button" [activePageNum]="activePageNum" [language]="language" [blockAll]="blockAll"
+                        [rightTextFrEn]="'QUI#WHO'"></app-next-page-button>
                 </div>
             </div>
 
@@ -93,8 +94,9 @@
                         content that loads efficiently. I follow accepted and best development practices to ensure that
                         my webapps work.</div>
                 </div>
-                <app-next-page-button class="next-page-button" [language]="language" [blockAll]="blockAll"  [leftTextFrEn]="'Accueil#Home'"
-                    [rightTextFrEn]="'Ce que je fais#What I do'"></app-next-page-button>
+                <div></div>
+                <app-next-page-button class="next-page-button" [language]="language" [blockAll]="blockAll"  [leftTextFrEn]="'ACCUEIL#HOME'"
+                    [rightTextFrEn]="'QUOI#WHAT'"></app-next-page-button>
             </div>
         </li>
         <li class="common-side">
@@ -133,9 +135,10 @@
                     <div class="sub-title" *ngIf="language==='En'">Training</div>
                     <div class="sub-text" *ngIf="language==='En'">Practical and immersive training packages.</div>
                 </div>
+                <div></div>
                 <app-next-page-button class="next-page-button" [language]="language" [blockAll]="blockAll" 
-                    [leftTextFrEn]="'Qui suis-je ?#Who am I'"
-                    [rightTextFrEn]="'Mes outils ?#My tools'"></app-next-page-button>
+                    [leftTextFrEn]="'QUI#WHO'"
+                    [rightTextFrEn]="'COMMENT#HOW'"></app-next-page-button>
             </div>
         </li>
         <li class="common-side">
@@ -169,8 +172,9 @@
                         available is indispensable. For animation WebGl (2D & 3D) for example, but also for smaller
                         tasks.</div>
                 </div>
+                <div></div>
                 <app-next-page-button class="next-page-button" [isLastPage]="true" [language]="language" [blockAll]="blockAll" 
-                    [leftTextFrEn]="'Ce que je fais#What I do'"></app-next-page-button>
+                    [leftTextFrEn]="'QUOI#WHAT'"></app-next-page-button>
             </div>
         </li>
     </div>
