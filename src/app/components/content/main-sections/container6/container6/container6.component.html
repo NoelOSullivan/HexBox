@@ -1,5 +1,5 @@
 <div class="container">
-    <div contentControl nPanel="6" (changeActivePanel)="changePanel($event)" class="flipper">
+    <div contentControl nPanel="6" [allowPanelSwipe]="true" (changeActivePanel)="changePanel($event)" class="flipper">
         <li class="common-side side1">
             <app-logo></app-logo>
             <app-circular-carousel [myContainerIsActive]="iAmActive" [scrollType]="'manual'" [itemType]="'imageText'" [language]="language" [data]="'panel6.json'" [orientation]="'vertical'"

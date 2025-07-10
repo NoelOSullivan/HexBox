@@ -770,7 +770,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
       setTimeout(() => {
         this.tarantulaIsMoving = false;
         this.spiderFeetSound.stop();
-        const directAccess = { hexNum: myHexNum - 1, nPage: 2, degrees: 0 };
+        const directAccess = { hexNum: myHexNum - 1, nPage: 2, nSubPage: 1, degrees: 0 };
         this.store.dispatch(new AccessPanelDirect(directAccess));
       }, 8000);
 

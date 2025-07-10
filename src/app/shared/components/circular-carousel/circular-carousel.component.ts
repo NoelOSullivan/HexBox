@@ -53,6 +53,8 @@ export class CircularCarouselComponent implements OnInit {
   private intervalID: any;
   private activeItem: number = 0;
   public captionTitle: string = "";
+  public captionTitleFr: string = "";
+  public captionTitleEn: string = "";
   public captionText: string = "";
   private lastActivePageNumber: number | undefined;
   private contentHeight!: number;
@@ -126,6 +128,8 @@ export class CircularCarouselComponent implements OnInit {
 
     if (changes.language && this.itemType === 'image') {
       this.language = changes.language.currentValue;
+      this.captionTitle 
+      this.captionTitle = this.language === "Fr" ? this.captionTitleFr : this.captionTitleEn;
       if (this.items) {
         this.manageCaption();
       }
@@ -137,7 +141,9 @@ export class CircularCarouselComponent implements OnInit {
   ngAfterViewInit() {
     this.dataService.getData(this.data).subscribe((carouselData: any) => {
       this.items = carouselData.carousel.items;
-      this.captionTitle = carouselData.carousel.captionTitleFr;
+      this.captionTitleFr = carouselData.carousel.captionTitleFr;
+      this.captionTitleEn = carouselData.carousel.captionTitleEn;
+      this.captionTitle = this.language === "Fr" ? this.captionTitleFr : this.captionTitleEn;
       this.captionText = carouselData.carousel.items[this.activeItem].captionFr;
       this.initCarousel();
     });

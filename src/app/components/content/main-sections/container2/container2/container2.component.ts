@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { ContentDirective } from '../../../../../shared/directives/content.directive';
-import { NgIf } from '@angular/common';
+import { NgIf, NgClass } from '@angular/common';
 import { Select, Store } from '@ngxs/store';
 
 
@@ -15,11 +15,12 @@ import { AppStateModel, LanguageModel } from 'app/store/general/general.model';
 import { Observable } from 'rxjs';
 import { Language, } from 'app/store/general/general.state';
 import { AppState } from 'app/store/general/general.state';
+import { NextPageButtonComponent } from 'app/shared/components/next-page-button/next-page-button.component';
 
 @Component({
   selector: 'app-container2',
   standalone: true,
-  imports: [NgIf, ContentDirective, LinkIconComponent, AirbusComponent, ThesunComponent, CircularCarouselComponent, LogoComponent],
+  imports: [NgIf, NgClass, ContentDirective, LinkIconComponent, AirbusComponent, ThesunComponent, CircularCarouselComponent, LogoComponent, NextPageButtonComponent],
   templateUrl: './container2.component.html',
   styleUrls: ['./container2.component.scss', '../../main-sections-shared-styles.scss']
 })
@@ -37,9 +38,12 @@ export class Container2 {
   activePageNum: number = 0;
   language!: string;
   iAmActive: boolean = false;
-  backButtonClick!: boolean;
+  // backButtonClick!: boolean;
   robotAirbusAnim!: boolean;
   recentreCarousel: boolean = false;
+  nSubPage!: number | undefined;
+  appState!: AppStateModel;
+  blockAll: boolean = false;
 
   ngOnInit() {
     this.language$.subscribe(newLanguage => {
@@ -47,8 +51,12 @@ export class Container2 {
     });
 
     this.appState$.subscribe(appState => {
+      this.appState = appState;
       if (this.robotAirbusAnim !== appState.robotAirbusAnim) {
         this.robotAirbusAnim = appState.robotAirbusAnim;
+      }
+      if (this.appState.blockAll !== this.blockAll) {
+        this.blockAll = this.appState.blockAll
       }
     })
 
@@ -64,6 +72,7 @@ export class Container2 {
     if (this.activePanel === this.nContainer) {
       this.iAmActive = true;
       this.recentreCarousel = true;
+      this.nSubPage = undefined;
     } else {
       this.iAmActive = false;
       this.recentreCarousel = false;
@@ -73,11 +82,25 @@ export class Container2 {
 
   changePageNum(activePageNum: number) {
     this.activePageNum = activePageNum;
+
+    if(this.nSubPage === undefined) {
+      this.nSubPage = 1;
+    }
+    // this.nSubPage =  this.activePageNum - 1;
   }
 
   goPage(pageNum: number) {
     // if (this.nContainer === this.activePanel) {
-    const directAccess: DirectAccess = { hexNum: this.nContainer, nPage: pageNum };
+    let nPage, nSubPage;
+    if (pageNum > 1) {
+      nPage = 2;
+      nSubPage = pageNum - 1;
+      this.nSubPage = nSubPage;
+    } else {
+      nPage = 1;
+      nSubPage = undefined;
+    }
+    const directAccess: DirectAccess = { hexNum: this.nContainer, nPage: nPage, nSubPage: nSubPage };
     this.store.dispatch(new AccessPanelDirect(directAccess));
     // }
   }

@@ -1,5 +1,5 @@
 <div class="container">
-    <div contentControl nPanel="1" (changePageNum)="changePageNum($event)" (setIsLastPage)="setIsLastPage($event)"
+    <div contentControl nPanel="1" [allowPanelSwipe]="true" (changePageNum)="changePageNum($event)" (setIsLastPage)="setIsLastPage($event)"
         class="flipper">
         <li class="common-side">
             <!-- Index finger animation for intro -->

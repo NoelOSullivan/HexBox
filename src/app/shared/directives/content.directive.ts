@@ -23,6 +23,7 @@ export class ContentDirective implements OnInit {
   @Select(AppState) appState$!: Observable<AppStateModel>;
 
   @Input() nPanel!: string;
+  @Input() allowPanelSwipe!: boolean;
   @Output() changeActivePanel = new EventEmitter<number>();
   @Output() changePageNum = new EventEmitter<number>();
   @Output() setIsLastPage = new EventEmitter<boolean>();
@@ -167,51 +168,57 @@ export class ContentDirective implements OnInit {
   }
 
   manageDown(posX: number): void {
-    this.lastX = this.touchStartX = posX;
-    this.firstClick = true;
+    if (this.allowPanelSwipe) {
+      this.lastX = this.touchStartX = posX;
+      this.firstClick = true;
+    }
   }
 
   manageMove(posX: number): void {
-    if (this.isTouchOrMousedown) {
+    if (this.allowPanelSwipe) {
+      if (this.isTouchOrMousedown) {
 
-      // Detect movement of finger since last event
-      const diffX = this.lastX - posX;
-      this.lastX = posX;
-      // If swiping right calculate new rotation if not yet minimum value (0)
-      // TO DO : 3 is arbitary. Maybe find a rule.
-      if (diffX < 0) {
-        this.direction = "right"
-        if (this.rotation.degrees < 0) {
-          this.rotation.degrees -= diffX * 3;
-        }
-      } else {
-        // If swiping left calculate new rotation if not yet maximum value (this.maxRotation)
-        if (diffX > 0) {
-          this.direction = "left"
-          if (this.rotation.degrees > this.maxRotation) {
+        // Detect movement of finger since last event
+        const diffX = this.lastX - posX;
+        this.lastX = posX;
+        // If swiping right calculate new rotation if not yet minimum value (0)
+        // TO DO : 3 is arbitary. Maybe find a rule.
+        if (diffX < 0) {
+          this.direction = "right"
+          if (this.rotation.degrees < 0) {
             this.rotation.degrees -= diffX * 3;
           }
+        } else {
+          // If swiping left calculate new rotation if not yet maximum value (this.maxRotation)
+          if (diffX > 0) {
+            this.direction = "left"
+            if (this.rotation.degrees > this.maxRotation) {
+              this.rotation.degrees -= diffX * 3;
+            }
+          }
         }
+        this.managePanelDisplay(false);
       }
-      this.managePanelDisplay(false);
     }
 
   }
 
   manageUp(posX: number): void {
-    this.isTouchOrMousedown = false;
-    this.touchEndX = posX;
-    if (this.touchEndX < this.touchStartX) {
-      this.direction = "left"
-      // Calculate the final degrees that will be flipped to
-      this.finalAnimRotation = Math.round(this.rotation.degrees / 180) * 180;
-      this.finishFlipToCalculatedPage();
-    } else {
-      if (this.touchEndX > this.touchStartX) {
-        this.direction = "right"
+    if (this.allowPanelSwipe) {
+      this.isTouchOrMousedown = false;
+      this.touchEndX = posX;
+      if (this.touchEndX < this.touchStartX) {
+        this.direction = "left"
         // Calculate the final degrees that will be flipped to
         this.finalAnimRotation = Math.round(this.rotation.degrees / 180) * 180;
         this.finishFlipToCalculatedPage();
+      } else {
+        if (this.touchEndX > this.touchStartX) {
+          this.direction = "right"
+          // Calculate the final degrees that will be flipped to
+          this.finalAnimRotation = Math.round(this.rotation.degrees / 180) * 180;
+          this.finishFlipToCalculatedPage();
+        }
       }
     }
   }
@@ -409,7 +416,7 @@ export class ContentDirective implements OnInit {
     if (this.lastPage !== nPage) {
       this.pageSound.stop();
       this.lastPage = nPage;
-      if(this.volume > 0) {
+      if (this.volume > 0) {
         this.pageSound.volume(this.volume);
         this.pageSound.play();
       }
