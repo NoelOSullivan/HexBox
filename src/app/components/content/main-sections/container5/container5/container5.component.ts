@@ -8,11 +8,10 @@ import { LanguageModel } from 'app/store/general/general.model';
 import { LogoComponent } from 'app/shared/components/logo/logo.component';
 
 @Component({
-  selector: 'app-container5',
-  standalone: true, 
-  imports: [NgIf, ContentDirective, LogoComponent],
-  templateUrl: './container5.component.html',
-  styleUrls: ['./container5.component.scss','../../main-sections-shared-styles.scss']
+    selector: 'app-container5',
+    imports: [NgIf, ContentDirective, LogoComponent],
+    templateUrl: './container5.component.html',
+    styleUrls: ['./container5.component.scss', '../../main-sections-shared-styles.scss']
 })
 export class Container5  {
 

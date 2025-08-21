@@ -4,7 +4,7 @@ import { NgIf, NgClass } from '@angular/common';
 import { Select, Store } from '@ngxs/store';
 
 import { LogoComponent } from '../../../../../shared/components/logo/logo.component';
-import { DirectAccessComponent } from '../../../../../shared/components/direct-access/direct-access.component';
+// import { DirectAccessComponent } from '../../../../../shared/components/direct-access/direct-access.component';
 import { SwipeIconComponent } from '../../../../../shared/components/swipe-icon/swipe-icon.component';
 
 import { Direction } from '../../../../../shared/interfaces/panel';
@@ -19,11 +19,10 @@ import { NextPageButtonComponent } from 'app/shared/components/next-page-button/
 import { BichromeTitleComponent } from 'app/shared/components/bichrome-title/bichrome-title.component';
 
 @Component({
-  selector: 'app-container1',
-  standalone: true,
-  imports: [NgIf, NgClass, ContentDirective, LogoComponent, BichromeTitleComponent, DirectAccessComponent, SwipeIconComponent, NextPageButtonComponent],
-  templateUrl: './container1.component.html',
-  styleUrls: ['./container1.component.scss', '../../main-sections-shared-styles.scss']
+    selector: 'app-container1',
+    imports: [NgIf, NgClass, ContentDirective, LogoComponent, BichromeTitleComponent, SwipeIconComponent, NextPageButtonComponent],
+    templateUrl: './container1.component.html',
+    styleUrls: ['./container1.component.scss', '../../main-sections-shared-styles.scss']
 })
 
 export class Container1 implements OnInit {

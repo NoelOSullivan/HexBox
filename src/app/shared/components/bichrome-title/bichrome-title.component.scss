@@ -1,4 +1,4 @@
-@import "../../../scss/variables";
+@use "../../../scss/variables";
 
 .word-holder {
     position: absolute;
@@ -37,7 +37,7 @@
 }
 
  .letter {
-    color: $primary-first-letter-color !important;
+    color: variables.$primary-first-letter-color !important;
  }
 
 @media screen and (max-width: 370px) {

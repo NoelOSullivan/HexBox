@@ -17,12 +17,11 @@ import { PageCounterModel } from '../../../store/panel/panel.model';
 import { ChangeContentWidth } from 'app/store/general/general.actions';
 
 @Component({
-  selector: 'app-content',
-  standalone: true,
-  changeDetection: ChangeDetectionStrategy.Default,
-  imports: [NgIf, NgClass, Container1, Container2, Container3, Container4, Container5, Container6],
-  templateUrl: './content.component.html',
-  styleUrls: ['./content.component.scss'],
+    selector: 'app-content',
+    changeDetection: ChangeDetectionStrategy.Default,
+    imports: [NgIf, NgClass, Container1, Container2, Container3, Container4, Container5, Container6],
+    templateUrl: './content.component.html',
+    styleUrls: ['./content.component.scss']
 })
 
 export class ContentComponent implements OnInit {

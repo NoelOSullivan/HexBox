@@ -9,11 +9,10 @@ import { Language } from 'app/store/general/general.state';
 import { BichromeTitleComponent } from 'app/shared/components/bichrome-title/bichrome-title.component';
 
 @Component({
-  selector: 'app-container3',
-  standalone: true, 
-  imports: [NgIf, ContentDirective, LogoComponent, BichromeTitleComponent],
-  templateUrl: './container3.component.html',
-  styleUrls: ['./container3.component.scss','../../main-sections-shared-styles.scss']
+    selector: 'app-container3',
+    imports: [NgIf, ContentDirective, LogoComponent, BichromeTitleComponent],
+    templateUrl: './container3.component.html',
+    styleUrls: ['./container3.component.scss', '../../main-sections-shared-styles.scss']
 })
 export class Container3  {
 

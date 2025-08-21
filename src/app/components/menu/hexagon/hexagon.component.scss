@@ -1,4 +1,4 @@
-@import "../../../scss/variables";
+@use "../../../scss/variables";
 
 :host-context(.hex_1) {
   .hexagon-container {
@@ -171,7 +171,7 @@
 
 :host-context(.hexagon-selected) {
   .svg-hexagon {
-    fill: $primary-hover-color;
+    fill: variables.$primary-hover-color;
     fill-opacity: 1;
   }
 
@@ -214,16 +214,16 @@
 }
 
 .svg-hexagon {
-  fill: $primary-background-color;
+  fill: variables.$primary-background-color;
   fill-opacity: 0.4;
-  stroke: $primary-text-color;
+  stroke: variables.$primary-text-color;
   stroke-width: 3px;
   // z-index: 10;
   transition: fill-opacity 1000ms ease-in;
 }
 
 .svg-hexagon-rolled {
-  fill: $primary-hover-color;
+  fill: variables.$primary-hover-color;
   fill-opacity: 1;
 }
 
@@ -252,7 +252,7 @@
   text-align: center;
   width: 100%;
   height: 100%;
-  color: $primary-text-color;
+  color: variables.$primary-text-color;
   transition: transform 1s;
 }
 
@@ -291,7 +291,7 @@
 }
 
 :host ::ng-deep .letter {
-  color: $primary-first-letter-color;
+  color: variables.$primary-first-letter-color;
 }
 
 :host ::ng-deep .menu-theme {

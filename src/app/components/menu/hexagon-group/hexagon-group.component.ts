@@ -25,12 +25,11 @@ import { HexBoxModel } from 'app/store/hexagon/hexagon.model';
 import { Howl, Howler } from 'howler';
 
 @Component({
-  selector: 'hexagon-group',
-  standalone: true,
-  imports: [NgClass, NgIf, HexagonComponent, LangButtonComponent, VolumeButtonComponent, SwipeIconComponent, EggComponent, TarantulaComponent, CircularTextComponent],
-  providers: [DataService],
-  templateUrl: './hexagon-group.component.html',
-  styleUrls: ['./hexagon-group.component.scss']
+    selector: 'hexagon-group',
+    imports: [NgClass, NgIf, HexagonComponent, LangButtonComponent, VolumeButtonComponent, SwipeIconComponent, EggComponent, TarantulaComponent, CircularTextComponent],
+    providers: [DataService],
+    templateUrl: './hexagon-group.component.html',
+    styleUrls: ['./hexagon-group.component.scss']
 })
 
 export class HexagonGroupComponent implements OnInit, AfterViewInit {

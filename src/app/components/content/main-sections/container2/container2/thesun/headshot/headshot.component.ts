@@ -5,11 +5,10 @@ import { AddEggDomRect } from 'app/store/general/general.actions';
 import { EggInfo } from 'app/shared/interfaces/general';
 
 @Component({
-  selector: 'app-headshot',
-  standalone: true,
-  imports: [NgIf, NgClass],
-  templateUrl: './headshot.component.html',
-  styleUrl: './headshot.component.scss'
+    selector: 'app-headshot',
+    imports: [NgIf, NgClass],
+    templateUrl: './headshot.component.html',
+    styleUrl: './headshot.component.scss'
 })
 export class HeadshotComponent {
 

@@ -1,4 +1,4 @@
-@import "../../../scss/variables";
+@use "../../../scss/variables";
 
 .carousel-root {
     position: absolute;
@@ -162,7 +162,7 @@ li {
     right: 0;
     border-left: 1px solid black;
     border-bottom: 5px solid black;
-    background: $primary-background-color;
+    background: variables.$primary-background-color;
     color: black;
     font-size: 1em;
 }

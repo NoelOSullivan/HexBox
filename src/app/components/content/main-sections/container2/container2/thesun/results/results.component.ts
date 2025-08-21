@@ -8,11 +8,10 @@ import { Observable } from 'rxjs/internal/Observable';
 import { Select } from '@ngxs/store';
 
 @Component({
-  selector: 'app-results',
-  standalone: true,
-  imports: [NgFor, NgIf],
-  templateUrl: './results.component.html',
-  styleUrl: './results.component.scss'
+    selector: 'app-results',
+    imports: [NgFor, NgIf],
+    templateUrl: './results.component.html',
+    styleUrl: './results.component.scss'
 })
 
 export class ResultsComponent {

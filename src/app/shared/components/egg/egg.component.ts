@@ -7,11 +7,10 @@ import * as THREE from 'three';
 import { GLTFLoader, GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 @Component({
-  selector: 'app-egg',
-  standalone: true,
-  imports: [],
-  templateUrl: './egg.component.html',
-  styleUrl: './egg.component.scss'
+    selector: 'app-egg',
+    imports: [],
+    templateUrl: './egg.component.html',
+    styleUrl: './egg.component.scss'
 })
 export class EggComponent implements OnInit {
 

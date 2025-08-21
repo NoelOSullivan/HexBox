@@ -5,12 +5,11 @@ import { DirectAccess } from '../../interfaces/panel';
 import { LinkIconComponent } from '../link-icon/link-icon.component';
 
 @Component({
-  selector: 'app-direct-access',
-  standalone: true,
-  imports: [LinkIconComponent],
-  providers: [],
-  templateUrl: './direct-access.component.html',
-  styleUrl: './direct-access.component.scss'
+    selector: 'app-direct-access',
+    imports: [LinkIconComponent],
+    providers: [],
+    templateUrl: './direct-access.component.html',
+    styleUrl: './direct-access.component.scss'
 })
 export class DirectAccessComponent {
 

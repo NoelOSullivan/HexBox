@@ -1,4 +1,4 @@
-@import "../../../scss/variables";
+@use "../../../scss/variables";
 
 .container {
     width: 100%;
@@ -137,7 +137,7 @@ header {
     font-size: 20px;
     background: black;
     // color: $primary-first-letter-color;
-    color: $primary-background-color;
+    color: variables.$primary-background-color;
     font-weight: 600;
     text-align: left;
 }

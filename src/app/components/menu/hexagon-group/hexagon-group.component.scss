@@ -1,4 +1,4 @@
-@import "../../../scss/variables";
+@use "../../../scss/variables";
 
 .menu-rotate {
     transform-origin: calc(100vw / 2) 26px;
@@ -46,8 +46,8 @@
     align-items: center;
     justify-content: center;
     border-bottom-right-radius: 100%;
-    border-right: 1px solid $primary-background-color;
-    border-bottom: 1px solid $primary-background-color;
+    border-right: 1px solid variables.$primary-background-color;
+    border-bottom: 1px solid variables.$primary-background-color;
     color: white;
     transform-origin: top left;
     transform: rotateZ(-90deg);
@@ -72,11 +72,11 @@
     pointer-events: none;
     box-shadow:
         0 0 50px 20px #fff,
-        0 0 75px 40px $primary-background-color,
-        0 0 100px 50px $primary-hover-color;
+        0 0 75px 40px variables.$primary-background-color,
+        0 0 100px 50px variables.$primary-hover-color;
     border: 2px solid black;
     border-radius: 25% 25% 50% 50%;
-    background: $primary-hover-color;
+    background: variables.$primary-hover-color;
     cursor: pointer;
 }
 
@@ -139,7 +139,7 @@
     // left: calc(50vw - 20px);
     width: 40px;
     height: 20px;
-    background: $primary-hover-color;
+    background: variables.$primary-hover-color;
     pointer-events: all;
     border-radius: 0 0 20px 20px;
     z-index: 21;

@@ -7,12 +7,13 @@ import { Subscription } from 'rxjs';
 import 'hammerjs';
 
 @Component({
-  selector: 'timeline',
-  templateUrl: './timeline.component.html',
-  styleUrls: ['./timeline.component.scss'],
-  host: {
-    '(window:resize)': 'onResize()'
-  }
+    selector: 'timeline',
+    templateUrl: './timeline.component.html',
+    styleUrls: ['./timeline.component.scss'],
+    host: {
+        '(window:resize)': 'onResize()'
+    },
+    standalone: false
 })
 export class TimelineComponent implements AfterViewInit {
 

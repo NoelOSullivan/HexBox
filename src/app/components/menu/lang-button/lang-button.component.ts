@@ -7,11 +7,10 @@ import { Language } from 'app/store/general/general.state';
 import { ChangeLanguage } from 'app/store/general/general.actions';
 
 @Component({
-  selector: 'app-lang-button',
-  standalone: true,
-  imports: [NgClass],
-  templateUrl: './lang-button.component.html',
-  styleUrls: ['./lang-button.component.scss']
+    selector: 'app-lang-button',
+    imports: [NgClass],
+    templateUrl: './lang-button.component.html',
+    styleUrls: ['./lang-button.component.scss']
 })
 export class LangButtonComponent implements OnInit {
 
