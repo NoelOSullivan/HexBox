@@ -1,5 +1,5 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
-import { NgIf, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Select, Store } from '@ngxs/store';
 import { MenuComponent } from './menu/menu/menu.component';
 import { ContentComponent } from './content/content/content.component';
@@ -12,7 +12,7 @@ import { ActivePanelNumberModel } from 'app/store/hexagon/hexagon.model';
 
 @Component({
     selector: 'app-layout',
-    imports: [NgIf, NgClass, MenuComponent, ContentComponent],
+    imports: [ NgClass, MenuComponent, ContentComponent],
     templateUrl: './layout.component.html',
     styleUrl: './layout.component.scss'
 })
@@ -35,28 +35,28 @@ export class LayoutComponent implements OnInit {
   resizeTimeout: any;
   that: any;
 
-  @HostListener('window:resize', ['$event'])
-  onWindowResize() {
-    if(document.fullscreenElement != null) {
-      this.viewHeightOK = true;
-    }else {
-      this.viewHeightOK = this.checkViewHeight();
-    }
+  // @HostListener('window:resize', ['$event'])
+  // onWindowResize() {
+  //   if(document.fullscreenElement != null) {
+  //     this.viewHeightOK = true;
+  //   }else {
+  //     this.viewHeightOK = this.checkViewHeight();
+  //   }
 
-    if (window.innerHeight > window.innerWidth) {
-      this.originalShortSide = window.innerWidth;
-      this.originalLongSide = window.innerHeight;
-    } else {
-      this.originalLongSide = window.innerWidth;
-      this.originalShortSide = window.innerHeight;
-    }
+  //   if (window.innerHeight > window.innerWidth) {
+  //     this.originalShortSide = window.innerWidth;
+  //     this.originalLongSide = window.innerHeight;
+  //   } else {
+  //     this.originalLongSide = window.innerWidth;
+  //     this.originalShortSide = window.innerHeight;
+  //   }
 
-    // console.log("window.", window.innerWidth, window.innerHeight);
+  //   // console.log("window.", window.innerWidth, window.innerHeight);
 
-    if (this.viewHeightOK) {
-      this.updateLayout();
-    }
-  }
+  //   if (this.viewHeightOK) {
+  //     this.updateLayout();
+  //   }
+  // }
 
   @HostListener('mouseup', ['$event']) mouseup(event: MouseEvent) {
 

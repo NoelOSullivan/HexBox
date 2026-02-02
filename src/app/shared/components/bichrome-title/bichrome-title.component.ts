@@ -1,9 +1,8 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'app-bichrome-title',
-    imports: [NgIf],
+    imports: [],
     templateUrl: './bichrome-title.component.html',
     styleUrl: './bichrome-title.component.scss'
 })

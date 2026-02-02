@@ -1,4 +1,4 @@
-@import "../../../scss/variables";
+@use "../../../scss/variables" as *;
 
 .menu-rotate {
     transform-origin: calc(100vw / 2) 26px;

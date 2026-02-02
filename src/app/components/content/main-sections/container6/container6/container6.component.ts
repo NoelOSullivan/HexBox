@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ContentDirective } from '../../../../../shared/directives/content.directive';
-import { NgIf } from '@angular/common';
 import { LogoComponent } from '../../../../../shared/components/logo/logo.component';
 import { CircularCarouselComponent } from 'app/shared/components/circular-carousel/circular-carousel.component';
 import { Select } from '@ngxs/store';
@@ -10,7 +9,7 @@ import { Language } from 'app/store/general/general.state';
 
 @Component({
     selector: 'app-container6',
-    imports: [NgIf, ContentDirective, LogoComponent, CircularCarouselComponent],
+    imports: [ ContentDirective, LogoComponent, CircularCarouselComponent],
     templateUrl: './container6.component.html',
     styleUrls: ['./container6.component.scss', '../../main-sections-shared-styles.scss']
 })

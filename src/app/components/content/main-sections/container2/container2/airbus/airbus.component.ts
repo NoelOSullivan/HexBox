@@ -1,15 +1,14 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { NgIf, NgClass } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { AppState } from 'app/store/general/general.state';
 import { Observable } from 'rxjs';
 import { Select } from '@ngxs/store';
 import { AppStateModel } from 'app/store/general/general.model';
 import { PlayButtonComponent } from 'app/shared/components/play-button/play-button.component';
-import { BulletPointsComponent } from 'app/shared/components/bullet-points/bullet-points.component';
 
 @Component({
     selector: 'app-airbus',
-    imports: [NgIf, NgClass, PlayButtonComponent, BulletPointsComponent],
+    imports: [NgIf, PlayButtonComponent],
     templateUrl: './airbus.component.html',
     styleUrl: './airbus.component.scss'
 })

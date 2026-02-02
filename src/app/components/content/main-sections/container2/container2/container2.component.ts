@@ -1,11 +1,10 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { ContentDirective } from '../../../../../shared/directives/content.directive';
-import { NgIf, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Select, Store } from '@ngxs/store';
 
 
 import { LogoComponent } from '../../../../../shared/components/logo/logo.component';
-import { LinkIconComponent } from '../../../../../shared/components/link-icon/link-icon.component';
 import { AirbusComponent } from './airbus/airbus.component';
 import { ThesunComponent } from './thesun/thesun.component';
 import { DirectAccess } from '../../../../../shared/interfaces/panel';
@@ -19,7 +18,7 @@ import { NextPageButtonComponent } from 'app/shared/components/next-page-button/
 
 @Component({
     selector: 'app-container2',
-    imports: [NgIf, NgClass, ContentDirective, LinkIconComponent, AirbusComponent, ThesunComponent, CircularCarouselComponent, LogoComponent, NextPageButtonComponent],
+    imports: [ NgClass, ContentDirective, AirbusComponent, ThesunComponent, CircularCarouselComponent, LogoComponent, NextPageButtonComponent],
     templateUrl: './container2.component.html',
     styleUrls: ['./container2.component.scss', '../../main-sections-shared-styles.scss']
 })

@@ -1,5 +1,5 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { LanguageModel } from 'app/store/general/general.model';
@@ -10,7 +10,7 @@ import { ChangeVolume } from 'app/store/general/general.actions';
 
 @Component({
     selector: 'app-volume-button',
-    imports: [NgClass, NgIf],
+    imports: [NgClass],
     templateUrl: './volume-button.component.html',
     styleUrls: ['./volume-button.component.scss']
 })
