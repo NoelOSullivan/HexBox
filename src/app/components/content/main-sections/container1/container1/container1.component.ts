@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ContentDirective } from '../../../../../shared/directives/content.directive';
-import { NgIf, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Select, Store } from '@ngxs/store';
 
 import { LogoComponent } from '../../../../../shared/components/logo/logo.component';
@@ -19,7 +19,7 @@ import { BichromeTitleComponent } from 'app/shared/components/bichrome-title/bic
 
 @Component({
     selector: 'app-container1',
-    imports: [NgIf, NgClass, ContentDirective, LogoComponent, BichromeTitleComponent, SwipeIconComponent, NextPageButtonComponent],
+    imports: [NgClass, ContentDirective, LogoComponent, BichromeTitleComponent, SwipeIconComponent, NextPageButtonComponent],
     templateUrl: './container1.component.html',
     styleUrls: ['./container1.component.scss', '../../main-sections-shared-styles.scss']
 })

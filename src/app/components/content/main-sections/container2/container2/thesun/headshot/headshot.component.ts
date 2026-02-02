@@ -1,12 +1,12 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { NgIf, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Store } from '@ngxs/store';
 import { AddEggDomRect } from 'app/store/general/general.actions';
 import { EggInfo } from 'app/shared/interfaces/general';
 
 @Component({
     selector: 'app-headshot',
-    imports: [NgIf, NgClass],
+    imports: [NgClass],
     templateUrl: './headshot.component.html',
     styleUrl: './headshot.component.scss'
 })

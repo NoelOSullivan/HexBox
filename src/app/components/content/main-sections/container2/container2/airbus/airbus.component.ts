@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { NgIf } from '@angular/common';
+
 import { AppState } from 'app/store/general/general.state';
 import { Observable } from 'rxjs';
 import { Select } from '@ngxs/store';
@@ -8,7 +8,7 @@ import { PlayButtonComponent } from 'app/shared/components/play-button/play-butt
 
 @Component({
     selector: 'app-airbus',
-    imports: [NgIf, PlayButtonComponent],
+    imports: [PlayButtonComponent],
     templateUrl: './airbus.component.html',
     styleUrl: './airbus.component.scss'
 })

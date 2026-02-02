@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, viewChild, effect, viewChildren } from '@angular/core';
 import { Router, Event as NavigationEvent } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
-import { Location, NgClass, NgIf } from '@angular/common';
+import { Location, NgClass } from '@angular/common';
 import { DataService } from '../../../shared/services/data.service';
 import { HexagonComponent } from '../hexagon/hexagon.component';
 import { Rotation, ActivePanelNumber, HexBoxInterface } from '../../../shared/interfaces/hexagon';
@@ -26,7 +26,7 @@ import { Howl, Howler } from 'howler';
 
 @Component({
     selector: 'hexagon-group',
-    imports: [NgClass, NgIf, HexagonComponent, LangButtonComponent, VolumeButtonComponent, SwipeIconComponent, EggComponent, TarantulaComponent, CircularTextComponent],
+    imports: [NgClass, HexagonComponent, LangButtonComponent, VolumeButtonComponent, SwipeIconComponent, EggComponent, TarantulaComponent, CircularTextComponent],
     providers: [DataService],
     templateUrl: './hexagon-group.component.html',
     styleUrls: ['./hexagon-group.component.scss']

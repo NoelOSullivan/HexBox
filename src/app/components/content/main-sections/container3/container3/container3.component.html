@@ -1,44 +1,80 @@
 <div class="container">
-    <div #flipper contentControl nPanel="3" [allowPanelSwipe]="true" class="flipper">
-        <li class="common-side">
-            <app-logo></app-logo>
-            <div class="vertical-space-between-holder">
-                <app-bichrome-title *ngIf="language==='Fr'" [text]="'LES 1-0-1'"></app-bichrome-title>
-                <app-bichrome-title *ngIf="language==='En'" [text]="'THE 1-0-1s'"></app-bichrome-title>
-                <div class="basic-text">
-                    <div class="sub-title" *ngIf="language==='Fr'">Les 101's</div>
-                    <div class="sub-text" *ngIf="language==='Fr'">Une série de cours intensifs et pratique de 30 heures.
-                    </div>
-                    <div class="sub-title" *ngIf="language==='En'">The 101's</div>
-                    <div class="sub-text" *ngIf="language==='En'">A series of intensive, practical courses of 30 hours.
-                    </div>
-                </div>
-                <div class="basic-text">
-                    <div class="sub-title" *ngIf="language==='Fr'">Vanilla Front End</div>
-                    <div class="sub-text" *ngIf="language==='Fr'">HTML, CSS, Javascript. Apprendre les fondamentaux.
-                    </div>
-                    <div class="sub-title" *ngIf="language==='En'">Vanilla Front End</div>
-                    <div class="sub-text" *ngIf="language==='En'">HTML, CSS, Javascript. Learn the fundamentals.</div>
-                </div>
-                <div class="basic-text">
-                    <div class="sub-title" *ngIf="language==='Fr'">Création d'Interfaces Magique</div>
-                    <div class="sub-text" *ngIf="language==='Fr'">Apprendre à donner de la personnalité à une
-                        application
-                        web.
-                    </div>
-                    <div class="sub-title" *ngIf="language==='En'">Magical Interface Creation</div>
-                    <div class="sub-text" *ngIf="language==='En'">Learn how to give a personality to a web app.</div>
-                </div>
-                <div class="basic-text">
-                    <div class="sub-title" *ngIf="language==='Fr'">HTML Canvas</div>
-                    <div class="sub-text" *ngIf="language==='Fr'">Apprendre Leaflet, D3, PixiJS et ThreeJS en
-                        construisant une application moderne.</div>
-                    <div class="sub-title" *ngIf="language==='En'">HTML Canvas</div>
-                    <div class="sub-text" *ngIf="language==='En'">Learn Leaflet, D3, PixiJS and ThreeJS while building a
-                        modern web application.</div>
-                </div>
-                <div></div>
+  <div #flipper contentControl nPanel="3" [allowPanelSwipe]="true" class="flipper">
+    <li class="common-side">
+      <app-logo></app-logo>
+      <div class="vertical-space-between-holder">
+        @if (language==='Fr') {
+          <app-bichrome-title [text]="'LES 1-0-1'"></app-bichrome-title>
+        }
+        @if (language==='En') {
+          <app-bichrome-title [text]="'THE 1-0-1s'"></app-bichrome-title>
+        }
+        <div class="basic-text">
+          @if (language==='Fr') {
+            <div class="sub-title">Les 101's</div>
+          }
+          @if (language==='Fr') {
+            <div class="sub-text">Une série de cours intensifs et pratique de 30 heures.
             </div>
-        </li>
-    </div>
+          }
+          @if (language==='En') {
+            <div class="sub-title">The 101's</div>
+          }
+          @if (language==='En') {
+            <div class="sub-text">A series of intensive, practical courses of 30 hours.
+            </div>
+          }
+        </div>
+        <div class="basic-text">
+          @if (language==='Fr') {
+            <div class="sub-title">Vanilla Front End</div>
+          }
+          @if (language==='Fr') {
+            <div class="sub-text">HTML, CSS, Javascript. Apprendre les fondamentaux.
+            </div>
+          }
+          @if (language==='En') {
+            <div class="sub-title">Vanilla Front End</div>
+          }
+          @if (language==='En') {
+            <div class="sub-text">HTML, CSS, Javascript. Learn the fundamentals.</div>
+          }
+        </div>
+        <div class="basic-text">
+          @if (language==='Fr') {
+            <div class="sub-title">Création d'Interfaces Magique</div>
+          }
+          @if (language==='Fr') {
+            <div class="sub-text">Apprendre à donner de la personnalité à une
+              application
+              web.
+            </div>
+          }
+          @if (language==='En') {
+            <div class="sub-title">Magical Interface Creation</div>
+          }
+          @if (language==='En') {
+            <div class="sub-text">Learn how to give a personality to a web app.</div>
+          }
+        </div>
+        <div class="basic-text">
+          @if (language==='Fr') {
+            <div class="sub-title">HTML Canvas</div>
+          }
+          @if (language==='Fr') {
+            <div class="sub-text">Apprendre Leaflet, D3, PixiJS et ThreeJS en
+            construisant une application moderne.</div>
+          }
+          @if (language==='En') {
+            <div class="sub-title">HTML Canvas</div>
+          }
+          @if (language==='En') {
+            <div class="sub-text">Learn Leaflet, D3, PixiJS and ThreeJS while building a
+            modern web application.</div>
+          }
+        </div>
+        <div></div>
+      </div>
+    </li>
+  </div>
 </div>

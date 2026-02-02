@@ -1,66 +1,130 @@
 <div #animHolder class="animation-holder">
-    <div class="intro">
-        <img class="logo-airbus" src="../../../../../../assets/images/airbus/logo-airbus-white.png">
-        <img class="airnavx-logo" src="../../../../../../assets/images/airbus/airnavX.png">
-        <img class="airnaveo-logo" src="../../../../../../assets/images/airbus/airnaveo-logo.jpg">
+  <div class="intro">
+    <img class="logo-airbus" src="../../../../../../assets/images/airbus/logo-airbus-white.png">
+    <img class="airnavx-logo" src="../../../../../../assets/images/airbus/airnavX.png">
+    <img class="airnaveo-logo" src="../../../../../../assets/images/airbus/airnaveo-logo.jpg">
+  </div>
+  @if (language === 'Fr') {
+    <div class="blurb">
+      De 2016 to 2020 je faisais parti de l'équipe Tech Data sur le projet Airnav&#x02E3;, un outil de consultation de
+      données techniques sur tous les appareils Airbus.<br><br>Je m'occupais du lecteur svg, de l'interface pour la suivi des nouveaux
+      documents et Airnaveo, pour la consultation smart media.
     </div>
-    <div class="blurb" *ngIf="language === 'Fr'">
-        De 2016 to 2020 je faisais parti de l'équipe Tech Data sur le projet Airnav&#x02E3;, un outil de consultation de
-        données techniques sur tous les appareils Airbus.<br><br>Je m'occupais du lecteur svg, de l'interface pour la suivi des nouveaux
-        documents et Airnaveo, pour la consultation smart media.
+  }
+  @if (language === 'En') {
+    <div class="blurb">
+      From 2016 to 2020 I was part of the Tech Data team working on Airnav&#x02E3;, a one-stop consultation tool for
+      technical data on all Airbus planes.<br><br>I had ownership of the svg reader, the interface for tracking new
+      and amended documents and Airnaveo, for interactive 3D maintenance.
     </div>
-    <div class="blurb" *ngIf="language === 'En'">
-        From 2016 to 2020 I was part of the Tech Data team working on Airnav&#x02E3;, a one-stop consultation tool for
-        technical data on all Airbus planes.<br><br>I had ownership of the svg reader, the interface for tracking new
-        and amended documents and Airnaveo, for interactive 3D maintenance.
-    </div>
-    <div id="airbusPlay" class="play">
-        <app-play-button (playState)="managePlay($event)" [playing]="playing"></app-play-button>
-    </div>
-    <img #image1 class="image init-anim-2" src="assets/images/airbus/airnavX-2.jpg">
-    <div #bullets1 class="bullet-points">
-        <div *ngIf="language === 'Fr'">Equipe de +40 personnes</div>
-        <div *ngIf="language === 'En'">+40 person team</div>
-        <div *ngIf="language === 'Fr'">Agile Safe</div>
-        <div *ngIf="language === 'En'">Agile Safe</div>
-        <div *ngIf="language === 'Fr'">Front-end dev lead</div>
-        <div *ngIf="language === 'En'">Front-end lead developer</div>
-    </div>
-    <img #image2 class="image init-anim-2" src="assets/images/airbus/airnavX-3.jpg">
-    <div #bullets2 class="bullet-points">
-        <div *ngIf="language === 'Fr'">J'ai developpé le lecteur SVG</div>
-        <div *ngIf="language === 'En'">I developed the SVG reader</div>
-        <div *ngIf="language === 'Fr'">Manipulation de nodes en temps réel</div>
-        <div *ngIf="language === 'En'">Realtime node manipulation</div>
-        <div *ngIf="language === 'Fr'">Mode plein écran et temoin de zoom</div>
-        <div *ngIf="language === 'En'">Full screen mode with zoom window</div>
-    </div>
-    <img #image3 class="image init-anim-2" src="assets/images/airbus/airnaveo.jpg">
-    <div #bullets3 class="bullet-points">
-        <div *ngIf="language === 'Fr'">Documentation 'Smart Média'</div>
-        <div *ngIf="language === 'En'">'Smart Media' documentation</div>
-        <div *ngIf="language === 'Fr'">Vidéo et 3D intéractive</div>
-        <div *ngIf="language === 'En'">Interactive 3D and video</div>
-        <div *ngIf="language === 'Fr'">Utilisation immersive</div>
-        <div *ngIf="language === 'En'">Immersive user experience</div>
-    </div>
-    <img #image4 class="image init-anim-2" src="assets/images/airbus/airnaveo-search.jpg">
-    <div #bullets4 class="bullet-points">
-        <div *ngIf="language === 'Fr'">Moteur de recherche visuel</div>
-        <div *ngIf="language === 'En'">Visual search engine</div>
-        <div *ngIf="language === 'Fr'">Accès doc via avions 3D</div>
-        <div *ngIf="language === 'En'">Doc access via 3D planes</div>
-        <div *ngIf="language === 'Fr'">Three.JS et Cortona3D</div>
-        <div *ngIf="language === 'En'">Three.JS and Cortona3D</div>
-    </div>
-    <img #image5 class="image init-anim-2" src="../../../../../../assets/images/airbus/airnaveo2.jpg">
-    <div #bullets5 class="bullet-points">
-        <div *ngIf="language === 'Fr'">Immersion 3D en temps réel</div>
-        <div *ngIf="language === 'En'">3D real-time immersion</div>
-        <div *ngIf="language === 'Fr'">Séquences animés précalculé</div>
-        <div *ngIf="language === 'En'">Precalculated animation sequences</div>
-        <div *ngIf="language === 'Fr'">Transitions fluide entre les deux</div>
-        <div *ngIf="language === 'En'">Seemless transitions between the two</div>
-    </div>
-    <img #image6 class="image init-anim-2" src="../../../../../../assets/images/airbus/airnaveo3.jpg">
+  }
+  <div id="airbusPlay" class="play">
+    <app-play-button (playState)="managePlay($event)" [playing]="playing"></app-play-button>
+  </div>
+  <img #image1 class="image init-anim-2" src="assets/images/airbus/airnavX-2.jpg">
+  <div #bullets1 class="bullet-points">
+    @if (language === 'Fr') {
+      <div>Equipe de +40 personnes</div>
+    }
+    @if (language === 'En') {
+      <div>+40 person team</div>
+    }
+    @if (language === 'Fr') {
+      <div>Agile Safe</div>
+    }
+    @if (language === 'En') {
+      <div>Agile Safe</div>
+    }
+    @if (language === 'Fr') {
+      <div>Front-end dev lead</div>
+    }
+    @if (language === 'En') {
+      <div>Front-end lead developer</div>
+    }
+  </div>
+  <img #image2 class="image init-anim-2" src="assets/images/airbus/airnavX-3.jpg">
+  <div #bullets2 class="bullet-points">
+    @if (language === 'Fr') {
+      <div>J'ai developpé le lecteur SVG</div>
+    }
+    @if (language === 'En') {
+      <div>I developed the SVG reader</div>
+    }
+    @if (language === 'Fr') {
+      <div>Manipulation de nodes en temps réel</div>
+    }
+    @if (language === 'En') {
+      <div>Realtime node manipulation</div>
+    }
+    @if (language === 'Fr') {
+      <div>Mode plein écran et temoin de zoom</div>
+    }
+    @if (language === 'En') {
+      <div>Full screen mode with zoom window</div>
+    }
+  </div>
+  <img #image3 class="image init-anim-2" src="assets/images/airbus/airnaveo.jpg">
+  <div #bullets3 class="bullet-points">
+    @if (language === 'Fr') {
+      <div>Documentation 'Smart Média'</div>
+    }
+    @if (language === 'En') {
+      <div>'Smart Media' documentation</div>
+    }
+    @if (language === 'Fr') {
+      <div>Vidéo et 3D intéractive</div>
+    }
+    @if (language === 'En') {
+      <div>Interactive 3D and video</div>
+    }
+    @if (language === 'Fr') {
+      <div>Utilisation immersive</div>
+    }
+    @if (language === 'En') {
+      <div>Immersive user experience</div>
+    }
+  </div>
+  <img #image4 class="image init-anim-2" src="assets/images/airbus/airnaveo-search.jpg">
+  <div #bullets4 class="bullet-points">
+    @if (language === 'Fr') {
+      <div>Moteur de recherche visuel</div>
+    }
+    @if (language === 'En') {
+      <div>Visual search engine</div>
+    }
+    @if (language === 'Fr') {
+      <div>Accès doc via avions 3D</div>
+    }
+    @if (language === 'En') {
+      <div>Doc access via 3D planes</div>
+    }
+    @if (language === 'Fr') {
+      <div>Three.JS et Cortona3D</div>
+    }
+    @if (language === 'En') {
+      <div>Three.JS and Cortona3D</div>
+    }
+  </div>
+  <img #image5 class="image init-anim-2" src="../../../../../../assets/images/airbus/airnaveo2.jpg">
+  <div #bullets5 class="bullet-points">
+    @if (language === 'Fr') {
+      <div>Immersion 3D en temps réel</div>
+    }
+    @if (language === 'En') {
+      <div>3D real-time immersion</div>
+    }
+    @if (language === 'Fr') {
+      <div>Séquences animés précalculé</div>
+    }
+    @if (language === 'En') {
+      <div>Precalculated animation sequences</div>
+    }
+    @if (language === 'Fr') {
+      <div>Transitions fluide entre les deux</div>
+    }
+    @if (language === 'En') {
+      <div>Seemless transitions between the two</div>
+    }
+  </div>
+  <img #image6 class="image init-anim-2" src="../../../../../../assets/images/airbus/airnaveo3.jpg">
 </div>

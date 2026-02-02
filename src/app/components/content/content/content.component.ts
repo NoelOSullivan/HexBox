@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngxs/store';
-import { NgIf, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Container1 } from '../main-sections/container1/container1/container1.component';
 import { Container4 } from '../main-sections/container4/container4/container4.component';
 import { Container2 } from '../main-sections/container2/container2/container2.component';
@@ -19,7 +19,7 @@ import { ChangeContentWidth } from 'app/store/general/general.actions';
 @Component({
     selector: 'app-content',
     changeDetection: ChangeDetectionStrategy.Default,
-    imports: [NgIf, NgClass, Container1, Container2, Container3, Container4, Container5, Container6],
+    imports: [NgClass, Container1, Container2, Container3, Container4, Container5, Container6],
     templateUrl: './content.component.html',
     styleUrls: ['./content.component.scss']
 })

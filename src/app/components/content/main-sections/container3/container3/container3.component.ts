@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ContentDirective } from '../../../../../shared/directives/content.directive';
-import { NgIf } from '@angular/common';
+
 import { LogoComponent } from 'app/shared/components/logo/logo.component';
 import { Select } from '@ngxs/store';
 import { LanguageModel } from 'app/store/general/general.model';
@@ -10,7 +10,7 @@ import { BichromeTitleComponent } from 'app/shared/components/bichrome-title/bic
 
 @Component({
     selector: 'app-container3',
-    imports: [NgIf, ContentDirective, LogoComponent, BichromeTitleComponent],
+    imports: [ContentDirective, LogoComponent, BichromeTitleComponent],
     templateUrl: './container3.component.html',
     styleUrls: ['./container3.component.scss', '../../main-sections-shared-styles.scss']
 })

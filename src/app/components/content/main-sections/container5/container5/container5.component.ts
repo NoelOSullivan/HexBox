@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ContentDirective } from '../../../../../shared/directives/content.directive';
-import { NgIf } from '@angular/common';
+
 import { Select } from '@ngxs/store';
 import { Language } from 'app/store/general/general.state';
 import { Observable } from 'rxjs';
@@ -9,7 +9,7 @@ import { LogoComponent } from 'app/shared/components/logo/logo.component';
 
 @Component({
     selector: 'app-container5',
-    imports: [NgIf, ContentDirective, LogoComponent],
+    imports: [ContentDirective, LogoComponent],
     templateUrl: './container5.component.html',
     styleUrls: ['./container5.component.scss', '../../main-sections-shared-styles.scss']
 })

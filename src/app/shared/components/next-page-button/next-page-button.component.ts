@@ -1,12 +1,12 @@
 import { Component, Input } from '@angular/core';
-import { NgIf } from '@angular/common';
+
 import { Store } from '@ngxs/store';
 import { Direction } from 'app/shared/interfaces/panel';
 import { TurnPage } from 'app/store/panel/panel.action';
 
 @Component({
     selector: 'app-next-page-button',
-    imports: [NgIf, ],
+    imports: [],
     templateUrl: './next-page-button.component.html',
     styleUrl: './next-page-button.component.scss'
 })

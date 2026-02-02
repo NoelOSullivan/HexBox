@@ -1,12 +1,18 @@
 <div #hoopHolder class="hoop-holder">
-    <div class="background-circle"></div>
-    <div class="arc arc-top"></div>
-    <div class="head-holder">
-        <div #head class="head" [ngClass]="{'head-down':headUp ===false}">
-            <img *ngIf="language==='Fr'" class="head-image" src="{{headSrcFr}}">
-            <img *ngIf="language==='En'" class="head-image" src="{{headSrcUk}}">
-            <img #egg *ngIf="showEgg" class="egg-image" src="assets/images/thesun/cracked-egg.png">
-        </div>
+  <div class="background-circle"></div>
+  <div class="arc arc-top"></div>
+  <div class="head-holder">
+    <div #head class="head" [ngClass]="{'head-down':headUp ===false}">
+      @if (language==='Fr') {
+        <img class="head-image" src="{{headSrcFr}}">
+      }
+      @if (language==='En') {
+        <img class="head-image" src="{{headSrcUk}}">
+      }
+      @if (showEgg) {
+        <img #egg class="egg-image" src="assets/images/thesun/cracked-egg.png">
+      }
     </div>
-    <div class="arc arc-bottom"></div>
+  </div>
+  <div class="arc arc-bottom"></div>
 </div>

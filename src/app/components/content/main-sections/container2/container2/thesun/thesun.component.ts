@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NgIf } from '@angular/common';
+
 import { Select, Store } from '@ngxs/store';
 import { HeadshotComponent } from './headshot/headshot.component';
 import { PlayButtonComponent } from 'app/shared/components/play-button/play-button.component';
@@ -15,7 +15,7 @@ import { HeadInfo } from 'app/shared/interfaces/general';
 
 @Component({
     selector: 'app-thesun',
-    imports: [NgIf, HeadshotComponent, PlayButtonComponent, ChronoComponent, ResultsComponent],
+    imports: [HeadshotComponent, PlayButtonComponent, ChronoComponent, ResultsComponent],
     providers: [DataService],
     templateUrl: './thesun.component.html',
     styleUrl: './thesun.component.scss'

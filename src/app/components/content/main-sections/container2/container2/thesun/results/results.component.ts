@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { NgFor, NgIf } from '@angular/common';
+
 import * as d3 from 'd3';
 import { HeadInfo } from 'app/shared/interfaces/general';
 import { AppState } from 'app/store/general/general.state';
@@ -9,7 +9,7 @@ import { Select } from '@ngxs/store';
 
 @Component({
     selector: 'app-results',
-    imports: [NgFor, NgIf],
+    imports: [],
     templateUrl: './results.component.html',
     styleUrl: './results.component.scss'
 })

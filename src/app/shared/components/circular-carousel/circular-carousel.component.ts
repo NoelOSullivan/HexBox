@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild, viewChild } from '@angular/core';
-import { NgFor, NgIf, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { DataService } from 'app/shared/services/data.service';
 import { Select } from '@ngxs/store';
 import { AppState } from 'app/store/general/general.state';
@@ -10,7 +10,7 @@ import { SwipeIconComponent } from '../swipe-icon/swipe-icon.component';
 
 @Component({
     selector: 'app-circular-carousel',
-    imports: [NgFor, NgIf, NgClass, SwipeIconComponent],
+    imports: [NgClass, SwipeIconComponent],
     providers: [DataService],
     templateUrl: './circular-carousel.component.html',
     styleUrl: './circular-carousel.component.scss'
