@@ -25,11 +25,11 @@ import { HexBoxModel } from 'app/store/hexagon/hexagon.model';
 import { Howl, Howler } from 'howler';
 
 @Component({
-    selector: 'hexagon-group',
-    imports: [NgClass, HexagonComponent, LangButtonComponent, VolumeButtonComponent, SwipeIconComponent, EggComponent, TarantulaComponent, CircularTextComponent],
-    providers: [DataService],
-    templateUrl: './hexagon-group.component.html',
-    styleUrls: ['./hexagon-group.component.scss']
+  selector: 'hexagon-group',
+  imports: [NgClass, HexagonComponent, LangButtonComponent, VolumeButtonComponent, SwipeIconComponent, EggComponent, TarantulaComponent, CircularTextComponent],
+  providers: [DataService],
+  templateUrl: './hexagon-group.component.html',
+  styleUrls: ['./hexagon-group.component.scss']
 })
 
 export class HexagonGroupComponent implements OnInit, AfterViewInit {
@@ -79,7 +79,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
   public menuContentLanguage: Array<any> = [];
   public menuContent2: string = "Click Me";
   public hexOpened: Array<any> = [];
-  public selected!: number;
+  public selected: number = 0;
   public rolled: number | null = null;
   public tarantulaIsOut: boolean = false;
   public tarantulaIsMoving: boolean = true;
@@ -171,6 +171,9 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
       this.hexbox = newHexBox;
     });
 
+    this.startHexagonIntroAnim();
+    // this.manageMenu(2);
+
     this.appState$.subscribe(newAppState => {
 
       if (newAppState.introVideoLoaded !== this.introVideoLoaded) {
@@ -180,36 +183,36 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
 
       // To Do : this gets called every time for the mouseupoutside on wheel menus
       // It keeps being called. No good.
-      this.introState = newAppState.introState;
-      if (this.introState === 'onFinalAnim' && this.introDone === false) {
-        this.introDone = true;
-        this.menuLanguageChange();
-        this.manageMenu(2);
-        this.activateDirectAccess();
-        this.activateTools();
-      }
-      if (this.sunGameState !== newAppState.sunGameState) {
-        this.sunGameState = newAppState.sunGameState;
-        switch (this.sunGameState) {
-          case SunGameState.GAMEOFF:
-          case SunGameState.GAMEOVER:
-            if (this.catapult) {
-              this.catapult.nativeElement.style.transition = "opacity 0.75s ease-out";
-              setTimeout(() => {
-                this.catapult.nativeElement.style.opacity = 0;
-              }, 0);
-              this.catapult.nativeElement.style.pointerEvents = 'none';
-            }
-            break;
-          case SunGameState.GAMEON:
-            this.catapult.nativeElement.style.transition = "opacity 1.25s ease-in";
-            setTimeout(() => {
-              this.catapult.nativeElement.style.opacity = 100;
-            }, 0);
-            this.catapult.nativeElement.style.pointerEvents = 'all';
-            break;
-        }
-      }
+      // this.introState = newAppState.introState;
+      // if (this.introState === 'onFinalAnim' && this.introDone === false) {
+      //   this.introDone = true;
+      //   this.menuLanguageChange();
+      //   this.manageMenu(2);
+      //   this.activateDirectAccess();
+      //   this.activateTools();
+      // }
+      // if (this.sunGameState !== newAppState.sunGameState) {
+      //   this.sunGameState = newAppState.sunGameState;
+      //   switch (this.sunGameState) {
+      //     case SunGameState.GAMEOFF:
+      //     case SunGameState.GAMEOVER:
+      //       if (this.catapult) {
+      //         this.catapult.nativeElement.style.transition = "opacity 0.75s ease-out";
+      //         setTimeout(() => {
+      //           this.catapult.nativeElement.style.opacity = 0;
+      //         }, 0);
+      //         this.catapult.nativeElement.style.pointerEvents = 'none';
+      //       }
+      //       break;
+      //     case SunGameState.GAMEON:
+      //       this.catapult.nativeElement.style.transition = "opacity 1.25s ease-in";
+      //       setTimeout(() => {
+      //         this.catapult.nativeElement.style.opacity = 100;
+      //       }, 0);
+      //       this.catapult.nativeElement.style.pointerEvents = 'all';
+      //       break;
+      //   }
+      // }
       if (newAppState.contentHeight !== this.contentHeight) {
         this.contentHeight = newAppState.contentHeight;
       }
@@ -300,11 +303,11 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
         const contentText = this.menuContent[i].split("##");
         const twoPossibles = contentText[1].split("#");
         let newText;
-        if (this.introState !== 'done' && this.introState !== 'onFinalAnim' && i === 2) {
-          newText = this.language == "Fr" ? "Cliquer" : "Click Me";
-        } else {
-          newText = this.language == "Fr" ? twoPossibles[0] : twoPossibles[1];
-        }
+        // if (this.introState !== 'done' && this.introState !== 'onFinalAnim' && i === 2) {
+        //   newText = this.language == "Fr" ? "Cliquer" : "Click Me";
+        // } else {
+        newText = this.language == "Fr" ? twoPossibles[0] : twoPossibles[1];
+        // }
         this.menuContentLanguage.push(contentText[0] + newText + contentText[2]);
       }
     } else {
@@ -328,28 +331,29 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
       // After pause, open menu with new button content
       this.setUpMenu(1); // Change menu content. To do : refactor and clean up
       this.hexOpened = [true, true, true, true, true, true];
+      this.selected = 2;
       // this.manageMenu(2);
     }, 1000);
   }
 
   clickHexagon(hexIndex: any, location: any, overrideBlock?: boolean) {
 
-    if (this.blockAll && !overrideBlock) return;
+    // if (this.blockAll && !overrideBlock) return;
 
-    if (this.introState === IntroState.BLOCKALL) {
-      return
-    }
+    // if (this.introState === IntroState.BLOCKALL) {
+    //   return
+    // }
 
-    if (this.introState === IntroState.ALLOWCUT) {
+    // if (this.introState === IntroState.ALLOWCUT) {
 
-      if (hexIndex === 2) {
-        this.store.dispatch(new ChangeIntroState(IntroState.ONFINALANIM));
-      }
-    }
+    //   if (hexIndex === 2) {
+    //     this.store.dispatch(new ChangeIntroState(IntroState.ONFINALANIM));
+    //   }
+    // }
 
-    if (this.introState === IntroState.DONE) {
-      this.manageMenu(hexIndex);
-    }
+    // if (this.introState === IntroState.DONE) {
+    this.manageMenu(hexIndex);
+    // }
   }
 
   manageMenu(hexIndex: number | null | undefined) {
@@ -380,6 +384,8 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
       if (rotationToAdd) {
         this.menuRotation += rotationToAdd;
       }
+
+      console.log("rotationToAdd", rotationToAdd);
 
       if (rotationToAdd) {
         const rotation: Rotation = { degrees: rotationToAdd }

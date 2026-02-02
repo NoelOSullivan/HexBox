@@ -107,17 +107,17 @@ export class LayoutComponent implements OnInit {
       this.updateLayout();
     }
 
-    this.activePanelNumber$.subscribe(newActivePanelNumber => {
-      this.changeBackgroundHue(newActivePanelNumber.activePanelNumber.apn);
-    });
+    // this.activePanelNumber$.subscribe(newActivePanelNumber => {
+    //   this.changeBackgroundHue(newActivePanelNumber.activePanelNumber.apn);
+    // });
   }
 
-  changeBackgroundHue(panel: number): void {
+  // changeBackgroundHue(panel: number): void {
 
-    const rotation = (panel - 1) * 60;
-    this.backgroundImage.nativeElement.style.filter = `hue-rotate(${rotation}deg)`;
+  //   const rotation = (panel - 1) * 60;
+  //   this.backgroundImage.nativeElement.style.filter = `hue-rotate(${rotation}deg)`;
 
-  }
+  // }
 
   updateLayout() {
 

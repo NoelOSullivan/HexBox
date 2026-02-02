@@ -1,10 +1,8 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ContentDirective } from '../../../../../shared/directives/content.directive';
-import { NgClass } from '@angular/common';
 import { Select, Store } from '@ngxs/store';
 
 import { LogoComponent } from '../../../../../shared/components/logo/logo.component';
-import { SwipeIconComponent } from '../../../../../shared/components/swipe-icon/swipe-icon.component';
 
 import { Direction } from '../../../../../shared/interfaces/panel';
 import { TurnPage } from '../../../../../store/panel/panel.action';
@@ -19,7 +17,7 @@ import { BichromeTitleComponent } from 'app/shared/components/bichrome-title/bic
 
 @Component({
     selector: 'app-container1',
-    imports: [NgClass, ContentDirective, LogoComponent, BichromeTitleComponent, SwipeIconComponent, NextPageButtonComponent],
+    imports: [ContentDirective, LogoComponent, BichromeTitleComponent, NextPageButtonComponent],
     templateUrl: './container1.component.html',
     styleUrls: ['./container1.component.scss', '../../main-sections-shared-styles.scss']
 })
@@ -31,10 +29,10 @@ export class Container1 implements OnInit {
 
   @Input() nContainer!: number;
 
-  @ViewChild('video1') video1!: ElementRef;
-  @ViewChild('video2') video2!: ElementRef;
-  @ViewChild('video3') video3!: ElementRef;
-  @ViewChild('videoHolder') videoHolder!: ElementRef;
+  // @ViewChild('video1') video1!: ElementRef;
+  // @ViewChild('video2') video2!: ElementRef;
+  // @ViewChild('video3') video3!: ElementRef;
+  // @ViewChild('videoHolder') videoHolder!: ElementRef;
 
   constructor(private store: Store) { }
 
@@ -65,44 +63,44 @@ export class Container1 implements OnInit {
   }
 
   ngOnInit(): void {
-    this.appState$.subscribe(newAppState => {
-      this.appState = newAppState;
-      this.introState = this.appState.introState;
-      if (this.introState === 'onFinalAnim' && this.introDone === false) {
-        this.introDone = true;
-        this.video1.nativeElement.removeEventListener('ended', this.endVideo1);
-        this.video2.nativeElement.removeEventListener('ended', this.endVideo2);
-        this.video3.nativeElement.removeEventListener('ended', this.endVideo3);
-        this.showSwipe = false;
-        // If the intro was cut by the user and we are on the 2nd page, go back to page 1
-        if (this.activePageNum === 1) {
-          const directionObj: Direction = { direction: "right" };
-          this.store.dispatch(new TurnPage(directionObj));
-        }
-        setTimeout(() => {
-          this.store.dispatch(new ChangeIntroState(IntroState.DONE));
-        }, 500);
+    // this.appState$.subscribe(newAppState => {
+    //   this.appState = newAppState;
+    //   this.introState = this.appState.introState;
+    //   if (this.introState === 'onFinalAnim' && this.introDone === false) {
+    //     this.introDone = true;
+    //     this.video1.nativeElement.removeEventListener('ended', this.endVideo1);
+    //     this.video2.nativeElement.removeEventListener('ended', this.endVideo2);
+    //     this.video3.nativeElement.removeEventListener('ended', this.endVideo3);
+    //     this.showSwipe = false;
+    //     // If the intro was cut by the user and we are on the 2nd page, go back to page 1
+    //     if (this.activePageNum === 1) {
+    //       const directionObj: Direction = { direction: "right" };
+    //       this.store.dispatch(new TurnPage(directionObj));
+    //     }
+    //     setTimeout(() => {
+    //       this.store.dispatch(new ChangeIntroState(IntroState.DONE));
+    //     }, 500);
 
-      }
-      if (this.introState === 'done' && !this.videosFinished) {
-        this.videosFinished = true;
-        if (this.video1) {
-          this.video1.nativeElement.style.visibility = "hidden";
-        }
-        if (this.video2) {
-          this.video2.nativeElement.style.visibility = "hidden";
-        }
-        if (this.video3) {
-          this.video3.nativeElement.style.visibility = "hidden";
-        }
-        this.done1 = true;
-        this.done2 = true;
-        this.done3 = true;
-      }
-      if (this.appState.blockAll !== this.blockAll) {
-        this.blockAll = this.appState.blockAll
-      }
-    });
+    //   }
+    //   if (this.introState === 'done' && !this.videosFinished) {
+    //     this.videosFinished = true;
+    //     if (this.video1) {
+    //       this.video1.nativeElement.style.visibility = "hidden";
+    //     }
+    //     if (this.video2) {
+    //       this.video2.nativeElement.style.visibility = "hidden";
+    //     }
+    //     if (this.video3) {
+    //       this.video3.nativeElement.style.visibility = "hidden";
+    //     }
+    //     this.done1 = true;
+    //     this.done2 = true;
+    //     this.done3 = true;
+    //   }
+    //   if (this.appState.blockAll !== this.blockAll) {
+    //     this.blockAll = this.appState.blockAll
+    //   }
+    // });
 
     this.language$.subscribe(newLanguage => {
       this.language = newLanguage.language
@@ -110,89 +108,89 @@ export class Container1 implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.video1.nativeElement.load();
+    // this.video1.nativeElement.load();
 
-    let that = this;
-    this.video1.nativeElement.addEventListener('loadeddata', function () {
+    // let that = this;
+    // this.video1.nativeElement.addEventListener('loadeddata', function () {
 
-      that.store.dispatch(new ChangeIntroVideoLoadedState(true));
-      // Video is loaded and can be played
-      const holderHeight = that.videoHolder.nativeElement.clientHeight;
-      const videoHeight = that.video1.nativeElement.clientHeight;
+    //   that.store.dispatch(new ChangeIntroVideoLoadedState(true));
+    //   // Video is loaded and can be played
+    //   const holderHeight = that.videoHolder.nativeElement.clientHeight;
+    //   const videoHeight = that.video1.nativeElement.clientHeight;
 
-      if (videoHeight > holderHeight) {
-        that.video1.nativeElement.style.marginTop = -(Math.min(videoHeight - holderHeight, 70)) + "px";
-        that.video2.nativeElement.style.marginTop = -(Math.min(videoHeight - holderHeight, 70)) + "px";
-        that.video3.nativeElement.style.marginTop = -(Math.min(videoHeight - holderHeight, 70)) + "px";
-      }
+    //   if (videoHeight > holderHeight) {
+    //     that.video1.nativeElement.style.marginTop = -(Math.min(videoHeight - holderHeight, 70)) + "px";
+    //     that.video2.nativeElement.style.marginTop = -(Math.min(videoHeight - holderHeight, 70)) + "px";
+    //     that.video3.nativeElement.style.marginTop = -(Math.min(videoHeight - holderHeight, 70)) + "px";
+    //   }
 
-      that.video1.nativeElement.muted = true;
-      that.video1.nativeElement.currentTime = 0;
-      that.video1.nativeElement.play();
+    //   that.video1.nativeElement.muted = true;
+    //   that.video1.nativeElement.currentTime = 0;
+    //   that.video1.nativeElement.play();
 
-      setTimeout(() => {
-        that.showSwipe = true;
-      }, 2000);
+    //   setTimeout(() => {
+    //     that.showSwipe = true;
+    //   }, 2000);
 
-      that.video1.nativeElement.addEventListener("ended", () => {
-        that.endVideo1();
-      });
-    }, false);
+    //   that.video1.nativeElement.addEventListener("ended", () => {
+    //     that.endVideo1();
+    //   });
+    // }, false);
 
-    this.video3.nativeElement.style.visibility = "hidden";
-    this.video3.nativeElement.pause();
+    // this.video3.nativeElement.style.visibility = "hidden";
+    // this.video3.nativeElement.pause();
 
   }
 
-  endVideo1() {
-    if (this.introDone === false) {
-      this.done1 = true;
-      this.video1.nativeElement.removeEventListener('ended', this);
-      this.flipIntro();
-    }
-  }
+  // endVideo1() {
+  //   if (this.introDone === false) {
+  //     this.done1 = true;
+  //     this.video1.nativeElement.removeEventListener('ended', this);
+  //     this.flipIntro();
+  //   }
+  // }
 
-  flipIntro(): void {
-    const directionObj: Direction = { direction: "left" };
-    this.store.dispatch(new TurnPage(directionObj));
+  // flipIntro(): void {
+  //   const directionObj: Direction = { direction: "left" };
+  //   this.store.dispatch(new TurnPage(directionObj));
 
-    this.video2.nativeElement.muted = true;
-    this.video2.nativeElement.style.visibility = "visible";
-    this.video2.nativeElement.play(1);
+  //   this.video2.nativeElement.muted = true;
+  //   this.video2.nativeElement.style.visibility = "visible";
+  //   this.video2.nativeElement.play(1);
 
-    this.video2.nativeElement.addEventListener("ended", () => {
-      this.endVideo2();
-    });
-  }
+  //   this.video2.nativeElement.addEventListener("ended", () => {
+  //     this.endVideo2();
+  //   });
+  // }
 
-  endVideo2() {
-    this.done2 = true;
-    this.video2.nativeElement.removeEventListener('ended', this);
-    this.flipIntroBack();
-  }
+  // endVideo2() {
+  //   this.done2 = true;
+  //   this.video2.nativeElement.removeEventListener('ended', this);
+  //   this.flipIntroBack();
+  // }
 
-  flipIntroBack(): void {
-    const directionObj: Direction = { direction: "right" };
-    this.store.dispatch(new TurnPage(directionObj));
+  // flipIntroBack(): void {
+  //   const directionObj: Direction = { direction: "right" };
+  //   this.store.dispatch(new TurnPage(directionObj));
 
-    this.video1.nativeElement.style.visibility = "hidden";
+  //   this.video1.nativeElement.style.visibility = "hidden";
 
-    this.video3.nativeElement.muted = true;
-    this.video3.nativeElement.style.visibility = "visible";
-    this.video3.nativeElement.play(1);
+  //   this.video3.nativeElement.muted = true;
+  //   this.video3.nativeElement.style.visibility = "visible";
+  //   this.video3.nativeElement.play(1);
 
-    this.onFingerAnim = true;
+  //   this.onFingerAnim = true;
 
-    this.video3.nativeElement.addEventListener("ended", () => {
-      this.endVideo3();
-    });
-  }
+  //   this.video3.nativeElement.addEventListener("ended", () => {
+  //     this.endVideo3();
+  //   });
+  // }
 
-  endVideo3() {
-    this.done3 = true;
-    this.video3.nativeElement.removeEventListener('ended', this);
-    this.finIntro();
-  }
+  // endVideo3() {
+  //   this.done3 = true;
+  //   this.video3.nativeElement.removeEventListener('ended', this);
+  //   this.finIntro();
+  // }
 
   finIntro() {
     this.store.dispatch(new ChangeIntroState(IntroState.ONFINALANIM));
