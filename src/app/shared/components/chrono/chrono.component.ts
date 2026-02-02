@@ -1,11 +1,10 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-chrono',
-  standalone: true,
-  imports: [],
-  templateUrl: './chrono.component.html',
-  styleUrl: './chrono.component.scss'
+    selector: 'app-chrono',
+    imports: [],
+    templateUrl: './chrono.component.html',
+    styleUrl: './chrono.component.scss'
 })
 export class ChronoComponent {
 

@@ -2,11 +2,10 @@ import { Component, Input } from '@angular/core';
 import { NgClass } from '@angular/common';
 
 @Component({
-  selector: 'app-tarantula',
-  standalone: true,
-  imports: [NgClass],
-  templateUrl: './tarantula.component.html',
-  styleUrl: './tarantula.component.scss'
+    selector: 'app-tarantula',
+    imports: [NgClass],
+    templateUrl: './tarantula.component.html',
+    styleUrl: './tarantula.component.scss'
 })
 export class TarantulaComponent {
   

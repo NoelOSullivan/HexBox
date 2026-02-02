@@ -9,11 +9,10 @@ import { ChangeLanguage } from 'app/store/general/general.actions';
 import { ChangeVolume } from 'app/store/general/general.actions';
 
 @Component({
-  selector: 'app-volume-button',
-  standalone: true,
-  imports: [NgClass, NgIf],
-  templateUrl: './volume-button.component.html',
-  styleUrls: ['./volume-button.component.scss']
+    selector: 'app-volume-button',
+    imports: [NgClass, NgIf],
+    templateUrl: './volume-button.component.html',
+    styleUrls: ['./volume-button.component.scss']
 })
 export class VolumeButtonComponent implements OnInit {
 

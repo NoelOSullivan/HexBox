@@ -9,11 +9,10 @@ import { LanguageModel } from 'app/store/general/general.model';
 import { Language } from 'app/store/general/general.state';
 
 @Component({
-  selector: 'app-container6',
-  standalone: true,
-  imports: [NgIf, ContentDirective, LogoComponent, CircularCarouselComponent],
-  templateUrl: './container6.component.html',
-  styleUrls: ['./container6.component.scss', '../../main-sections-shared-styles.scss']
+    selector: 'app-container6',
+    imports: [NgIf, ContentDirective, LogoComponent, CircularCarouselComponent],
+    templateUrl: './container6.component.html',
+    styleUrls: ['./container6.component.scss', '../../main-sections-shared-styles.scss']
 })
 export class Container6 implements OnInit {
 

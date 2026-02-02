@@ -19,11 +19,10 @@ import { NextPageButtonComponent } from 'app/shared/components/next-page-button/
 import { BichromeTitleComponent } from 'app/shared/components/bichrome-title/bichrome-title.component';
 
 @Component({
-  selector: 'app-container1',
-  standalone: true,
-  imports: [NgIf, NgClass, ContentDirective, LogoComponent, BichromeTitleComponent, DirectAccessComponent, SwipeIconComponent, NextPageButtonComponent],
-  templateUrl: './container1.component.html',
-  styleUrls: ['./container1.component.scss', '../../main-sections-shared-styles.scss']
+    selector: 'app-container1',
+    imports: [NgIf, NgClass, ContentDirective, LogoComponent, BichromeTitleComponent, DirectAccessComponent, SwipeIconComponent, NextPageButtonComponent],
+    templateUrl: './container1.component.html',
+    styleUrls: ['./container1.component.scss', '../../main-sections-shared-styles.scss']
 })
 
 export class Container1 implements OnInit {

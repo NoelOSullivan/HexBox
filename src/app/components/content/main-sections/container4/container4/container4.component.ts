@@ -8,11 +8,10 @@ import { Observable } from 'rxjs';
 import { LanguageModel } from 'app/store/general/general.model';
 
 @Component({
-  selector: 'app-container4',
-  standalone: true, 
-  imports: [NgIf, ContentDirective, DirectAccessComponent],
-  templateUrl: './container4.component.html',
-  styleUrls: ['./container4.component.scss','../../main-sections-shared-styles.scss']
+    selector: 'app-container4',
+    imports: [NgIf, ContentDirective, DirectAccessComponent],
+    templateUrl: './container4.component.html',
+    styleUrls: ['./container4.component.scss', '../../main-sections-shared-styles.scss']
 })
 export class Container4  {
   

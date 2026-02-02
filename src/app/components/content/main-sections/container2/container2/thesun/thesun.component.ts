@@ -14,12 +14,11 @@ import { DataService } from 'app/shared/services/data.service';
 import { HeadInfo } from 'app/shared/interfaces/general';
 
 @Component({
-  selector: 'app-thesun',
-  standalone: true,
-  imports: [NgIf, HeadshotComponent, PlayButtonComponent, ChronoComponent, ResultsComponent],
-  providers: [DataService],
-  templateUrl: './thesun.component.html',
-  styleUrl: './thesun.component.scss'
+    selector: 'app-thesun',
+    imports: [NgIf, HeadshotComponent, PlayButtonComponent, ChronoComponent, ResultsComponent],
+    providers: [DataService],
+    templateUrl: './thesun.component.html',
+    styleUrl: './thesun.component.scss'
 })
 
 export class ThesunComponent implements OnInit {

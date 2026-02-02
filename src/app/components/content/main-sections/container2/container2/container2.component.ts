@@ -18,11 +18,10 @@ import { AppState } from 'app/store/general/general.state';
 import { NextPageButtonComponent } from 'app/shared/components/next-page-button/next-page-button.component';
 
 @Component({
-  selector: 'app-container2',
-  standalone: true,
-  imports: [NgIf, NgClass, ContentDirective, LinkIconComponent, AirbusComponent, ThesunComponent, CircularCarouselComponent, LogoComponent, NextPageButtonComponent],
-  templateUrl: './container2.component.html',
-  styleUrls: ['./container2.component.scss', '../../main-sections-shared-styles.scss']
+    selector: 'app-container2',
+    imports: [NgIf, NgClass, ContentDirective, LinkIconComponent, AirbusComponent, ThesunComponent, CircularCarouselComponent, LogoComponent, NextPageButtonComponent],
+    templateUrl: './container2.component.html',
+    styleUrls: ['./container2.component.scss', '../../main-sections-shared-styles.scss']
 })
 export class Container2 {
 

@@ -11,11 +11,10 @@ import { Observable } from 'rxjs';
 import { ActivePanelNumberModel } from 'app/store/hexagon/hexagon.model';
 
 @Component({
-  selector: 'app-layout',
-  standalone: true,
-  imports: [NgIf, NgClass, MenuComponent, ContentComponent],
-  templateUrl: './layout.component.html',
-  styleUrl: './layout.component.scss'
+    selector: 'app-layout',
+    imports: [NgIf, NgClass, MenuComponent, ContentComponent],
+    templateUrl: './layout.component.html',
+    styleUrl: './layout.component.scss'
 })
 
 export class LayoutComponent implements OnInit {

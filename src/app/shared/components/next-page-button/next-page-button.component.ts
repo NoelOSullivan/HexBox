@@ -6,11 +6,10 @@ import { Direction } from 'app/shared/interfaces/panel';
 import { TurnPage } from 'app/store/panel/panel.action';
 
 @Component({
-  selector: 'app-next-page-button',
-  standalone: true,
-  imports: [NgIf, SwipeIconComponent],
-  templateUrl: './next-page-button.component.html',
-  styleUrl: './next-page-button.component.scss'
+    selector: 'app-next-page-button',
+    imports: [NgIf, SwipeIconComponent],
+    templateUrl: './next-page-button.component.html',
+    styleUrl: './next-page-button.component.scss'
 })
 export class NextPageButtonComponent {
 

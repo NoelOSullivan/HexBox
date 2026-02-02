@@ -4,11 +4,10 @@ import { Store } from '@ngxs/store';
 import { ChangeLanguage } from './store/general/general.actions';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [LayoutComponent],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+    selector: 'app-root',
+    imports: [LayoutComponent],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss'
 })
 
 export class AppComponent implements OnInit {

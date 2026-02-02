@@ -9,12 +9,11 @@ import { Language } from 'app/store/general/general.state';
 import { SwipeIconComponent } from '../swipe-icon/swipe-icon.component';
 
 @Component({
-  selector: 'app-circular-carousel',
-  standalone: true,
-  imports: [NgFor, NgIf, NgClass, SwipeIconComponent],
-  providers: [DataService],
-  templateUrl: './circular-carousel.component.html',
-  styleUrl: './circular-carousel.component.scss'
+    selector: 'app-circular-carousel',
+    imports: [NgFor, NgIf, NgClass, SwipeIconComponent],
+    providers: [DataService],
+    templateUrl: './circular-carousel.component.html',
+    styleUrl: './circular-carousel.component.scss'
 })
 export class CircularCarouselComponent implements OnInit {
 

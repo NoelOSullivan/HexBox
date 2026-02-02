@@ -6,11 +6,10 @@ import { Observable } from 'rxjs';
 import { AppStateModel } from 'app/store/general/general.model';
 
 @Component({
-  selector: 'app-play-button',
-  standalone: true,
-  imports: [NgClass],
-  templateUrl: './play-button.component.html',
-  styleUrls: ['./play-button.component.scss']
+    selector: 'app-play-button',
+    imports: [NgClass],
+    templateUrl: './play-button.component.html',
+    styleUrls: ['./play-button.component.scss']
 })
 
 export class PlayButtonComponent {

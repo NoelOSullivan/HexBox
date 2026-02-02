@@ -4,11 +4,10 @@ import { SunGameState } from 'app/store/general/general.model';
 import { HexBoxInterface } from 'app/shared/interfaces/hexagon'
 
 @Component({
-  selector: 'app-hexagon',
-  standalone: true,
-  imports: [NgClass],
-  templateUrl: './hexagon.component.html',
-  styleUrls: ['./hexagon.component.scss']
+    selector: 'app-hexagon',
+    imports: [NgClass],
+    templateUrl: './hexagon.component.html',
+    styleUrls: ['./hexagon.component.scss']
 })
 export class HexagonComponent {
 

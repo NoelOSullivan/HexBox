@@ -8,11 +8,10 @@ import { PlayButtonComponent } from 'app/shared/components/play-button/play-butt
 import { BulletPointsComponent } from 'app/shared/components/bullet-points/bullet-points.component';
 
 @Component({
-  selector: 'app-airbus',
-  standalone: true,
-  imports: [NgIf, NgClass, PlayButtonComponent, BulletPointsComponent],
-  templateUrl: './airbus.component.html',
-  styleUrl: './airbus.component.scss'
+    selector: 'app-airbus',
+    imports: [NgIf, NgClass, PlayButtonComponent, BulletPointsComponent],
+    templateUrl: './airbus.component.html',
+    styleUrl: './airbus.component.scss'
 })
 export class AirbusComponent {
 

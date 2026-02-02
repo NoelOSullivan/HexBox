@@ -2,11 +2,10 @@ import { Component, Input } from '@angular/core';
 import { NgClass } from '@angular/common';
 
 @Component({
-  selector: 'app-circular-text',
-  standalone: true,
-  imports: [NgClass],
-  templateUrl: './circular-text.component.html',
-  styleUrl: './circular-text.component.scss'
+    selector: 'app-circular-text',
+    imports: [NgClass],
+    templateUrl: './circular-text.component.html',
+    styleUrl: './circular-text.component.scss'
 })
 export class CircularTextComponent {
 
