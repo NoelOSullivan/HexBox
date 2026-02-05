@@ -1,0 +1,292 @@
+.full-screen-holder {
+    position: absolute;
+    width: 100svw;
+    height: 100svh;
+    overflow: hidden;
+    overscroll-behavior: contain;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.sackhead {
+    position: absolute;
+    background-image: url("/assets/enigma/sackhead.jpg");
+    background-size: cover;
+    width: 500px;
+    height: 500px;
+    top: calc(50% - 250px);
+    left: calc(50% - 250px);
+    // opacity: 0.4;
+    transition: top ease-out 0.5s, left ease-in 0.5s, opacity 0.5s linear;
+    pointer-events: none;
+}
+
+.sackhead-hides {
+    top: calc(50% - 200px);
+    left: calc(50% - 350px);
+}
+
+.sackhead-dies {
+    opacity: 0;
+}
+
+// .wall {
+//     width: 100vw;
+//     height: 100vh;
+//     background-image: url("/assets/enigma/wall2.jpg");
+//     background-position: center center;
+//     background-repeat: no-repeat;
+//     background-size: auto 100%;
+// }
+
+.wall-left {
+    position: absolute;
+    left: 0;
+    width: 100svw;
+    height: 100svh;
+    background-image: url("/assets/enigma/wall-left.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    transition: left 1s ease-in-out;
+    pointer-events: none;
+}
+
+.wall-left-open {
+    // left: -50svw;
+    left: max(-46svw, -400px)
+}
+
+.wall-right {
+    position: absolute;
+    right: 0;
+    width: 100svw;
+    height: 100svh;
+    background-image: url("/assets/enigma/wall-right.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    transition: right 1s ease-in-out;
+    pointer-events: none;
+}
+
+.wall-right-open {
+    // right: -50svw;
+    right: max(-60svw, -400px)
+}
+
+.left-fade {
+    position: absolute;
+    left: 0;
+    width: 10px;
+    height: 100vh;
+    background: linear-gradient(to left, transparent 0%, black 100%);
+}
+
+.right-fade {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 10px;
+    height: 100vh;
+    background: linear-gradient(to right, transparent 0%, black 100%);
+}
+
+.dark {
+    position: absolute;
+    height: 100vh;
+    background: black;
+}
+
+.light {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    box-shadow: inset 0 0 150px 150px #000;
+    background: #fff;
+    z-index: 10;
+}
+
+.candle {
+    position: absolute;
+    z-index: 2;
+    background-image: url("/assets/enigma/candle.png");
+    background-size: cover;
+    width: calc(113px * 0.3);
+    height: calc(162px * 0.3);
+    z-index: 1;
+    top: calc(50% + 50px);
+    left: calc(50% - 100px);
+
+    pointer-events: all;
+}
+
+.element-holder {
+    width: calc(100svh / 15);
+    height: calc(100svh / 15);
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transition: opacity 0.5s linear;
+}
+
+.kill-element {
+    opacity: 0;
+}
+
+.earth-holder {
+    left: calc(50svw - 17svh);
+    top: 35svh;
+}
+
+.wind-holder {
+    right: calc(50svw - 14.5svh);
+    top: 47.4svh;
+}
+
+.fire-holder {
+    left: calc(50svw - 18svh);
+    top: 61svh;
+}
+
+.water-holder {
+    right: calc(50svw - 19svh);
+    top: 74svh;
+}
+
+.element {
+    background-size: cover;
+    width: 95%;
+    height: 85%;
+}
+
+.element-burnt {
+    filter: saturate(10) contrast(5) brightness(2) drop-shadow(0 0 0.2rem rgb(250, 0, 0));
+}
+
+.earth {
+    background-image: url("/assets/enigma/earth.png");
+    opacity: 0.7;
+}
+
+.wind {
+    background-image: url("/assets/enigma/wind.png");
+    opacity: 0.6;
+}
+
+.fire {
+    background-image: url("/assets/enigma/fire.png");
+    opacity: 0.3;
+}
+
+.water {
+    background-image: url("/assets/enigma/water.png");
+    opacity: 0.4;
+}
+
+// .scroll-target {
+//     position: absolute;
+//     left: calc(50svw - 26svh);
+//     top: 70svh;
+//     rotate: 0deg;
+//     width: calc(100svh / 5);
+//     height: calc(100svh / 5);
+// }
+
+.scroll-holder {
+    position: absolute;
+    width: calc(100svh / 40);
+    height: calc(100svh / 9);
+    left: calc(50svw - 15svh);
+    top: 54svh;
+    overflow: hidden;
+    rotate: 75deg;
+    transition: opacity 0.5s linear, width 0.5s linear, height 0.5s linear, left 0.5s linear, top 0.5s linear, rotate 0.5s linear;
+    pointer-events: none;
+}
+
+.scroll-holder-fallen {
+    z-index: 1;
+    left: calc(50svw - 23svh);
+    top: 70svh;
+    rotate: 0deg;
+    width: calc(100svh / 15);
+    height: calc(100svh / 3.5);
+}
+
+.scroll-open {
+    width: calc(100svh / 3.5);
+}
+
+.scroll-fixed {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url("/assets/enigma/scrollFixed.png");
+    background-size: cover;
+    left: 0;
+}
+
+.scroll-move {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url("/assets/enigma/scrollMove.png");
+    background-size: cover;
+    background-position: right center;
+    transition: left 0.5s linear;
+    left: 5px;
+}
+
+.scroll-move-fallen {
+    left: 11px;
+}
+
+.scroll-roll {
+    left: 0;
+}
+
+.kill-scroll {
+    opacity: 0;
+}
+
+.intro-text {
+    // margin-left: 5%;
+    width: 90%;
+    position: absolute;
+    top: 40px;
+    text-align: center;
+    font-family: 'aniron-regular';
+    font-size: 20px;
+    color: white;
+    opacity: 1;
+    transition: opacity 1s linear;
+    pointer-events: none;
+}
+
+.hide-intro-text {
+    opacity: 0;
+}
+
+.zapp-button {
+    
+    pointer-events: all;
+    position: absolute;
+    font-family: 'aniron-regular';
+    font-size: 12px;
+    text-align: right  ;
+    // width: 100px;
+    height: 20px;
+    right: 15px;
+    bottom: 40px;
+    color: white // right: 20px;
+        // background-image: url("/assets/enigma/zapp-button.png");
+        // background-size: cover;
+        // cursor: pointer;
+        // pointer-events: auto;
+}

@@ -1,0 +1,402 @@
+.mask-holder {
+    width: 100svw;
+    height: 100svh;
+    position: relative;
+    overflow: hidden;
+}
+
+.mask {
+    pointer-events: all;
+    position: absolute;
+    left: calc(-50svw + 5svh);
+    top: -30svh;
+    width: 220vw;
+    height: 220vh;
+    background-color: hsla(0, 0%, 0%, 0.9);
+    mask: radial-gradient(circle at 50% 50%,
+            transparent 30px,
+            rgba(240, 220, 220, 0.9) 150px);
+    opacity: 1;
+    transition: opacity 0.5s linear;
+}
+
+.kill-mask {
+    opacity: 0;
+}
+
+.mask-for-candle {
+    background-color: hsla(0, 0%, 0%, 0.8);
+    mask: radial-gradient(circle at 50% 50%,
+            transparent 0px,
+            rgba(240, 220, 220, 0.8) 200px);
+}
+
+.halo-grow {
+    width: 100svw;
+    height: 100svh;
+    background: black;
+    opacity: 0.4;
+    pointer-events: none;
+    transition: opacity 0.5s linear;
+}
+
+.halo-grow-fade {
+    opacity: 0;
+}
+
+.match-holder {
+    pointer-events: none;
+    position: absolute;
+    width: calc(100svh / 4000 * 101);
+    height: calc(100svh / 4000 * 440);
+    left: calc(50svw + 15svh);
+    top: 70svh;
+    transform: rotate(-135deg);
+    z-index: 3;
+}
+
+.match-holder-lit {
+    animation: match-holder-rotate 0.2s 1 ease-out;
+    animation-fill-mode: forwards;
+}
+
+@keyframes match-holder-rotate {
+    0% {
+        transform: rotate(-135deg);
+    }
+
+    100% {
+        transform: rotate(-45deg);
+    }
+}
+
+.match {
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    margin-left: -70%;
+    margin-top: -20%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    animation-fill-mode: forwards;
+}
+
+.match1 {
+    background-image: url(images/match1.png);
+    opacity: 1;
+}
+
+.showMatch {
+    opacity: 1;
+}
+
+.match1LifeCycle {
+    animation: manageMatch1 2s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes manageMatch1 {
+    0% {
+        opacity: 1;
+    }
+
+    95% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.match2 {
+    background-image: url(images/match2.png);
+    opacity: 0;
+}
+
+.match2LifeCycle {
+    animation: manageMatch2 6s;
+    animation-fill-mode: forwards;
+    animation-delay: 1.5s;
+}
+
+@keyframes manageMatch2 {
+    0% {
+        opacity: 0;
+    }
+
+    5% {
+        opacity: 1;
+    }
+
+    95% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.match3 {
+    opacity: 0;
+    background-image: url(images/match3.png);
+}
+
+.match3LifeCycle {
+    animation: manageMatch3 7s;
+    animation-fill-mode: forwards;
+    animation-delay: 7s;
+}
+
+@keyframes manageMatch3 {
+    0% {
+        opacity: 0;
+    }
+
+    5% {
+        opacity: 1;
+    }
+
+    95% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.match4 {
+    opacity: 0;
+    background-image: url(images/match4.png);
+}
+
+.match4LifeCycle {
+    animation: manageMatch4 8s;
+    animation-fill-mode: forwards;
+    animation-delay: 13.5s;
+}
+
+@keyframes manageMatch4 {
+    0% {
+        opacity: 0;
+    }
+
+    5% {
+        opacity: 1;
+    }
+
+    95% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.match5 {
+    opacity: 0;
+    background-image: url(images/match5.png);
+}
+
+.match5LifeCycle {
+    animation: manageMatch5 10s;
+    animation-fill-mode: forwards;
+    animation-delay: 19s;
+}
+
+@keyframes manageMatch5 {
+    0% {
+        opacity: 0;
+    }
+
+    5% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+$flame-height: 150px;
+$wick-height: 50px;
+$orange: #ff6a00;
+$orange-yellow: #ff9224;
+$dark: #2c2b39;
+$blue-dark: #30537d;
+$blue-light: #76daff;
+$yellow: #fbf348;
+$yellow-grey: #58523a;
+
+.flame {
+    rotate: 135deg;
+    position: absolute;
+    top: -140px;
+    left: -30%;
+    width: 20px;
+    scale: 1.2 0;
+    height: $flame-height;
+    margin: 0px auto;
+    transform-origin: 50% 95%;
+    transition: scale 0.6s ease-out, rotate 0.5s ease-out, top 23s ease-out;
+
+    .top {
+        width: 20px;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: white;
+        border-top-left-radius: 500%;
+        border-bottom-left-radius: 50px;
+        border-top-right-radius: 500%;
+        border-bottom-right-radius: 50px;
+        transform: skewY(-10deg);
+        box-shadow:
+            0 0px 0px 3px white,
+            0 -20px 1px 4px white,
+            0 -25px 2px 3px gold,
+            0 -30px 5px 4px $orange,
+            0 0px 150px 10px $orange,
+            0 -10px 2px 4px white,
+            0 -5px 3px 3px white;
+        animation: flame-up 4s infinite;
+    }
+
+    .shadows {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        width: 1px;
+        height: 60px;
+        border-radius: 50%;
+        box-shadow:
+            0 5px 20px 15px gold,
+            0 0px 100px 20px $orange,
+            0 15px 50px 15px $orange,
+            5px 30px 5px 13px $orange,
+            5px 50px 5px 13px $orange,
+            0 75px 50px 30px black;
+    }
+
+    .bottom {
+        transform: scale(0.9);
+        position: absolute;
+        bottom: 6px;
+        left: 9px;
+        width: 1px;
+        height: 8px;
+        border-radius: 1%;
+        background: $dark;
+        box-shadow:
+            0 6px 10px 12px rgba(60, 76, 125, 0.3),
+            0 0px 4px 8px $dark,
+            0 -12px 10px 8px rgba(255, 106, 0, 0.5),
+            0 5px 7px 12px $dark,
+            0 -3px 10px 12px $dark,
+            5px -10px 10px 5px red,
+            0 -15px 10px 10px gold,
+            5px -25px 10px 5px gold,
+            0 2px 5px 10px $blue-dark,
+            0 -2px 2px 14px $blue-light,
+            0 2px 10px 12px $blue-light;
+    }
+}
+
+.flame2 {
+    rotate: 0deg;
+    scale: 0.5 0;
+    transition: scale 0.6s ease-out, rotate 0.5s ease-out;
+    top: -145px;
+    left: 10px;
+}
+
+.start-flame {
+    rotate: 45deg;
+}
+
+.still {
+    animation: flame-anim-still 5s infinite;
+}
+
+@keyframes flame-anim-still {
+    0% {
+        transform: skewX(2deg) skewY(5deg)
+    }
+
+    8% {
+        transform: skewX(-2deg) skewY(0deg)
+    }
+
+    22% {
+        transform: skewX(2deg) skewY(4deg)
+    }
+
+    28% {
+        transform: skewX(-2deg) skewY(-1deg)
+    }
+
+    40% {
+        transform: skewX(2deg) skewY(6deg)
+    }
+
+    50% {
+        transform: skewX(-2deg) skewY(1deg)
+    }
+
+    58% {
+        transform: skewX(2deg) skewY(4deg)
+    }
+
+    72% {
+        transform: skewX(-2deg) skewY(0deg)
+    }
+
+    80% {
+        transform: skewX(2deg) skewY(5deg)
+    }
+
+    92% {
+        transform: skewX(-2deg) skewY(-2deg)
+    }
+
+    100% {
+        transform: skewX(2deg) skewY(5deg)
+    }
+}
+
+.candle {
+    pointer-events: none;
+    position: absolute;
+    background-image: url(./images/candle.png);
+    background-size: cover;
+    width: calc(113px * 0.3);
+    height: calc(162px * 0.3);
+    scale: 0.9;
+    bottom: 40.2%;
+    left: calc(50% - 80px);
+    opacity: 0;
+    transition: opacity 1s ease-out, scale 1s ease-out, bottom 1s ease-out;
+}
+
+.kill-candle {
+    opacity: 0;
+}
+
+.place-candle {
+    opacity: 1;
+    bottom: 40%;
+}
+
+.detail {
+    opacity: 1;
+    transition: opacity 1s ease-out;
+}
+
+.kill-detail {
+    opacity: 0;
+}

@@ -63,8 +63,8 @@ export class Container1 implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.appState$.subscribe(newAppState => {
-    //   this.appState = newAppState;
+    this.appState$.subscribe(newAppState => {
+      this.appState = newAppState;
     //   this.introState = this.appState.introState;
     //   if (this.introState === 'onFinalAnim' && this.introDone === false) {
     //     this.introDone = true;
@@ -97,10 +97,10 @@ export class Container1 implements OnInit {
     //     this.done2 = true;
     //     this.done3 = true;
     //   }
-    //   if (this.appState.blockAll !== this.blockAll) {
-    //     this.blockAll = this.appState.blockAll
-    //   }
-    // });
+      if (this.appState.blockAll !== this.blockAll) {
+        this.blockAll = this.appState.blockAll
+      }
+    });
 
     this.language$.subscribe(newLanguage => {
       this.language = newLanguage.language

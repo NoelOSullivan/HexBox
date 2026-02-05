@@ -4,6 +4,7 @@ body {
     // width: 100svh;
     // height: 100svw
     overscroll-behavior: contain;
+    user-select: none;
 }
 
 h1, h2, h3, p {
@@ -23,6 +24,20 @@ h1, h2, h3, p {
     src: url('assets/fonts/PassionOne-Black.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
+}
+
+@font-face {
+  font-family: 'aniron-regular';
+  src: url('assets/fonts/aniron.regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'aniron-bold';
+  src: url('assets/fonts/aniron.bold.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
 
 

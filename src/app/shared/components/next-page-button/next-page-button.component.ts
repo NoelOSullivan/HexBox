@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 
 import { Store } from '@ngxs/store';
 import { Direction } from 'app/shared/interfaces/panel';
+import { ChangeBlockAllState } from 'app/store/general/general.actions';
 import { TurnPage } from 'app/store/panel/panel.action';
 
 @Component({
@@ -68,6 +69,7 @@ export class NextPageButtonComponent {
 
   turnPageToRight(): void {
     if (!this.blockAll) {
+      this.store.dispatch(new ChangeBlockAllState(true));
       const directionObj: Direction = { direction: "left" };
       this.store.dispatch(new TurnPage(directionObj));
     }
@@ -75,6 +77,7 @@ export class NextPageButtonComponent {
 
   turnPageToLeft(): void {
     if (!this.blockAll) {
+      this.store.dispatch(new ChangeBlockAllState(true));
       const directionObj: Direction = { direction: "right" };
       this.store.dispatch(new TurnPage(directionObj));
     }

@@ -10,6 +10,7 @@ import { ActivePanelNumberModel } from '../../store/hexagon/hexagon.model';
 import { ActivePanelNumber } from '../../store/hexagon/hexagon.state';
 import { AppStateModel, IntroState } from 'app/store/general/general.model';
 import { AppState } from 'app/store/general/general.state';
+import { ChangeBlockAllState } from 'app/store/general/general.actions';
 
 @Directive({
   selector: '[contentControl]',
@@ -93,6 +94,11 @@ export class ContentDirective implements OnInit {
 
     this.appState$.subscribe(newAppState => {
       this.introState = newAppState.introState;
+
+      this.blockAll = false;
+      this.panel.nativeElement.children[this.activePage].style.pointerEvents = 'all';
+
+
       if (newAppState.introState === 'done') {
         this.blockAll = false;
         this.panel.nativeElement.children[this.activePage].style.pointerEvents = 'all';
@@ -249,6 +255,7 @@ export class ContentDirective implements OnInit {
   }
 
   turnPage(direction: string) {
+
     if (direction === "left") {
       if (this.rotation.degrees >= this.maxRotation) {
         this.blockAll = true;
@@ -306,9 +313,10 @@ export class ContentDirective implements OnInit {
         if (this.rotation.degrees <= this.finalAnimRotation) {
           clearInterval(this.finalAnimInterval);
           this.rotation.degrees = this.finalAnimRotation;
-          if (this.introState === 'done') {
-            this.blockAll = false;
-          }
+          // if (this.introState === 'done') {
+          this.store.dispatch(new ChangeBlockAllState(false));
+          this.blockAll = false;
+          // }
           if (this.activePage + 1 < this.nPages) {
             flipFinished = true;
             // this.changePageNum.emit(this.activePage + 1);
@@ -318,9 +326,10 @@ export class ContentDirective implements OnInit {
         if (this.rotation.degrees >= this.finalAnimRotation) {
           clearInterval(this.finalAnimInterval);
           this.rotation.degrees = this.finalAnimRotation;
-          if (this.introState === 'done') {
-            this.blockAll = false;
-          }
+          // if (this.introState === 'done') {
+          this.blockAll = false;
+          this.store.dispatch(new ChangeBlockAllState(false));
+          // }
           flipFinished = true;
           // this.changePageNum.emit(this.activePage);
         }

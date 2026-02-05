@@ -9,6 +9,10 @@
     overflow: hidden;
     min-height: 550px;
     min-width: 300px;
+    background-image: url("/assets/enigma/wallsbackground.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
 }
 
 
@@ -43,7 +47,7 @@
     padding-bottom: 54px;
     // overflow: hidden;
     background-color: rgba($color: #000000, $alpha: 0.3);
-    border-top: 1px solid white;
+    // border-top: 1px solid white;
 
     height: 200px;
     width: 100svw;

@@ -51,30 +51,30 @@ export class ContentComponent implements OnInit {
   ngOnInit() {
     this.actualRotation = this.startRotation;
 
-    this.pageCounters$.subscribe(newPC => {
-      this.pageCounters = newPC;
-      this.updateWidgetInfo();
-    });
+    // this.pageCounters$.subscribe(newPC => {
+    //   this.pageCounters = newPC;
+    //   this.updateWidgetInfo();
+    // });
 
     this.activePanelNumber$.subscribe(newAPN => {
       if (this.activePanelNumber !== newAPN.activePanelNumber.apn) {
         this.activePanelNumber = newAPN.activePanelNumber.apn;
-        this.updateWidgetInfo();
+        // this.updateWidgetInfo();
       }
     });
   }
 
-  updateWidgetInfo(): void {
+  // updateWidgetInfo(): void {
 
-    let apn = this.activePanelNumber;
-    if (apn === 0) apn = 6;
-    this.pageTotal = this.pageCounters.pageCounters.totals[apn - 1];
-    this.pageNumber = this.pageCounters.pageCounters.counters[apn - 1];
+  //   let apn = this.activePanelNumber;
+  //   if (apn === 0) apn = 6;
+  //   this.pageTotal = this.pageCounters.pageCounters.totals[apn - 1];
+  //   this.pageNumber = this.pageCounters.pageCounters.counters[apn - 1];
 
-    if (this.pageWidget) {
-      this.pageWidget.nativeElement.style.width = this.pageNumber / this.pageTotal * 100 + '%';
-    }
-  }
+  //   if (this.pageWidget) {
+  //     this.pageWidget.nativeElement.style.width = this.pageNumber / this.pageTotal * 100 + '%';
+  //   }
+  // }
 
   ngAfterViewInit(): void {
     this.rotation$.subscribe(newRot => {

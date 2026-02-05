@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, OnInit, ViewChild } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { Select, Store } from '@ngxs/store';
 import { MenuComponent } from './menu/menu/menu.component';
@@ -9,10 +9,12 @@ import { ChangeContentHeight, ChangeMouseUpDetected } from 'app/store/general/ge
 import { AppState } from 'app/store/general/general.state';
 import { Observable } from 'rxjs';
 import { ActivePanelNumberModel } from 'app/store/hexagon/hexagon.model';
+import { EnigmaComponent } from "./enigma/enigma.component";
+import { StateService } from 'app/services/state.service';
 
 @Component({
     selector: 'app-layout',
-    imports: [ NgClass, MenuComponent, ContentComponent],
+    imports: [NgClass, MenuComponent, ContentComponent, EnigmaComponent],
     templateUrl: './layout.component.html',
     styleUrl: './layout.component.scss'
 })
@@ -25,6 +27,8 @@ export class LayoutComponent implements OnInit {
 
   @Select(AppState) appState$!: Observable<AppStateModel>;
   @Select(ActivePanelNumber) activePanelNumber$!: Observable<ActivePanelNumberModel>;
+
+  protected state = inject(StateService);
 
   originalShortSide!: number;
   originalLongSide!: number;

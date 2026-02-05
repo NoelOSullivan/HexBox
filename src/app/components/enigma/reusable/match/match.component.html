@@ -1,0 +1,42 @@
+@if(overAndDone===false) {
+<div class="mask-holder">
+    <!-- Becomes LightSourceComponent -->
+    <div #candle class="candle" [ngClass]="{'place-candle':candleActive===true, 'kill-candle':elementsDone===true}">
+        <div #flame2 class="flame flame2 still">
+            <div class="shadows"></div>
+            <div class="top"></div>
+            <div class="middle"></div>
+            <div class="bottom"></div>
+        </div>
+    </div>
+
+    <!-- Double trouble perhaps. See if light effect can be done with one div -->
+
+    <div #mask class="mask" [ngClass]="{'mask-for-candle':candleLit===true, 'kill-mask': elementsDone===true}"
+        (touchstart)="touchstartMask($event)" (touchmove)="touchmoveMask($event)" (touchend)="touchendMask()"
+        (mousedown)="mousedownMask($event)" (mousemove)="mousemoveMask($event)" (mouseup)="mouseupMask()"></div>
+    <div class="halo-grow" [ngClass]="{'halo-grow-fade':haloLit===true}"></div>
+
+    <!-- Becomes LightSourceComponent -->
+    <div #matchHolder class="match-holder" [ngClass]="{'match-holder-lit':myMatchLit===true}">
+        <div class="match match1" [ngClass]="{'match1LifeCycle':myMatchLit===true}"></div>
+        <div class="match match2" [ngClass]="{'match2LifeCycle':myMatchLit===true}"></div>
+        <div class="match match3" [ngClass]="{'match3LifeCycle':myMatchLit===true}"></div>
+        <div class="match match4" [ngClass]="{'match4LifeCycle':myMatchLit===true}"></div>
+        <div class="match match5" [ngClass]="{'match5LifeCycle':myMatchLit===true}"></div>
+
+        <div #flame class="flame still" [ngClass]="{'start-flame':myMatchLit===true}">
+            <div class="shadows"></div>
+            <div class="top"></div>
+            <div class="middle"></div>
+            <div class="bottom"></div>
+        </div>
+
+    </div>
+
+    <app-zoom-detail class="detail" [ngClass]="{'kill-detail':elementsDone===true}" [zoomImage]="zoomImage"
+        [zoomVisible]="zoomVisible" [percentLeft]="percentLeft" [percentTop]="percentTop"
+        [elementOnFire]="elementOnFire"></app-zoom-detail>
+
+</div>
+}

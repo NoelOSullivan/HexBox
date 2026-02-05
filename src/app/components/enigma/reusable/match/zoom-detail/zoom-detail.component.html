@@ -1,0 +1,14 @@
+<div class="detail-holder" [ngClass]="{'zoom-visible':zoomVisible===true}">
+    <div #fire class="fire" [ngClass]="{'fire-in-background':lightItUp===true}"></div>
+    <div #zoomed class="elements-holder">
+        <div class="element">
+            <img class="zoom-image" src="../../../../../assets/enigma/{{zoomImage}}" [ngClass]="{'burn-zoom-image':elementOnFire===true}" />
+        </div>
+    </div>
+    <div class="camera-corners" [ngClass]="{'fade-crosshairs':elementOnFire===true}">
+        <div class="corner top left"></div>
+        <div class="corner top right"></div>
+        <div class="corner bottom left"></div>
+        <div class="corner bottom right"></div>
+    </div>
+</div>

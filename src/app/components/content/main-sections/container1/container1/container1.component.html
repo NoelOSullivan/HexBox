@@ -2,7 +2,7 @@
   <div contentControl nPanel="1" [allowPanelSwipe]="true" (changePageNum)="changePageNum($event)"
     (setIsLastPage)="setIsLastPage($event)" class="flipper">
     <li class="common-side">
-      
+
       <app-logo></app-logo>
       <!-- Index finger animation for intro -->
       <!-- @if (introState!=='done' && introState!=='onFinalAnim') {
@@ -47,10 +47,10 @@
           </div>
           <div class="intro-text">
             @if (language==='En') {
-            <span>Creation & Code</span>
+            <span>Creatiive Code</span>
             }
             @if (language==='Fr') {
-            <span>Création & Code</span>
+            <span>Code Créative</span>
             }
           </div>
           <div class="top-line"></div>
@@ -65,7 +65,7 @@
         <div class="offer">
           <div>&#x2022; Sites Web &#x2022; Web Apps &#x2022;</div>
           <div>&#x2022; Gamification &#x2022;</div>
-          <div>&#x2022; Jeux HTML &#x2022;</div>
+          <div>&#x2022; Jeux &#x2022;</div>
           <div>&#x2022; Formation &#x2022;</div>
         </div>
         }
@@ -73,13 +73,11 @@
         <div class="offer">
           <div>&#x2022; Web Sites &#x2022; Web Apps &#x2022;</div>
           <div>&#x2022; Gamification &#x2022;</div>
-          <div>&#x2022; HTML Games &#x2022;</div>
+          <div>&#x2022; HTML &#x2022;</div>
           <div>&#x2022; Training &#x2022;</div>
         </div>
         }
-        <div>
-
-        </div>
+        <div></div>
         <!-- @if (introDone===true) { -->
         <app-next-page-button class="next-page-button" [activePageNum]="activePageNum" [language]="language"
           [blockAll]="blockAll" [rightTextFrEn]="'QUI#WHO'"></app-next-page-button>
