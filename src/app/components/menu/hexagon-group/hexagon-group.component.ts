@@ -99,7 +99,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
   private hexagons: Array<any> = [];
   private hexagonFlips: Array<any> = [];
   private introDone: boolean = false;
-  private blockAll: boolean = false;
+  private blockAll: boolean = true;
   private language!: string;
   private pageCounters!: PageCounterModel;
   private contentHeight: number = 0;
@@ -176,10 +176,11 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
 
     this.appState$.subscribe(newAppState => {
 
-      if (newAppState.introVideoLoaded !== this.introVideoLoaded) {
-        this.introVideoLoaded = newAppState.introVideoLoaded;
-        this.startHexagonIntroAnim();
-      }
+      //1111111111
+      // if (newAppState.introVideoLoaded !== this.introVideoLoaded) {
+      //   this.introVideoLoaded = newAppState.introVideoLoaded;
+      //   this.startHexagonIntroAnim();
+      // }
 
       // To Do : this gets called every time for the mouseupoutside on wheel menus
       // It keeps being called. No good.
@@ -332,28 +333,16 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
       this.setUpMenu(1); // Change menu content. To do : refactor and clean up
       this.hexOpened = [true, true, true, true, true, true];
       this.selected = 2;
-      // this.manageMenu(2);
+      const activePanelNumber: ActivePanelNumber = { apn: 1 };
+      this.store.dispatch(new ChangePanelNumber(activePanelNumber));
+      this.store.dispatch(new ChangeBlockAllState(false));
     }, 1000);
   }
 
   clickHexagon(hexIndex: any, location: any, overrideBlock?: boolean) {
-
-    // if (this.blockAll && !overrideBlock) return;
-
-    // if (this.introState === IntroState.BLOCKALL) {
-    //   return
-    // }
-
-    // if (this.introState === IntroState.ALLOWCUT) {
-
-    //   if (hexIndex === 2) {
-    //     this.store.dispatch(new ChangeIntroState(IntroState.ONFINALANIM));
-    //   }
-    // }
-
-    // if (this.introState === IntroState.DONE) {
+    if (this.blockAll && !overrideBlock) return;
+    // if (this.blockAll) return;
     this.manageMenu(hexIndex);
-    // }
   }
 
   manageMenu(hexIndex: number | null | undefined) {
@@ -384,8 +373,6 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
       if (rotationToAdd) {
         this.menuRotation += rotationToAdd;
       }
-
-      console.log("rotationToAdd", rotationToAdd);
 
       if (rotationToAdd) {
         const rotation: Rotation = { degrees: rotationToAdd }

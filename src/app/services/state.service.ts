@@ -21,6 +21,5 @@ export class StateService {
 
     setSection(val: AppSection) {
         this.state.update(current => ({ ...current, section: val }));
-        console.log("Section changed to:", val);
     }
 }

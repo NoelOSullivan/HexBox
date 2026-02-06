@@ -21,10 +21,7 @@ export enum SunGameState {
 
 export interface AppStateModel {
     // public appState!: AppState;
-    onIntro: boolean;
-    introState: IntroState;
     blockAll: boolean;
-    introVideoLoaded: boolean;
     mouseUpDetected: boolean;
     contentHeight: number;
     contentWidth: number;

@@ -38,10 +38,10 @@ export class Language {
     name: 'appState',
     defaults: {
         // appState: {
-        onIntro: true,
-        introState: IntroState.BLOCKALL,
-        blockAll: false,
-        introVideoLoaded: false,
+        // onIntro: true,
+        // introState: IntroState.BLOCKALL,
+        blockAll: true,
+        // introVideoLoaded: false,
         mouseUpDetected: false,
         contentHeight: 0,
         contentWidth: 0,   
@@ -116,21 +116,21 @@ export class AppState {
     //     })
     // }
 
-    @Action(ChangeIntroState) changeIntroState(ctx: StateContext<AppStateModel>, action: ChangeIntroState) {
-        const state = ctx.getState();
-        ctx.setState({
-            ...state,
-            introState: action.introState
-        })
-    }
+    // @Action(ChangeIntroState) changeIntroState(ctx: StateContext<AppStateModel>, action: ChangeIntroState) {
+    //     const state = ctx.getState();
+    //     ctx.setState({
+    //         ...state,
+    //         introState: action.introState
+    //     })
+    // }
 
-    @Action(ChangeIntroVideoLoadedState) changIntroVideoLoaded(ctx: StateContext<AppStateModel>, action: ChangeIntroVideoLoadedState) {
-        const state = ctx.getState();
-        ctx.setState({
-            ...state,
-            introVideoLoaded: action.introVideoLoadedState
-        })
-    }
+    // @Action(ChangeIntroVideoLoadedState) changIntroVideoLoaded(ctx: StateContext<AppStateModel>, action: ChangeIntroVideoLoadedState) {
+    //     const state = ctx.getState();
+    //     ctx.setState({
+    //         ...state,
+    //         introVideoLoaded: action.introVideoLoadedState
+    //     })
+    // }
 
     @Action(ChangeSunGameState) changeSunGameState(ctx: StateContext<AppStateModel>, action: ChangeSunGameState) {
         const state = ctx.getState();

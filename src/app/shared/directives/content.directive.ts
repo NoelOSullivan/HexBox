@@ -8,7 +8,7 @@ import { DirectAccessModel, PageTurnerModel } from '../../store/panel/panel.mode
 import { DirectAccess, PageTurner } from '../../store/panel/panel.state';
 import { ActivePanelNumberModel } from '../../store/hexagon/hexagon.model';
 import { ActivePanelNumber } from '../../store/hexagon/hexagon.state';
-import { AppStateModel, IntroState } from 'app/store/general/general.model';
+import { AppStateModel } from 'app/store/general/general.model';
 import { AppState } from 'app/store/general/general.state';
 import { ChangeBlockAllState } from 'app/store/general/general.actions';
 
@@ -50,7 +50,6 @@ export class ContentDirective implements OnInit {
   finalAnimDirection!: String;
   blockAll: boolean = true;
   activePanelNumber!: number;
-  introState!: IntroState;
   isTouchOrMousedown: boolean = false;
   appState!: AppStateModel;
   firstClick: boolean = true;
@@ -93,16 +92,8 @@ export class ContentDirective implements OnInit {
     });
 
     this.appState$.subscribe(newAppState => {
-      this.introState = newAppState.introState;
+      // this.blockAll = false;
 
-      this.blockAll = false;
-      this.panel.nativeElement.children[this.activePage].style.pointerEvents = 'all';
-
-
-      if (newAppState.introState === 'done') {
-        this.blockAll = false;
-        this.panel.nativeElement.children[this.activePage].style.pointerEvents = 'all';
-      }
       if (newAppState.blockAll !== this.blockAll) {
         this.blockAll = newAppState.blockAll;
       }
@@ -124,11 +115,19 @@ export class ContentDirective implements OnInit {
     this.activePanelNumber$.subscribe(newAPN => {
       this.activePanelNumber = newAPN.activePanelNumber.apn
       if (this.activePanelNumber === 0) this.activePanelNumber = 6;
-      // console.log(this.nPanel, "ngAfterViewInit this.activePanelNumber", this.activePanelNumber);
       this.changeActivePanel.emit(this.activePanelNumber);
       this.lastPage = undefined;
+      this.managePanelPointerEvents();
     });
 
+  }
+
+  managePanelPointerEvents(): void {
+    if (this.activePanelNumber === Number(this.nPanel)) {
+      this.panel.nativeElement.style.pointerEvents = 'all';
+    } else {
+      this.panel.nativeElement.style.pointerEvents = 'none';
+    }
   }
 
   @HostListener('wheel', ['$event']) wheel(event: WheelEvent) {
@@ -313,10 +312,10 @@ export class ContentDirective implements OnInit {
         if (this.rotation.degrees <= this.finalAnimRotation) {
           clearInterval(this.finalAnimInterval);
           this.rotation.degrees = this.finalAnimRotation;
-          // if (this.introState === 'done') {
+
           this.store.dispatch(new ChangeBlockAllState(false));
           this.blockAll = false;
-          // }
+
           if (this.activePage + 1 < this.nPages) {
             flipFinished = true;
             // this.changePageNum.emit(this.activePage + 1);
@@ -326,10 +325,8 @@ export class ContentDirective implements OnInit {
         if (this.rotation.degrees >= this.finalAnimRotation) {
           clearInterval(this.finalAnimInterval);
           this.rotation.degrees = this.finalAnimRotation;
-          // if (this.introState === 'done') {
           this.blockAll = false;
           this.store.dispatch(new ChangeBlockAllState(false));
-          // }
           flipFinished = true;
           // this.changePageNum.emit(this.activePage);
         }
@@ -345,9 +342,6 @@ export class ContentDirective implements OnInit {
 
   managePanelDisplay(flipFinished: boolean) {
 
-    // debugger;
-    // console.log("MMMMMMMMMMMMMMMMMMPPPPPPPPPPPPPPPPPPPPPPDDDDDDDDDDDDDDDDD");
-
     // If new rotation goes too far in either direction, correct to zero or max 
     if (this.rotation.degrees >= 0) {
       this.rotation.degrees = 0;
@@ -356,8 +350,6 @@ export class ContentDirective implements OnInit {
         this.rotation.degrees = this.maxRotation;
       }
     }
-
-    // if (this.rotation.degrees === 0) debugger;
 
     // if (this.activePage !== Math.floor(this.rotation.degrees / -180) || this.firstClick) {
     if (this.activePage !== -Math.round(-this.rotation.degrees / -180) || this.firstClick || flipFinished) {
@@ -372,7 +364,7 @@ export class ContentDirective implements OnInit {
       this.turnOffAllPages();
       // Display front facing panel
       this.panel.nativeElement.children[this.activePage].style.display = 'flex';
-      this.panel.nativeElement.children[this.activePage].style.pointerEvents = 'all';
+     
       // Display next probable front facing panel (the one we are turning to)
       if (!flipFinished && this.onDirectAccess === false) {
         if (this.direction === 'left') {
@@ -438,7 +430,7 @@ export class ContentDirective implements OnInit {
   turnOffAllPages(): void {
     for (let i = 0; i < this.nPages; i++) {
       this.panel.nativeElement.children[i].style.display = 'none';
-      this.panel.nativeElement.children[i].style.pointerEvents = 'none';
+      // this.panel.nativeElement.children[i].style.pointerEvents = 'none';
     }
   }
 

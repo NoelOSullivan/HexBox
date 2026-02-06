@@ -2,37 +2,8 @@
   <div contentControl nPanel="1" [allowPanelSwipe]="true" (changePageNum)="changePageNum($event)"
     (setIsLastPage)="setIsLastPage($event)" class="flipper">
     <li class="common-side">
-
       <app-logo></app-logo>
-      <!-- Index finger animation for intro -->
-      <!-- @if (introState!=='done' && introState!=='onFinalAnim') {
-      <div class="finger" [ngClass]="{'finger-anim': onFingerAnim===true}">
-        <app-swipe-icon></app-swipe-icon>
-      </div>
-      } -->
-      <!-- <div #videoHolder class="video-holder">
-        <video #video1 playsinline class="video video1"
-          [ngClass]="{'shunt-intro-video': introState==='onFinalAnim'}"
-        src="assets/videos/introA.mp4"></video>
-        <video #video3 playsinline class="video" [ngClass]="{'shunt-intro-video': introState==='onFinalAnim'}"
-        src="assets/videos/introC.mp4"></video>
-        @if (introState!=='onFinalAnim' && showSwipe===true) {
-          <div class="swipe-me">
-            @if (language==='En') {
-              <span>Swipe Me</span>
-            }
-            @if (language==='Fr') {
-              <span>Balaie moi</span>
-            }
-          </div>
-        }
-      </div> -->
-      <!-- <div class="text-holder"> -->
-      <!-- <div class="intro-anim" [ngClass]="{'shunt-intro-text': introState==='onFinalAnim' ||introState==='done'}"> -->
-      <!-- <div class="intro-anim"> -->
-
       <div class="vertical-space-between-holder">
-
         <div class="intro-holder">
           <div class="byline">
             Noel O'Sullivan
@@ -59,8 +30,6 @@
           <div class="right-line"></div>
         </div>
 
-
-
         @if (language==='Fr') {
         <div class="offer">
           <div>&#x2022; Sites Web &#x2022; Web Apps &#x2022;</div>
@@ -78,38 +47,17 @@
         </div>
         }
         <div></div>
-        <!-- @if (introDone===true) { -->
+
         <app-next-page-button class="next-page-button" [activePageNum]="activePageNum" [language]="language"
           [blockAll]="blockAll" [rightTextFrEn]="'QUI#WHO'"></app-next-page-button>
-        <!-- } -->
 
       </div>
-      <!-- </div>
-      </div> -->
 
     </li>
     <li class="common-side">
       <app-logo></app-logo>
-      <!-- @if (introState!=='done') {
-      <div class="video-holder">
-        <video #video2 playsinline class="video" src="assets/videos/introB.mp4"
-          [ngClass]="{'shunt-intro-video': introState==='onFinalAnim'}"></video>
-        @if (introState!=='onFinalAnim') {
-        <div class="swipe-me-back">
-          @if (language==='En') {
-          <span>Swipe Me</span>
-          }
-          @if (language==='Fr') {
-          <span>Balaie moi</span>
-          }
-        </div>
-        }
-      </div>
-      } -->
-      <!-- @if (introState==='done') { -->
+      
       <div class="vertical-space-between-holder">
-        <!-- <div *ngIf="introState==='done'" class="vertical-space-between-holder basic-text"
-          [ngClass]="{'shunt-intro-text': introState==='onFinalAnim'}"> -->
         @if (language==='Fr') {
         <app-bichrome-title [text]="'QUI'"></app-bichrome-title>
         }
@@ -157,7 +105,6 @@
         <app-next-page-button class="next-page-button" [language]="language" [blockAll]="blockAll"
           [leftTextFrEn]="'ACCUEIL#HOME'" [rightTextFrEn]="'QUOI#WHAT'"></app-next-page-button>
       </div>
-      <!-- } -->
     </li>
     <li class="common-side">
       <app-logo></app-logo>

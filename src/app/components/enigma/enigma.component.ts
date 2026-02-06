@@ -55,8 +55,6 @@ export class EnigmaComponent {
         { element: "fire", boundingRect: this.fire().nativeElement.getBoundingClientRect() },
         { element: "water", boundingRect: this.water().nativeElement.getBoundingClientRect() }
       ];
-      console.log("this.elementData", this.elementData);
-      // this.scrollData = this.scrollTarget().nativeElement.getBoundingClientRect();
     });
   }
 

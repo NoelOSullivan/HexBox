@@ -16,9 +16,10 @@ export class Container4  {
   
   @Select(Language) language$!: Observable<LanguageModel>;
 
-  // @Input() nContainer!: number;
+  @Input() nContainer!: number;
 
   language!: string;
+  showVideo: boolean = false;
 
   constructor() { }
 
@@ -26,6 +27,14 @@ export class Container4  {
     this.language$.subscribe(newLanguage => {
       this.language = newLanguage.language
     });
+  }
+
+  changePanel(panel: number) {
+    if (panel === this.nContainer) {
+      this.showVideo = true;
+    } else {
+      this.showVideo = false;
+    }
   }
 
 }
