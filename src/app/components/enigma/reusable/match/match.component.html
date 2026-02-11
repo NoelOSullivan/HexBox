@@ -1,7 +1,7 @@
 @if(overAndDone===false) {
 <div class="mask-holder">
     <!-- Becomes LightSourceComponent -->
-    <div #candle class="candle" [ngClass]="{'place-candle':candleActive===true, 'kill-candle':elementsDone===true}">
+    <div #candle class="candle" [ngClass]="{'place-candle':candleActive===true,'lit-candle':candleLit===true, 'kill-candle':elementsDone===true}">
         <div #flame2 class="flame flame2 still">
             <div class="shadows"></div>
             <div class="top"></div>

@@ -1,31 +1,25 @@
 <div class="full-screen-holder">
 
-    <div class="sackhead" [ngClass]="{'sackhead-hides':sackHides===true, 'sackhead-dies':enigmaEnd===true}">
-    </div>
-
-    <div class="wall-left-last" [ngClass]="{'wall-left-open':enigmaEnd===true}">
-        <div #earth class="element-holder earth-holder" [ngClass]="{'kill-element':enigmaEnd===true}">
-            <div class="element earth" [ngClass]="{'element-burnt':doneEarth===true}"></div>
-        </div>
-        <div #fire class="element-holder fire-holder" [ngClass]="{'kill-element':enigmaEnd===true}">
-            <div class="element fire" [ngClass]="{'element-burnt':doneFire===true}"></div>
-        </div>
-    </div>
+    <div class="sackhead" [ngClass]="{'sackhead-hides':sackHides===true, 'sackhead-dies':enigmaEnd===true}"></div>
 
     <div class="wall-left" [ngClass]="{'wall-left-open':enigmaEnd===true}">
-        <div #earth class="element-holder earth-holder" [ngClass]="{'kill-element':enigmaEnd===true}">
+        <div #earth class="element-holder earth-holder"
+            [ngClass]="{'blink':scrollOpen===true && enigmaEnd===false, 'kill-element':enigmaEnd===true}">
             <div class="element earth" [ngClass]="{'element-burnt':doneEarth===true}"></div>
         </div>
-        <div #fire class="element-holder fire-holder" [ngClass]="{'kill-element':enigmaEnd===true}">
+        <div #fire class="element-holder fire-holder"
+            [ngClass]="{'blink':scrollOpen===true && enigmaEnd===false, 'kill-element':enigmaEnd===true}">
             <div class="element fire" [ngClass]="{'element-burnt':doneFire===true}"></div>
         </div>
     </div>
 
     <div #wallRight class="wall-right" [ngClass]="{'wall-right-open':enigmaEnd===true}">
-        <div #wind class="element-holder wind-holder" [ngClass]="{'kill-element':enigmaEnd===true}">
+        <div #wind class="element-holder wind-holder"
+            [ngClass]="{'blink':scrollOpen===true && enigmaEnd===false, 'kill-element':enigmaEnd===true}">
             <div class="element wind" [ngClass]="{'element-burnt':doneWind===true}"></div>
         </div>
-        <div #water class="element-holder water-holder" [ngClass]="{'kill-element':enigmaEnd===true}">
+        <div #water class="element-holder water-holder"
+            [ngClass]="{'blink':scrollOpen===true && enigmaEnd===false, 'kill-element':enigmaEnd===true}">
             <div class="element water" [ngClass]="{'element-burnt':doneWater===true}"></div>
         </div>
     </div>
@@ -38,6 +32,13 @@
     <div class="scroll-holder"
         [ngClass]="{'scroll-open':scrollOpen===true, 'scroll-holder-fallen':scrollFallen===true, 'kill-scroll':enigmaEnd===true}">
         <div class="scroll-fixed"></div>
+
+        @if(language.currentLanguage()==='fr') {
+        <div class="burn-text">Trouver...<br>et brûler</div>
+        } @else {
+        <div class="burn-text">Find...<br>and burn</div>
+        }
+
         <div class="scroll-move"
             [ngClass]="{'scroll-move-fallen':scrollFallen===true, 'scroll-roll':scrollOpen===true}"></div>
     </div>
@@ -47,16 +48,23 @@
         (wallsOpen)="readOutputWallsOpenValue($event)" [appWidth]="appWidth" [appHeight]="appHeight"
         [enigmaEndInfo]="enigmaEnd" [passedElementData]="elementData"></app-match>
 
+
     <div class="intro-text" [ngClass]="{'hide-intro-text':matchLit===true || enigmaEnd===true}">
-        Enfermé dans<br>Le Château d'If/Else<br>pour web sorcellerie<br>... liberez-moi.<br><br>Vite ! De la lumière.
+        @if(language.currentLanguage()==='fr') {
+        <span>xxx Enfermé dans<br>Le Château d'If/Else<br>pour web sorcellerie<br>... liberez-moi.<br><br>Vite ! De la
+            lumière.</span>
+        }
+        @if(language.currentLanguage()==='en') {
+        <span> Locked in<br>Le Château d'If/Else<br>for web sorcery<br>... free me.<br><br>Quick ! Some light.</span>
+        }
     </div>
 
     @if(enigmaEnd===false) {
-        @if(language.currentLanguage()==='fr') {
-            <div class="zapp-button" (click)="zappEnigma()">PASSER<br>L'ENIGME</div>
-        } @else {
-            <div class="zapp-button" (click)="zappEnigma()">SKIP THE<br>ENIGMA</div>
-        }
+    @if(language.currentLanguage()==='fr') {
+    <div class="zapp-button" (click)="zappEnigma()">PASSER<br>L'ENIGME</div>
+    } @else {
+    <div class="zapp-button" (click)="zappEnigma()">SKIP THE<br>ENIGMA</div>
+    }
     }
 
 </div>

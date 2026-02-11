@@ -5,6 +5,7 @@ body {
     // height: 100svw
     overscroll-behavior: contain;
     user-select: none;
+    -webkit-user-drag: none;
 }
 
 h1, h2, h3, p {

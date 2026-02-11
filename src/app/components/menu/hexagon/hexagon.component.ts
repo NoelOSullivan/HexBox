@@ -4,18 +4,12 @@ import { SunGameState } from 'app/store/general/general.model';
 import { HexBoxInterface } from 'app/shared/interfaces/hexagon'
 
 @Component({
-    selector: 'app-hexagon',
-    imports: [NgClass],
-    templateUrl: './hexagon.component.html',
-    styleUrls: ['./hexagon.component.scss']
+  selector: 'app-hexagon',
+  imports: [NgClass],
+  templateUrl: './hexagon.component.html',
+  styleUrls: ['./hexagon.component.scss']
 })
 export class HexagonComponent {
-
-  // @ViewChild('menuMagic') menuMagic: ElementRef;
-  // @ViewChild('topHalf') topHalf: ElementRef;
-  // @ViewChild('bottomHalf') bottomHalf: ElementRef;
-
-  // 
 
   @Input() content: string | undefined;
   @Input() hexNum!: number;
@@ -30,13 +24,6 @@ export class HexagonComponent {
   openState: boolean | undefined;
 
   constructor() { }
-
-
-  // ngAfterViewInit() {
-  //   this.menuMagic = document.getElementsByClassName("menu-magic")[0] as HTMLElement;
-  //   this.topHalf = document.getElementsByClassName("top-half")[0] as HTMLElement;
-  //   this.bottomHalf = document.getElementsByClassName("bottom-half")[0] as HTMLElement;
-  // }
 
   ngOnChanges(changes: any) {
     if (changes.content && changes.content.currentValue && changes.content.currentValue.indexOf("menuMagic") > -1) {
@@ -80,9 +67,6 @@ export class HexagonComponent {
       }
     }
 
-
   }
-
-
 
 }

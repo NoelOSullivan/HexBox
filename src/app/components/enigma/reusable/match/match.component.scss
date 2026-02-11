@@ -8,8 +8,8 @@
 .mask {
     pointer-events: all;
     position: absolute;
-    left: calc(-50svw + 5svh);
-    top: -30svh;
+    // left: calc(-50svw + 5svh);
+    // top: -30svh;
     width: 220vw;
     height: 220vh;
     background-color: hsla(0, 0%, 0%, 0.9);
@@ -49,7 +49,7 @@
     position: absolute;
     width: calc(100svh / 4000 * 101);
     height: calc(100svh / 4000 * 440);
-    left: calc(50svw + 15svh);
+    left: calc(50svw + 5svh);
     top: 70svh;
     transform: rotate(-135deg);
     z-index: 3;
@@ -379,17 +379,24 @@ $yellow-grey: #58523a;
     scale: 0.9;
     bottom: 40.2%;
     left: calc(50% - 80px);
-    opacity: 0;
-    transition: opacity 1s ease-out, scale 1s ease-out, bottom 1s ease-out;
+    // opacity: 0;
+    filter: brightness(0);
+    transition: filter 0.5s ease-out, scale 1s ease-out, bottom 1s ease-out;
 }
 
 .kill-candle {
-    opacity: 0;
+    filter: brightness(0);
 }
 
 .place-candle {
-    opacity: 1;
+    // opacity: 0.5;
+    filter: brightness(0.5);
     bottom: 40%;
+}
+
+.lit-candle {
+    opacity: 1;
+    filter: brightness(1);
 }
 
 .detail {

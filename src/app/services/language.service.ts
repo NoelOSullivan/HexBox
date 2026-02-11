@@ -6,7 +6,8 @@ import { Injectable, signal, computed, effect } from '@angular/core';
 export class LanguageService {
     
 
-  private languageSignal = signal<string>(navigator.language || 'en');
+  // private languageSignal = signal<string>(navigator.language || 'en');
+  private languageSignal = signal<string>('en');
 
   readonly currentLanguage = this.languageSignal.asReadonly();
 

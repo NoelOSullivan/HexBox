@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild, viewChild } from '@angular/core';
-import { NgClass } from '@angular/common';
+import { NgFor, NgIf, NgClass } from '@angular/common';
 import { DataService } from 'app/shared/services/data.service';
 import { Select } from '@ngxs/store';
 import { AppState } from 'app/store/general/general.state';
@@ -9,11 +9,12 @@ import { Language } from 'app/store/general/general.state';
 import { SwipeIconComponent } from '../swipe-icon/swipe-icon.component';
 
 @Component({
-    selector: 'app-circular-carousel',
-    imports: [NgClass, SwipeIconComponent],
-    providers: [DataService],
-    templateUrl: './circular-carousel.component.html',
-    styleUrl: './circular-carousel.component.scss'
+  selector: 'app-circular-carousel',
+  standalone: true,
+  imports: [NgFor, NgIf, NgClass, SwipeIconComponent],
+  providers: [DataService],
+  templateUrl: './circular-carousel.component.html',
+  styleUrl: './circular-carousel.component.scss'
 })
 export class CircularCarouselComponent implements OnInit {
 
@@ -52,12 +53,9 @@ export class CircularCarouselComponent implements OnInit {
   private intervalID: any;
   private activeItem: number = 0;
   public captionTitle: string = "";
-  public captionTitleFr: string = "";
-  public captionTitleEn: string = "";
   public captionText: string = "";
   private lastActivePageNumber: number | undefined;
   private contentHeight!: number;
-  private blockAll!: boolean;
 
   constructor(private dataService: DataService) { }
 
@@ -73,9 +71,6 @@ export class CircularCarouselComponent implements OnInit {
         this.contentHeight = appState.contentHeight;
         this.itemHeight = Math.floor(this.contentHeight * .45);
       }
-      if (appState.blockAll !== this.blockAll) {
-        this.blockAll = appState.blockAll;
-      }
     });
   }
 
@@ -86,12 +81,12 @@ export class CircularCarouselComponent implements OnInit {
         // Condition stops carousel restart if user flips just a little before releasing and the flip comes back
         if (this.lastActivePageNumber !== this.myPageNum) {
           this.lastActivePageNumber = this.myPageNum;
-          // this.startAutoScroll();
+          this.startAutoScroll();
         }
       } else {
         this.lastActivePageNumber = undefined;
         this.activeItem = 0;
-        // this.stopAutoScroll();
+        this.stopAutoScroll();
       }
     }
 
@@ -109,26 +104,24 @@ export class CircularCarouselComponent implements OnInit {
         }
         this.lastActivePageNumber = undefined;
         this.activeItem = 0;
-        // if (this.scrollType === 'auto') {
-        //   this.stopAutoScroll();
-        // }
+        if (this.scrollType === 'auto') {
+          this.stopAutoScroll();
+        }
       } else {
         // this.lastActivePageNumber = this.myPageNum;
         if (this.myPageNum === this.activePageNum) {
           if (this.carouselRoot) {
             this.carouselRoot.nativeElement.style.pointerEvents = "auto";
           }
-          // if (this.scrollType === 'auto') {
-          //   this.startAutoScroll();
-          // }
+          if (this.scrollType === 'auto') {
+            this.startAutoScroll();
+          }
         }
       }
     }
 
     if (changes.language && this.itemType === 'image') {
       this.language = changes.language.currentValue;
-      this.captionTitle 
-      this.captionTitle = this.language === "Fr" ? this.captionTitleFr : this.captionTitleEn;
       if (this.items) {
         this.manageCaption();
       }
@@ -140,9 +133,7 @@ export class CircularCarouselComponent implements OnInit {
   ngAfterViewInit() {
     this.dataService.getData(this.data).subscribe((carouselData: any) => {
       this.items = carouselData.carousel.items;
-      this.captionTitleFr = carouselData.carousel.captionTitleFr;
-      this.captionTitleEn = carouselData.carousel.captionTitleEn;
-      this.captionTitle = this.language === "Fr" ? this.captionTitleFr : this.captionTitleEn;
+      this.captionTitle = carouselData.carousel.captionTitleFr;
       this.captionText = carouselData.carousel.items[this.activeItem].captionFr;
       this.initCarousel();
     });
@@ -155,6 +146,7 @@ export class CircularCarouselComponent implements OnInit {
       this.itemCount = this.items.length;
       this.itemDegrees = 360 / this.itemCount;
       this.degrees = 0;
+      console.log("this.itemDegrees", this.itemDegrees);
 
       for (let i = 0, length = this.itemCollection.length; i < length; i++) {
         const item = this.itemCollection.namedItem("item" + i);
@@ -193,7 +185,6 @@ export class CircularCarouselComponent implements OnInit {
   @HostListener('wheel', ['$event']) wheel(event: WheelEvent) {
     event.stopPropagation();
     event.preventDefault();
-    if (this.blockAll) return;
     if (this.scrollType === "manual") {
       if (event.deltaY > 0) {
         this.degrees -= this.itemDegrees / 5;
@@ -206,7 +197,6 @@ export class CircularCarouselComponent implements OnInit {
   }
 
   @HostListener('touchstart', ['$event']) touchstart(event: TouchEvent) {
-    if (this.blockAll) return;
     if (this.scrollType === "manual") {
       // event.stopPropagation();
       // event.preventDefault();
@@ -215,7 +205,6 @@ export class CircularCarouselComponent implements OnInit {
   }
 
   @HostListener('touchmove', ['$event']) touchmove(event: TouchEvent) {
-    if (this.blockAll) return;
     if (this.scrollType === "manual") {
       event.stopPropagation();
       event.preventDefault();
@@ -224,7 +213,6 @@ export class CircularCarouselComponent implements OnInit {
   }
 
   @HostListener('touchend', ['$event']) touchend(event: TouchEvent) {
-    if (this.blockAll) return;
     if (this.scrollType === "manual") {
       // event.stopPropagation();
       // event.preventDefault();
@@ -233,7 +221,6 @@ export class CircularCarouselComponent implements OnInit {
   }
 
   @HostListener('mousedown', ['$event']) mousedown(event: MouseEvent) {
-    if (this.blockAll) return;
     if (this.scrollType === "manual") {
       // event.stopPropagation();
       // event.preventDefault();
@@ -242,7 +229,6 @@ export class CircularCarouselComponent implements OnInit {
   }
 
   @HostListener('mousemove', ['$event']) mousemove(event: MouseEvent) {
-    if (this.blockAll) return;
     if (this.scrollType === "manual") {
       event.stopPropagation();
       event.preventDefault();
@@ -251,7 +237,6 @@ export class CircularCarouselComponent implements OnInit {
   }
 
   @HostListener('mouseup', ['$event']) mouseup(event: MouseEvent) {
-    if (this.blockAll) return;
     if (this.scrollType === "manual") {
       // event.stopPropagation();
       // event.preventDefault();
@@ -298,7 +283,7 @@ export class CircularCarouselComponent implements OnInit {
   }
 
   manageCaption(): void {
-    if (this.language) {
+    if(this.language) {
       this.captionText = this.language === "Fr" ? this.items[this.activeItem].captionFr : this.items[this.activeItem].captionEn;
     }
   }
@@ -344,7 +329,6 @@ export class CircularCarouselComponent implements OnInit {
   }
 
   itemClicked(event: MouseEvent, item: any): void {
-    if (this.blockAll) return;
     event.preventDefault();
     event.stopPropagation();
     this.carouselItemClicked.emit(item.page);

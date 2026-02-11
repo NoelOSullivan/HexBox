@@ -192,28 +192,31 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
       //   this.activateDirectAccess();
       //   this.activateTools();
       // }
-      // if (this.sunGameState !== newAppState.sunGameState) {
-      //   this.sunGameState = newAppState.sunGameState;
-      //   switch (this.sunGameState) {
-      //     case SunGameState.GAMEOFF:
-      //     case SunGameState.GAMEOVER:
-      //       if (this.catapult) {
-      //         this.catapult.nativeElement.style.transition = "opacity 0.75s ease-out";
-      //         setTimeout(() => {
-      //           this.catapult.nativeElement.style.opacity = 0;
-      //         }, 0);
-      //         this.catapult.nativeElement.style.pointerEvents = 'none';
-      //       }
-      //       break;
-      //     case SunGameState.GAMEON:
-      //       this.catapult.nativeElement.style.transition = "opacity 1.25s ease-in";
-      //       setTimeout(() => {
-      //         this.catapult.nativeElement.style.opacity = 100;
-      //       }, 0);
-      //       this.catapult.nativeElement.style.pointerEvents = 'all';
-      //       break;
-      //   }
-      // }
+      // this.activateTools();
+      // this.activateDirectAccess();
+
+      if (this.sunGameState !== newAppState.sunGameState) {
+        this.sunGameState = newAppState.sunGameState;
+        switch (this.sunGameState) {
+          case SunGameState.GAMEOFF:
+          case SunGameState.GAMEOVER:
+            if (this.catapult) {
+              this.catapult.nativeElement.style.transition = "opacity 0.75s ease-out";
+              setTimeout(() => {
+                this.catapult.nativeElement.style.opacity = 0;
+              }, 0);
+              this.catapult.nativeElement.style.pointerEvents = 'none';
+            }
+            break;
+          case SunGameState.GAMEON:
+            this.catapult.nativeElement.style.transition = "opacity 1.25s ease-in";
+            setTimeout(() => {
+              this.catapult.nativeElement.style.opacity = 100;
+            }, 0);
+            this.catapult.nativeElement.style.pointerEvents = 'all';
+            break;
+        }
+      }
       if (newAppState.contentHeight !== this.contentHeight) {
         this.contentHeight = newAppState.contentHeight;
       }
@@ -336,6 +339,8 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
       const activePanelNumber: ActivePanelNumber = { apn: 1 };
       this.store.dispatch(new ChangePanelNumber(activePanelNumber));
       this.store.dispatch(new ChangeBlockAllState(false));
+      this.activateTools();
+      this.activateDirectAccess();
     }, 1000);
   }
 
@@ -388,7 +393,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
 
       // Manage direct access
       if (hexIndex !== 2) {
-        this.disactivateDirectAccess();
+        // this.disactivateDirectAccess();
       } else {
         this.activateDirectAccess();
       }
@@ -658,6 +663,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
   //-------------------------------------
 
   activateDirectAccess(): void {
+    console.log("activateDirectAccess");
     if (!this.daActivated) {
       this.daTarantulaIsOut = true;
       this.daTarantulaIsMoving = true;
@@ -695,6 +701,9 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
   manageDirectAccess() {
     if (this.daActivated) {
       this.directAccessOpen = !this.directAccessOpen;
+      if(this.directAccessOpen) {
+        this.clickHexagon(2, '/container2', true);
+      }
       this.daTarantulaIsMoving = true;
       if (this.volume > 0) {
         this.spiderFeetSound.volume(this.volume);
@@ -749,6 +758,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
         this.store.dispatch(new ChangeHexBox(hexBoxState));
         this.tarantulaHolder.nativeElement.style.transform = "rotate(0deg)";
         this.clickHexagon(myHexNum, myContainer, true);
+        this.disactivateDirectAccess();
       }, 4000);
 
       setTimeout(() => {
@@ -830,6 +840,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
 
       setTimeout(() => {
         this.store.dispatch(new ChangeBlockAllState(false));
+        this.activateDirectAccess();
       }, 20000);
     } else {
       const myHexNum = 5;
@@ -863,6 +874,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
         this.tarantulaHolder.nativeElement.style.transform = "rotate(0deg)";
         this.domeTarantulaHolder.nativeElement.style.transform = "rotate(0deg)";
         this.clickHexagon(myHexNum, myContainer, true);
+        this.disactivateDirectAccess();
       }, 4000);
 
       setTimeout(() => {
@@ -884,6 +896,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
 
       setTimeout(() => {
         this.store.dispatch(new ChangeBlockAllState(false));
+        this.activateDirectAccess();
       }, 9000);
     }
 

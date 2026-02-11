@@ -253,6 +253,7 @@
   width: 100%;
   height: 100%;
   color: $primary-text-color;
+  color: black;
   transition: transform 1s;
 }
 
@@ -268,14 +269,14 @@
 
 //------------------------------------------------------------------------------------------------------
 
-.sub-menu-holder {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: red;
-  top: -100%;
-  left: 0;
-}
+// .sub-menu-holder {
+//   position: absolute;
+//   width: 100%;
+//   height: 100%;
+//   background: red;
+//   top: -100%;
+//   left: 0;
+// }
 
 //------------------------------------------------------------------------------------------------------
 
@@ -303,11 +304,12 @@
   font-family: 'Miriam Libre', sans-serif;
   font-weight: 600;
   top: 16px;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 :host ::ng-deep .one-char {
-  font-size: 18px;
+  top: 12px;
+  font-size: 24px;
 }
 
 :host ::ng-deep .centre-hex-1 {

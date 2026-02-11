@@ -16,7 +16,7 @@ export class MatchComponent {
 
   constructor(private singletonService: SingletonService) {
     effect(() => {
-      if(this.enigmaEndInfo() === true) {
+      if (this.enigmaEndInfo() === true) {
         this.overAndDone = true;
         this.timeOutFlameDeath && clearTimeout(this.timeOutFlameDeath);
       }
@@ -114,14 +114,9 @@ export class MatchComponent {
     if (changes.appWidth) {
       this.appCentre = { x: changes.appWidth.currentValue / 2, y: changes.appHeight.currentValue / 2 };
     }
-
     if (changes.passedElementData) {
       this.elementData = changes.passedElementData.currentValue;
     }
-
-    // if (changes.passedScrollData) {
-    //   this.scrollData = changes.passedScrollData.currentValue;
-    // }
   }
 
   ngAfterViewInit() {
@@ -129,6 +124,9 @@ export class MatchComponent {
     this.maskHeight = (this.mask().nativeElement.getBoundingClientRect().bottom - this.mask().nativeElement.getBoundingClientRect().top) / 2;
     this.matchHolderWidth = (this.matchHolder().nativeElement.getBoundingClientRect().right - this.matchHolder().nativeElement.getBoundingClientRect().left) / 2;
     this.matchHolderHeight = (this.matchHolder().nativeElement.getBoundingClientRect().bottom - this.matchHolder().nativeElement.getBoundingClientRect().top) / 2;
+    const rect = this.matchHolder().nativeElement.getBoundingClientRect();
+    this.cursorPos = { x: rect.right, y: rect.bottom + (rect.bottom - rect.top) }
+    this.placeMask();
   }
 
   touchstartMask(event: TouchEvent): void {
@@ -307,8 +305,8 @@ export class MatchComponent {
     // Detect match flame nearing hidden figure
     if (!this.figureDone) {
       if (this.appCentre) {
-        if (Math.abs(this.appCentre.x - this.cursorPos!.x) < 80) {
-          if (Math.abs(this.appCentre.y - this.cursorPos!.y) < 80) {
+        if (Math.abs(this.appCentre.x - this.cursorPos!.x) < 180) {
+          if (Math.abs(this.appCentre.y - this.cursorPos!.y) < 100) {
             this.figureDone = true;
             this.emitMoveFigure(true);
             setTimeout(() => {
@@ -337,7 +335,6 @@ export class MatchComponent {
         }
       }
     }
-
   }
 
   placeCandle() {
@@ -416,7 +413,7 @@ export class MatchComponent {
     if (!this.candleLit) {
       // mask follows flame thanks to xyFlameCorrection
       let timeFromStart = Math.round((currentTime - this.startTime) / 1000);
-      let percentageTimeFromStart = timeFromStart / this.totalTime * 100;
+      let percentageTimeFromStart = timeFromStart / this.totalTime * 100 | 0;
       let xyFlameCorrection = 40 / 100 * percentageTimeFromStart;
       this.mask().nativeElement.style.left = this.cursorPos!.x - (this.maskWidth) - 30 + diff + xyFlameCorrection + "px";
       this.mask().nativeElement.style.top = this.cursorPos!.y - (this.maskHeight) - (this.matchHolderHeight * 2) - 20 + diff + xyFlameCorrection + "px";

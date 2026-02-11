@@ -11,7 +11,7 @@ import { DomRect } from 'app/shared/interfaces/general';
     name: 'language',
     defaults: {
         // language: {
-        language: "Fr",
+        language: "En",
         // },
     }
 })

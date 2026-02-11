@@ -29,7 +29,8 @@
     <div class="orientation-message" [ngClass]="{'hideForPortrait':viewHeightOK}">
         <img src="assets/images/rotation-icon.png" class="rotation-device" />
     </div>
-
-    <app-enigma></app-enigma>
+    <span [ngClass]="{'hideForLandscape':!viewHeightOK}">
+        <app-enigma></app-enigma>
+    </span>
 
 </div>

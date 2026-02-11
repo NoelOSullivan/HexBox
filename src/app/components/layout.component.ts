@@ -39,28 +39,28 @@ export class LayoutComponent implements OnInit {
   resizeTimeout: any;
   that: any;
 
-  // @HostListener('window:resize', ['$event'])
-  // onWindowResize() {
-  //   if(document.fullscreenElement != null) {
-  //     this.viewHeightOK = true;
-  //   }else {
-  //     this.viewHeightOK = this.checkViewHeight();
-  //   }
+  @HostListener('window:resize', [])
+  onWindowResize() {
+    if(document.fullscreenElement != null) {
+      this.viewHeightOK = true;
+    }else {
+      this.viewHeightOK = this.checkViewHeight();
+    }
 
-  //   if (window.innerHeight > window.innerWidth) {
-  //     this.originalShortSide = window.innerWidth;
-  //     this.originalLongSide = window.innerHeight;
-  //   } else {
-  //     this.originalLongSide = window.innerWidth;
-  //     this.originalShortSide = window.innerHeight;
-  //   }
+    if (window.innerHeight > window.innerWidth) {
+      this.originalShortSide = window.innerWidth;
+      this.originalLongSide = window.innerHeight;
+    } else {
+      this.originalLongSide = window.innerWidth;
+      this.originalShortSide = window.innerHeight;
+    }
 
-  //   // console.log("window.", window.innerWidth, window.innerHeight);
+    // console.log("window.", window.innerWidth, window.innerHeight);
 
-  //   if (this.viewHeightOK) {
-  //     this.updateLayout();
-  //   }
-  // }
+    if (this.viewHeightOK) {
+      this.updateLayout();
+    }
+  }
 
   @HostListener('mouseup', ['$event']) mouseup(event: MouseEvent) {
 
@@ -68,7 +68,7 @@ export class LayoutComponent implements OnInit {
     // appState = { appState: { onIntro: this.appState.appState.onIntro, mouseUpDetected: !this.appState.appState.mouseUpDetected } };
     // this.store.dispatch(new ChangeAppState(appState.appState));
 
-    // this.store.dispatch(new ChangeMouseUpDetected());
+    this.store.dispatch(new ChangeMouseUpDetected());
 
 
   }

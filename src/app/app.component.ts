@@ -19,9 +19,9 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     let language: string;
     language = "En";
-    if(navigator.language.toLowerCase().includes("fr")) {
-      language = "Fr";
-    }
+    // if(navigator.language.toLowerCase().includes("fr")) {
+    //   language = "Fr";
+    // }
     this.store.dispatch(new ChangeLanguage(language));
   }
 
