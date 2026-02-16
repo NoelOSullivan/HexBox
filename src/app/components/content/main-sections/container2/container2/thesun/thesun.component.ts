@@ -55,6 +55,7 @@ export class ThesunComponent implements OnInit {
   chrono!: string;
   sunGameState!: SunGameState;
   headJSON!: any;
+  playButtonText!: string;
 
   ngOnInit() {
     // Get data for candidates
@@ -100,6 +101,7 @@ export class ThesunComponent implements OnInit {
 
     if (changes.language) {
       this.changeHeads(changes.language.currentValue);
+      this.playButtonText = this.language === "Fr" ? "Le jeu du sondage" : "The Polling Game";
 
     }
   }

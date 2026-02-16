@@ -55,6 +55,8 @@ export class AirbusComponent {
   timeOut6: any;
   timeOut7: any;
 
+  playButtonText!: string;
+
   ngAfterViewInit() {
     this.appState$.subscribe((appState) => {
       if (appState.contentHeight !== this.contentHeight) {
@@ -154,6 +156,7 @@ export class AirbusComponent {
 
     if (changes.language) {
       this.language = changes.language.currentValue;
+      this.playButtonText = this.language === "Fr" ? "Regarder" : "Showreel";
     }
 
     if (changes.robotAirbusAnim) {

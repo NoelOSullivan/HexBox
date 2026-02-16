@@ -21,7 +21,7 @@
             <div class="common-side" [ngClass]="{'hide-page': nSubPage!==3}">
                 <app-logo></app-logo>
                 <app-circular-carousel [myContainerIsActive]="iAmActive" [scrollType]="'manual'" [hasCaption]="true"
-                    [itemType]="'image'" [language]="language" [data]="'milan.json'" [orientation]="'vertical'"
+                    [itemType]="'image'" [language]="language" [data]="'milan.json'" [recentreCarousel]="recentreCarousel" [orientation]="'vertical'"
                     [perspective]="'1000px'"></app-circular-carousel>
             </div>
             <app-next-page-button class="next-page-button" [isLastPage]="true" [language]="language"

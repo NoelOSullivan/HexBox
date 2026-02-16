@@ -1,21 +1,35 @@
-.swipe-icon-holder {
-    width:50%;
-}
-
-.swipe-icon-image {
-    width: 100%;
-}
-
-.right {
+.next-button {
+    display: flex;
+    justify-content: end;
+    max-width: 150px;
+    background: black;
+    color: white;
+    font-size: 16px;
+    pointer-events: inherit;
+    border-radius: 20px 0px;
+    cursor: pointer;
+    user-select: none;
     position: absolute;
-    top:-6px;
-    right: 11px;
+    right: 0;
+    padding-left: 10px;
+
+}
+
+.icon-holder {
+    position: relative;
+    width:20px;
+    height: 20px;
+    margin-left: 12px;
+    margin-right: 12px;
+}
+
+.icon {
+    position: absolute;
+    top:-17px;
+    height: 35px;
+}
+
+.icon-right{
     transform: rotateZ(90deg);
-}
-
-.left {
-    position: absolute;
-    top:-4px;
-    left: 11px;
-    transform: rotateZ(-90deg) rotateY(180deg);
+    left:0;
 }

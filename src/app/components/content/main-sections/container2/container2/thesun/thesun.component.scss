@@ -15,10 +15,17 @@
   margin-left: 10px;
   margin-right: 10px;
   background: rgba(0, 0, 0, 0.3);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 100;
   padding: 10px;
-  ;
+}
+
+.highlight {
+    font-weight: 900;
+    color: black;
+    background: rgb(255, 246, 180);
+    padding-left: 2px;
+    padding-right: 2px;
 }
 
 .game {
@@ -53,9 +60,9 @@
 .play {
   position: absolute;
   bottom: 10px;
-  width: 35px;
-  height: 31px;
-  right: 10px;
+  width: 200px;
+  height: 30px;
+  right: 5px;
   // z-index: 10;
 }
 

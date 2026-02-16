@@ -15,7 +15,6 @@ import { AppState, Language } from 'app/store/general/general.state';
 import { BackButtonClick, ChangeBlockAllState, ChangeEggState, ChangeIntroState, RobotAirbusAnim, TransmitEggInfo } from 'app/store/general/general.actions';
 import { LangButtonComponent } from '../lang-button/lang-button.component';
 import { VolumeButtonComponent } from '../volume-button/volume-button.component';
-import { SwipeIconComponent } from 'app/shared/components/swipe-icon/swipe-icon.component';
 import { EggComponent } from 'app/shared/components/egg/egg.component';
 import { TarantulaComponent } from 'app/shared/components/tarantula/tarantula.component';
 import { CircularTextComponent } from 'app/shared/components/circular-text/circular-text.component';
@@ -26,7 +25,7 @@ import { Howl, Howler } from 'howler';
 
 @Component({
   selector: 'hexagon-group',
-  imports: [NgClass, HexagonComponent, LangButtonComponent, VolumeButtonComponent, SwipeIconComponent, EggComponent, TarantulaComponent, CircularTextComponent],
+  imports: [NgClass, HexagonComponent, LangButtonComponent, VolumeButtonComponent, EggComponent, TarantulaComponent, CircularTextComponent],
   providers: [DataService],
   templateUrl: './hexagon-group.component.html',
   styleUrls: ['./hexagon-group.component.scss']

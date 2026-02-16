@@ -1,4 +1,9 @@
-
-<div class="anim-button start-button" (click)="clickPlay()" [ngClass]="{'flipMe':playing===true}"><img src="assets/images/play.png" class="image"/></div>
-<div class="anim-button stop-button" (click)="clickStop()" [ngClass]="{'flipMe':playing===false}"><img src="assets/images/stop.png" class="image"/></div>
-
+<div class="play-button-holder">
+    <div [ngClass]="{'hideMe':playing===true}" (click)="clickPlay()">{{playButtonText}}</div>
+    <div class="anim-button-holder">
+        <div class="anim-button start-button" (click)="clickPlay()" [ngClass]="{'flipMe':playing===true}"><img
+                src="assets/images/play.png" class="image" /></div>
+        <div class="anim-button stop-button" (click)="clickStop()" [ngClass]="{'flipMe':playing===false}"><img
+                src="assets/images/stop.png" class="image" /></div>
+    </div>
+</div>

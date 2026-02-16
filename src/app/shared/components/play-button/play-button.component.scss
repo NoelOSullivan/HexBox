@@ -1,14 +1,45 @@
+.play-button-holder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+  font-size: 16px;
+}
+
+.anim-button-holder {
+  position: relative;
+  margin-left: 5px;
+  width: 30px;
+  height: 30px;
+}
+
 .anim-button {
   position: absolute;
   backface-visibility: hidden;
   transition: transform 0.5s;
   cursor: pointer;
+  // background: rgba(255, 255, 255, 0.7);
+  border: 1px solid white;
+  background: black;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
 }
 
 .flipMe {
   transform: rotateY(180deg);
 }
 
+.hideMe {
+  display: none;
+}
+
 .image {
-  width: 100%
+  width: 24px;
+  height: 24px;
 }

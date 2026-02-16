@@ -58,9 +58,9 @@
 
 .play {
     position: absolute;
-    width: 35px;
-    height: 31px;
-    bottom: 10px;
+    width: 140px;
+    height: 30px;
+    bottom: 5px;
     right: 10px;
     z-index: 10;
 }
@@ -68,8 +68,7 @@
 .blurb {
     position: absolute;
     width: 80%;
-    padding-left: 10px;
-    padding-right: 4%;
+    padding: 10px 10px 4% 10px;
     color: white;
     font-size: 14px;
     background: rgba(255, 255, 255, 0.4);
@@ -78,6 +77,14 @@
     box-sizing: border-box;
     text-align: justify;
     left: 3svh;
+}
+
+.highlight {
+    font-weight: 900;
+    color: black;
+    background: rgb(255, 246, 180);
+    padding-left: 2px;
+    padding-right: 2px;
 }
 
 .blurb2 {

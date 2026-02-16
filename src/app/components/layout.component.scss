@@ -7,6 +7,7 @@
     // background-image: url('./background.jpg');
     // background-position: 50% 50%;
     overflow: hidden;
+    overscroll-behavior: contain;
     // min-height: 550px;
     min-width: 300px;
     background-image: url("/assets/enigma/wallsbackground.jpg");

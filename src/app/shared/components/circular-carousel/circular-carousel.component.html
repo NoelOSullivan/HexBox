@@ -1,41 +1,54 @@
-<!-- <div class="mouse-up-outside-detector"></div> -->
 <nav #carouselRoot class="carousel-root">
     <div class="carousel-event-capture"></div>
     <div #carousel class="carousel" [ngClass]="{'auto-animate':scrollType==='auto'}">
-        <!-- <span *ngIf="itemType==='imageText'"> -->
         <li class="carousel-item" *ngFor="let item of items; let  i = index" id="item{{i}}"
             (click)="itemClicked($event,item)">
-            <div class="item-holder" *ngIf="itemType==='imageText'">
+            @if (itemType==='imageText') {
+            <div class="item-holder">
                 <div class="logo-holder">
                     <img class="svg-icon" src="{{item.imageSrc}}" />
                 </div>
-                <div class="text-holder">
+                <div class="text-holder"  [ngClass]="{'centre-blurb':item.page === undefined}">
                     <div class="intro">
-                        <span *ngIf="language==='En'">{{item.introEn}}</span>
-                        <span *ngIf="language==='Fr'">{{item.introFr}}</span>
+                        @if (language==='En') {
+                        <span [innerHTML]="item.introEn"></span>
+                        }
+                        @if (language==='Fr') {
+                        <span [innerHTML]="item.introFr"></span>
+                        }
                     </div>
                     <div class="text">
-                        <span *ngIf="language==='En'">{{item.textEn}}</span>
-                        <span *ngIf="language==='Fr'">{{item.textFr}}</span>
+                        @if (language==='En') {
+                        <span [innerHTML]="item.textEn"></span>
+                        }
+                        @if (language==='Fr') {
+                        <span [innerHTML]="item.textFr"></span>
+                        }
                     </div>
                 </div>
             </div>
-            <div class="item-holder" *ngIf="itemType==='image'">
+            }
+            @if (itemType==='image') {
+            <div class="item-holder">
                 <div class="image-holder">
                     <img class="image" src="{{item.imageSrc}}" />
                 </div>
             </div>
-            <div *ngIf="item.page" class="click-indicator">
+            }
+            @if (item.page) {
+            <div class="click-indicator">
                 <div class="icon-holder">
-                    <app-swipe-icon [direction]="'right'"></app-swipe-icon>
+                    <app-swipe-icon [direction]="'right'" [buttonText]="buttonText"></app-swipe-icon>
                 </div>
             </div>
-            <!-- <app-swipe-icon class="click-indicator"></app-swipe-icon> -->
+            }
             <div #shadow class="shadow"></div>
         </li>
     </div>
-    <div *ngIf="itemType==='image'">
+    @if (itemType==='image') {
+    <div>
         <div class="caption-title">{{captionTitle}}</div>
         <div class="caption-text">{{captionText}}</div>
     </div>
+    }
 </nav>

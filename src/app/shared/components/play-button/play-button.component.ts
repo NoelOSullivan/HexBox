@@ -16,13 +16,12 @@ export class PlayButtonComponent {
 
   @Output() playState = new EventEmitter<boolean>();
   @Input() playing!: boolean;
+  @Input() playButtonText!: string;
   @Select(AppState) appState$!: Observable<AppStateModel>;
 
   private blockAll!: boolean;
 
   constructor() { }
-
-  language!: String;
 
   ngOnInit(): void {
     this.appState$.subscribe((appState) => {
@@ -34,7 +33,6 @@ export class PlayButtonComponent {
 
   ngOnChanges(changes: any) {
     if (changes.playing) {
-      // console.log("changes.playing", changes.playing);
       this.playing = changes.playing.currentValue;
     }
   }

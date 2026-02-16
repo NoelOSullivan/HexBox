@@ -1,59 +1,62 @@
 <div class="game-holder">
 
   @if (playing===false) {
-    <div class="game">
-      @if (language==='Fr') {
-        <div class="blurb">
-          J'ai travaillé sur le site Sunnation du journal The Sun qui suivait l'election de 2015 au Royaume-Uni.<br>
-          Des jeux, des quizzes et des web-app.<br><br>Je me suis inspiré de cette expérience pour créér une
-          application de
-          sondage en partenariat avec Iflop et Ipsauce.<br><br>Il utilise des metriques de l'émotion et du
-          catharsis pour sonder la popularité des candidats.<br><br>Cliquer pour voir l'outil de sondage.
-        </div>
-      }
-      @if (language==='En') {
-        <div class="blurb">
-          I worked on Sunnation, The Suns UK election website in 2015.<br>Games, quizzes and webapps.<br><br>This
-          experience inspired
-          me to create a polling application in partnership with FiveThirtySeven and Scraatchy & Scraatchy.<br><br>It
-          uses metrics of
-          emotion and catharsis to measure the popularity of candidats.<br><br>Click to see the polling tool.
-        </div>
-      }
+  <div class="game">
+    @if (language==='Fr') {
+    <div class="blurb">
+      En partenariat avec<br><br><br><span class="highlight">Iflop</span><br><br>et<br><br><span
+        class="highlight">Ipsauce</span><br><br><br>Un outil de sondage innovant qui utilise<br>des indicateurs
+      d'émotion et de catharsis<br>pour prédire les tendances de vote
     </div>
+    }
+    @if (language==='En') {
+    <div class="blurb">
+      In partnership with<br><br><br><span class="highlight">FiveThirtySeven</span><br><br>and<br><br><span
+        class="highlight">Scraatchy and Scraatchy </span><br><br><br>An innovative polling tool that uses<br>metrics
+      of emotion and catharsis<br>to predict voting trends.
+    </div>
+    }
+  </div>
   }
 
   @if (playing===true) {
-    <div class="game">
-      <div class="line back-line">
-        <app-headshot (switchHeads)="switchHeads(1, false)" [nHead]="1" [headSrcFr]="activeHeadSrcFr[0]" [headSrcUk]="activeHeadSrcUk[0]"
-        [headUp]="headUp[0]" [eggInfo]="eggInfo" [left]="'18%'" [language]="language"></app-headshot>
-        <app-headshot (switchHeads)="switchHeads(2, false)" [nHead]="2" [headSrcFr]="activeHeadSrcFr[1]" [headSrcUk]="activeHeadSrcUk[1]"
-        [headUp]="headUp[1]" [eggInfo]="eggInfo" [right]="'18%'" [language]="language"></app-headshot>
-      </div>
-      <div class="line middle-line">
-        <app-headshot (switchHeads)="switchHeads(3, false)" [nHead]="3" [headSrcFr]="activeHeadSrcFr[2]" [headSrcUk]="activeHeadSrcUk[2]"
-        [headUp]="headUp[2]" [eggInfo]="eggInfo" [left]="'10%'" [language]="language"></app-headshot>
-        <app-headshot (switchHeads)="switchHeads(4, false)" [nHead]="4" [headSrcFr]="activeHeadSrcFr[3]" [headSrcUk]="activeHeadSrcUk[3]"
-        [headUp]="headUp[3]" [eggInfo]="eggInfo" [right]="'10%'" [language]="language"></app-headshot>
-      </div>
-      <div class="line front-line">
-        <app-headshot (switchHeads)="switchHeads(5, false)" [nHead]="5" [headSrcFr]="activeHeadSrcFr[4]" [headSrcUk]="activeHeadSrcUk[4]"
-        [headUp]="headUp[4]" [eggInfo]="eggInfo" [left]="'1%'" [language]="language"></app-headshot>
-        <app-headshot (switchHeads)="switchHeads(6, false)" [nHead]="6" [headSrcFr]="activeHeadSrcFr[5]" [headSrcUk]="activeHeadSrcUk[5]"
-        [headUp]="headUp[5]" [eggInfo]="eggInfo" [right]="'1%'" [language]="language"></app-headshot>
-      </div>
-      @if (sunGameState==='gameOn') {
-        <app-chrono class="chrono" [chrono]="chrono"></app-chrono>
-      }
-      @if (sunGameState==='gameOver') {
-        <app-results class="results" [headInfos]="finalHeadInfos" [language]="language"></app-results>
-      }
+  <div class="game">
+    <div class="line back-line">
+      <app-headshot (switchHeads)="switchHeads(1, false)" [nHead]="1" [headSrcFr]="activeHeadSrcFr[0]"
+        [headSrcUk]="activeHeadSrcUk[0]" [headUp]="headUp[0]" [eggInfo]="eggInfo" [left]="'18%'"
+        [language]="language"></app-headshot>
+      <app-headshot (switchHeads)="switchHeads(2, false)" [nHead]="2" [headSrcFr]="activeHeadSrcFr[1]"
+        [headSrcUk]="activeHeadSrcUk[1]" [headUp]="headUp[1]" [eggInfo]="eggInfo" [right]="'18%'"
+        [language]="language"></app-headshot>
     </div>
+    <div class="line middle-line">
+      <app-headshot (switchHeads)="switchHeads(3, false)" [nHead]="3" [headSrcFr]="activeHeadSrcFr[2]"
+        [headSrcUk]="activeHeadSrcUk[2]" [headUp]="headUp[2]" [eggInfo]="eggInfo" [left]="'10%'"
+        [language]="language"></app-headshot>
+      <app-headshot (switchHeads)="switchHeads(4, false)" [nHead]="4" [headSrcFr]="activeHeadSrcFr[3]"
+        [headSrcUk]="activeHeadSrcUk[3]" [headUp]="headUp[3]" [eggInfo]="eggInfo" [right]="'10%'"
+        [language]="language"></app-headshot>
+    </div>
+    <div class="line front-line">
+      <app-headshot (switchHeads)="switchHeads(5, false)" [nHead]="5" [headSrcFr]="activeHeadSrcFr[4]"
+        [headSrcUk]="activeHeadSrcUk[4]" [headUp]="headUp[4]" [eggInfo]="eggInfo" [left]="'1%'"
+        [language]="language"></app-headshot>
+      <app-headshot (switchHeads)="switchHeads(6, false)" [nHead]="6" [headSrcFr]="activeHeadSrcFr[5]"
+        [headSrcUk]="activeHeadSrcUk[5]" [headUp]="headUp[5]" [eggInfo]="eggInfo" [right]="'1%'"
+        [language]="language"></app-headshot>
+    </div>
+    @if (sunGameState==='gameOn') {
+    <app-chrono class="chrono" [chrono]="chrono"></app-chrono>
+    }
+    @if (sunGameState==='gameOver') {
+    <app-results class="results" [headInfos]="finalHeadInfos" [language]="language"></app-results>
+    }
+  </div>
   }
 
   <div class="play">
-    <app-play-button (playState)="managePlay($event)" [playing]="playing"></app-play-button>
+    <app-play-button (playState)="managePlay($event)" [playing]="playing"
+      [playButtonText]="playButtonText"></app-play-button>
   </div>
 
 </div>

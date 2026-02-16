@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild, viewChild } from '@angular/core';
-import { NgFor, NgIf, NgClass } from '@angular/common';
+import { NgFor, NgClass } from '@angular/common';
 import { DataService } from 'app/shared/services/data.service';
 import { Select } from '@ngxs/store';
 import { AppState } from 'app/store/general/general.state';
@@ -11,7 +11,7 @@ import { SwipeIconComponent } from '../swipe-icon/swipe-icon.component';
 @Component({
   selector: 'app-circular-carousel',
   standalone: true,
-  imports: [NgFor, NgIf, NgClass, SwipeIconComponent],
+  imports: [NgFor, NgClass, SwipeIconComponent],
   providers: [DataService],
   templateUrl: './circular-carousel.component.html',
   styleUrl: './circular-carousel.component.scss'
@@ -56,6 +56,7 @@ export class CircularCarouselComponent implements OnInit {
   public captionText: string = "";
   private lastActivePageNumber: number | undefined;
   private contentHeight!: number;
+  public buttonText!: string;
 
   constructor(private dataService: DataService) { }
 
@@ -120,14 +121,15 @@ export class CircularCarouselComponent implements OnInit {
       }
     }
 
-    if (changes.language && this.itemType === 'image') {
+    if (changes.language) {
       this.language = changes.language.currentValue;
-      if (this.items) {
-        this.manageCaption();
+      this.buttonText = this.language === "Fr" ? "Voir plus" : "See more";
+      if (this.itemType === 'image') {
+        if (this.items) {
+          this.manageCaption();
+        }
       }
     }
-
-
   }
 
   ngAfterViewInit() {
@@ -283,7 +285,7 @@ export class CircularCarouselComponent implements OnInit {
   }
 
   manageCaption(): void {
-    if(this.language) {
+    if (this.language) {
       this.captionText = this.language === "Fr" ? this.items[this.activeItem].captionFr : this.items[this.activeItem].captionEn;
     }
   }
@@ -291,9 +293,10 @@ export class CircularCarouselComponent implements OnInit {
   rotateCarousel(): void {
     if (this.carousel) {
       if (this.hasCaption) {
-        let correctedDegrees = (this.degrees + this.itemDegrees / 2);
+        let correctedDegrees = (Math.floor(this.degrees) + this.itemDegrees / 2);
         if (correctedDegrees > 359) correctedDegrees = correctedDegrees - 360;
         this.activeItem = Math.floor(correctedDegrees / this.itemDegrees);
+        if (this.activeItem === -1) debugger;
         this.manageCaption();
       }
       this.carousel.nativeElement.style.transform = 'translateZ(' + -this.radius + 'px) ' + 'rotateX' + '(' + (this.degrees) + 'deg)';

@@ -4,53 +4,53 @@
             {
                 "imageSrc": "assets/images/logos/logo-airbus.png",
                 "introEn": "Four years with the Tech Data team",
-                "textEn": "Interface design and dev, tech drawing reader, 3D",
+                "textEn": "&#x2022; Interface design and development &#x2022;<br>&#x2022; SVG Tech drawing reader &#x2022; <br>&#x2022; Smart Media & 3D &#x2022;",
                 "introFr": "Quatre ans avec l'équipe Tech Data",
-                "textFr": "Design et dev des interfaces, lecteur de dessins techniques, 3D",
+                "textFr": "&#x2022; Conception et développement d'interfaces &#x2022;<br>&#x2022; Lecteur de dessins techniques SVG &#x2022; <br>&#x2022; Smart Media & 3D &#x2022;",
                 "page": 2
             },
             {
                 "imageSrc": "assets/images/logos/logo-dgac.png",
-                "introEn": "One year, two projects, two tech stacks",
-                "textEn": "Airplane ground management - Environment",
-                "introFr": "Un an, deux équipes, deux stacks techno",
-                "textFr": "Gestion d'avions au sol - Environnement"
+                "introEn": "&#x2022; Two simultaneous projects &#x2022;<br>Aircraft Ground Handling and Environment",
+                "textEn": "&#x2022; Two tech stacks : Angular / React &#x2022; <br>&#x2022; Leaflet &#x2022; D3 &#x2022; GeoJson &#x2022;",
+                "introFr": "&#x2022; Deux projets simultanés &#x2022;<br>Gestion d'avions au sol & Environnement",
+                "textFr": "&#x2022; Deux piles technologiques : Angular / React &#x2022; <br>&#x2022; Leaflet &#x2022; D3 &#x2022; GeoJson &#x2022;"
             },
             {
                 "imageSrc": "assets/images/logos/logo-ednat.jpg",
-                "introEn": "One year on the Saxo project",
-                "textEn": "Forms on an industrial scale ;-)",
-                "introFr": "Un an sur le projet Saxo",
+                "introEn": "Saxo: application for the administrative<br>and financial management<br>of schools and educational services",
+                "textEn": "&#x2022; Interconnected forms on an industrial scale &#x2022; ",
+                "introFr": "Saxo : application pour la gestion<br>administrative et financière<br>des écoles et des services éducatifs",
                 "textFr": "Des formulaires interconnectés à perte de vue ;-)"
             },
             {
                 "imageSrc": "assets/images/logos/logo-gamesys.jpg",
-                "introEn": "Eight months of online casino gaming",
-                "textEn": "Marketing games",
-                "introFr": "Huit mois de jeux casino enligne",
+                "introEn": "Online casino gaming<br>Daily content delivery",
+                "textEn": "&#x2022; Marketing games &#x2022;",
+                "introFr": "Jeux de casino en ligne<br>Diffusion quotidienne de contenu",
                 "textFr": "Jeux marketting"
             },
             {
                 "imageSrc": "assets/images/logos/logo-moneypenny.jpg",
-                "introEn": "Largest UK answering service provider",
-                "textEn": "Marketing content, Virtual assistant",
-                "introFr": "Plus grand société de permanence téléphonique du Royaume-uni",
-                "textFr": "Contenu marketting, Assistant virtuel"
+                "introEn": "Largest UK provider of outsourced secretaries",
+                "textEn": "&#x2022; Marketing content &#x2022; Virtual assistant &#x2022;",
+                "introFr": "Plus grand société de permanence secretarial du Royaume-uni",
+                "textFr": "&#x2022; Contenu marketting &#x2022; Assistant virtuel &#x2022;"
             },
             {
                 "imageSrc": "assets/images/logos/logo-thesun.jpg",
-                "introEn": "Sunnation 2015 UK Election website",
-                "textEn": "Games, Quizzes, Activities on a daily basis leading up to the election",
-                "introFr": "Sunnation 2015 site parodique sur les éléctions parlementaires au RU",
-                "textFr": "Jeux, quiz, activités chaque jour pendant la periode des éléctions",
+                "introEn": "Sunnation UK Election website<br>Daily content delivery",
+                "textEn": "&#x2022; Games &#x2022; Quizzes &#x2022; Activities &#x2022;",
+                "introFr": "Site web Sunnation pour les élections britanniques<br>Diffusion quotidienne de contenu",
+                "textFr": "&#x2022; Jeux &#x2022; Quizzes &#x2022; Activités &#x2022;",
                 "page": 3
             },
             {
                 "imageSrc": "assets/images/logos/logo-milan.jpg",
-                "introEn": "Fifteen years of interactive content creation for kids",
-                "textEn": "Games, documentairies, karaokés, activities, animated stories",
+                "introEn": "Fifteen years of developing educational content for 4 to 12 year olds",
+                "textEn": "&#x2022; Games &#x2022; Documentairies &#x2022; Karaokes &#x2022;<br>&#x2022; Activities &#x2022; Interactive stories &#x2022;",
                 "introFr": "Quinze ans de contenu interactive",
-                "textFr": "Jeux, documentaires, karaokés, activités, contes animés",
+                "textFr": "&#x2022; Jeux &#x2022; Documentaires &#x2022; Karaokés &#x2022;<br>&#x2022; Activités &#x2022; Contes interactives &#x2022;",
                 "page": 4
             }
         ]

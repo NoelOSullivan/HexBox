@@ -48,9 +48,7 @@
   <div #otherStuff class="other-stuff">
 
     <div class="menu-direct-access-holder">
-
       <div class="direct-access-toggle" [ngClass]="{'direct-access-open':directAccessOpen===true}">
-
         <div class="top" (click)="manageDirectAccess()">
           <div #domeTarantulaHolder class="dome-tarantula-holder">
             <app-tarantula [tarantulaIsOut]="daTarantulaIsOut"
@@ -71,9 +69,7 @@
     </div>
 
     <div class="tools-holder">
-
       <div class="tools-toggle" [ngClass]="{'tools-open':toolsOpen===true}">
-
         <div class="top" (click)="manageTools()">
           <div #domeToolsHolder class="dome-tools-holder" [ngClass]="{'dome-tools-holder-out':toolsAreOut===true}">
             <img class="cog1-image" src="../../../../assets/images/cog1.png" [ngClass]="{'cog1-image-open':toolsAreMoving===true}">
@@ -93,9 +89,6 @@
         <div></div>
       </div>
     </div>
-
-
-
     <!-- <div class="direct-access" (click)="directAccessWW()"></div> -->
     <!-- <div class="back-button-holder">
     <div class="back-button" [ngClass]="{'back-button-active': showBackButton}" (click)="clickBack()">
@@ -127,9 +120,7 @@
   <img #slingLeft class="sling-left" src="assets/images/thesun/sling-left.png">
   <!-- <div #sling  class="sling"></div> -->
   <div #eggSight class="eggSight"></div>
-  <div #slingButton class="sling-button">
-    <app-swipe-icon [direction]="'left'"></app-swipe-icon>
-  </div>
+  <div #slingButton class="sling-button"></div>
   <div class="catch-all-events"></div>
 </div>
 
