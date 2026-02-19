@@ -6,10 +6,10 @@ import { ChangeBlockAllState } from 'app/store/general/general.actions';
 import { TurnPage } from 'app/store/panel/panel.action';
 
 @Component({
-    selector: 'app-next-page-button',
-    imports: [],
-    templateUrl: './next-page-button.component.html',
-    styleUrl: './next-page-button.component.scss'
+  selector: 'app-next-page-button',
+  imports: [],
+  templateUrl: './next-page-button.component.html',
+  styleUrl: './next-page-button.component.scss'
 })
 export class NextPageButtonComponent {
 
@@ -26,6 +26,7 @@ export class NextPageButtonComponent {
   twoPossiblesLeft!: Array<string>;
   blockLeft: boolean = false;
   blockRight: boolean = false;
+  blinkArrow: boolean | undefined = undefined;
 
   constructor(private store: Store) { }
 
@@ -56,8 +57,12 @@ export class NextPageButtonComponent {
     let that = this;
     if (changes.activePageNum) {
       if (changes.activePageNum.currentValue <= 0) {
+        if (this.blinkArrow === undefined) {
+          this.blinkArrow = true;
+        }
         that.blockLeft = true;
       } else {
+        this.blinkArrow = false;
         that.blockLeft = false;
       }
     }
@@ -82,6 +87,5 @@ export class NextPageButtonComponent {
       this.store.dispatch(new TurnPage(directionObj));
     }
   }
-
 
 }

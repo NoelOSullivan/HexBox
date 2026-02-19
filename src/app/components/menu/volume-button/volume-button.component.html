@@ -1,5 +1,5 @@
-<div class="volume-button" (touchstart)="openVolume($event)" (touchmove)="mousemoveVolume($event)" (touchend)="closeVolume($event)">
-    <img src="assets/images/volumeButton.png" class="image" />
+<div class="volume-button" (mousedown)="mouseOpenVolume($event)" (touchstart)="touchOpenVolume($event)" (mousemove)="mouseMoveVolume($event)" (touchmove)="touchMoveVolume($event)" (mouseup)="mouseCloseVolume($event)" (touchend)="touchCloseVolume($event)">
+    <img draggable="false" src="assets/images/volumeButton.png" class="image" />
     <div class="volume">{{volume}}</div>
 </div>
 <div [ngClass]="{'show-volume-switch': volumeOpen===true}" class="volume-switch">

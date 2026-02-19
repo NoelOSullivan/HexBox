@@ -19,8 +19,8 @@ export class BichromeTitleComponent {
   ngOnChanges(changes: any) {
     if (changes.text) {
       const text = changes.text.currentValue;
-      this.text1 = "<span style='color:#d72b31'>" + text.slice(0, 1) + "</span>" + text.slice(1);
-      this.text2 = text.slice(0, -1) + "<span style='color:#d72b31'>" + text.slice(-1) + "</span>"
+      this.text1 = "<span class='letter-orange'>" + text.slice(0, 1) + "</span>" + text.slice(1);
+      this.text2 = text.slice(0, -1) + "<span class='letter-blue'>" + text.slice(-1) + "</span>"
     }
   }
 

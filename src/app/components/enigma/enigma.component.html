@@ -33,7 +33,7 @@
         [ngClass]="{'scroll-open':scrollOpen===true, 'scroll-holder-fallen':scrollFallen===true, 'kill-scroll':enigmaEnd===true}">
         <div class="scroll-fixed"></div>
 
-        @if(language.currentLanguage()==='fr') {
+        @if(language.currentLanguage()==='Fr') {
         <div class="burn-text">Trouver...<br>et brûler</div>
         } @else {
         <div class="burn-text">Find...<br>and burn</div>
@@ -50,17 +50,17 @@
 
 
     <div class="intro-text" [ngClass]="{'hide-intro-text':matchLit===true || enigmaEnd===true}">
-        @if(language.currentLanguage()==='fr') {
-        <span>xxx Enfermé dans<br>Le Château d'If/Else<br>pour web sorcellerie<br>... liberez-moi.<br><br>Vite ! De la
+        @if(language.currentLanguage()==='Fr') {
+        <span>Enfermé dans<br>Le Château d'If/Else<br>pour web sorcellerie<br>... liberez-moi.<br><br>Vite ! De la
             lumière.</span>
         }
-        @if(language.currentLanguage()==='en') {
+        @if(language.currentLanguage()==='En') {
         <span> Locked in<br>Le Château d'If/Else<br>for web sorcery<br>... free me.<br><br>Quick ! Some light.</span>
         }
     </div>
 
     @if(enigmaEnd===false) {
-    @if(language.currentLanguage()==='fr') {
+    @if(language.currentLanguage()==='Fr') {
     <div class="zapp-button" (click)="zappEnigma()">PASSER<br>L'ENIGME</div>
     } @else {
     <div class="zapp-button" (click)="zappEnigma()">SKIP THE<br>ENIGMA</div>

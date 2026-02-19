@@ -13,15 +13,15 @@
             <span>Web<br>Development</span>
             }
             @if (language==='Fr') {
-            <span>Dévéloppement<br>Web</span>
+            <span>Développement<br>Web</span>
             }
           </div>
           <div class="intro-text">
             @if (language==='En') {
-            <span>Creatiive Code</span>
+            <span>Creative Code</span>
             }
             @if (language==='Fr') {
-            <span>Code Créative</span>
+            <span>Code Créatif</span>
             }
           </div>
           <div class="top-line"></div>
@@ -32,7 +32,7 @@
 
         @if (language==='Fr') {
         <div class="offer">
-          <div>&#x2022; Sites Web &#x2022; Web Apps &#x2022;</div>
+          <div>&#x2022; Sites Web &#x2022; Applications Web &#x2022;</div>
           <div>&#x2022; Gamification &#x2022;</div>
           <div>&#x2022; Jeux &#x2022;</div>
           <div>&#x2022; Formation &#x2022;</div>
@@ -47,6 +47,10 @@
         </div>
         }
         <div></div>
+
+        @if (showSwipe===true && touchDetect.isTouchDevice()) {
+        <img src="assets/images/swipe.png" class="swipe-icon">
+        }
 
         <app-next-page-button class="next-page-button" [activePageNum]="activePageNum" [language]="language"
           [blockAll]="blockAll" [rightTextFrEn]="'QUI#WHO'"></app-next-page-button>
@@ -84,7 +88,7 @@
         </div>
         <div class="basic-text">
           @if (language==='Fr') {
-          <div class="sub-title">Développeur Web Créative</div>
+          <div class="sub-title">Développeur Web Créatif</div>
           }
           @if (language==='Fr') {
           <div class="sub-text">Je donne une personnalité aux applications. J'utilise le Motion Design ainsi que des
@@ -200,7 +204,8 @@
           <div class="sub-title">HTML/CSS</div>
           }
           @if (language==='En') {
-          <div class="sub-text">A real knowledge of CSS allows for the creation of unique experiences. Hand made. No templates.
+          <div class="sub-text">A real knowledge of CSS allows for the creation of unique experiences. Hand made. No
+            templates.
             No themes.</div>
           }
         </div>

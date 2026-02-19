@@ -138,3 +138,24 @@
         font-size: 16px;
     }
 }
+
+.swipe-icon {
+    position: absolute;
+    width: 40px;
+    right: 10px;
+    bottom: 10px;
+    animation: swipeSwipe 2.5s ease;
+    animation-iteration-count: infinite;
+}
+
+@keyframes swipeSwipe {
+    0% {
+        right: 10px;
+    }
+    50% {
+        right: 50px;
+    }
+    100%{
+        right: 10px;
+    }
+}

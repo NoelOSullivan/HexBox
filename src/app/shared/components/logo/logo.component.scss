@@ -60,6 +60,10 @@
 
 }
 
-:host ::ng-deep .letter {
-    color: $primary-first-letter-color;
-  }
+:host ::ng-deep .letter-orange {
+    color: $primary-background-color;
+}
+
+:host ::ng-deep .letter-blue {
+    color: $primary-hover-color;
+}

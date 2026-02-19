@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, Input, OnInit, ViewChild } from '@angular/core';
 import { ContentDirective } from '../../../../../shared/directives/content.directive';
 import { Select } from '@ngxs/store';
 
@@ -8,6 +8,7 @@ import { AppState } from 'app/store/general/general.state';
 import { AppStateModel, IntroState, LanguageModel } from 'app/store/general/general.model';
 import { Observable } from 'rxjs';
 import { Language } from 'app/store/general/general.state';
+import { TouchDetectService } from 'app/services/touchDetect.service';
 import { NextPageButtonComponent } from 'app/shared/components/next-page-button/next-page-button.component';
 import { BichromeTitleComponent } from 'app/shared/components/bichrome-title/bichrome-title.component';
 
@@ -23,11 +24,13 @@ export class Container1 implements OnInit {
   @Select(AppState) appState$!: Observable<AppStateModel>;
   @Select(Language) language$!: Observable<LanguageModel>;
 
+  protected touchDetect = inject(TouchDetectService);
+
   @Input() nContainer!: number;
 
   constructor() { }
   
-  showSwipe: boolean = false;
+  showSwipe: boolean = true;
   activePageNum: number = 0;
   isLastPage: boolean = false;
 
@@ -40,6 +43,7 @@ export class Container1 implements OnInit {
 
   changePageNum(activePageNum: number) {
     if (this.activePageNum !== activePageNum) {
+      if(this.showSwipe===true) this.showSwipe = false;
       this.activePageNum = activePageNum;
     }
   }

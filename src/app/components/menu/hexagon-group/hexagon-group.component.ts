@@ -65,6 +65,8 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
   showBackButton: boolean = false;
   allowBackButton: boolean = false;
 
+  catapultClicked: boolean = false;
+
   startPoint: { x: number, y: number } = { x: 0, y: 0 };
   movePoint: { x: number, y: number } = { x: 0, y: 0 };
 
@@ -208,6 +210,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
             }
             break;
           case SunGameState.GAMEON:
+            this.catapultClicked = false;
             this.catapult.nativeElement.style.transition = "opacity 1.25s ease-in";
             setTimeout(() => {
               this.catapult.nativeElement.style.opacity = 100;
@@ -345,7 +348,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
 
   clickHexagon(hexIndex: any, location: any, overrideBlock?: boolean) {
     if (this.blockAll && !overrideBlock) return;
-    // if (this.blockAll) return;
+    if (this.selected === hexIndex) return;
     this.manageMenu(hexIndex);
   }
 
@@ -441,6 +444,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
 
   touchstartCatapult(event: TouchEvent): void {
     if (this.allowCatapult === true) {
+      this.catapultClicked = true;
       this.slingWasPressed = true;
       this.slingButton.nativeElement.style.opacity = 0;
       this.startPoint.x = event.touches[0].clientX;
@@ -451,6 +455,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
 
   mousedownCatapult(event: MouseEvent): void {
     if (this.allowCatapult === true) {
+      this.catapultClicked = true;
       this.slingWasPressed = true;
       this.slingButton.nativeElement.style.opacity = 0;
       this.startPoint.x = event.clientX;
@@ -700,7 +705,7 @@ export class HexagonGroupComponent implements OnInit, AfterViewInit {
   manageDirectAccess() {
     if (this.daActivated) {
       this.directAccessOpen = !this.directAccessOpen;
-      if(this.directAccessOpen) {
+      if (this.directAccessOpen) {
         this.clickHexagon(2, '/container2', true);
       }
       this.daTarantulaIsMoving = true;

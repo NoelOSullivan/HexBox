@@ -36,9 +36,13 @@
     left: 2px;
 }
 
- .letter {
-    color: $primary-first-letter-color !important;
- }
+:host ::ng-deep .letter-orange {
+    color: $primary-background-color;
+}
+
+:host ::ng-deep .letter-blue {
+    color: $primary-hover-color;
+}
 
 @media screen and (max-width: 370px) {
     .word-holder {

@@ -1,22 +1,25 @@
 <div class="button-holder">
   <!-- <div class="back-button-holder"> -->
+  @if (!blockLeft) {
+  <div class="back-button" (click)="turnPageToLeft()">
+    <div class="icon-holder back">
+      <img src="assets/images/arrows.png" class="icon icon-left" />
+    </div>
     @if (!blockLeft) {
-      <div class="back-button" (click)="turnPageToLeft()">
-        <div class="icon-holder back">
-          <img src="assets/images/arrows.png" class="icon icon-left" />
-        </div>
-        @if (!blockLeft) {
-          <div>{{leftText}}</div>
-        }
-      </div>
+    <div>{{leftText}}</div>
     }
+  </div>
+  }
   <!-- </div> -->
   @if (!blockRight) {
-    <div class="next-button" (click)="turnPageToRight()">
-      <div>{{rightText}}</div>
-      <div class="icon-holder">
-        <img src="assets/images/arrows.png" class="icon icon-right" />
-      </div>
+  <div class="next-button" (click)="turnPageToRight()">
+    <div>{{rightText}}</div>
+    <div class="icon-holder">
+      <img src="assets/images/arrows.png" class="icon icon-right" />
+      @if (blinkArrow ) {
+      <img src="assets/images/arrows.png" class="icon icon-right blink" />
+      }
     </div>
+  </div>
   }
 </div>

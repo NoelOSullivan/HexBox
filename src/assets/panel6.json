@@ -19,21 +19,21 @@
                 "imageSrc": "assets/images/panel6/react.png",
                 "introEn": "Library for<br>Single Page Applications",
                 "textEn": "Projects: DGAC, Gamesys",
-                "introFr": "Librarie pour<br>Single Page Applications",
+                "introFr": "Librairie pour<br>Single Page Applications",
                 "textFr": "Projets: DGAC, Gamesys"
             },
             {
                 "imageSrc": "assets/images/panel6/d3.svg",
                 "introEn": "Library for<br>Data Visualisation",
                 "textEn": "Project: DGAC",
-                "introFr": "Librarie pour<br>Visualisation des données",
+                "introFr": "Librairie pour<br>Visualisation des données",
                 "textFr": "Projet: DGAC"
             },
             {
                 "imageSrc": "assets/images/panel6/leaflet.svg",
                 "introEn": "Library for<br>Interactive Maps and Plans",
                 "textEn": "Project: DGAC",
-                "introFr": "Librarie pour des<br>cartes et des plans interactifs",
+                "introFr": "Librairie pour des<br>cartes et des plans interactifs",
                 "textFr": "Projets: DGAC"
             },
             {
@@ -54,7 +54,7 @@
                 "imageSrc": "assets/images/panel6/threeJS.png",
                 "introEn": "Library for<br>3D WebGL animation",
                 "textEn": "Project: Airbus, The Sun",
-                "introFr": "Librarie pour<br>Animation 3D WebGL",
+                "introFr": "Librairie pour<br>Animation 3D WebGL",
                 "textFr": "Projet: Airbus, The Sun"
             }
         ]

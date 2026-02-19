@@ -80,6 +80,34 @@
     cursor: pointer;
 }
 
+.indic {
+    border: 20px solid $primary-background-color;
+    border-radius: 50%;
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: -25px;
+    left: -20px;
+    animation: whoosh 2s ease-out;
+    animation-iteration-count: infinite;
+    scale: 1.5;
+    box-sizing: border-box;
+}
+
+@keyframes whoosh {
+    0% {
+        scale: 1.5;
+    }
+
+    50% {
+        scale: 0;
+    }
+
+    100% {
+        scale: 0;
+    }
+}
+
 .egg {
     position: absolute;
     top: 5px;
@@ -207,7 +235,7 @@
 }
 
 .direct-access-open {
-    top: -10px;
+    top: 0px;
 }
 
 .tools-holder {
@@ -253,7 +281,7 @@
 }
 
 .tools-open {
-    top: -10px;
+    top: 0px;
 }
 
 .tools-text {

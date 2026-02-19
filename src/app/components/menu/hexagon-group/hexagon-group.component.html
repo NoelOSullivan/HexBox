@@ -1,46 +1,45 @@
 <div class="bollocks-holder">
   <div #menuRotate class="menu-rotate">
     @if (menuRotate && menuContent) {
-      <app-hexagon [content]=menuContentLanguage[0] [sunGameState]="sunGameState"
-        [hexbox]="hexbox.hexbox" class="hex_0">
-      </app-hexagon>
+    <app-hexagon [content]=menuContentLanguage[0] [sunGameState]="sunGameState" [hexbox]="hexbox.hexbox" class="hex_0">
+    </app-hexagon>
     }
     <!-- Remember that order is inverted for the needs of the opening animation-->
     @if (menuRotate && menuContent) {
-      <app-hexagon #hex1 [content]=menuContentLanguage[6] [hexNum]="6" class="hex_6"
-        [ngClass]="{'hexagon-flip-animate':hexOpened[5],'hexagon-selected':selected==6 || rolled==6}"
-        (click)="clickHexagon(6,'/container6')" (mouseover)="overHexagon(6)" (mouseleave)="leaveHexagon()">
-      </app-hexagon>
+    <app-hexagon #hex1 [content]=menuContentLanguage[6] [hexNum]="6" class="hex_6"
+      [ngClass]="{'hexagon-flip-animate':hexOpened[5],'hexagon-selected':selected==6 || rolled==6}"
+      (click)="clickHexagon(6,'/container6')" (mouseover)="overHexagon(6)" (mouseleave)="leaveHexagon()">
+    </app-hexagon>
     }
     @if (menuRotate && menuContent) {
-      <app-hexagon #he2 [content]=menuContentLanguage[5] [hexNum]="5" class="hex_5"
-        [ngClass]="{'hexagon-flip-animate':hexOpened[4],'hexagon-selected':selected==5 || rolled==5}"
-        (click)="clickHexagon(5,'/container5')" (mouseover)="overHexagon(5)" (mouseleave)="leaveHexagon()">
-      </app-hexagon>
+    <app-hexagon #he2 [content]=menuContentLanguage[5] [hexNum]="5" class="hex_5"
+      [ngClass]="{'hexagon-flip-animate':hexOpened[4],'hexagon-selected':selected==5 || rolled==5}"
+      (click)="clickHexagon(5,'/container5')" (mouseover)="overHexagon(5)" (mouseleave)="leaveHexagon()">
+    </app-hexagon>
     }
     @if (menuRotate && menuContent) {
-      <app-hexagon #hex3 [content]=menuContentLanguage[4] [hexNum]="4" class="hex_4"
-        [ngClass]="{'hexagon-flip-animate':hexOpened[3],'hexagon-selected':selected==4 || rolled==4}"
-        (click)="clickHexagon(4,'/container4')" (mouseover)="overHexagon(4)" (mouseleave)="leaveHexagon()">
-      </app-hexagon>
+    <app-hexagon #hex3 [content]=menuContentLanguage[4] [hexNum]="4" class="hex_4"
+      [ngClass]="{'hexagon-flip-animate':hexOpened[3],'hexagon-selected':selected==4 || rolled==4}"
+      (click)="clickHexagon(4,'/container4')" (mouseover)="overHexagon(4)" (mouseleave)="leaveHexagon()">
+    </app-hexagon>
     }
     @if (menuRotate && menuContent) {
-      <app-hexagon #hex4 [content]=menuContentLanguage[3] [hexNum]="3" class="hex_3"
-        [ngClass]="{'hexagon-flip-animate':hexOpened[2], 'hexagon-selected':selected==3 || rolled==3}"
-        (click)="clickHexagon(3,'/container3')" (mouseover)="overHexagon(3)" (mouseleave)="leaveHexagon()">
-      </app-hexagon>
+    <app-hexagon #hex4 [content]=menuContentLanguage[3] [hexNum]="3" class="hex_3"
+      [ngClass]="{'hexagon-flip-animate':hexOpened[2], 'hexagon-selected':selected==3 || rolled==3}"
+      (click)="clickHexagon(3,'/container3')" (mouseover)="overHexagon(3)" (mouseleave)="leaveHexagon()">
+    </app-hexagon>
     }
     @if (menuRotate && menuContent) {
-      <app-hexagon [content]=menuContentLanguage[2] [hexNum]="2" class="hex_2"
-        [ngClass]="{'hexagon-flip-animate':hexOpened[1],'hexagon-selected':selected==2 || rolled==2}"
-        (click)="clickHexagon(2,'/container2')" (mouseover)="overHexagon(2)" (mouseleave)="leaveHexagon()">
-      </app-hexagon>
+    <app-hexagon [content]=menuContentLanguage[2] [hexNum]="2" class="hex_2"
+      [ngClass]="{'hexagon-flip-animate':hexOpened[1],'hexagon-selected':selected==2 || rolled==2}"
+      (click)="clickHexagon(2,'/container2')" (mouseover)="overHexagon(2)" (mouseleave)="leaveHexagon()">
+    </app-hexagon>
     }
     @if (menuRotate && menuContent) {
-      <app-hexagon [content]=menuContentLanguage[1] [hexNum]="1" class="hex_1"
-        [ngClass]="{'hexagon-flip-animate':hexOpened[0], 'hexagon-selected':selected==1 || rolled==1}"
-        (click)="clickHexagon(1,'/container1')" (mouseover)="overHexagon(1)" (mouseleave)="leaveHexagon()">
-      </app-hexagon>
+    <app-hexagon [content]=menuContentLanguage[1] [hexNum]="1" class="hex_1"
+      [ngClass]="{'hexagon-flip-animate':hexOpened[0], 'hexagon-selected':selected==1 || rolled==1}"
+      (click)="clickHexagon(1,'/container1')" (mouseover)="overHexagon(1)" (mouseleave)="leaveHexagon()">
+    </app-hexagon>
     }
 
   </div>
@@ -51,12 +50,11 @@
       <div class="direct-access-toggle" [ngClass]="{'direct-access-open':directAccessOpen===true}">
         <div class="top" (click)="manageDirectAccess()">
           <div #domeTarantulaHolder class="dome-tarantula-holder">
-            <app-tarantula [tarantulaIsOut]="daTarantulaIsOut"
-            [tarantulaIsMoving]="daTarantulaIsMoving" [tarantulaIsForward]="daTarantulaIsForward"></app-tarantula>
+            <app-tarantula [tarantulaIsOut]="daTarantulaIsOut" [tarantulaIsMoving]="daTarantulaIsMoving"
+              [tarantulaIsForward]="daTarantulaIsForward"></app-tarantula>
           </div>
           <div class="da-text" [ngClass]="{'show-da-text':daActivated===true && directAccessOpen===false}">
-            <app-circular-text [text]="daTextContent"
-            [turn]="turnDirection"></app-circular-text>
+            <app-circular-text [text]="daTextContent" [turn]="turnDirection"></app-circular-text>
           </div>
           <div class="sphere">
             <img class="sphere-image" src="../../../../assets/images/sphere.png">
@@ -72,13 +70,15 @@
       <div class="tools-toggle" [ngClass]="{'tools-open':toolsOpen===true}">
         <div class="top" (click)="manageTools()">
           <div #domeToolsHolder class="dome-tools-holder" [ngClass]="{'dome-tools-holder-out':toolsAreOut===true}">
-            <img class="cog1-image" src="../../../../assets/images/cog1.png" [ngClass]="{'cog1-image-open':toolsAreMoving===true}">
-            <img class="cog2-image" src="../../../../assets/images/cog2.png" [ngClass]="{'cog2-image-open':toolsAreMoving===true}">
-            <img class="cog3-image" src="../../../../assets/images/cog3.png" [ngClass]="{'cog3-image-open':toolsAreMoving===true}">
+            <img class="cog1-image" src="../../../../assets/images/cog1.png"
+              [ngClass]="{'cog1-image-open':toolsAreMoving===true}">
+            <img class="cog2-image" src="../../../../assets/images/cog2.png"
+              [ngClass]="{'cog2-image-open':toolsAreMoving===true}">
+            <img class="cog3-image" src="../../../../assets/images/cog3.png"
+              [ngClass]="{'cog3-image-open':toolsAreMoving===true}">
           </div>
           <div class="tools-text" [ngClass]="{'show-da-text':toolsActivated===true && toolsOpen===false}">
-            <app-circular-text [text]="toolsTextContent"
-            [turn]="turnDirection"></app-circular-text>
+            <app-circular-text [text]="toolsTextContent" [turn]="turnDirection"></app-circular-text>
           </div>
           <div class="sphere">
             <img class="sphere-image" src="../../../../assets/images/sphere.png">
@@ -95,40 +95,44 @@
       <app-swipe-icon [direction]="'left'"></app-swipe-icon>
     </div>
   </div> -->
-</div>
-<!-- <div #catapult *ngIf="sunGameState==='gameOn'" class="catapult" (touchstart)="touchstartCatapult($event)" -->
-<div #catapult class="catapult hexagon-flip" (mousedown)="mousedownCatapult($event)"
-  (mousemove)="mousemoveCatapult($event)" (mouseup)="mouseupCatapult($event)"
-  (touchstart)="touchstartCatapult($event)" (touchmove)="touchmoveCatapult($event)"
-  (touchend)="touchendCatapult($event)">
-  <div #leftElastic class="left-elastic">
-    <svg width='100%' height='100%' viewBox='0 0 1 1' preserveAspectRatio='none'>
-      <line x1="0" y1="0" x2="1" y2="1" vector-effect="non-scaling-stroke" stroke="black" stroke-width="2" />
-    </svg>
   </div>
-  <div #rightElastic class="right-elastic">
-    <svg width='100%' height='100%' viewBox='0 0 1 1' preserveAspectRatio='none'>
-      <line x1="0" y1="0" x2="1" y2="1" vector-effect="non-scaling-stroke" stroke="black" stroke-width="2" />
-    </svg>
+  <!-- <div #catapult *ngIf="sunGameState==='gameOn'" class="catapult" (touchstart)="touchstartCatapult($event)" -->
+  <div #catapult class="catapult hexagon-flip" (mousedown)="mousedownCatapult($event)"
+    (mousemove)="mousemoveCatapult($event)" (mouseup)="mouseupCatapult($event)"
+    (touchstart)="touchstartCatapult($event)" (touchmove)="touchmoveCatapult($event)"
+    (touchend)="touchendCatapult($event)">
+    <div #leftElastic class="left-elastic">
+      <svg width='100%' height='100%' viewBox='0 0 1 1' preserveAspectRatio='none'>
+        <line x1="0" y1="0" x2="1" y2="1" vector-effect="non-scaling-stroke" stroke="black" stroke-width="2" />
+      </svg>
+    </div>
+    <div #rightElastic class="right-elastic">
+      <svg width='100%' height='100%' viewBox='0 0 1 1' preserveAspectRatio='none'>
+        <line x1="0" y1="0" x2="1" y2="1" vector-effect="non-scaling-stroke" stroke="black" stroke-width="2" />
+      </svg>
+    </div>
+    <img #slingAnchor class="sling-anchor" src="assets/images/thesun/sling-anchor.png">
+    <img #slingRight class="sling-right" src="assets/images/thesun/sling-right.png">
+    <div #egg class="egg">
+      <div #eggShadow class="egg-shadow"></div>
+      <app-egg [sunGameState]="sunGameState"></app-egg>
+    </div>
+    <img #slingLeft class="sling-left" src="assets/images/thesun/sling-left.png">
+    <!-- <div #sling  class="sling"></div> -->
+    <div #eggSight class="eggSight"></div>
+    <div #slingButton class="sling-button"></div>
+    @if (catapultClicked!==true) {
+    <div class="indic"></div>
+    }
+    <div class="catch-all-events"></div>
   </div>
-  <img #slingAnchor class="sling-anchor" src="assets/images/thesun/sling-anchor.png">
-  <img #slingRight class="sling-right" src="assets/images/thesun/sling-right.png">
-  <div #egg class="egg">
-    <div #eggShadow class="egg-shadow"></div>
-    <app-egg [sunGameState]="sunGameState"></app-egg>
-  </div>
-  <img #slingLeft class="sling-left" src="assets/images/thesun/sling-left.png">
-  <!-- <div #sling  class="sling"></div> -->
-  <div #eggSight class="eggSight"></div>
-  <div #slingButton class="sling-button"></div>
-  <div class="catch-all-events"></div>
-</div>
 
 
 
-<div #tarantulaHolder class="tarantula-holder">
-  <app-tarantula [tarantulaIsOut]="tarantulaIsOut" [tarantulaIsMoving]="tarantulaIsMoving"></app-tarantula>
-</div>
+
+  <div #tarantulaHolder class="tarantula-holder">
+    <app-tarantula [tarantulaIsOut]="tarantulaIsOut" [tarantulaIsMoving]="tarantulaIsMoving"></app-tarantula>
+  </div>
 
 
 

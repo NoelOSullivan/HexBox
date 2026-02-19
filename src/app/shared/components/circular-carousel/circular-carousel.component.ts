@@ -29,6 +29,7 @@ export class CircularCarouselComponent implements OnInit {
   @Input() myPageNum!: number;
   @Input() myContainerIsActive!: boolean;
   @Input() recentreCarousel!: boolean;
+  @Input() blockAll!: boolean;
 
   @Output() carouselItemClicked = new EventEmitter<number>();
 
@@ -57,6 +58,7 @@ export class CircularCarouselComponent implements OnInit {
   private lastActivePageNumber: number | undefined;
   private contentHeight!: number;
   public buttonText!: string;
+  private mouseUpDetected!: boolean;
 
   constructor(private dataService: DataService) { }
 
@@ -72,8 +74,14 @@ export class CircularCarouselComponent implements OnInit {
         this.contentHeight = appState.contentHeight;
         this.itemHeight = Math.floor(this.contentHeight * .45);
       }
+      if (this.mouseUpDetected !== appState.mouseUpDetected) {
+        this.mouseUpDetected = appState.mouseUpDetected;
+        this.manageUp();
+      }
     });
   }
+
+
 
   ngOnChanges(changes: any) {
 
@@ -148,7 +156,6 @@ export class CircularCarouselComponent implements OnInit {
       this.itemCount = this.items.length;
       this.itemDegrees = 360 / this.itemCount;
       this.degrees = 0;
-      console.log("this.itemDegrees", this.itemDegrees);
 
       for (let i = 0, length = this.itemCollection.length; i < length; i++) {
         const item = this.itemCollection.namedItem("item" + i);
@@ -252,7 +259,7 @@ export class CircularCarouselComponent implements OnInit {
   }
 
   manageMove(posY: number): void {
-    if (this.isTouchOrMousedown) {
+    if (this.isTouchOrMousedown && this.blockAll === false) {
       const diffY = this.lastY - posY;
       this.lastY = posY;
       this.degrees += diffY;
@@ -334,7 +341,9 @@ export class CircularCarouselComponent implements OnInit {
   itemClicked(event: MouseEvent, item: any): void {
     event.preventDefault();
     event.stopPropagation();
-    this.carouselItemClicked.emit(item.page);
+    if (this.blockAll === false) {
+      this.carouselItemClicked.emit(item.page);
+    }
   }
 
 }

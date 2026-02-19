@@ -9,7 +9,7 @@
         "<div class='large-letter'>B</div>"
     ],
     "menu_1": [
-        "<div class='centre-hex-1'><div id='menuMagic' class='menu-magic'></div><div #topHalf class='top-half'><div><span class='letter'>H</span>EX</div></div><div #bottomHalf class='bottom-half'><div>BO<span class='letter'>X</span></div></div></div>",
+        "<div class='centre-hex-1'><div id='menuMagic' class='menu-magic'></div><div #topHalf class='top-half'><div><span class='letter-orange'>H</span>EX</div></div><div #bottomHalf class='bottom-half'><div>BO<span class='letter-blue'>X</span></div></div></div>",
         "<div class='menu-theme'>##Techno#Soft##</div>",
         "<div class='menu-theme'>##Accueil#Home##</div>",
         "<div class='menu-theme'>##Projets#Work##</div>",
