@@ -14,11 +14,18 @@
     </div>
 
     <div #menuLayout class="menu-layout" [ngClass]="{'no-borders':!viewHeightOK}">
-        <!-- <span *ngIf="orientation === 'PORTRAIT'"> -->
         <div [ngClass]="{'hideForLandscape':!viewHeightOK}">
             <footer class="menu-footer">
-                <div class="tel">+33 (0)6 78 93 29 75</div>
-                <div class="mail">noel&#64;hex-box.com</div>
+                <a class="tel-button" href="tel:+336 78 93 29 75">
+                    <img class="contact-button" src="../../../../assets/images/tel-icon.png" draggable="false">
+                </a>
+                <div class="text-contacts">
+                    <a class="tel" href="tel:+336 78 93 29 75">+33 (0)6 78 93 29 75</a>
+                    <a class="mail" href="mailto:noel@hex-box.com">noel&#64;hex-box.com</a>
+                </div>
+                <a class="tel-button" href="mailto:noel@hex-box.com">
+                    <img class="contact-button" src="../../../../assets/images/email-icon.png" draggable="false">
+                </a>
             </footer>
 
             <app-menu></app-menu>
